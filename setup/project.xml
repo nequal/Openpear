@@ -1,0 +1,88 @@
+<project name="Open PEAR Server" version="0.1.0" pathinfo="index.php">
+    <description>
+        共用のPEAR Channelリポジトリサービス
+    </description>
+    <database name="openpear">
+        <table name="package">
+            <column name="id" />
+            <column name="name" unique="true" require="true" chartype="/^[A-Za-z][A-Za-z0-9_]+$/" />
+            <column name="summary" size="1000" />
+            <column name="description" type="text" />
+            <column name="public" type="bool" default="0" />
+            <column name="vote" type="float(15,14)" default="0.0" max="5" min="0" />
+            <column name="created" type="timestamp" default="sysdate" />
+            <column name="updated" type="timestamp" default="sysdate" />
+        </table>
+        <table name="maintainer">
+            <column name="id" />
+            <column name="open_id" unique="true" require="true" />
+            <column name="name" unique="true" require="true" chartype="/^[A-Za-z0-9_\-]+$/" />
+            <column name="mail" type="mail" />
+            <column name="fullname" />
+            <column name="profile" type="text" />
+            <column name="password" require="true" />
+            <column name="created" type="timestamp" default="sysdate" />
+        </table>
+
+        <map name="charge">
+            <column name="id" />
+            <column name="package" type="int" reference="package.id" uniquewith="maintainer" />
+            <column name="maintainer" type="int" reference="maintainer.id" uniquewith="package" />
+            <column name="role">
+                <choices>
+                    <data caption="lead">lead</data>
+                    <data caption="developer">developer</data>
+                    <data caption="contributor">contributor</data>
+                    <data caption="helper">helper</data>
+                </choices>
+            </column>
+        </map>
+    </database>
+    <database name="server">
+        <table name="categories" class="server_categories">
+            <column name="name" type="string" />
+            <column name="desctn" type="text" />
+        </table>
+        <table name="maintainers" class="server_maintainers">
+            <column name="hundle" type="string" size="30" />
+            <column name="fullname" size="100" />
+            <column name="email" size="100" />
+            <column name="stats" size="10" />
+        </table>
+        <table name="packages" class="server_packages">
+            <column name="channel" size="100" />
+            <column name="date" size="30" />
+            <column name="dependencies" type="text" />
+            <column name="description" type="text" />
+            <column name="licenselocation" type="text" />
+            <column name="maintainers" type="text" />
+            <column name="name" size="100" />
+            <column name="notes" type="text" />
+            <column name="package" size="100" />
+            <column name="stability" type="text" />
+            <column name="state" size="10" />
+            <column name="summary" type="text" />
+            <column name="version" size="10" />
+            <column name="filesize" size="10" />
+            <column name="contents" type="text" />
+        </table>
+    </database>
+    <input name="SVN_PATH">
+        <title>Subversionのディレクトリ</title>
+        <description>SVNのパス</description>
+        <data>/home/openpear/svn</data>
+    </input>
+    <input name="SVN_NAME">
+        <title>リポジトリの名前</title>
+        <data>openpear</data>
+    </input>
+    <input name="WORKING_DIR">
+        <title>作業用ディレクトリ</title>
+        <description>パッケージングに使用する一時ディレクトリ</description>
+        <data>{$rhaco.path()}/work/build</data>
+    </input>
+    <input name="SVN_URL">
+        <title>Subversion のURL</title>
+        <data>http://svn.openpear.org/</data>
+    </input>
+</project>
