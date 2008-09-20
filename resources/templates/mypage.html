@@ -1,0 +1,39 @@
+<rt:extends href="index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">マイページ - Open PEAR Server</rt:block>
+
+<rt:block name="info">登録情報は<a href="{$rhaco.url('maintainer/settings')}">こちらから変更できます</a></rt:block>
+<rt:block name="contents">
+	<h3>登録情報</h3>
+	<dl>
+		<dt>ユーザー名</dt>
+		<dd>{$object.name}</dd>
+		<dt>名前</dt>
+		<dd>{$object.fullname}</dd>
+		<dt>SVNパスワード</dt>
+		<dd>{$object.password}</dd>
+	</dl>
+
+	<h3>あなたが参加しているパッケージ</h3>
+	<?php $object_list = array_chunk($packages, 3); ?>
+	<rt:loop param="object_list" var="row">
+	    <rt:loop param="row" var="object">
+	        <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
+	            <h3>{$object.name}</h3>
+	            <p>{$f.text2html($object.description)}</p>
+	            <p><a href="{$rhaco.url('package')}/{$object.name}">ProjectPage</a></p>
+	        </div>
+	    </rt:loop>
+	    <div style="width:100%">&nbsp;</div>
+	</rt:loop>
+
+</rt:block>
+
+<rt:block name="menu">
+			<li><a href="{$rhaco.url()}">about</a></li>
+			<li><a href="{$rhaco.url('packages')}">packages</a></li>
+			<li><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
+			<li><a href="http://svn.pear.riaf.jp/">repository</a></li>
+			<li><a href="{$rhaco.url('login')}">login</a></li>
+</rt:block>

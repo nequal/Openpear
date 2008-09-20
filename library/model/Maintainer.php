@@ -29,6 +29,16 @@ class Maintainer extends MaintainerTable{
             file_put_contents(sprintf('%s/%s.passwd', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), implode("\n", $accounts));
     }
 
+    function afterSelect($db){
+        if(!empty($this->dependCharges)){
+            $c = new C(Q::order(Package::columnName()));
+            foreach($this->dependCharges as $charge){
+                $c->addCriteriaOr(new C(Q::eq(Package::columnId(), $charge->package)));
+            }
+            $this->setPackages($db->select(new Package(), $c));
+        }
+    }
+
     function _h($p){
         $a = array(0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z");
         $salt = $a[array_rand($a)] . $a[array_rand($a)];

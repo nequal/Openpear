@@ -22,11 +22,18 @@ class OpenpearPackage extends Openpear
     }
     function search(){
         if($this->isVariable('w')){
-
-        } else return new HtmlParser('search.html');
+            $parser = parent::read(new Package(), new C(Q::ilike(Package::columnDescription(), $this->getVariable('w'), 'p'), Q::orderDesc(Package::columnUpdated()), Q::pager(18)));
+        } else return $this->read();
     }
     function detail($name){
-        $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name)));
+        $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name), Q::depend()));
+        $server = $this->_getServer();
+        $parser->setVariable('latestVersion', $server->backend->searchLastestVersion($package));
+        if(RequestLogin::isLogin()){
+            $u = RequestLogin::getLoginSession();
+            $p = $parser->variables['object'];
+            $parser->setVariable('isMaintainer', $this->isMaintainer($p, $u));
+        }
         return $parser;
     }
 

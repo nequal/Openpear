@@ -15,6 +15,15 @@ class Openpear extends Views
         $parser = new HtmlParser('index.html');
         return $parser;
     }
+    function mypage(){
+        $this->loginRequired();
+        $u = RequestLogin::getLoginSession();
+        $packages = $this->dbUtil->select(new Package(), new C(Q::eq(Package::columnId(), Charge::columnPackage()), Q::eq(Charge::columnMaintainer(), $u->getId())));
+        $parser = new HtmlParser('mypage.html');
+        $parser->setVariable('object', $u);
+        $parser->setVariable('packages', $packages);
+        return $parser;
+    }
 
     function login(){
         if($this->isVariable('openid_identity')){

@@ -21,11 +21,11 @@ class OpenpearMaintainer extends Openpear
         Header::redirect(Rhaco::url('login'));
     }
     function read(){
-        $parser = parent::read(new Maintainer(), new C(Q::orderDesc(Maintainer::columnName()), Q::pager(99)));
+        $parser = parent::read(new Maintainer(), new C(Q::order(Maintainer::columnName()), Q::pager(99)));
         return $parser;
     }
     function detail($name){
-        $parser = parent::detail(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $name)));
+        $parser = parent::detail(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $name), Q::depend()));
         return $parser;
     }
 }

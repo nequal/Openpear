@@ -9,7 +9,7 @@
 <rt:loop param="object_list" var="row">
     <rt:loop param="row" var="object">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
-            <h3>{$object.name}</h3>
+            <h3><rt:if="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></h3>
             <p>{$f.text2html($object.profile)}</p>
             <p><a href="{$rhaco.url('maintainer')}/{$object.name}">Profile</a></p>
         </div>
