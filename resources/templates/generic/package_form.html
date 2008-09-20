@@ -5,6 +5,10 @@
 
 <rt:block name="info">一度設定したプロジェクト名は変更できません。注意してください。</rt:block>
 <rt:block name="contents">
+<rt:if param="{$generic_title}" value="update">
+		<h3>パッケージング</h3>
+		<p><a href="{$rhaco.url('package')}/{$name}/release">まだ実装できてない</a></p>
+</rt:if>
         <h3>パッケージ情報</h3>
         <form action="{$rhaco.uri()}" method="post" rt:reference="true">
             <div class="field">

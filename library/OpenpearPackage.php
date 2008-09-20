@@ -28,7 +28,7 @@ class OpenpearPackage extends Openpear
     function detail($name){
         $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name), Q::depend()));
         $server = $this->_getServer();
-        $parser->setVariable('latestVersion', $server->backend->searchLastestVersion($package));
+        $parser->setVariable('latestVersion', $server->backend->searchLastestVersion($name));
         if(RequestLogin::isLogin()){
             $u = RequestLogin::getLoginSession();
             $p = $parser->variables['object'];
