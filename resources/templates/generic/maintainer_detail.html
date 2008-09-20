@@ -5,7 +5,7 @@
 
 <rt:block name="info">メンテナーの登録は、今すぐOpenIDで<a href="{$rhaco.url('login')}">ログイン</a>！</rt:block>
 <rt:block name="contents">
-        <h3><rt:if="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></h3>
+        <h3><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></h3>
         <p>{$f.text2html($object.profile)}</p>
 
 		<h3>あなたが参加しているパッケージ</h3>

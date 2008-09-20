@@ -28,5 +28,12 @@ class OpenpearMaintainer extends Openpear
         $parser = parent::detail(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $name), Q::depend()));
         return $parser;
     }
+    function settings(){
+        $this->loginRequired();
+        $u = RequestLogin::getLoginSession();
+        $this->clearVariable('id', 'name', 'created');
+        $parser = parent::update($u, Rhaco::url('mypage'));
+        return $parser;
+    }
 }
 
