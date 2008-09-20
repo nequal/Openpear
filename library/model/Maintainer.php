@@ -1,0 +1,39 @@
+<?php
+Rhaco::import("model.table.MaintainerTable");
+/**
+ * 
+ */
+class Maintainer extends MaintainerTable{
+
+    function afterInsert($db){
+        $this->updateAccountFile($db);
+        return true;
+    }
+    function afterUpdate($db){
+        $this->updateAccountFile($db);
+        return true;
+    }
+    function afterDelete($db){
+        $this->updateAccountFile($db);
+        return true;
+    }
+
+    function updateAccountFile($db){
+        $accounts = array();
+        $accounts[] = sprintf('%s:%s', Rhaco::constant('SYSTEM_USER'), Maintainer::_h(Rhaco::constant('SYSTEM_PASS')));
+        $maintainers = $db->select(new Maintainer());
+        foreach($maintainers as $maintainer){
+            $accounts[] = sprintf('%s:%s', $maintainer->getName(), Maintainer::_h($maintainer->getPassword()));
+        }
+        if(!empty($accounts) && count($accounts) > 1)
+            file_put_contents(sprintf('%s/%s.passwd', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), implode("\n", $accounts));
+    }
+
+    function _h($p){
+        $a = array(0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z");
+        $salt = $a[array_rand($a)] . $a[array_rand($a)];
+        return crypt($p, $salt);
+    }
+}
+
+?>

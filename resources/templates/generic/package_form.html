@@ -1,0 +1,39 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">プロジェクト情報<rt:if param="{$generic_title}" value="create">作成<rt:else />編集</rt:if> - Open PEAR Server</rt:block>
+
+<rt:block name="info">一度設定したプロジェクト名は変更できません。注意してください。</rt:block>
+<rt:block name="contents">
+        <h3>パッケージ情報</h3>
+        <form action="{$rhaco.uri()}" method="post" rt:reference="true">
+            <div class="field">
+                <label for="name"><b>プロジェクト名</b></label>
+                <rt:if param="{$generic_title}" value="create">
+                <p><input type="text" size="20" value="" name="name" /> (半角英数字と_（アンダースコア）が使えます)</p>
+                <rt:else />
+                <p>{$name}</p>
+                </rt:if>
+            </div>
+            <div class="field">
+                <label for="description">プロジェクト概要</label>
+                <p><textarea name="description" rows="20" cols="50"></textarea></p>
+            </div>
+            <div class="field">
+                <label><b>パブリック設定</b></label>
+                <p><input type="radio" name="public" value="0" />メンテナを手動管理する&nbsp;<input type="radio" name="public" value="1" />すべてのユーザーが編集可能</p>
+            </div>
+            <div class="field">
+                <p><input type="submit" value="{$generic_button}" /></p>
+            </div>
+        </form>
+</rt:block>
+
+<rt:block name="menu">
+			<li><a href="{$rhaco.url()}">about</a></li>
+			<li class="active"><a href="{$rhaco.url('packages')}">packages</a></li>
+			<li><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
+			<li><a href="http://svn.pear.riaf.jp/">repository</a></li>
+			<li><a href="{$rhaco.url('login')}">login</a></li>
+</rt:block>
+

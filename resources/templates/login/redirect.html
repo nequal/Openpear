@@ -1,0 +1,11 @@
+<html>
+<body onload="document.login.submit();">
+	<p>自動的にページが切り替わらない場合は下のボタンをクリックしてください</p>
+	<form action="{$url}" method="post" name="login">
+    <rt:loop param="{$headers}" key="input_name" var="header">
+        <input type="hidden" name="{$input_name}" value="{$header}" />
+    </rt:loop>
+        <input type="submit" value="ログイン" />
+	</form>
+</body>
+</html>

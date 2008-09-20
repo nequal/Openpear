@@ -1,0 +1,39 @@
+<rt:extends href="index.html" />
+<rt:block name="teaser"></rt:block>
+
+
+
+<rt:block name="title">ログイン - Open PEAR Server</rt:block>
+
+<rt:block name="menu">
+			<li><a href="{$rhaco.url()}">about</a></li>
+			<li><a href="{$rhaco.url('packages')}">packages</a></li>
+			<li><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
+			<li><a href="http://svn.pear.riaf.jp/">repository</a></li>
+			<li class="active"><a href="{$rhaco.url('login')}">login</a></li>
+</rt:block>
+
+<rt:block name="contents">
+        <div class="col">
+            <h3><span class="red">One-click</span> Login</h3>
+            <p><a href="{$rhaco.url('login')}?server=mixi.jp"><img src="http://media.riaf.org/openid/mixi.gif" alt="mixiでログイン" /></a></p>
+            <p><a href="{$rhaco.url('login')}?server=yahoo.co.jp"><img src="http://i.yimg.jp/images/login/btn/btnXSYid.gif" alt="Yahoo!Japan IDでログイン" /></a></p>
+        </div>
+
+        <div class="col">
+            <h3><span class="red">Optional</span> Server</h3>
+            <form action="{$rhaco.url('login')}" method="get">
+                <p>それ以外のプロバイダでログインする</p>
+                <p class="info">OpenID 2.0 対応のサイトでもログインすることが出来ます。</p>
+                <input type="text" size="20" name="server" style="background: url(http://media.riaf.org/openid/login-bg.gif) no-repeat #fff;background-position: 0 50%;padding-left: 18px;height: 18px;" value="coderepos.org" onfocus="this.value=''" />
+                <input type="submit" value="ログイン" />
+            </form>
+        </div>
+
+        <div class="col last">
+            <h3><span class="red">OpenID</span>とは？</h3>
+            <p>OpenIDとは、世界中のOpenID対応サイトで共通して利用できるURL形式のIDのことです。</p>
+            <p>OpenID対応サイトで利用すれば、新たにアカウントを作成したり、ログインするために別々のIDやパスワードを入力する必要がなくなります。</p>
+        </div>
+</rt:block>
+

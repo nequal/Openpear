@@ -1,0 +1,21 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">{$object.name} - Open PEAR Server</rt:block>
+
+<rt:block name="info">新しいプロジェクトの追加は<a href="{$rhaco.url('packages/create')}">プロジェクト情報作成</a>から行えます</rt:block>
+<rt:block name="contents">
+        <h3>{$object.name}</h3>
+        <p>{$f.text2html($object.description)}</p>
+</rt:loop>
+
+</rt:block>
+
+<rt:block name="menu">
+			<li><a href="{$rhaco.url()}">about</a></li>
+			<li class="active"><a href="{$rhaco.url('packages')}">packages</a></li>
+			<li><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
+			<li><a href="http://svn.pear.riaf.jp/">repository</a></li>
+			<li><a href="{$rhaco.url('login')}">login</a></li>
+</rt:block>
+

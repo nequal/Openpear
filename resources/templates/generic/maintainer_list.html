@@ -1,0 +1,29 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">メンテナー - Open PEAR Server</rt:block>
+
+<rt:block name="info">メンテナーの登録は、今すぐOpenIDで<a href="{$rhaco.url('login')}">ログイン</a>！</rt:block>
+<rt:block name="contents">
+<?php $object_list = array_chunk($object_list, 3); ?>
+<rt:loop param="object_list" var="row">
+    <rt:loop param="row" var="object">
+        <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
+            <h3>{$object.name}</h3>
+            <p>{$f.text2html($object.profile)}</p>
+            <p><a href="{$rhaco.url('maintainer')}/{$object.name}">Profile</a></p>
+        </div>
+    </rt:loop>
+    <div style="width:100%">&nbsp;</div>
+</rt:loop>
+
+</rt:block>
+
+<rt:block name="menu">
+			<li><a href="{$rhaco.url()}">about</a></li>
+			<li><a href="{$rhaco.url('packages')}">packages</a></li>
+			<li class="active"><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
+			<li><a href="http://svn.pear.riaf.jp/">repository</a></li>
+			<li><a href="{$rhaco.url('login')}">login</a></li>
+</rt:block>
+
