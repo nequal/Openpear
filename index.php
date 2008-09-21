@@ -93,5 +93,6 @@ $parser = Urls::parser(array(
         'method' => 'detail',
     ),
 ), $db);
+$parser->setFilter('filter.OpenpearTemplateFilter');
 $parser->write();
 

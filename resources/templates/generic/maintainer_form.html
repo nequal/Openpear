@@ -1,18 +1,18 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
 
-<rt:block name="title">ユーザー情報登録 - Open PEAR Server</rt:block>
+<rt:block name="title">ユーザー情報設定 - Open PEAR Server</rt:block>
 
 <rt:block name="contents">
-        <h3>ユーザー情報登録</h3>
-        <form action="{$rhaco.url('maintainer/signup')}" method="post">
+        <h3>ユーザー情報設定</h3>
+        <form action="{$rhaco.uri()}" method="post">
             <div class="field">
                 <label for="open_id"><b>OpenID URL</b></label>
-                <p>{$open_id}</p>
+                <p><b>{$open_id}</b></p>
             </div>
             <div class="field">
                 <label for="name"><b>Subversionアカウント名</b></label>
-                <p><input type="text" size="20" value="" name="name" /> (半角英数字と_-が使用できます)</p>
+                <p><b>{$name}</b></p>
             </div>
             <div class="field">
                 <label for="password"><b>Subversionパスワード</b></label>
@@ -31,7 +31,7 @@
                 <p><textarea name="profile" rows="20" cols="50"></textarea></p>
             </div>
             <div class="field">
-                <p><input type="submit" value="sign-up" /></p>
+                <p><input type="submit" value="update" /></p>
             </div>
         </form>
         <br />

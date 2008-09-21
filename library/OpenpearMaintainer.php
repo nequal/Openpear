@@ -31,7 +31,7 @@ class OpenpearMaintainer extends Openpear
     function settings(){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
-        $this->clearVariable('id', 'name', 'created');
+        $this->clearVariable('id', 'open_id', 'name', 'created');
         $parser = parent::update($u, Rhaco::url('mypage'));
         return $parser;
     }

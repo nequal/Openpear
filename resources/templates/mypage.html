@@ -4,6 +4,7 @@
 <rt:block name="title">マイページ - Open PEAR Server</rt:block>
 
 <rt:block name="info">登録情報は<a href="{$rhaco.url('maintainer/settings')}">こちらから変更できます</a></rt:block>
+
 <rt:block name="contents">
 	<h3>登録情報</h3>
 	<dl>
@@ -28,12 +29,4 @@
 	    <div style="width:100%">&nbsp;</div>
 	</rt:loop>
 
-</rt:block>
-
-<rt:block name="menu">
-			<li><a href="{$rhaco.url()}">about</a></li>
-			<li><a href="{$rhaco.url('packages')}">packages</a></li>
-			<li><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
-			<li><a href="{$rhaco.constant('SVN_URL')}">repository</a></li>
-			<li><a href="{$rhaco.url('login')}">login</a></li>
 </rt:block>
