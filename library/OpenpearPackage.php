@@ -56,7 +56,7 @@ class OpenpearPackage extends Openpear
             } else {
                 $parser = new HtmlParser('package/release.html');
                 $parser->setVariable('object', $p);
-                $parser->setVariable('version', $this->searchLastestVersion($package, '0.1.0'));
+                $parser->setVariable('version', $this->getLastestVersion($package, '0.1.0'));
                 return $parser;
             }
         }
@@ -75,7 +75,7 @@ class OpenpearPackage extends Openpear
         return $this->_notFound();
     }
 
-    function seatchLastestVersion($package, $default='0.1.0'){
+    function getLastestVersion($package, $default='0.1.0'){
         Rhaco::import('model.ServerPackages');
         $stabs = array();
         $lastest = $default;
@@ -89,7 +89,8 @@ class OpenpearPackage extends Openpear
                 $stabs['lastest'] = $item['version'];
             }
         }
-        $lastest = $stabs['lastest'];
+        if(isset($stabs['lastest']))
+            $lastest = $stabs['lastest'];
         return $lastest;
     }
 }
