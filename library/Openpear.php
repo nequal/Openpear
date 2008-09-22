@@ -51,12 +51,14 @@ class Openpear extends Views
             // redirect
             $parser = new HtmlParser('login/redirect.html');
             $openid = new OpenIDAuth($this->getVariable('server'));
+            $endPointURL = $openid->getEndPointURL();
+            if(empty($endPointURL)) return $this->_notFound();
             $openid->request();
             $openid->addParameter('openid.sreg.required', 'nickname');
             $openid->addParameter('openid.sreg.optional', 'email');
             $openid->addParameter('openid.identity', 'http://specs.openid.net/auth/2.0/identifier_select');
             $openid->addParameter('openid.claimed_id', 'http://specs.openid.net/auth/2.0/identifier_select');
-            $parser->setVariable('url', $openid->getEndPointURL());
+            $parser->setVariable('url', $endPointURL);
             $parser->setVariable('headers', $openid->getEndPointHeaders(Rhaco::url(), Rhaco::url('login')));
             return $parser;
         }
@@ -83,7 +85,9 @@ class Openpear extends Views
     }
     function _notFound(){
         parent::_notFound();
-        return $this->parser();
+        $parser = $this->parser();
+        $parser->setTemplate('error/404.html');
+        return $parser;
     }
 }
 
