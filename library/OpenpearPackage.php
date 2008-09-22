@@ -76,10 +76,12 @@ class OpenpearPackage extends Openpear
     }
 
     function getLastestVersion($package, $default='0.1.0'){
+        static $db = null;
         Rhaco::import('model.ServerPackages');
+        if(!Variable::istype('DbUtil', $db)) $db = new DbUtil(ServerPackages::connection());
         $stabs = array();
         $lastest = $default;
-        $releases = $this->dbUtil->select(new ServerPackages(), new C(Q::eq(ServerPackages::columnName(), $package)));
+        $releases = $db->select(new ServerPackages(), new C(Q::eq(ServerPackages::columnName(), $package)));
         foreach($releases as $release){
             $stab = unserialize($release->stability);
             if (!isset($stabs[$stab['release']]) || -1==version_compare($stabs[$stab['release']], $release->version)) {

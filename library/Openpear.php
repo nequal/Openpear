@@ -51,9 +51,9 @@ class Openpear extends Views
             // redirect
             $parser = new HtmlParser('login/redirect.html');
             $openid = new OpenIDAuth($this->getVariable('server'));
+            $openid->request();
             $endPointURL = $openid->getEndPointURL();
             if(empty($endPointURL)) return $this->_notFound();
-            $openid->request();
             $openid->addParameter('openid.sreg.required', 'nickname');
             $openid->addParameter('openid.sreg.optional', 'email');
             $openid->addParameter('openid.identity', 'http://specs.openid.net/auth/2.0/identifier_select');
