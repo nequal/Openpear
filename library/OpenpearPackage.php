@@ -6,7 +6,6 @@
  * @license New BSD License
  * @version $Id$
  */
-require_once 'PEAR/Server2.php';
 Rhaco::import('model.Release');
 
 class OpenpearPackage extends Openpear
@@ -27,8 +26,7 @@ class OpenpearPackage extends Openpear
     }
     function detail($name){
         $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name), Q::depend()));
-        $server = $this->_getServer();
-        $parser->setVariable('latestVersion', $server->backend->searchLastestVersion($name));
+        $parser->setVariable('latestVersion', $this->getLastestVersion($name, 'no release'));
         if(RequestLogin::isLogin()){
             $u = RequestLogin::getLoginSession();
             $p = $parser->variables['object'];
@@ -56,10 +54,9 @@ class OpenpearPackage extends Openpear
                 }
                 $release->build($this->getVariable('build_path', $package.'/trunk'));
             } else {
-                $server = $this->_getServer();
                 $parser = new HtmlParser('package/release.html');
                 $parser->setVariable('object', $p);
-                $parser->setVariable('version', $server->backend->searchLastestVersion($package));
+                $parser->setVariable('version', $this->searchLastestVersion($package, '0.1.0'));
                 return $parser;
             }
         }
@@ -77,11 +74,23 @@ class OpenpearPackage extends Openpear
         }
         return $this->_notFound();
     }
-    function _getServer(){
-        static $server;
-        if(is_object($server)) return $server;
-        $server = new PEAR_Server2(include(Rhaco::path('channel.config.php')));
-        return $server;
+
+    function seatchLastestVersion($package, $default='0.1.0'){
+        Rhaco::import('model.ServerPackages');
+        $stabs = array();
+        $lastest = $default;
+        $releases = $this->dbUtil->select(new ServerPackages(), new C(Q::eq(ServerPackages::columnName(), $package)));
+        foreach($releases as $release){
+            $stab = unserialize($release->stability);
+            if (!isset($stabs[$stab['release']]) || -1==version_compare($stabs[$stab['release']], $release->version)) {
+                $stabs[$stab['release']] = $release->version;
+            }
+            if (-1==version_compare($stabs['lastest'], $release->version)) {
+                $stabs['lastest'] = $item['version'];
+            }
+        }
+        $lastest = $stabs['lastest'];
+        return $lastest;
     }
 }
 
