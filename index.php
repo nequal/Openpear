@@ -34,7 +34,7 @@ $parser = Urls::parser(array(
         'method' => 'logout',
     ),
 
-    '^packages$' => array(
+    '^package$' => array(
         'class' => 'OpenpearPackage',
         'method' => 'read',
     ),
