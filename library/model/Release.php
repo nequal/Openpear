@@ -43,7 +43,7 @@ class Release
         $this->variables['version']['api_ver'] = $num;
         $this->variables['version']['api_stab'] = $stab;
     }
-    function setLicence($name, $uri){
+    function setLicense($name, $uri){
         $this->variables['license'] = array(
             'name' => $name,
             'uri' => $uri,
