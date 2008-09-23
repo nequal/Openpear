@@ -1,5 +1,5 @@
 <?php
-Rhaco::import('PEAR_Server2');
+require_once 'PEAR/Server2.php';
 Rhaco::import('SvnUtil');
 
 class Release
@@ -65,7 +65,7 @@ class Release
         foreach($this->variables as $key => $val){
             $data .= sprintf("[%s]\n", $key);
             foreach($val as $k => $v){
-                $data .= sprintf("%s = %s", $k, $v);
+                $data .= sprintf("%s = %s\n", $k, $v);
             }
             $data .= "\n";
         }
@@ -92,12 +92,15 @@ class Release
         $ret = ob_get_clean();
 
         $files = FileUtil::ls($work_path.'/release');
+        $ret = false;
         foreach($files as $file){
             if($file->getExtension() == '.tgz'){
-                $this->registerPackage($file->getFullname());
+                $ret = $this->registerPackage($file->getFullname());
                 break;
             }
         }
+        // タグ打ちとかする？
+        return $ret;
     }
     function registerPackage($packageFile){
         $cfg = include(Rhaco::path('channel.config.php'));
@@ -113,6 +116,7 @@ class Release
         } catch (Exception $e) {
             return false;
         }
+        return true;
     }
 }
 

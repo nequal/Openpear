@@ -20,7 +20,7 @@ class OpenpearTemplateFilter
                         );
                         if($isActive) $f = true;
                     }
-                    if($f == false) $lists[0]['isActive'] = ' class="active"';
+                    if($f == false && Rhaco::uri() == '/') $lists[0]['isActive'] = ' class="active"';
                     $val = '';
                     foreach($lists as $li){
                         $val .= sprintf('<li%s><a href="%s">%s</a></li>'."\n", $li['isActive'], $li['href'], $li['caption']);

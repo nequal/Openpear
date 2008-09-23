@@ -32,7 +32,11 @@
 			<li><a href="{$rhaco.url('packages')}">packages</a></li>
 			<li><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
 			<li><a href="{$rhaco.constant('SVN_URL')}">repository</a></li>
+			<rt:if param="{$isLogin}">
+			<li><a href="{$rhaco.url('logout')}">logout</a>({$my.name})</li>
+			<rt:else />
 			<li><a href="{$rhaco.url('login')}">login</a></li>
+			</rt:if>
 		</ul>
 	</div>
 <rt:block name="teaser">
@@ -90,7 +94,7 @@
 	</div>
 		
 	<div id="footer">
-		<p class="right">Design: <a href="http://www.solucija.com/" title="Information Architecture and Web Design">Luka Cvrk</a> &middot; Managed: <a href="http://riaf.jp/">riaf</a> &middot; Supported: <a href="http://nequal.jp/">nequal</a>  &middot; Powered: <a href="http://rhaco.org/">rhaco</a></p>
+		<p class="right">Design: <a href="http://www.solucija.com/" title="Information Architecture and Web Design">Luka Cvrk</a> &middot; Managed: <a href="http://riaf.jp/">riaf</a> with <a href="http://nequal.jp/">nequal</a>  &middot; Powered: <a href="http://rhaco.org/">rhaco</a></p>
 		<p>&copy; Copyright 2008 <a href="{$rhaco.url()}">Open PEAR Server</a> &middot; All Rights Reserved</p>
 	</div>
 </body>

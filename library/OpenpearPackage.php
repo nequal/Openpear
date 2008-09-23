@@ -51,6 +51,7 @@ class OpenpearPackage extends Openpear
                 'license_url' => 'http://creativecommons.org/licenses/BSD/',
                 'php_min' => '4.3.3',
                 'pear_min' => '1.4.0',
+                'build_path' => 'trunk',
             );
             $parser = new HtmlParser('package/release.html');
             if($this->isPost()){
@@ -61,7 +62,7 @@ class OpenpearPackage extends Openpear
                 foreach($p->maintainers as $maintainer){
                     $release->addMaintainer($maintainer->name, $maintainer->fullname, $maintainer->mail, $maintainer->role);
                 }
-                $release->build($this->getVariable('build_path', $package.'/trunk'));
+                $release->build($this->getVariable('build_path', $package. '/'. $default['build_path']));
                 Rhaco::end();// debug.
             } else $parser->setVariable($default);
             $parser->setVariable('object', $p);

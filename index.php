@@ -94,5 +94,7 @@ $parser = Urls::parser(array(
     ),
 ), $db);
 $parser->setFilter('filter.OpenpearTemplateFilter');
+$parser->setVariable('isLogin', RequestLogin::isLogin());
+if(RequestLogin::isLogin()) $parser->setVariable('my', RequestLogin::getLoginSession());
 $parser->write();
 
