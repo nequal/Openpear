@@ -11,7 +11,7 @@ Rhaco::import('network.http.Header');
 class LoginCondition
 {
     function condition($request){
-        return RequestLogin::isLogin();
+        return Variable::istype('Maintainer', RequestLogin::getLoginSession());
     }
 
     function invalid(){

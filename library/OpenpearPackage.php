@@ -28,7 +28,7 @@ class OpenpearPackage extends Openpear
         $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name), Q::depend()));
         if(!isset($parser->variables['object'])) return $parser;
         $parser->setVariable('latestVersion', $this->getLastestVersion($name, 'no release'));
-        if(RequestLogin::isLogin()){
+        if(RequestLogin::isLoginSession()){
             $u = RequestLogin::getLoginSession();
             $p = $parser->variables['object'];
             $parser->setVariable('isMaintainer', $this->isMaintainer($p, $u));
