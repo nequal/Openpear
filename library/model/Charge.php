@@ -4,6 +4,10 @@ Rhaco::import("model.table.ChargeTable");
  * 
  */
 class Charge extends ChargeTable{
+    function afterInsert($db){
+        $this->updateAccess($db);
+        return true;
+    }
     function afterUpdate($db){
         $this->updateAccess($db);
         return true;
