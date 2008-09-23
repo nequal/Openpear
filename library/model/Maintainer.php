@@ -12,6 +12,10 @@ class Maintainer extends MaintainerTable{
     }
     function afterUpdate($db){
         $this->updateAccountFile($db);
+        if(RequestLogin::isLoginSession()){
+            $u = RequestLogin::getLoginSession();
+            if($u->id == $this->id) RequestLogin::setLoginSession($this);
+        }
         return true;
     }
     function afterDelete($db){

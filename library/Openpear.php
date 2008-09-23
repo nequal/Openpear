@@ -92,6 +92,9 @@ class Openpear extends Views
 
     function loginRequired(){
         RequestLogin::loginRequired(new LoginCondition());
+        if(!RequestLogin::isLoginSession()){
+            Header::redirect(Rhaco::url('login'));
+        }
     }
     function _notFound(){
         parent::_notFound();
