@@ -74,11 +74,11 @@ class Release
 
     function build($path){
         $work_path = Rhaco::constant('WORKING_DIR');
-        chdir($work_path);
 
-        $svn = SvnUtil();
+        $svn = new SvnUtil();
         $svn->_cmd('rm -rf '. $work_path);
         FileUtil::cp(Rhaco::resource('skelton'), $work_path);
+        chdir($work_path);
         $this->writeINI($work_path.'/build.conf');
         file_put_contents($work_path.'/desc.txt', $this->description);
         if(empty($this->notes)) $this->notes = $svn->cmd(sprintf("log file://%s/%s/%s", Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path));
