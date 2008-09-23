@@ -53,12 +53,12 @@ class OpenpearPackage extends Openpear
                     $release->addMaintainer($maintainer->name, $maintainer->fullname, $maintainer->mail, $maintainer->role);
                 }
                 $release->build($this->getVariable('build_path', $package.'/trunk'));
-            } else {
-                $parser = new HtmlParser('package/release.html');
-                $parser->setVariable('object', $p);
-                $parser->setVariable('version', $this->getLastestVersion($package, '0.1.0'));
-                return $parser;
+                Rhaco::end();// debug.
             }
+            $parser = new HtmlParser('package/release.html');
+            $parser->setVariable('object', $p);
+            $parser->setVariable('version', $this->getLastestVersion($package, '0.1.0'));
+            return $parser;
         }
         return $this->_notFound();
     }
@@ -69,7 +69,7 @@ class OpenpearPackage extends Openpear
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
         if(Variable::istype('Package', $p) && $this->isMaintainer($p, $u)){
             $this->clearVariable('name', 'created');
-            $parser = parent::update($p, Rhaco::url('package/'.$p->getName()));
+            $parser = parent::update(new Package(), new C(Q::eq(Package::columnId(), $p->id)), Rhaco::url('package/'.$p->getName()));
             return $parser;
         }
         return $this->_notFound();

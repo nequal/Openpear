@@ -14,7 +14,7 @@ class Release
             'package_type' => 'php',
             'baseinstalldir' => '/',
             'channel' => 'pear.riaf.jp',
-            'summary' => '',
+            'summary_file' => 'desc.txt',
             'description_file' => 'desc.txt',
             'notes_file' => 'notes.txt',
         ),
