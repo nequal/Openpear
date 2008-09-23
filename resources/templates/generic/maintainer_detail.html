@@ -8,7 +8,7 @@
         <h3><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></h3>
         <p>{$f.text2html($object.profile)}</p>
 
-	<rt:if param="{$object_list}">
+	<rt:if param="{$object.packages}">
 		<h3>あなたが参加しているパッケージ</h3>
 		<?php $object_list = array_chunk($object->packages, 3); ?>
 		<rt:loop param="object_list" var="row">

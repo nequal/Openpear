@@ -28,7 +28,7 @@ class OpenpearPackage extends Openpear
     function detail($name){
         $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name), Q::depend()));
         if(!isset($parser->variables['object'])) return $parser;
-        $parser->setVariable('latestVersion', $this->getLastestVersion($name, 'no release'));
+        $parser->setVariable('latestVersion', $this->getLatestVersion($name, 'no release'));
         if(RequestLogin::isLoginSession()){
             $u = RequestLogin::getLoginSession();
             $p = $parser->variables['object'];
@@ -74,7 +74,7 @@ class OpenpearPackage extends Openpear
                 Rhaco::end();// debug.
             } else $parser->setVariable($default);
             $parser->setVariable('object', $p);
-            $parser->setVariable('version', $this->getLastestVersion($package, '0.1.0'));
+            $parser->setVariable('version', $this->getLatestVersion($package, '0.1.0'));
             return $parser;
         }
         return $this->_notFound();
@@ -92,23 +92,23 @@ class OpenpearPackage extends Openpear
         return $this->_notFound();
     }
 
-    function getLastestVersion($package, $default='0.1.0'){
+    function getLatestVersion($package, $default='0.1.0'){
         $db = $this->getServerDB();
         $stabs = array();
-        $lastest = $default;
+        $latest = $default;
         $releases = $db->select(new ServerPackages(), new C(Q::eq(ServerPackages::columnName(), $package)));
         foreach($releases as $release){
             $stab = unserialize($release->stability);
             if (!isset($stabs[$stab['release']]) || -1==version_compare($stabs[$stab['release']], $release->version)) {
                 $stabs[$stab['release']] = $release->version;
             }
-            if (-1==version_compare(@$stabs['lastest'], $release->version)) {
-                $stabs['lastest'] = $release->version;
+            if (-1==version_compare(@$stabs['latest'], $release->version)) {
+                $stabs['latest'] = $release->version;
             }
         }
-        if(isset($stabs['lastest']))
-            $lastest = $stabs['lastest'];
-        return $lastest;
+        if(isset($stabs['latest']))
+            $latest = $stabs['latest'];
+        return $latest;
     }
 }
 
