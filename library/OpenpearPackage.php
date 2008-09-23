@@ -63,7 +63,7 @@ class OpenpearPackage extends Openpear
                     $release->addMaintainer($maintainer->name, $maintainer->fullname, $maintainer->mail, $maintainer->role);
                 }
                 $release->description = $p->description;
-                $release->build($this->getVariable('build_path', $package. '/'. $default['build_path']));
+                $release->build($package. '/'. $this->getVariable('build_path', $default['build_path']));
                 Rhaco::end();// debug.
             } else $parser->setVariable($default);
             $parser->setVariable('object', $p);

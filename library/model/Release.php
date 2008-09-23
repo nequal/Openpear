@@ -88,8 +88,10 @@ class Release
 
         ob_start();
         system('cd '.$work_path);
+        system('chmod a+x '. $work_path. '/build');
         system($work_path.'/build');
         $ret = ob_get_clean();
+        Logger::deep_debug('build: '. $ret);
 
         $files = FileUtil::ls($work_path.'/release');
         $ret = false;
