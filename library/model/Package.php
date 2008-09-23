@@ -29,10 +29,16 @@ class Package extends PackageTable{
     function afterSelect($db){
         if(!empty($this->dependCharges)){
             $c = new C(Q::order(Maintainer::columnName()));
+            $roles = array();
             foreach($this->dependCharges as $charge){
                 $c->addCriteriaOr(new C(Q::eq(Maintainer::columnId(), $charge->maintainer)));
+                $roles[$charge->maintainer] = $charge->role;
             }
-            $this->setMaintainers($db->select(new Maintainer(), $c));
+            $maintainers = $db->select(new Maintainer(), $c);
+            foreach($maintainers as &$maintainer){
+                if(isset($roles[$maintainer->id])) $maintainer->role = $roles[$maintainer->id];
+            }
+            $this->setMaintainers($maintainers);
         }
     }
 }

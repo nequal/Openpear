@@ -4,6 +4,7 @@ Rhaco::import("model.table.MaintainerTable");
  * 
  */
 class Maintainer extends MaintainerTable{
+    var $role = 'lead';
 
     function afterInsert($db){
         $this->updateAccountFile($db);

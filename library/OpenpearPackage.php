@@ -44,18 +44,26 @@ class OpenpearPackage extends Openpear
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
         if(Variable::istype('Package', $p) && $this->isMaintainer($p, $u)){
             // fixme
+            $default = array(
+                'version' => '0.1.0',
+                'stability' => 'stable',
+                'license_name' => 'New BSD License',
+                'license_url' => 'http://creativecommons.org/licenses/BSD/',
+                'php_min' => '4.3.3',
+                'pear_min' => '1.4.0',
+            );
+            $parser = new HtmlParser('package/release.html');
             if($this->isPost()){
                 $release = new Release($package);
-                $release->setVersion($this->getVariable('version', '0.1.0'), $this->getVariable('stability', 'stable'));
-                $release->setLicense($this->getVariable('license_name', 'New BSD License'), $this->getVariable('license_url', 'http://creativecommons.org/licenses/BSD/'));
-                $release->setMin($this->getVariable('php_min', '4.3.3'), $this->getVariable('pear_min', '1.4.0'));
+                $release->setVersion($this->getVariable('version', $default['version']), $this->getVariable('stability', $default['stability']));
+                $release->setLicense($this->getVariable('license_name', $default['license_name']), $this->getVariable('license_url', $default['license_url']));
+                $release->setMin($this->getVariable('php_min', $default['php_min']), $this->getVariable('pear_min', $default['pear_min']));
                 foreach($p->maintainers as $maintainer){
                     $release->addMaintainer($maintainer->name, $maintainer->fullname, $maintainer->mail, $maintainer->role);
                 }
                 $release->build($this->getVariable('build_path', $package.'/trunk'));
                 Rhaco::end();// debug.
-            }
-            $parser = new HtmlParser('package/release.html');
+            } else $parser->setVariable($default);
             $parser->setVariable('object', $p);
             $parser->setVariable('version', $this->getLastestVersion($package, '0.1.0'));
             return $parser;
