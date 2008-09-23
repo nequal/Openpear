@@ -26,6 +26,7 @@ class OpenpearPackage extends Openpear
     }
     function detail($name){
         $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name), Q::depend()));
+        if(!isset($parser->variables['object'])) return $parser;
         $parser->setVariable('latestVersion', $this->getLastestVersion($name, 'no release'));
         if(RequestLogin::isLogin()){
             $u = RequestLogin::getLoginSession();
@@ -63,7 +64,12 @@ class OpenpearPackage extends Openpear
                     $release->addMaintainer($maintainer->name, $maintainer->fullname, $maintainer->mail, $maintainer->role);
                 }
                 $release->description = $p->description;
-                $release->build($package. '/'. $this->getVariable('build_path', $default['build_path']));
+                if($release->build($package. '/'. $this->getVariable('build_path', $default['build_path']))){
+                    // success
+                } else {
+                    
+                }
+                echo $release->buildLog;
                 Rhaco::end();// debug.
             } else $parser->setVariable($default);
             $parser->setVariable('object', $p);
@@ -86,9 +92,7 @@ class OpenpearPackage extends Openpear
     }
 
     function getLastestVersion($package, $default='0.1.0'){
-        static $db = null;
-        Rhaco::import('model.ServerPackages');
-        if(!Variable::istype('DbUtil', $db)) $db = new DbUtil(ServerPackages::connection());
+        $db = $this->getServerDB();
         $stabs = array();
         $lastest = $default;
         $releases = $db->select(new ServerPackages(), new C(Q::eq(ServerPackages::columnName(), $package)));
@@ -97,8 +101,8 @@ class OpenpearPackage extends Openpear
             if (!isset($stabs[$stab['release']]) || -1==version_compare($stabs[$stab['release']], $release->version)) {
                 $stabs[$stab['release']] = $release->version;
             }
-            if (-1==version_compare($stabs['lastest'], $release->version)) {
-                $stabs['lastest'] = $item['version'];
+            if (-1==version_compare(@$stabs['lastest'], $release->version)) {
+                $stabs['lastest'] = $release->version;
             }
         }
         if(isset($stabs['lastest']))

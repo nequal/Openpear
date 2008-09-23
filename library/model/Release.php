@@ -33,6 +33,7 @@ class Release
     );
     var $description = '';
     var $notes = '';
+    var $buildLog = '';
 
     function Release($name){
         $this->variables['package']['package_name'] = $name;
@@ -90,8 +91,7 @@ class Release
         system('cd '.$work_path);
         system('chmod a+x '. $work_path. '/build');
         system($work_path.'/build');
-        $ret = ob_get_clean();
-        Logger::deep_debug('build: '. $ret);
+        $this->buildLog = ob_get_clean();
 
         $files = FileUtil::ls($work_path.'/release');
         $ret = false;
@@ -109,13 +109,14 @@ class Release
         $server = new PEAR_Server2($cfg);
         try {
             $package = $server->core->generatePackage($packageFile);
-            if(false === $this->core->validatePackage($package)){
+            if(false === $server->core->validatePackage($package)){
                 return false;
             }
-            $this->core->copyPackage($packageFile, $package->getFileName());
-            $this->backend->insertPackage($package);
-            $this->backend->insertCategory($package->getCategoryObject());
+            $server->core->copyPackage($packageFile, $package->getFileName());
+            $server->backend->insertPackage($package);
+            $server->backend->insertCategory($package->getCategoryObject());
         } catch (Exception $e) {
+            Logger::error($e->getMessage());
             return false;
         }
         return true;

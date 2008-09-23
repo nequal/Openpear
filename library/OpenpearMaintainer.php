@@ -32,7 +32,7 @@ class OpenpearMaintainer extends Openpear
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $this->clearVariable('id', 'open_id', 'name', 'created');
-        $parser = parent::update($u, Rhaco::url('mypage'));
+        $parser = parent::update(new Maintainer(), new C(Q::eq(Maintainer::columnId(), $u->id)), Rhaco::url('mypage'));
         return $parser;
     }
 }

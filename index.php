@@ -13,7 +13,6 @@ Rhaco::import('Openpear');
 Rhaco::import('OpenpearPackage');
 Rhaco::import('OpenpearMaintainer');
 
-Request::usesession();
 RequestLogin::silent(new LoginCondition());
 
 $db = new DbUtil(Package::connection());

@@ -65,6 +65,7 @@ class Openpear extends Views
         return new HtmlParser('login.html');
     }
     function logout(){
+        $this->loginRequired();
         RequestLogin::logout();
         Header::redirect(Rhaco::url());
     }
@@ -78,6 +79,15 @@ class Openpear extends Views
             return true;
         }
         return false;
+    }
+
+    function getServerDB(){
+        static $db = null;
+        Rhaco::import('model.ServerPackages');
+        Rhaco::import('model.ServerMaintainers');
+        Rhaco::import('model.ServerCategories');
+        if(!Variable::istype('DbUtil', $db)) $db = new DbUtil(ServerPackages::connection());
+        return $db;
     }
 
     function loginRequired(){
