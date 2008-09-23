@@ -17,6 +17,7 @@ class OpenpearPackage extends Openpear
     function create(){
         $this->loginRequired();
         $parser = parent::create(new Package(), Rhaco::url('package/'. $this->getVariable('name', '')));
+        $parser->setVariable('public', 1);
         return $parser;
     }
     function search(){

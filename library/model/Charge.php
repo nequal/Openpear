@@ -23,7 +23,7 @@ class Charge extends ChargeTable{
         $developers = array();
         foreach($maintainers as $maintainer) $developers[] = $maintainer->name;
         $access = "[groups]\n";
-        $access = "developer = ". implode(', ', $developers). "\n\n";
+        $access .= "developer = ". implode(', ', $developers). "\n\n";
         
         $access .= "[/]\n";
         $access .= "* = r\n\n";
@@ -31,6 +31,7 @@ class Charge extends ChargeTable{
         $packages = $db->select(new Package(), new C(Q::depend()));
         foreach($packages as $package){
             $access .= sprintf("[/%s]\n", $package->name);
+            $access .= "* = r\n";
             if($package->isPublic()){
                 $access .= "@developer = rw\n";
             } else {
