@@ -47,7 +47,9 @@
 		</div>
 		
 		<script type="text/javascript">
-			$('extConfigSwitch').click(function(){$('extConfig').toggle();});
+			$(function(){
+				$('#extConfigSwitch').click(function(){$('#extConfig').fadeIn();});
+			});
 		</script>
 		<p><a href="#" id="extConfigSwitch">詳細な設定</a></p>
 		<div id="extConfig" style="display:none;">

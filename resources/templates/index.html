@@ -31,11 +31,14 @@
 		<h1><a href="{$rhaco.url()}">Open PEAR Server</a></h1>
 		<ul id="menu">
 			<li><a href="{$rhaco.url()}">about</a></li>
+<rt:if param="{$isLogin}">
+			<li><a href="{$rhaco.url('mypage')}">mypage</a></li>
+</rt:if>
 			<li><a href="{$rhaco.url('package')}">packages</a></li>
 			<li><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
 			<li><a href="{$rhaco.constant('SVN_URL')}">repository</a></li>
 			<rt:if param="{$isLogin}">
-			<li><a href="{$rhaco.url('logout')}">logout ({$my.name})</a></li>
+			<li><a href="{$rhaco.url('logout')}">logout</a></li>
 			<rt:else />
 			<li><a href="{$rhaco.url('login')}">login</a></li>
 			</rt:if>
@@ -63,7 +66,7 @@
 
 	<div class="wrap">
         <div style="margin: 10px 0;">
-            <p class="info"><rt:block name="info"><span style="color: red; font-weight: bold;">ま、まだ作ってる途中なんだからね！！！動くワケないんだから！！！！</span></rt:block></p>
+            <p class="info"><rt:block name="info"><span style="color: red; font-weight: bold;">ま、まだ作ってる途中なんだからね！！！動くワケないんだから！！！！<br />実際の運用は <i>openpear.org</i> でやります！なので、ここは好き勝手いじり倒してokです！</span></rt:block></p>
         </div>
 <rt:block name="contents">
 		<div class="col">
