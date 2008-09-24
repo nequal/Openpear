@@ -10,11 +10,11 @@
 class OpenpearMaintainer extends Openpear
 {
     function signup(){
-        if($this->isPost() && $this->isSession('open_id')){
+        if($this->isPost() && $this->isSession('openId')){
             $maintainer = $this->toObject(new Maintainer());
-            $maintainer->setOpenId($this->getSession('open_id'));
+            $maintainer->setOpenId($this->getSession('openId'));
             if($this->dbUtil->insert($maintainer)){
-                $this->clearSession('open_id');
+                $this->clearSession('openId');
                 RequestLogin::setLoginSession($maintainer);
                 Header::redirect(Rhaco::url('mypage'));
             }
@@ -32,7 +32,7 @@ class OpenpearMaintainer extends Openpear
     function settings(){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
-        $this->clearVariable('id', 'open_id', 'name', 'created');
+        $this->clearVariable('id', 'openId', 'open_id', 'name', 'created');
         $parser = parent::update(new Maintainer(), new C(Q::eq(Maintainer::columnId(), $u->id)), Rhaco::url('mypage'));
         return $parser;
     }

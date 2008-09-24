@@ -39,10 +39,10 @@ class Openpear extends Views
                     Header::redirect(Rhaco::url('mypage'));
                 } else {
                     // create maintainer
-                    $this->setSession('open_id', $url);
+                    $this->setSession('openId', $url);
                     $parser = new HtmlParser('maintainer/signup.html');
                     $parser->setVariable($this->getVariable());
-                    $parser->setVariable('open_id', $url);
+                    $parser->setVariable('openId', $url);
                     return $parser;
                 }
             }

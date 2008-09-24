@@ -5,10 +5,10 @@
 
 <rt:block name="contents">
         <h3>ユーザー情報設定</h3>
-        <form action="{$rhaco.uri()}" method="post">
+        <form action="{$rhaco.uri()}" method="post" rt:reference="true">
             <div class="field">
                 <label for="open_id"><b>OpenID URL</b></label>
-                <p><b>{$open_id}</b></p>
+                <p><b>{$openId}</b></p>
             </div>
             <div class="field">
                 <label for="name"><b>Subversionアカウント名</b></label>
