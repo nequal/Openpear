@@ -54,10 +54,16 @@ class OpenpearPackage extends Openpear
                 'php_min' => '4.3.3',
                 'pear_min' => '1.4.0',
                 'build_path' => 'trunk',
+                'baseinstalldir' => '/',
             );
+            if(strpos($package, '_') !== false){
+                $path = explode('_', $package);
+                array_pop($path);
+                $default['baseinstalldir'] .= implode('/', $path);
+            }
             $parser = new HtmlParser('package/release.html');
             if($this->isPost()){
-                $release = new Release($package);
+                $release = new Release($package, $this->getVariable('baseinstalldir', $default['baseinstalldir']));
                 $release->setVersion($this->getVariable('version', $default['version']), $this->getVariable('stability', $default['stability']));
                 $release->setLicense($this->getVariable('license_name', $default['license_name']), $this->getVariable('license_url', $default['license_url']));
                 $release->setMin($this->getVariable('php_min', $default['php_min']), $this->getVariable('pear_min', $default['pear_min']));
@@ -66,11 +72,9 @@ class OpenpearPackage extends Openpear
                 }
                 $release->description = $p->description;
                 if($release->build($package. '/'. $this->getVariable('build_path', $default['build_path']))){
-                    // success
-                } else {
-                    
+                    Header::redirect(Rhaco::url('package/').$package);
                 }
-                echo $release->buildLog;
+                echo nl2br($release->buildLog);
                 Rhaco::end();// debug.
             } else $parser->setVariable($default);
             $parser->setVariable('object', $p);

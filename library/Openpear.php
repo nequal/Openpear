@@ -36,7 +36,7 @@ class Openpear extends Views
                 $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnOpenId(), $url)));
                 if(Variable::istype('Maintainer', $maintainer)){
                     RequestLogin::setLoginSession($maintainer);
-                    Header::redirect($this->getVariable('return_to', Rhaco::url()));
+                    Header::redirect(Rhaco::url('mypage'));
                 } else {
                     // create maintainer
                     $this->setSession('open_id', $url);

@@ -10,11 +10,11 @@
     <rt:loop param="row" var="object">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
             <h3>{$object.name}</h3>
-            <p>{$object.description}</p>
+            <p>{$f.text2html($object.description)}</p>
             <p><a href="{$rhaco.url('package')}/{$object.name}">ProjectPage</a></p>
         </div>
     </rt:loop>
-    <div style="width:100%">&nbsp;</div>
+    <br clear="all" />
 </rt:loop>
 
 </rt:block>

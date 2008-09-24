@@ -35,8 +35,9 @@ class Release
     var $notes = '';
     var $buildLog = '';
 
-    function Release($name){
+    function Release($name, $baseinstalldir='/'){
         $this->variables['package']['package_name'] = $name;
+        $this->variables['package']['baseinstalldir'] = $baseinstalldir;
     }
     function setVersion($num, $stab='stable'){
         $this->variables['version']['release_ver'] = $num;
