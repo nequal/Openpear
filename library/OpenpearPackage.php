@@ -39,6 +39,22 @@ class OpenpearPackage extends Openpear
 
     // == ==
 
+    function maintainer($package){
+        
+    }
+    function maintainer_add($package){
+        $this->loginRequired();
+        $u = RequestLogin::getLoginSession();
+    }
+    function maintainer_update($package){
+        $this->loginRequired();
+        $u = RequestLogin::getLoginSession();
+    }
+    function maintainer_delete($package){
+        $this->loginRequired();
+        $u = RequestLogin::getLoginSession();
+    }
+
     function release($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
