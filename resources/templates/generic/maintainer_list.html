@@ -3,16 +3,15 @@
 
 <rt:block name="title">メンテナー - Open PEAR Server</rt:block>
 
-<rt:block name="info">メンテナーの登録は、今すぐOpenIDで<a href="{$rhaco.url('login')}">ログイン</a>！</rt:block>
+<rt:block name="info"><rt:if param="{$isLogin}">登録していない PHP 開発者が居たら、是非 Open PEAR Server へ招待してください<rt:else />メンテナーの登録は、今すぐOpenIDで<a href="{$rhaco.url('login')}">ログイン</a>！</rt:if></rt:block>
 
 <rt:block name="contents">
 	<?php $object_list = array_chunk($object_list, 3); ?>
 	<rt:loop param="object_list" var="row">
 	    <rt:loop param="row" var="object">
 	        <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
-	            <h3><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></h3>
+	            <h3><a href="{$rhaco.url('maintainer')}/{$object.name}"><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></a></h3>
 	            <p>{$f.toA($f.text2html($object.profile))}</p>
-	            <p><a href="{$rhaco.url('maintainer')}/{$object.name}">Profile</a></p>
 	        </div>
 	    </rt:loop>
 	    <br clear="all" />

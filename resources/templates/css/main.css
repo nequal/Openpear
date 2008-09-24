@@ -9,6 +9,8 @@ body { margin: 50px 0 0; background: #fff url(../images/bg.gif) repeat-x; font: 
 	h1 a { text-decoration: none; }
 	h2 { font-size: 2em; color: #FFF2B3; font-weight: normal; margin: 0 0 .8em; }
 	h3 { font-size: 1.5em; border-bottom: 1px solid #eee; margin: 0 0 .8em; }
+	h3 a { text-decoration: none; color: #444; }
+	h3 a:hover { text-decoration: underline; }
 	p  { margin: 0 0 2em 0; line-height: 1.8em; }
 	em { border-bottom: 1px dotted #fff; cursor: pointer; }
 	a { color: #9D2900; }
@@ -33,7 +35,7 @@ body { margin: 50px 0 0; background: #fff url(../images/bg.gif) repeat-x; font: 
 	.step { cursor: pointer; color: #FAFDDD; padding: 4px 0 0 11px; margin: 0 35px 0 0; font-size: 1.4em; float: left; text-align: center; background: url(../images/step.gif) no-repeat; height: 30px; }
 	.step a { color: #fff; margin: 0 10px 0 0; }
 	
-.col { float: left; width: 276px; margin: 0 30px 16px 0; oveflow: hidden; }
+.col { float: left; width: 276px; margin: 0 30px 16px 0; overflow: hidden; }
 	.last { float: right; margin: 0; }
 	.info { border: 1px solid #e0e0e0; background: #f4f4f4; padding: 7px; }
 
@@ -57,11 +59,14 @@ form div.field label {
 form div.field p {
     margin: 5px 180px;
 }
+dl {
+	margin: 10px;
+}
 dt {
 	margin: 5px;
 	font-weight: bold;
     border-bottom: 1px solid #eee;
 }
 dd {
-	margin: 5px 15px;
+	margin: 5px 20px;
 }

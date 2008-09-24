@@ -19,9 +19,8 @@
 <rt:loop param="object_list" var="row">
     <rt:loop param="row" var="object">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
-            <h3><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if> ({$object.role})</h3>
+            <h3><a href="{$rhaco.url('maintainer')}/{$object.name}"><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></a> ({$object.role})</h3>
             <p>{$f.toA($f.text2html($object.profile))}</p>
-            <p><a href="{$rhaco.url('maintainer')}/{$object.name}">Profile</a></p>
         </div>
     </rt:loop>
     <br clear="all" />
