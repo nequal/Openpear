@@ -1,14 +1,28 @@
 <rt:extends href="index.html" />
 <rt:block name="teaser"></rt:block>
 
-
-
 <rt:block name="title">ログイン - Open PEAR Server</rt:block>
 
 <rt:block name="contents">
+<script type="text/javascript">
+	$(function(){
+		var user_id = null;
+		var server;
+		$('#loginHatena').click(function(){
+			user_id = prompt("はてなIDを入力");
+			if(user_id != null && user_id != ''){
+				server = 'http://www.hatena.ne.jp/' + user_id + '/';
+				location.href = '{$rhaco.url('login')}?server=' + server;
+			}
+			return false;
+		});
+	});
+</script>
+
         <div class="col">
             <h3><span class="red">One-click</span> Login</h3>
             <p><a href="{$rhaco.url('login')}?server=mixi.jp"><img src="http://media.riaf.org/openid/mixi.gif" alt="mixiでログイン" /></a></p>
+            <p><a href="#" id="loginHatena"><img src="http://media.riaf.org/openid/hatena.gif" alt="はてなでログイン" /></a></p>
             <p><a href="{$rhaco.url('login')}?server=yahoo.co.jp"><img src="http://i.yimg.jp/images/login/btn/btnXSYid.gif" alt="Yahoo!Japan IDでログイン" /></a></p>
         </div>
 
@@ -17,7 +31,7 @@
             <form action="{$rhaco.url('login')}" method="get">
                 <p>それ以外のプロバイダでログインする</p>
                 <p class="info">OpenID 2.0 対応のサイトでもログインすることが出来ます。</p>
-                <input type="text" size="20" name="server" style="background: url(http://media.riaf.org/openid/login-bg.gif) no-repeat #fff;background-position: 0 50%;padding-left: 18px;height: 18px;" value="coderepos.org" onfocus="this.value=''" />
+                <input type="text" size="20" name="server" style="background: url(http://media.riaf.org/openid/login-bg.gif) no-repeat #fff;background-position: 0 50%;padding-left: 18px;height: 18px;" value="wassr.jp" onfocus="this.value='';this.onfocus='';" />
                 <input type="submit" value="ログイン" />
             </form>
         </div>
