@@ -9,7 +9,7 @@
 		$('#addMaintainer').submit(
 			$.post(
 				$(this).attr('action'),
-				{'maintainer': $(this).children('input[name=maintainer]').val(), 'role': $(this).children('select[name=role]').val()},
+				{'maintainer': $('#addMaintainer input[name=maintainer]').val(), 'role': $('#addMaintainer select[name=role]').val()},
 				function(response, status) {
 					if(response['error'] == 1){
 						$('#information').text(response['message']);
