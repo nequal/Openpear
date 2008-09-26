@@ -40,19 +40,66 @@ class OpenpearPackage extends Openpear
     // == ==
 
     function maintainer($package){
-        
+        $this->loginRequired();
+        $u = RequestLogin::getLoginSession();
+        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
+        if($this->isMaintainer($p, $u)){
+            $parser = new HtmlParser('package/maintainer.html');
+            $parser->setVariable('object', $p);
+            return $parser;
+        } else $this->_forbidden();
     }
     function maintainer_add($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
+        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
+        $response = array('error' => 1, 'message' => 'unknown error');
+        if($this->isPost() && $this->isVariable('maintainer') && $this->isVariable('role')){
+            if($this->isMaintainer($p, $u)){
+                $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $this->getVariable('maintainer'))));
+                if(Variable::istype('Maintainer', $maintainer)){
+                    $response = array('error' => 1, 'message' => 'unknown error');
+                    $isMaintainer = $this->dbUtil->get(new Charge(), new C(Q::eq(Package::columnId(), $p->id), Q::eq(Maintainer::columnId(), $maintainer->id)));
+                    if(Variable::istype('Charge', $isMaintainer)){
+                        $response = array('error' => 1, 'message' => 'already exists maintainer');
+                    }
+                    $charge = new Charge();
+                    $charge->setMaintainer($maintainer->id);
+                    $charge->setPackage($p->id);
+                    $charge->setRole($this->getVariable('role', 'lead'));
+                    if($charge->save($this->dbUtil)){
+                        $response = array('error' => 0, 'success' => 1, 'maintainer' => array('name' => $maintainer->name, 'fullname' => $maintainer->fullname, 'role' => $charge->role));
+                    }
+                } else $response = array('error' => 1, 'message' => 'unknown maintainer');
+            } else $response = array('error' => 1, 'message' => 'forbidden');
+        }
+        $this->json($response);
     }
     function maintainer_update($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
+        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
+        $response = array('error' => 1, 'message' => 'unknown error');
+        if($this->isPost() && $this->isVariable('id') && $this->isVariable('role')){
+            if($this->isMaintainer($p, $u)){
+            } else $response = array('error' => 1, 'message' => 'forbidden');
+        }
+        $this->json($response);
     }
     function maintainer_delete($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
+        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
+        $response = array('error' => 1, 'message' => 'unknown error');
+        if($this->isPost() && $this->isVariable('id')){
+            if($this->isMaintainer($p, $u)){
+                $mc = $this->dbUtil->count(new Charge(), new C(Q::eq(Package::columnId(), $p->id)));
+                if($mc > 1){
+                    // delete
+                } else $response = array('error', 'message' => 'maintainer is required');
+            } else $response = array('error' => 1, 'message' => 'forbidden');
+        }
+        $this->json($response);
     }
 
     function release($package){

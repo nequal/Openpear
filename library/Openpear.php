@@ -90,6 +90,16 @@ class Openpear extends Views
         return $db;
     }
 
+    function json($data, $callback=null){
+        $json = json_encode($data);
+        if(is_null($callback)){
+            Header::write(array('Content-type' => 'application/json; charset=utf-8', 'X-JSON' => $json));
+            echo $json;
+        } else {
+            printf('%s(%s);', $callback, $json);
+        }
+        Rhaco::end();
+    }
     function loginRequired(){
         RequestLogin::loginRequired(new LoginCondition());
         if(!RequestLogin::isLoginSession()){
@@ -97,10 +107,14 @@ class Openpear extends Views
         }
     }
     function _notFound(){
+        Http::status(404);
         parent::_notFound();
         $parser = $this->parser();
         $parser->setTemplate('error/404.html');
         return $parser;
+    }
+    function _forbidden(){
+        $this->_notFound();//fixme!
     }
 }
 

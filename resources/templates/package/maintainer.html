@@ -1,0 +1,70 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="adHeader">
+	<link href="http://media.riaf.org/jquery/jquery.suggest.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="http://media.riaf.org/jquery/jquery.suggest.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('#addMaintainer').submit(
+			$.post(
+				$(this).attr('action'),
+				{'maintainer': $(this).children('input[name=maintainer]').val(), 'role': $(this).children('select[name=role]').val()},
+				function(response, status) {
+					if(response['error'] == 1){
+						$('#information').text(response['message']);
+					} else {
+						$(this).children('input[name=maintainer]').val('');
+						$('#information').text('メンテナ追加しました');
+						$('#maintainersList').prepend('<tr class="new"><td><a href="'+
+							response['maintainer']['name']+ '">'+
+							response['maintainer']['fullname']+'</a></td><td>'+
+							response['maintainer']['role']+'</td></tr>');
+					}
+				},
+				'json'
+			);
+			return false;
+		);
+	});
+	</script>
+</rt:block>
+
+<rt:block name="title">{$object.name}のメンテナ管理 - Open PEAR Server</rt:block>
+
+<rt:block name="info">Open PEAR Server に登録されているメンテナー一覧は<a href="{$rhaco.url('maintainer')}">こちらから</a></rt:block>
+
+<rt:block name="contents">
+	<h3>メンテナ追加</h3>
+	<form action="{$rhaco.url('package')}/{$object.name}/maintainer/add" method="post" id="addMaintainer">
+		<script type="text/javascript">
+			$(function(){
+				$("#suggest").suggest("{$rhaco.url('api/maintainers')}",{});
+			});
+		</script>
+		<div class="field">
+		    <label for="maintainer">ユーザーID（Subversion ユーザー名）</label>
+		    <p><input name="maintainer" type="text" size="19" id="suggest" /></p>
+		</div>
+		<div class="field">
+		    <label for="role">状態</label>
+		    <p><select name="role">
+		    	<option value="lead">lead</option>
+		    	<option value="developer">developer</option>
+		    	<option value="contributor">contributor</option>
+		    	<option value="helper">helper</option>
+	    	</select></p>
+		</div>
+		<div class="field">
+			<p><input type="submit" value="追加" /></p>
+		</div>
+	</form>
+	
+	<h3>メンテナ一覧</h3>
+	<table id="maintainersList" rt:param="{$object.maintainers}" rt:var="maintainer">
+		<tr class="even">
+			<td><a href="{$rhaco.url('maintainer')}/{$maintainer.name}">{$maintainer.fullname}</a></td>
+			<td>{$maintainer.role}</td>
+		</tr>
+	</table>
+</rt:block>

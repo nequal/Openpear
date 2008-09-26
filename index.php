@@ -91,6 +91,11 @@ $parser = Urls::parser(array(
         'class' => 'OpenpearMaintainer',
         'method' => 'detail',
     ),
+    
+    '^api\/maintainers$' => array(
+        'class' => 'OpenpearAPI',
+        'method' => 'maintainers',
+    ),
 ), $db);
 $parser->setFilter('filter.OpenpearTemplateFilter');
 $parser->setVariable('isLogin', RequestLogin::isLoginSession());
