@@ -6,7 +6,7 @@
 	<script type="text/javascript" src="http://media.riaf.org/jquery/jquery.suggest.js"></script>
 	<script type="text/javascript">
 	$(function(){
-		$('#addMaintainer').submit(
+		$('#addMaintainer').submit(function(){
 			$.post(
 				$(this).attr('action'),
 				{'maintainer': $('#addMaintainer input[name=maintainer]').val(), 'role': $('#addMaintainer select[name=role]').val()},
@@ -26,7 +26,7 @@
 				'json'
 			);
 			return false;
-		);
+		});
 	});
 	</script>
 </rt:block>
