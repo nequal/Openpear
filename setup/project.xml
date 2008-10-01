@@ -6,10 +6,9 @@
         <table name="package">
             <column name="id" />
             <column name="name" unique="true" require="true" chartype="/^[A-Za-z][A-Za-z0-9_]+$/" />
-            <column name="summary" size="1000" />
-            <column name="description" type="text" />
+            <column name="description" type="text" require="true" />
             <column name="public" type="bool" default="1" />
-            <column name="vote" type="float(15,14)" default="0.0" max="5" min="0" />
+            <column name="latestRelease" type="text" />
             <column name="created" type="timestamp" default="sysdate" />
             <column name="updated" type="timestamp" default="sysdate" />
         </table>

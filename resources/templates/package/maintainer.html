@@ -14,7 +14,7 @@
 					if(response['error'] == 1){
 						$('#information').text(response['message']);
 					} else {
-						$(this).children('input[name=maintainer]').val('');
+						$('#addMaintainer input[name=maintainer]').val('');
 						$('#information').text('メンテナ追加しました');
 						$('#maintainersList').prepend('<tr class="new"><td><a href="'+
 							response['maintainer']['name']+ '">'+
