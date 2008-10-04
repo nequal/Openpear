@@ -92,7 +92,7 @@ class OpenpearPackage extends Openpear
         $this->message('メンテナ状態の変更に失敗しました');
         Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
     }
-    function maintainer_delete($package){
+    function maintainer_remove($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
