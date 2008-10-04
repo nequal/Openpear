@@ -14,9 +14,9 @@
     $(function(){
         var message = '<span style="color: red; font-weight: bold;">{$message}</span>';
         var norMessage = $('#information').html();
-        $('#information').html(message);
+        $('#information').addClass('notice').html(message);
         var timer = setTimeout(function(){
-            $('#information').html(norMessage);
+            $('#information').removeClass('notice').html(norMessage);
             clearTimeout(timer);
         }, 7000);
     });

@@ -55,13 +55,12 @@
 			    	<option value="developer">developer</option>
 			    	<option value="contributor">contributor</option>
 			    	<option value="helper">helper</option>
-		    	</select></p>
-				<p><input type="submit" value="変更" /></p>
+		    	</select><input type="submit" value="変更" /></p>
             </form>
             </td><td>
             <form action="{$rhaco.url('package')}/{$object.name}/maintainer/remove" method="post">
             	<input type="hidden" name="id" value="{$maintainer.id}" />
-				<p><input type="submit" value="メンテナから外す" /></p>
+				<input type="submit" value="メンテナから外す" />
             </form>
             </td></tr></table>
         </div>
