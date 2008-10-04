@@ -57,9 +57,8 @@ class OpenpearPackage extends Openpear
             if($this->isMaintainer($p, $u)){
                 $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $this->getVariable('maintainer'))));
                 if(Variable::istype('Maintainer', $maintainer)){
-                    $isMaintainer = $this->dbUtil->get(new Charge(), new C(Q::eq(Package::columnId(), $p->id), Q::eq(Maintainer::columnId(), $maintainer->id)));
-                    if(Variable::istype('Charge', $isMaintainer)){
-                    	$this->message('メンテナを追加しました');
+                    if($this->isMaintainer($p, $maintainer)){
+                    	$this->message('既にメンテナ登録されています');
                         Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
                     }
                     $charge = new Charge();
@@ -67,6 +66,7 @@ class OpenpearPackage extends Openpear
                     $charge->setPackage($p->id);
                     $charge->setRole($this->getVariable('role', 'lead'));
                     if($charge->save($this->dbUtil)){
+                    	$this->message('メンテナを追加しました');
                     	Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
                     }
                 }
