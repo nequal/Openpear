@@ -15,6 +15,7 @@ class OpenpearMaintainer extends Openpear
             $maintainer->setOpenId($this->getSession('openId'));
             if($this->dbUtil->insert($maintainer)){
                 $this->clearSession('openId');
+                $this->message('ユーザー登録が完了しました');
                 RequestLogin::setLoginSession($maintainer);
                 Header::redirect(Rhaco::url('mypage'));
             }

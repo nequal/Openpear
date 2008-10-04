@@ -145,6 +145,7 @@ class OpenpearPackage extends Openpear
                 }
                 $release->description = $p->description;
                 if($release->build($package. '/'. $this->getVariable('build_path', $default['build_path']))){
+                	$this->message('パッケージをリリースしました (version '.$this->getVariable('version', $default['version']).')');
                     Header::redirect(Rhaco::url('package/').$package);
                 }
                 echo nl2br($release->buildLog);

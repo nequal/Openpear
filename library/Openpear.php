@@ -35,6 +35,7 @@ class Openpear extends Views
                 // maintainer exists?
                 $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnOpenId(), $url)));
                 if(Variable::istype('Maintainer', $maintainer)){
+                	$this->message('ログインしました');
                     RequestLogin::setLoginSession($maintainer);
                     Header::redirect(Rhaco::url('mypage'));
                 } else {
@@ -67,6 +68,7 @@ class Openpear extends Views
     function logout(){
         $this->loginRequired();
         RequestLogin::logout();
+        $this->message('ログアウトしました');
         Header::redirect(Rhaco::url());
     }
 
@@ -107,6 +109,7 @@ class Openpear extends Views
     function loginRequired(){
         RequestLogin::loginRequired(new LoginCondition());
         if(!RequestLogin::isLoginSession()){
+        	$this->message('ログインが必要な動作です');
             Header::redirect(Rhaco::url('login'));
         }
     }
