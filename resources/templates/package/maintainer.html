@@ -5,29 +5,9 @@
 	<link href="http://media.riaf.org/jquery/jquery.suggest.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="http://media.riaf.org/jquery/jquery.suggest.js"></script>
 	<script type="text/javascript">
-	$(function(){
-		$('#addMaintainer').submit(function(){
-			$.post(
-				$(this).attr('action'),
-				{'maintainer': $('#addMaintainer input[name=maintainer]').val(), 'role': $('#addMaintainer select[name=role]').val()},
-				function(response, status) {
-					if(response['error'] == 1){
-						$('#information').text(response['message']);
-					} else {
-						$('#addMaintainer input[name=maintainer]').val('');
-						$('#information').text('メンテナ追加しました');
-						$('#maintainersList').prepend('<tr class="new"><td><a href="'+
-							response['maintainer']['name']+ '">'+
-							response['maintainer']['fullname']+'</a></td><td>'+
-							response['maintainer']['role']+'</td></tr>');
-					}
-					return false;
-				},
-				'json'
-			);
-			return false;
+		$(function(){
+			$("#suggest").suggest("{$rhaco.url('api/maintainers')}",{});
 		});
-	});
 	</script>
 </rt:block>
 
@@ -37,12 +17,7 @@
 
 <rt:block name="contents">
 	<h3>メンテナ追加</h3>
-	<form action="{$rhaco.url('package')}/{$object.name}/maintainer/add" method="post" id="addMaintainer">
-		<script type="text/javascript">
-			$(function(){
-				$("#suggest").suggest("{$rhaco.url('api/maintainers')}",{});
-			});
-		</script>
+	<form action="{$rhaco.url('package')}/{$object.name}/maintainer/add" method="post">
 		<div class="field">
 		    <label for="maintainer">ユーザーID（Subversion ユーザー名）</label>
 		    <p><input name="maintainer" type="text" size="19" id="suggest" /></p>
@@ -62,10 +37,38 @@
 	</form>
 	
 	<h3>メンテナ一覧</h3>
-	<table id="maintainersList" rt:param="{$object.maintainers}" rt:var="maintainer">
-		<tr class="even">
-			<td><a href="{$rhaco.url('maintainer')}/{$maintainer.name}">{$maintainer.fullname}</a></td>
-			<td>{$maintainer.role}</td>
-		</tr>
-	</table>
+<?php $maintainers = array_chunk($object->maintainers, 3); ?>
+<rt:loop param="maintainers" var="row">
+    <rt:loop param="row" var="maintainer">
+        <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
+            <h3><a href="{$rhaco.url('maintainer')}/{$maintainer.name}"><rt:if param="{$maintainer.fullname}">{$object.fullname}<rt:else />{$maintainer.name}</rt:if></a> ({$maintainer.role})</h3>
+            <p>{$f.toA($f.text2html($maintainer.profile))}</p>
+            <table><tr><td>
+            <form action="{$rhaco.url('package')}/{$object.name}/maintainer/update" method="post">
+                <input type="hidden" name="id" value="{$maintainer.id}" />
+				<div class="field">
+				    <label for="role">状態</label>
+				    <p><select name="role">
+				    	<option value="lead">lead</option>
+				    	<option value="developer">developer</option>
+				    	<option value="contributor">contributor</option>
+				    	<option value="helper">helper</option>
+			    	</select></p>
+				</div>
+				<div class="field">
+					<p><input type="submit" value="変更" /></p>
+				</div>
+            </form>
+            </td><td>
+            <form action="{$rhaco.url('package')}/{$object.name}/maintainer/remove" method="post">
+            	<input type="hidden" name="id" value="{$maintainer.id}" />
+				<div class="field">
+					<p><input type="submit" value="メンテナから外す" /></p>
+				</div>
+            </form>
+            </td></tr></table>
+        </div>
+    </rt:loop>
+    <br clear="all" />
+</rt:loop>
 </rt:block>

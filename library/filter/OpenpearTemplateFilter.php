@@ -4,6 +4,9 @@ class OpenpearTemplateFilter
 {
     function publish($src, &$parser){
         if(SimpleTag::setof($tag, $src)){
+            /**
+             * メニューの置換
+             */
             foreach($tag->getIn('ul') as $ul){
                 if($ul->param('id') == 'menu'){
                     $lists = array();

@@ -9,6 +9,19 @@
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript">google.load("jquery", "1.2");</script>
 	<rt:block name="adHeader"></rt:block>
+	<rt:if param="{$message}">
+	<script type="text/javascript">
+    $(function(){
+        var message = '<span style="color: red; font-weight: bold;">{$message}</span>';
+        var norMessage = $('#information').html();
+        $('#information').html(message);
+        var timer = setTimeout(function(){
+            $('#information').html(norMessage);
+            clearTimeout(timer);
+        }, 7000);
+    });
+	</script>
+	</rt:if>
 </head>
 <body>
 	<div id="header">

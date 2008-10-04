@@ -53,53 +53,63 @@ class OpenpearPackage extends Openpear
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        $response = array('error' => 1, 'message' => 'unknown error');
         if($this->isPost() && $this->isVariable('maintainer') && $this->isVariable('role')){
             if($this->isMaintainer($p, $u)){
                 $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $this->getVariable('maintainer'))));
                 if(Variable::istype('Maintainer', $maintainer)){
-                    $response = array('error' => 1, 'message' => 'unknown error');
                     $isMaintainer = $this->dbUtil->get(new Charge(), new C(Q::eq(Package::columnId(), $p->id), Q::eq(Maintainer::columnId(), $maintainer->id)));
                     if(Variable::istype('Charge', $isMaintainer)){
-                        $response = array('error' => 1, 'message' => 'already exists maintainer');
+                    	$this->message('メンテナを追加しました');
+                        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
                     }
                     $charge = new Charge();
                     $charge->setMaintainer($maintainer->id);
                     $charge->setPackage($p->id);
                     $charge->setRole($this->getVariable('role', 'lead'));
                     if($charge->save($this->dbUtil)){
-                        $response = array('error' => 0, 'success' => 1, 'maintainer' => array('name' => $maintainer->name, 'fullname' => $maintainer->fullname, 'role' => $charge->role));
+                    	Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
                     }
-                } else $response = array('error' => 1, 'message' => 'unknown maintainer');
-            } else $response = array('error' => 1, 'message' => 'forbidden');
+                }
+            }
         }
-        $this->json($response);
+        $this->message('メンテナの追加に失敗しました');
+        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
     }
     function maintainer_update($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        $response = array('error' => 1, 'message' => 'unknown error');
-        if($this->isPost() && $this->isVariable('id') && $this->isVariable('role')){
-            if($this->isMaintainer($p, $u)){
-            } else $response = array('error' => 1, 'message' => 'forbidden');
+        if($this->isPost() && $this->isVariable('id') && $this->isVariable('role') && $this->isMaintainer($p, $u)){
+            $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
+            if(Variable::istype('Charge', $charge)){
+            	$charge->setRole($this->getVariable('role'));
+            	if($charge->save($this->dbUtil)){
+            		$this->message('メンテナの状態を変更しました');
+            		Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
+            	}
+            }
         }
-        $this->json($response);
+        $this->message('メンテナ状態の変更に失敗しました');
+        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
     }
     function maintainer_delete($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        $response = array('error' => 1, 'message' => 'unknown error');
-        if($this->isPost() && $this->isVariable('id')){
-            if($this->isMaintainer($p, $u)){
-                $mc = $this->dbUtil->count(new Charge(), new C(Q::eq(Package::columnId(), $p->id)));
+        if($this->isPost() && $this->isVariable('id') && $this->isMaintainer($p, $u)){
+            $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
+            if(Variable::istype('Charge', $charge)){
+            	$mc = $this->dbUtil->count(new Charge(), new C(Q::eq(Package::columnId(), $p->id)));
                 if($mc > 1){
-                    // delete
-                } else $response = array('error', 'message' => 'maintainer is required');
-            } else $response = array('error' => 1, 'message' => 'forbidden');
+                    if($this->dbUtil->delete($charge)){
+                    	$this->message('メンテナの解除を行いました');
+                    	Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
+                    }
+                }
+            }
         }
-        $this->json($response);
+        $this->message('メンテナの解除に失敗しました');
+        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
     }
 
     function release($package){

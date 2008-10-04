@@ -97,8 +97,13 @@ $parser = Urls::parser(array(
         'method' => 'maintainers',
     ),
 ), $db);
+$request = new Request();
 $parser->setFilter('filter.OpenpearTemplateFilter');
 $parser->setVariable('isLogin', RequestLogin::isLoginSession());
 if(RequestLogin::isLoginSession()) $parser->setVariable('my', RequestLogin::getLoginSession());
+if($request->isSession('message')){
+	$parser->setVariable('message', $request->getSession('message'));
+	$request->clearSession('message');
+}
 $parser->write();
 

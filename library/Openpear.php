@@ -90,13 +90,17 @@ class Openpear extends Views
         return $db;
     }
 
+    function message($message){
+    	$this->setSession('message', $message);
+    }
     function json($data, $callback=null){
         $json = json_encode($data);
         if(is_null($callback)){
             Header::write(array('Content-type' => 'application/json; charset=utf-8', 'X-JSON' => $json));
             echo $json;
         } else {
-            printf('%s(%s);', $callback, $json);
+            Header::write(array('Content-type' => 'text/javascript; charset=utf-8'));
+        	printf('%s(%s);', $callback, $json);
         }
         Rhaco::end();
     }
