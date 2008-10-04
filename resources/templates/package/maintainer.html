@@ -43,26 +43,22 @@
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
             <h3><a href="{$rhaco.url('maintainer')}/{$maintainer.name}"><rt:if param="{$maintainer.fullname}">{$maintainer.fullname}<rt:else />{$maintainer.name}</rt:if></a> ({$maintainer.role})</h3>
             <p>{$f.toA($f.text2html($maintainer.profile))}</p>
-            <table><tr><td>
             <form action="{$rhaco.url('package')}/{$object.name}/maintainer/update" method="post">
                 <input type="hidden" name="id" value="{$maintainer.id}" />
 			    <label for="role">状態</label>
-			    <?php // できない気がするw
-                    $role = $maintainer->role;
-			    ?>
-			    <p><select name="role" rt:reference="true">
+			    <?php $role = $maintainer->role; ?>
+			    <select name="role" rt:reference="true">
 			    	<option value="lead">lead</option>
 			    	<option value="developer">developer</option>
 			    	<option value="contributor">contributor</option>
 			    	<option value="helper">helper</option>
-		    	</select><input type="submit" value="変更" /></p>
+		    	</select><input type="submit" value="変更" />
             </form>
-            </td><td>
+            <br />
             <form action="{$rhaco.url('package')}/{$object.name}/maintainer/remove" method="post">
             	<input type="hidden" name="id" value="{$maintainer.id}" />
 				<input type="submit" value="メンテナから外す" />
             </form>
-            </td></tr></table>
         </div>
     </rt:loop>
     <br clear="all" />
