@@ -41,30 +41,27 @@
 <rt:loop param="maintainers" var="row">
     <rt:loop param="row" var="maintainer">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
-            <h3><a href="{$rhaco.url('maintainer')}/{$maintainer.name}"><rt:if param="{$maintainer.fullname}">{$object.fullname}<rt:else />{$maintainer.name}</rt:if></a> ({$maintainer.role})</h3>
+            <h3><a href="{$rhaco.url('maintainer')}/{$maintainer.name}"><rt:if param="{$maintainer.fullname}">{$maintainer.fullname}<rt:else />{$maintainer.name}</rt:if></a> ({$maintainer.role})</h3>
             <p>{$f.toA($f.text2html($maintainer.profile))}</p>
             <table><tr><td>
             <form action="{$rhaco.url('package')}/{$object.name}/maintainer/update" method="post">
                 <input type="hidden" name="id" value="{$maintainer.id}" />
-				<div class="field">
-				    <label for="role">状態</label>
-				    <p><select name="role">
-				    	<option value="lead">lead</option>
-				    	<option value="developer">developer</option>
-				    	<option value="contributor">contributor</option>
-				    	<option value="helper">helper</option>
-			    	</select></p>
-				</div>
-				<div class="field">
-					<p><input type="submit" value="変更" /></p>
-				</div>
+			    <label for="role">状態</label>
+			    <?php // できない気がするw
+                    $role = $maintainer->role;
+			    ?>
+			    <p><select name="role" rt:reference="true">
+			    	<option value="lead">lead</option>
+			    	<option value="developer">developer</option>
+			    	<option value="contributor">contributor</option>
+			    	<option value="helper">helper</option>
+		    	</select></p>
+				<p><input type="submit" value="変更" /></p>
             </form>
             </td><td>
             <form action="{$rhaco.url('package')}/{$object.name}/maintainer/remove" method="post">
             	<input type="hidden" name="id" value="{$maintainer.id}" />
-				<div class="field">
-					<p><input type="submit" value="メンテナから外す" /></p>
-				</div>
+				<p><input type="submit" value="メンテナから外す" /></p>
             </form>
             </td></tr></table>
         </div>
