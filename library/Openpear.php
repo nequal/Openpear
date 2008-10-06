@@ -26,11 +26,11 @@ class Openpear extends Views
     }
 
     function login(){
-    	if(RequestLogin::isLogin()){
-    		$this->message('既にログインしています');
-    		Header::redirect(Rhaco::url('mypage'));
-    	}
-    	$url = $this->openIdLogin();
+        if(RequestLogin::isLogin()){
+            $this->message('既にログインしています');
+            Header::redirect(Rhaco::url('mypage'));
+        }
+        $url = $this->openIdLogin();
         if($url == false) {
             return new HtmlParser('login.html');
         }
@@ -111,7 +111,7 @@ class Openpear extends Views
             }
             $message = implode('<br />', $messages);
         }
-    	$this->setSession('message', $message);
+        $this->setSession('message', $message);
     }
     function json($data, $callback=null){
         $json = json_encode($data);
@@ -120,14 +120,14 @@ class Openpear extends Views
             echo $json;
         } else {
             Header::write(array('Content-type' => 'text/javascript; charset=utf-8'));
-        	printf('%s(%s);', $callback, $json);
+            printf('%s(%s);', $callback, $json);
         }
         Rhaco::end();
     }
     function loginRequired(){
         RequestLogin::loginRequired(new LoginCondition());
         if(!RequestLogin::isLoginSession()){
-        	$this->message('ログインが必要な動作です');
+            $this->message('ログインが必要な動作です');
             Header::redirect(Rhaco::url('login'));
         }
     }

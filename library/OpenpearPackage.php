@@ -58,7 +58,7 @@ class OpenpearPackage extends Openpear
                 $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $this->getVariable('maintainer'))));
                 if(Variable::istype('Maintainer', $maintainer)){
                     if($this->isMaintainer($p, $maintainer)){
-                    	$this->message('既にメンテナ登録されています');
+                        $this->message('既にメンテナ登録されています');
                         Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
                     }
                     $charge = new Charge();
@@ -66,8 +66,8 @@ class OpenpearPackage extends Openpear
                     $charge->setPackage($p->id);
                     $charge->setRole($this->getVariable('role', 'lead'));
                     if($charge->save($this->dbUtil)){
-                    	$this->message('メンテナを追加しました');
-                    	Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
+                        $this->message('メンテナを追加しました');
+                        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
                     }
                 }
             }
@@ -82,11 +82,11 @@ class OpenpearPackage extends Openpear
         if($this->isPost() && $this->isVariable('id') && $this->isVariable('role') && $this->isMaintainer($p, $u, true)){
             $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
             if(Variable::istype('Charge', $charge)){
-            	$charge->setRole($this->getVariable('role'));
-            	if($charge->save($this->dbUtil)){
-            		$this->message('メンテナの状態を変更しました');
-            		Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
-            	}
+                $charge->setRole($this->getVariable('role'));
+                if($charge->save($this->dbUtil)){
+                    $this->message('メンテナの状態を変更しました');
+                    Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
+                }
             }
         }
         $this->message('メンテナ状態の変更に失敗しました', true);
@@ -99,11 +99,11 @@ class OpenpearPackage extends Openpear
         if($this->isPost() && $this->isVariable('id') && $this->isMaintainer($p, $u, true)){
             $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
             if(Variable::istype('Charge', $charge)){
-            	$mc = $this->dbUtil->count(new Charge(), new C(Q::eq(Package::columnId(), $p->id)));
+                $mc = $this->dbUtil->count(new Charge(), new C(Q::eq(Package::columnId(), $p->id)));
                 if($mc > 1){
                     if($this->dbUtil->delete($charge)){
-                    	$this->message('メンテナの解除を行いました');
-                    	Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
+                        $this->message('メンテナの解除を行いました');
+                        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
                     }
                 }
             }
@@ -145,7 +145,7 @@ class OpenpearPackage extends Openpear
                 }
                 $release->description = $p->description;
                 if($release->build($package. '/'. $this->getVariable('build_path', $default['build_path']))){
-                	$this->message('パッケージをリリースしました (version '.$this->getVariable('version', $default['version']).')');
+                    $this->message('パッケージをリリースしました (version '.$this->getVariable('version', $default['version']).')');
                     Header::redirect(Rhaco::url('package/').$package);
                 }
                 echo nl2br($release->buildLog);

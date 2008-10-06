@@ -7,18 +7,18 @@ class Maintainer extends MaintainerTable{
     var $role = 'lead';
 
     function beforeInsert($db){
-    	$denyNames = array('signup', 'settings', 'add_openid', 'delete_openid');
-    	if(in_array($this->name, $denyNames)) return false;
-    	return true;
+        $denyNames = array('signup', 'settings', 'add_openid', 'delete_openid');
+        if(in_array($this->name, $denyNames)) return false;
+        return true;
     }
 
     function afterInsert($db){
-    	$this->hashPassword();
+        $this->hashPassword();
         $this->updateAccountFile($db);
         return true;
     }
     function afterUpdate($db){
-    	$this->hashPassword();
+        $this->hashPassword();
         $this->updateAccountFile($db);
         if(RequestLogin::isLoginSession()){
             $u = RequestLogin::getLoginSession();
@@ -32,7 +32,7 @@ class Maintainer extends MaintainerTable{
     }
 
     function hashPassword(){
-    	$this->password = $this->_h($this->password);
+        $this->password = $this->_h($this->password);
     }
 
     function updateAccountFile($db){

@@ -25,10 +25,10 @@ class SvnUtil
     }
 
     function cmd($cmd){
-    	Logger::debug('svn called: '. $cmd);
+        Logger::debug('svn called: '. $cmd);
         $r = $this->_cmd(sprintf('%s %s', $this->svn_path, $cmd));
-	Logger::deep_debug('svn result: '. $r);
-	return $r;
+    Logger::deep_debug('svn result: '. $r);
+    return $r;
     }
 
     function _cmd($cmd){
