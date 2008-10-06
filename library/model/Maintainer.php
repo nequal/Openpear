@@ -13,10 +13,12 @@ class Maintainer extends MaintainerTable{
     }
 
     function afterInsert($db){
+    	$this->hashPassword();
         $this->updateAccountFile($db);
         return true;
     }
     function afterUpdate($db){
+    	$this->hashPassword();
         $this->updateAccountFile($db);
         if(RequestLogin::isLoginSession()){
             $u = RequestLogin::getLoginSession();
@@ -29,12 +31,16 @@ class Maintainer extends MaintainerTable{
         return true;
     }
 
+    function hashPassword(){
+    	$this->password = $this->_h($this->password);
+    }
+
     function updateAccountFile($db){
         $accounts = array();
         $accounts[] = sprintf('%s:%s', Rhaco::constant('SYSTEM_USER'), Maintainer::_h(Rhaco::constant('SYSTEM_PASS')));
         $maintainers = $db->select(new Maintainer());
         foreach($maintainers as $maintainer){
-            $accounts[] = sprintf('%s:%s', $maintainer->getName(), Maintainer::_h($maintainer->getPassword()));
+            $accounts[] = sprintf('%s:%s', $maintainer->getName(), $maintainer->getPassword());
         }
         if(!empty($accounts) && count($accounts) > 1)
             file_put_contents(sprintf('%s/%s.passwd', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), implode("\n", $accounts));
