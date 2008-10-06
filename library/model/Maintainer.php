@@ -6,6 +6,12 @@ Rhaco::import("model.table.MaintainerTable");
 class Maintainer extends MaintainerTable{
     var $role = 'lead';
 
+    function beforeInsert($db){
+    	$denyNames = array('signup', 'settings', 'add_openid', 'delete_openid');
+    	if(in_array($this->name, $denyNames)) return false;
+    	return true;
+    }
+
     function afterInsert($db){
         $this->updateAccountFile($db);
         return true;

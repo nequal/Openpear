@@ -32,7 +32,7 @@ class OpenpearPackage extends Openpear
         if(RequestLogin::isLoginSession()){
             $u = RequestLogin::getLoginSession();
             $p = $parser->variables['object'];
-            $parser->setVariable('isMaintainer', $this->isMaintainer($p, $u));
+            $parser->setVariable('isMaintainer', $this->isMaintainer($p, $u, true));
         }
         return $parser;
     }
@@ -43,7 +43,7 @@ class OpenpearPackage extends Openpear
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
-        if($this->isMaintainer($p, $u)){
+        if($this->isMaintainer($p, $u, true)){
             $parser = new HtmlParser('package/maintainer.html');
             $parser->setVariable('object', $p);
             return $parser;
@@ -54,7 +54,7 @@ class OpenpearPackage extends Openpear
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
         if($this->isPost() && $this->isVariable('maintainer') && $this->isVariable('role')){
-            if($this->isMaintainer($p, $u)){
+            if($this->isMaintainer($p, $u, true)){
                 $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $this->getVariable('maintainer'))));
                 if(Variable::istype('Maintainer', $maintainer)){
                     if($this->isMaintainer($p, $maintainer)){
@@ -72,14 +72,14 @@ class OpenpearPackage extends Openpear
                 }
             }
         }
-        $this->message('メンテナの追加に失敗しました');
+        $this->message('メンテナの追加に失敗しました', true);
         Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
     }
     function maintainer_update($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        if($this->isPost() && $this->isVariable('id') && $this->isVariable('role') && $this->isMaintainer($p, $u)){
+        if($this->isPost() && $this->isVariable('id') && $this->isVariable('role') && $this->isMaintainer($p, $u, true)){
             $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
             if(Variable::istype('Charge', $charge)){
             	$charge->setRole($this->getVariable('role'));
@@ -89,14 +89,14 @@ class OpenpearPackage extends Openpear
             	}
             }
         }
-        $this->message('メンテナ状態の変更に失敗しました');
+        $this->message('メンテナ状態の変更に失敗しました', true);
         Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
     }
     function maintainer_remove($package){
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        if($this->isPost() && $this->isVariable('id') && $this->isMaintainer($p, $u)){
+        if($this->isPost() && $this->isVariable('id') && $this->isMaintainer($p, $u, true)){
             $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
             if(Variable::istype('Charge', $charge)){
             	$mc = $this->dbUtil->count(new Charge(), new C(Q::eq(Package::columnId(), $p->id)));
@@ -108,7 +108,7 @@ class OpenpearPackage extends Openpear
                 }
             }
         }
-        $this->message('メンテナの解除に失敗しました');
+        $this->message('メンテナの解除に失敗しました', true);
         Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
     }
 
@@ -117,7 +117,7 @@ class OpenpearPackage extends Openpear
         $u = RequestLogin::getLoginSession();
 
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
-        if(Variable::istype('Package', $p) && $this->isMaintainer($p, $u)){
+        if(Variable::istype('Package', $p) && $this->isMaintainer($p, $u, true)){
             // fixme
             $default = array(
                 'version' => '0.1.0',
@@ -162,7 +162,7 @@ class OpenpearPackage extends Openpear
         $u = RequestLogin::getLoginSession();
 
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        if(Variable::istype('Package', $p) && $this->isMaintainer($p, $u)){
+        if(Variable::istype('Package', $p) && $this->isMaintainer($p, $u, true)){
             $this->clearVariable('name', 'created');
             $parser = parent::update(new Package(), new C(Q::eq(Package::columnId(), $p->id)), Rhaco::url('package/'.$p->getName()));
             return $parser;

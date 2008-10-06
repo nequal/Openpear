@@ -14,7 +14,6 @@
         </table>
         <table name="maintainer">
             <column name="id" />
-            <column name="open_id" unique="true" require="true" />
             <column name="name" unique="true" require="true" chartype="/^[A-Za-z0-9_\-]+$/" />
             <column name="mail" type="mail" />
             <column name="fullname" />
@@ -22,7 +21,15 @@
             <column name="password" require="true" />
             <column name="created" type="timestamp" default="sysdate" />
         </table>
+        <table name="open_id">
+            <column name="maintainer" type="int" reference="maintainer.id" uniquewith="url" />
+            <column name="url" unique="true" require="true" type="string" uniquewith="maintainer" />
+        </table>
 
+        <map name="favorite">
+            <column name="package" type="int" reference="package.id" uniquewith="maintainer" />
+            <column name="maintainer" type="int" reference="maintainer.id" uniquewith="package" />
+        </map>
         <map name="charge">
             <column name="id" />
             <column name="package" type="int" reference="package.id" uniquewith="maintainer" />

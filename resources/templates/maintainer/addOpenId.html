@@ -1,0 +1,22 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">OpenID管理 - Open PEAR Server</rt:block>
+
+<rt:block name="contents">
+    <h3>新規 OpenID 登録</h3>
+    <form action="{$rhaco.url('maintainer/add_openid')}" method="post">
+        <div class="field">
+            <p><input type="text" name="server" size="31" /> <input type="submit" value="追加" /></p>
+        </div>
+    </form>
+
+    <h3>登録されている OpenID 一覧</h3>
+    <rt:loop param="object_list" var="object">
+        <p>{$object.url}</p>
+        <form action="{$rhaco.url('maintainer/delete_openid')}" mehtod="post">
+            <input type="hidden" name="url" value="{$object.url}" />
+            <input type="submit" value="削除" />
+        </form>
+    </rt:loop>
+</rt:block>

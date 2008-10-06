@@ -46,6 +46,10 @@ $parser = Urls::parser(array(
         'class' => 'OpenpearPackage',
         'method' => 'search',
     ),
+    '^packages\/favorite$' => array(
+        'OpenpearAPI',
+        'toggleFavorite',
+    ),
     '^package\/(.*?)\/settings$' => array(
         'class' => 'OpenpearPackage',
         'method' => 'settings',
@@ -86,6 +90,14 @@ $parser = Urls::parser(array(
     '^maintainer\/settings$' => array(
         'class' => 'OpenpearMaintainer',
         'method' => 'settings',
+    ),
+    '^maintainer\/add_openid$' => array(
+        'class' => 'OpenpearMaintainer',
+        'method' => 'addOpenId',
+    ),
+    '^maintainer\/delete_openid$' => array(
+        'class' => 'OpenpearMaintainer',
+        'method' => 'deleteOpenId',
     ),
     '^maintainer\/(.+)$' => array(
         'class' => 'OpenpearMaintainer',

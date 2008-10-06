@@ -13,8 +13,6 @@ class MaintainerTable extends TableObjectBase{
 	/**  */
 	var $id;
 	/**  */
-	var $openId;
-	/**  */
 	var $name;
 	/**  */
 	var $mail;
@@ -26,7 +24,10 @@ class MaintainerTable extends TableObjectBase{
 	var $password;
 	/**  */
 	var $created;
+	var $dependOpenIds;
+	var $dependFavorites;
 	var $dependCharges;
+	var $packages;
 	var $packages;
 
 
@@ -35,7 +36,6 @@ class MaintainerTable extends TableObjectBase{
 	}
 	function __init__($id=null){
 		$this->id = null;
-		$this->openId = null;
 		$this->name = null;
 		$this->mail = null;
 		$this->fullname = null;
@@ -66,7 +66,7 @@ class MaintainerTable extends TableObjectBase{
 		if(!Rhaco::isVariable("_R_D_C_","Maintainer::Id")){
 			$column = new Column("column=id,variable=id,type=serial,size=22,primary=true,",__CLASS__);
 			$column->label(Message::_("id"));
-			$column->depend("Charge::Maintainer");
+			$column->depend("OpenId::Maintainer","Favorite::Maintainer","Charge::Maintainer");
 			Rhaco::addVariable("_R_D_C_",$column,"Maintainer::Id");
 		}
 		return Rhaco::getVariable("_R_D_C_",null,"Maintainer::Id");
@@ -83,31 +83,6 @@ class MaintainerTable extends TableObjectBase{
 	 */
 	function getId(){
 		return $this->id;
-	}
-	/**
-	 * 
-	 * @return database.model.Column
-	 */
-	function columnOpenId(){
-		if(!Rhaco::isVariable("_R_D_C_","Maintainer::OpenId")){
-			$column = new Column("column=open_id,variable=openId,type=string,require=true,unique=true,",__CLASS__);
-			$column->label(Message::_("open_id"));
-			Rhaco::addVariable("_R_D_C_",$column,"Maintainer::OpenId");
-		}
-		return Rhaco::getVariable("_R_D_C_",null,"Maintainer::OpenId");
-	}
-	/**
-	 * 
-	 * @return string
-	 */
-	function setOpenId($value){
-		$this->openId = TableObjectUtil::cast($value,"string");
-	}
-	/**
-	 * 
-	 */
-	function getOpenId(){
-		return $this->openId;
 	}
 	/**
 	 * 
@@ -265,11 +240,29 @@ class MaintainerTable extends TableObjectBase{
 	}
 
 
+	function setDependOpenIds($value){
+		$this->dependOpenIds = $value;
+	}
+	function getDependOpenIds(){
+		return $this->dependOpenIds;
+	}
+	function setDependFavorites($value){
+		$this->dependFavorites = $value;
+	}
+	function getDependFavorites(){
+		return $this->dependFavorites;
+	}
 	function setDependCharges($value){
 		$this->dependCharges = $value;
 	}
 	function getDependCharges(){
 		return $this->dependCharges;
+	}
+	function setPackages($value){
+		$this->packages = $value;
+	}
+	function getPackages(){
+		return $this->packages;
 	}
 	function setPackages($value){
 		$this->packages = $value;

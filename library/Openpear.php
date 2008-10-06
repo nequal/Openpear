@@ -26,44 +26,27 @@ class Openpear extends Views
     }
 
     function login(){
-        if($this->isVariable('openid_identity')){
-            // validate & create user
-            $openid = new OpenIDAuth();
-            $variables = $this->getVariable();
-            if($openid->validate($variables)){
-                $url = $this->getVariable('openid_identity');
-                // maintainer exists?
-                $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnOpenId(), $url)));
-                if(Variable::istype('Maintainer', $maintainer)){
-                	$this->message('ログインしました');
-                    RequestLogin::setLoginSession($maintainer);
-                    Header::redirect(Rhaco::url('mypage'));
-                } else {
-                    // create maintainer
-                    $this->setSession('openId', $url);
-                    $parser = new HtmlParser('maintainer/signup.html');
-                    $parser->setVariable($this->getVariable());
-                    $parser->setVariable('openId', $url);
-                    return $parser;
-                }
-            }
+    	if(RequestLogin::isLogin()){
+    		$this->message('既にログインしています');
+    		Header::redirect(Rhaco::url('mypage'));
+    	}
+    	$url = $this->openIdLogin();
+        if($url == false) {
+            return new HtmlParser('login.html');
         }
-        if($this->isVariable('server')){
-            // redirect
-            $parser = new HtmlParser('login/redirect.html');
-            $openid = new OpenIDAuth($this->getVariable('server'));
-            $openid->request();
-            $endPointURL = $openid->getEndPointURL();
-            if(empty($endPointURL)) return $this->_notFound();
-            $openid->addParameter('openid.sreg.required', 'nickname');
-            $openid->addParameter('openid.sreg.optional', 'email');
-            $openid->addParameter('openid.identity', 'http://specs.openid.net/auth/2.0/identifier_select');
-            $openid->addParameter('openid.claimed_id', 'http://specs.openid.net/auth/2.0/identifier_select');
-            $parser->setVariable('url', $endPointURL);
-            $parser->setVariable('headers', $openid->getEndPointHeaders(Rhaco::url(), Rhaco::url('login')));
+        $account = $this->dbUtil->get(new OpenId(), new C(Q::eq(OpenId::columnUrl(), $url), Q::fact()));
+        if(Variable::istype('OpenId', $account) && Variable::istype('Maintainer', $account->factMaintainer)){
+            $this->message('ログインしました');
+            RequestLogin::setLoginSession($account->factMaintainer);
+            Header::redirect(Rhaco::url('mypage'));
+        } else {
+            // create maintainer
+            $this->setSession('openId', $url);
+            $parser = new HtmlParser('maintainer/signup.html');
+            $parser->setVariable($this->getVariable());
+            $parser->setVariable('openId', $url);
             return $parser;
         }
-        return new HtmlParser('login.html');
     }
     function logout(){
         $this->loginRequired();
@@ -72,8 +55,36 @@ class Openpear extends Views
         Header::redirect(Rhaco::url());
     }
 
-    function isMaintainer($package, $maintainer){
-        if($package->isPublic()){
+    function openIdLogin($endPoint='login'){
+        if($this->isVariable('openid_identity')){
+            // validate & create user
+            $openid = new OpenIDAuth();
+            $variables = $this->getVariable();
+            if($openid->validate($variables)){
+                return $this->getVariable('openid_identity');
+            }
+        }
+        if($this->isVariable('server')){
+            // redirect
+            $parser = new HtmlParser('login/redirect.html');
+            $openid = new OpenIDAuth($this->getVariable('server'));
+            $openid->request();
+            $endPointURL = $openid->getEndPointURL();
+            if(empty($endPointURL)) return false;
+            $openid->addParameter('openid.sreg.required', 'nickname');
+            $openid->addParameter('openid.sreg.optional', 'email');
+            $openid->addParameter('openid.identity', 'http://specs.openid.net/auth/2.0/identifier_select');
+            $openid->addParameter('openid.claimed_id', 'http://specs.openid.net/auth/2.0/identifier_select');
+            $parser->setVariable('url', $endPointURL);
+            $parser->setVariable('headers', $openid->getEndPointHeaders(Rhaco::url(), Rhaco::url($endPoint)));
+            $parser->write();
+            Rhaco::end();
+        }
+        return false;
+    }
+
+    function isMaintainer($package, $maintainer, $strict=false){
+        if($strict == false && $package->isPublic()){
             return true;
         }
         $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $package->getId()), Q::eq(Charge::columnMaintainer(), $maintainer->getId())));
@@ -92,7 +103,14 @@ class Openpear extends Views
         return $db;
     }
 
-    function message($message){
+    function message($message, $e=false){
+        if($e === true && ExceptionTrigger::isException()){
+            $messages = array($message);
+            foreach(ExceptionTrigger::get() as $e){
+                $messages[] = $e->getMessage();
+            }
+            $message = implode('<br />', $messages);
+        }
     	$this->setSession('message', $message);
     }
     function json($data, $callback=null){

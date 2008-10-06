@@ -15,18 +15,18 @@ class PackageTable extends TableObjectBase{
 	/**  */
 	var $name;
 	/**  */
-	var $summary;
-	/**  */
 	var $description;
 	/**  */
 	var $public;
 	/**  */
-	var $vote;
+	var $latestRelease;
 	/**  */
 	var $created;
 	/**  */
 	var $updated;
+	var $dependFavorites;
 	var $dependCharges;
+	var $maintainers;
 	var $maintainers;
 
 
@@ -36,10 +36,9 @@ class PackageTable extends TableObjectBase{
 	function __init__($id=null){
 		$this->id = null;
 		$this->name = null;
-		$this->summary = null;
 		$this->description = null;
-		$this->public = 0;
-		$this->vote = 0.000000;
+		$this->public = 1;
+		$this->latestRelease = null;
 		$this->created = time();
 		$this->updated = time();
 		$this->setId($id);
@@ -66,7 +65,7 @@ class PackageTable extends TableObjectBase{
 		if(!Rhaco::isVariable("_R_D_C_","Package::Id")){
 			$column = new Column("column=id,variable=id,type=serial,size=22,primary=true,",__CLASS__);
 			$column->label(Message::_("id"));
-			$column->depend("Charge::Package");
+			$column->depend("Favorite::Package","Charge::Package");
 			Rhaco::addVariable("_R_D_C_",$column,"Package::Id");
 		}
 		return Rhaco::getVariable("_R_D_C_",null,"Package::Id");
@@ -113,34 +112,9 @@ class PackageTable extends TableObjectBase{
 	 * 
 	 * @return database.model.Column
 	 */
-	function columnSummary(){
-		if(!Rhaco::isVariable("_R_D_C_","Package::Summary")){
-			$column = new Column("column=summary,variable=summary,type=string,size=1000,",__CLASS__);
-			$column->label(Message::_("summary"));
-			Rhaco::addVariable("_R_D_C_",$column,"Package::Summary");
-		}
-		return Rhaco::getVariable("_R_D_C_",null,"Package::Summary");
-	}
-	/**
-	 * 
-	 * @return string
-	 */
-	function setSummary($value){
-		$this->summary = TableObjectUtil::cast($value,"string");
-	}
-	/**
-	 * 
-	 */
-	function getSummary(){
-		return $this->summary;
-	}
-	/**
-	 * 
-	 * @return database.model.Column
-	 */
 	function columnDescription(){
 		if(!Rhaco::isVariable("_R_D_C_","Package::Description")){
-			$column = new Column("column=description,variable=description,type=text,",__CLASS__);
+			$column = new Column("column=description,variable=description,type=text,require=true,",__CLASS__);
 			$column->label(Message::_("description"));
 			Rhaco::addVariable("_R_D_C_",$column,"Package::Description");
 		}
@@ -192,26 +166,26 @@ class PackageTable extends TableObjectBase{
 	 * 
 	 * @return database.model.Column
 	 */
-	function columnVote(){
-		if(!Rhaco::isVariable("_R_D_C_","Package::Vote")){
-			$column = new Column("column=vote,variable=vote,type=float,max=5,min=0,",__CLASS__);
-			$column->label(Message::_("vote"));
-			Rhaco::addVariable("_R_D_C_",$column,"Package::Vote");
+	function columnLatestRelease(){
+		if(!Rhaco::isVariable("_R_D_C_","Package::LatestRelease")){
+			$column = new Column("column=latestRelease,variable=latestRelease,type=text,",__CLASS__);
+			$column->label(Message::_("latestRelease"));
+			Rhaco::addVariable("_R_D_C_",$column,"Package::LatestRelease");
 		}
-		return Rhaco::getVariable("_R_D_C_",null,"Package::Vote");
+		return Rhaco::getVariable("_R_D_C_",null,"Package::LatestRelease");
 	}
 	/**
 	 * 
-	 * @return float
+	 * @return text
 	 */
-	function setVote($value){
-		$this->vote = TableObjectUtil::cast($value,"float");
+	function setLatestRelease($value){
+		$this->latestRelease = TableObjectUtil::cast($value,"text");
 	}
 	/**
 	 * 
 	 */
-	function getVote(){
-		return $this->vote;
+	function getLatestRelease(){
+		return $this->latestRelease;
 	}
 	/**
 	 * 
@@ -273,11 +247,23 @@ class PackageTable extends TableObjectBase{
 	}
 
 
+	function setDependFavorites($value){
+		$this->dependFavorites = $value;
+	}
+	function getDependFavorites(){
+		return $this->dependFavorites;
+	}
 	function setDependCharges($value){
 		$this->dependCharges = $value;
 	}
 	function getDependCharges(){
 		return $this->dependCharges;
+	}
+	function setMaintainers($value){
+		$this->maintainers = $value;
+	}
+	function getMaintainers(){
+		return $this->maintainers;
 	}
 	function setMaintainers($value){
 		$this->maintainers = $value;
