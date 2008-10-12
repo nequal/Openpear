@@ -14,14 +14,14 @@
 			    url: 'http://s.hatena.ne.jp/entries.json',
 			    dataType: 'jsonp',
 			    success: function (json){
-			        $.ajax(
+			        $.ajax({
 					    url: 'http://s.hatena.ne.jp/star.add.json',
 					    dataType: 'jsonp',
 					    data: {uri: '{$rhaco.url()}', rks: json.rks},
 					    success: function(result){
 					    	user_id = result.name;
 					    }
-					);
+			        });
 			    }
 			});
 			user_id = user_id ? user_id : prompt("はてなIDを入力");
