@@ -9,11 +9,22 @@
 		var user_id = null;
 		var server;
 		$('#loginHatena').click(function(){
-			$.get('http://s.hatena.ne.jp/entries.json', {}, function(json){
-			    $.get('http://s.hatena.ne.jp/star.add.json', {uri: '{$rhaco.url()}', rks: json.rks}, function(result){
-			        user_id = result.name ? result.name : prompt("はてなIDを入力");
-				}, 'json');
-			}, 'json');
+			var user_id;
+			$.ajax({
+			    url: 'http://s.hatena.ne.jp/entries.json',
+			    dataType: 'jsonp',
+			    success: function (json){
+			        $.ajax(
+					    url: 'http://s.hatena.ne.jp/star.add.json',
+					    dataType: 'jsonp',
+					    data: {uri: '{$rhaco.url()}', rks: json.rks},
+					    success: function(result){
+					    	user_id = result.name;
+					    }
+					);
+			    }
+			});
+			user_id = user_id ? user_id : prompt("はてなIDを入力");
 			if(user_id != null && user_id != ''){
 				server = 'http://www.hatena.ne.jp/' + user_id + '/';
 				location.href = '{$rhaco.url('login')}?server=' + server;
