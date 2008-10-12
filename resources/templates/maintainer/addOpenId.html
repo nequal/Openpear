@@ -4,13 +4,62 @@
 <rt:block name="title">OpenID管理 - Open PEAR Server</rt:block>
 
 <rt:block name="contents">
-    <h3>新規 OpenID 登録</h3>
-    <form action="{$rhaco.url('maintainer/add_openid')}" method="post">
-        <div class="field">
-            <p><input type="text" name="server" size="31" /> <input type="submit" value="追加" /></p>
-        </div>
-    </form>
+<script type="text/javascript">
+    $(function(){
+        var user_id = null;
+        var server;
+        $('#loginHatena').click(function(){
+            $.ajax({
+                url: 'http://s.hatena.ne.jp/entries.json',
+                dataType: 'jsonp',
+                success: function (json){
+                    $.ajax({
+                        url: 'http://s.hatena.ne.jp/star.add.json',
+                        dataType: 'jsonp',
+                        data: {uri: '{$rhaco.url()}', rks: json.rks},
+                        success: function(result){
+                            location.href = '{$rhaco.url('maintainer/add_openid'')}?server=http://www.hatena.ne.jp/' + result.name + '/';
+                        },
+                        error: function(){
+                            user_id = prompt("はてなIDを入力");
+                            location.href = '{$rhaco.url('maintainer/add_openid'')}?server=http://www.hatena.ne.jp/' + user_id + '/';
+                        }
+                    });
+                },
+                error: function(){
+                    user_id = prompt("はてなIDを入力");
+                    location.href = '{$rhaco.url('maintainer/add_openid'')}?server=http://www.hatena.ne.jp/' + user_id + '/';
+                }
+            });
+            return false;
+        });
+    });
+</script>
 
+        <div class="col">
+            <h3><span class="red">One-click</span> Login</h3>
+            <p><a href="{$rhaco.url('maintainer/add_openid')}?server=mixi.jp"><img src="http://media.riaf.org/openid/mixi.gif" alt="mixiでログイン" /></a></p>
+            <p><a href="#" id="loginHatena"><img src="http://media.riaf.org/openid/hatena.gif" alt="はてなでログイン" /></a></p>
+            <p><a href="{$rhaco.url('maintainer/add_openid')}?server=yahoo.co.jp"><img src="http://i.yimg.jp/images/login/btn/btnXSYid.gif" alt="Yahoo!Japan IDでログイン" /></a></p>
+        </div>
+
+        <div class="col">
+            <h3><span class="red">Optional</span> Server</h3>
+            <form action="{$rhaco.url('maintainer/add_openid')}" method="get">
+                <p>それ以外のプロバイダでログインする</p>
+                <p class="info">OpenID 2.0 対応のサイトでもログインすることが出来ます。</p>
+                <input type="text" size="20" name="server" style="background: url(http://media.riaf.org/openid/login-bg.gif) no-repeat #fff;background-position: 0 50%;padding-left: 18px;height: 18px;" value="wassr.jp" onfocus="this.value='';this.onfocus='';" />
+                <input type="submit" value="ログイン" />
+            </form>
+        </div>
+
+        <div class="col last">
+            <h3><span class="red">OpenID</span>とは？</h3>
+            <p>OpenIDとは、世界中のOpenID対応サイトで共通して利用できるURL形式のIDのことです。</p>
+            <p>OpenID対応サイトで利用すれば、新たにアカウントを作成したり、ログインするために別々のIDやパスワードを入力する必要がなくなります。</p>
+        </div>
+
+    <br />
     <h3>登録されている OpenID 一覧</h3>
     <rt:loop param="object_list" var="object">
         <p>{$object.url}</p>
