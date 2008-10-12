@@ -12,4 +12,5 @@ error_reporting(E_ALL);
 Rhaco::import('model.Charge');
 Rhaco::import('model.Maintainer');
 Rhaco::import('model.Package');
-
+Rhaco::import('model.OpenId');
+Rhaco::import('model.Favorite');
