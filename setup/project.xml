@@ -26,9 +26,12 @@
             <column name="url" unique="true" require="true" type="string" uniquewith="maintainer" />
         </table>
 
+        <ext name="user" table="maintainer" />
+        <ext name="project" table="package" />
+
         <map name="favorite">
-            <column name="package" type="int" reference="package.id" uniquewith="maintainer" />
-            <column name="maintainer" type="int" reference="maintainer.id" uniquewith="package" />
+            <column name="package" type="int" reference="project.id" uniquewith="maintainer" />
+            <column name="maintainer" type="int" reference="user.id" uniquewith="package" />
         </map>
         <map name="charge">
             <column name="id" />
