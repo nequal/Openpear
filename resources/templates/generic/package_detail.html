@@ -5,9 +5,25 @@
 
 <rt:block name="info">新しいプロジェクトの追加は<a href="{$rhaco.url('packages/create')}">プロジェクト情報作成</a>から行えます</rt:block>
 <rt:block name="contents">
+<script type="text/javascript">
+$(function(){
+	$('#facorite').click(function(){
+	    $.post(
+	    	'{$rhaco.url('packages/favorite')}',
+	    	{packageId: {$object.id}},
+	    	function(json){
+	    	    $('#facoriteMessage').text(json.message);
+		    },
+	    	'json'
+	    );
+	});
+});
+</script>
+
         <h3>{$object.name}</h3>
         <p>Subversion Repository: <b><a href="{$rhaco.constant('SVN_URL')}{$object.name}">{$rhaco.constant('SVN_URL')}{$object.name}</a></b> / Latest Release: <b>{$latestVersion}</b></p>
         <p>{$f.toA($f.text2html($object.description))}</p>
+        <button id="favorite">イイネ</button><span id="favoriteMessage"></span>
         <rt:if param="{$isMaintainer}">
         <p class="info">
         	開発は、svn クライアントで <b>{$rhaco.constant('SVN_URL')}{$object.name}</b> をチェックアウトして行ってください<br />
