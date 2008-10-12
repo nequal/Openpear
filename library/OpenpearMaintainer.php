@@ -49,6 +49,11 @@ class OpenpearMaintainer extends Openpear
             $parser->setVariable('object_list', $this->dbUtil->select(new OpenId(), new C(Q::eq(OpenId::columnMaintainer(), $u->id))));
             return $parser;
         }
+        $openId = $this->dbUtil->get(new OpenId(), new C(Q::eq(OpenId::columnUrl(), $url)));
+        if(Variable::istype('OpenId', $openId)){
+        	$this->message('既に登録されている OpenID です');
+        	Header::redirect(Rhaco::url('maintainer/add_openid'));
+        }
         $openId = new OpenId();
         $openId->setUrl($url);
         $openId->setMaintainer($u->id);
