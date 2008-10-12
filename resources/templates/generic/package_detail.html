@@ -10,7 +10,7 @@ $(function(){
 	$('#favorite').click(function(){
 	    $.post(
 	    	'{$rhaco.url('packages/favorite')}',
-	    	{packageId: {$object.id}},
+	    	{packageId: {$object.id}, type: 'json'},
 	    	function(json){
 	    	    $('#facoriteMessage').text(json.message);
 		    },
