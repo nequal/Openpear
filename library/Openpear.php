@@ -26,7 +26,7 @@ class Openpear extends Views
     }
 
     function login(){
-        if(RequestLogin::isLogin()){
+        if(RequestLogin::isLoginSession()){
             $this->message('既にログインしています');
             Header::redirect(Rhaco::url('mypage'));
         }
