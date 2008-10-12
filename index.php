@@ -47,8 +47,8 @@ $parser = Urls::parser(array(
         'method' => 'search',
     ),
     '^packages\/favorite$' => array(
-        'OpenpearAPI',
-        'toggleFavorite',
+        'class' => 'OpenpearAPI',
+        'method' => 'toggleFavorite',
     ),
     '^package\/(.*?)\/settings$' => array(
         'class' => 'OpenpearPackage',
