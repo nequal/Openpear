@@ -113,14 +113,14 @@ class Openpear extends Views
         }
         $this->setSession('message', $message);
     }
-    function json($data, $callback=null){
+    function json($data, $allowCallback=true){
         $json = json_encode($data);
-        if(is_null($callback)){
+        if($allowCallback === true && $this->isVariable('callback')){
+            Header::write(array('Content-type' => 'text/javascript; charset=utf-8'));
+            printf('%s(%s);', $this->getVariable('callback'), $json);
+        } else {
             Header::write(array('Content-type' => 'application/json; charset=utf-8', 'X-JSON' => $json));
             echo $json;
-        } else {
-            Header::write(array('Content-type' => 'text/javascript; charset=utf-8'));
-            printf('%s(%s);', $callback, $json);
         }
         Rhaco::end();
     }
@@ -132,14 +132,14 @@ class Openpear extends Views
         }
     }
     function _notFound(){
-        Http::status(404);
         parent::_notFound();
         $parser = $this->parser();
         $parser->setTemplate('error/404.html');
         return $parser;
     }
     function _forbidden(){
-        $this->_notFound();//fixme!
+    	Http::status(403);
+        return new HtmlParser('error/403.html');
     }
 }
 

@@ -14,9 +14,9 @@
         </table>
         <table name="maintainer">
             <column name="id" />
-            <column name="name" unique="true" require="true" chartype="/^[A-Za-z0-9_\-]+$/" />
+            <column name="name" unique="true" require="true" max="20" chartype="/^[A-Za-z0-9_\-]+$/" />
             <column name="mail" type="mail" />
-            <column name="fullname" />
+            <column name="fullname" max="30" />
             <column name="profile" type="text" />
             <column name="password" require="true" />
             <column name="created" type="timestamp" default="sysdate" />
