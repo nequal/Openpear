@@ -11,19 +11,19 @@ Rhaco::import("database.model.Column");
  */
 class FavoriteTable extends TableObjectBase{
 	/**  */
-	var $p;
+	var $package;
 	/**  */
-	var $m;
-	var $factP;
-	var $factM;
+	var $maintainer;
+	var $factPackage;
+	var $factMaintainer;
 
 
 	function FavoriteTable(){
 		$this->__init__();
 	}
 	function __init__(){
-		$this->p = null;
-		$this->m = null;
+		$this->package = null;
+		$this->maintainer = null;
 	}
 	function connection(){
 		if(!Rhaco::isVariable("_R_D_CON_","openpear")){
@@ -43,65 +43,65 @@ class FavoriteTable extends TableObjectBase{
 	 * 
 	 * @return database.model.Column
 	 */
-	function columnP(){
-		if(!Rhaco::isVariable("_R_D_C_","Favorite::P")){
-			$column = new Column("column=package,variable=p,type=integer,size=22,unique=true,reference=Package::Id,uniqueWith=Favorite::M,",__CLASS__);
+	function columnPackage(){
+		if(!Rhaco::isVariable("_R_D_C_","Favorite::Package")){
+			$column = new Column("column=package,variable=package,type=integer,size=22,unique=true,reference=Package::Id,uniqueWith=Favorite::Maintainer,",__CLASS__);
 			$column->label(Message::_("package"));
-			Rhaco::addVariable("_R_D_C_",$column,"Favorite::P");
+			Rhaco::addVariable("_R_D_C_",$column,"Favorite::Package");
 		}
-		return Rhaco::getVariable("_R_D_C_",null,"Favorite::P");
+		return Rhaco::getVariable("_R_D_C_",null,"Favorite::Package");
 	}
 	/**
 	 * 
 	 * @return integer
 	 */
-	function setP($value){
-		$this->p = TableObjectUtil::cast($value,"integer");
+	function setPackage($value){
+		$this->package = TableObjectUtil::cast($value,"integer");
 	}
 	/**
 	 * 
 	 */
-	function getP(){
-		return $this->p;
+	function getPackage(){
+		return $this->package;
 	}
 	/**
 	 * 
 	 * @return database.model.Column
 	 */
-	function columnM(){
-		if(!Rhaco::isVariable("_R_D_C_","Favorite::M")){
-			$column = new Column("column=maintainer,variable=m,type=integer,size=22,unique=true,reference=Maintainer::Id,uniqueWith=Favorite::P,",__CLASS__);
+	function columnMaintainer(){
+		if(!Rhaco::isVariable("_R_D_C_","Favorite::Maintainer")){
+			$column = new Column("column=maintainer,variable=maintainer,type=integer,size=22,unique=true,reference=Maintainer::Id,uniqueWith=Favorite::Package,",__CLASS__);
 			$column->label(Message::_("maintainer"));
-			Rhaco::addVariable("_R_D_C_",$column,"Favorite::M");
+			Rhaco::addVariable("_R_D_C_",$column,"Favorite::Maintainer");
 		}
-		return Rhaco::getVariable("_R_D_C_",null,"Favorite::M");
+		return Rhaco::getVariable("_R_D_C_",null,"Favorite::Maintainer");
 	}
 	/**
 	 * 
 	 * @return integer
 	 */
-	function setM($value){
-		$this->m = TableObjectUtil::cast($value,"integer");
+	function setMaintainer($value){
+		$this->maintainer = TableObjectUtil::cast($value,"integer");
 	}
 	/**
 	 * 
 	 */
-	function getM(){
-		return $this->m;
+	function getMaintainer(){
+		return $this->maintainer;
 	}
 
 
-	function getFactP(){
-		return $this->factP;
+	function getFactPackage(){
+		return $this->factPackage;
 	}
-	function setFactP($obj){
-		$this->factP = $obj;
+	function setFactPackage($obj){
+		$this->factPackage = $obj;
 	}
-	function getFactM(){
-		return $this->factM;
+	function getFactMaintainer(){
+		return $this->factMaintainer;
 	}
-	function setFactM($obj){
-		$this->factM = $obj;
+	function setFactMaintainer($obj){
+		$this->factMaintainer = $obj;
 	}
 }
 ?>
