@@ -27,7 +27,6 @@ class PackageTable extends TableObjectBase{
 	var $dependFavorites;
 	var $dependCharges;
 	var $maintainers;
-	var $maintainers;
 
 
 	function PackageTable($id=null){
@@ -65,7 +64,7 @@ class PackageTable extends TableObjectBase{
 		if(!Rhaco::isVariable("_R_D_C_","Package::Id")){
 			$column = new Column("column=id,variable=id,type=serial,size=22,primary=true,",__CLASS__);
 			$column->label(Message::_("id"));
-			$column->depend("Favorite::Package","Charge::Package");
+			$column->depend("Favorite::P","Charge::Package");
 			Rhaco::addVariable("_R_D_C_",$column,"Package::Id");
 		}
 		return Rhaco::getVariable("_R_D_C_",null,"Package::Id");
@@ -258,12 +257,6 @@ class PackageTable extends TableObjectBase{
 	}
 	function getDependCharges(){
 		return $this->dependCharges;
-	}
-	function setMaintainers($value){
-		$this->maintainers = $value;
-	}
-	function getMaintainers(){
-		return $this->maintainers;
 	}
 	function setMaintainers($value){
 		$this->maintainers = $value;
