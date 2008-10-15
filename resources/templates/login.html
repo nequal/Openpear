@@ -5,35 +5,37 @@
 
 <rt:block name="contents">
 <script type="text/javascript">
-	$(function(){
-		var user_id = null;
-		var server;
-		$('#loginHatena').click(function(){
-			$.ajax({
-			    url: 'http://s.hatena.ne.jp/entries.json',
-			    dataType: 'jsonp',
-			    success: function (json){
-			        $.ajax({
-					    url: 'http://s.hatena.ne.jp/star.add.json',
-					    dataType: 'jsonp',
-					    data: {uri: '{$rhaco.url()}', rks: json.rks},
-					    success: function(result){
-					    	location.href = '{$rhaco.url('login')}?server=http://www.hatena.ne.jp/' + result.name + '/';
-					    },
-			            error: function(){
-		                    user_id = prompt("はてなIDを入力");
-		                    location.href = '{$rhaco.url('login')}?server=http://www.hatena.ne.jp/' + user_id + '/';
-		                }
-			        });
-			    },
-			    error: function(){
-			    	user_id = prompt("はてなIDを入力");
-			    	location.href = '{$rhaco.url('login')}?server=http://www.hatena.ne.jp/' + user_id + '/';
-				}
-			});
-			return false;
-		});
-	});
+    $(function(){
+        var user_id = null;
+        noName = function(){
+            user_id = prompt("はてなIDを入力");
+            if(user_id == null || user_id == '') return false;
+            location.href = '{$rhaco.url('login')}?server=http://www.hatena.ne.jp/' + user_id + '/';
+            return false;
+        }
+        $('#loginHatena').click(function(){
+            $.ajax({
+                url: 'http://s.hatena.ne.jp/entries.json',
+                dataType: 'jsonp',
+                success: function (json){
+                    $.ajax({
+                        url: 'http://s.hatena.ne.jp/star.add.json',
+                        dataType: 'jsonp',
+                        data: {uri: '{$rhaco.url()}', rks: json.rks},
+                        success: function(result){
+                            if(result.name)
+                                location.href = '{$rhaco.url('login')}?server=http://www.hatena.ne.jp/' + result.name + '/';
+                            else
+                                return noName();
+                        },
+                        error: noName
+                    });
+                },
+                error: noName
+            });
+            return false;
+        });
+    });
 </script>
 
         <div class="col">
