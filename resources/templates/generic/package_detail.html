@@ -7,12 +7,12 @@
 <rt:block name="contents">
 <script type="text/javascript">
 $(function(){
-	$('#favorite').click(function(){
-	    $.post(
-	    	'{$rhaco.url('packages/favorite')}',
+    $('#favorite').click(function(){
+        $.post(
+            '{$rhaco.url('packages/favorite')}',
 	    	{packageId: {$object.id}, type: 'json'},
 	    	function(json){
-	    	    $('#facoriteMessage').text(json.message);
+	    	    $('#favoriteMessage').text(json.message);
 		    },
 	    	'json'
 	    );
@@ -23,7 +23,13 @@ $(function(){
         <h3>{$object.name}</h3>
         <p>Subversion Repository: <b><a href="{$rhaco.constant('SVN_URL')}{$object.name}">{$rhaco.constant('SVN_URL')}{$object.name}</a></b> / Latest Release: <b>{$latestVersion}</b></p>
         <p>{$f.toA($f.text2html($object.description))}</p>
-        <rt:if param="{$isLogin}"><button id="favorite">イイネ</button><span id="favoriteMessage"></span></rt:if>
+        <h4>このプロジェクトを応援する開発者!</h4>
+        <div id="favorites">
+	        <rt:if param="{$isLogin}"><button id="favorite">&nbsp;イイネ!&nbsp;</button> <span id="favoriteMessage"></span></rt:if>
+	        <p><rt:loop param="{$object.favorites}" var="favorite">
+	           <span><a href="{$rhaco.url('maintainer')}/{$facvorite.name}">{$favorite.fullname}</a></span>
+	        </rt:loop></p>
+        </div>
         <rt:if param="{$isMaintainer}">
         <p class="info">
         	開発は、svn クライアントで <b>{$rhaco.constant('SVN_URL')}{$object.name}</b> をチェックアウトして行ってください<br />

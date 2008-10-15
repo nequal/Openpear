@@ -5,6 +5,8 @@ Rhaco::import('SvnUtil');
  * 
  */
 class Package extends PackageTable{
+    var $favorites;
+    
     function afterInsert($db){
         // add charge
         $m = RequestLogin::getLoginSession();
@@ -39,6 +41,13 @@ class Package extends PackageTable{
                 if(isset($roles[$maintainer->id])) $maintainer->role = $roles[$maintainer->id];
             }
             $this->setMaintainers($maintainers);
+        }
+        if(!empty($this->dependFavorites)){
+            $c = new C();
+            foreach($this->dependFavorites as $favorite){
+                $c->addCriteriaOr(new C(Q::eq(Maintainer::columnId(), $favorite->maintainer)));
+            }
+            $this->favorites = $db->select(new Maintainer(), $c);
         }
     }
 }

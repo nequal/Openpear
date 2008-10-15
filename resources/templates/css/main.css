@@ -73,3 +73,6 @@ dt {
 dd {
 	margin: 5px 20px;
 }
+#favorites p span {
+    margin-left: 5px;
+}

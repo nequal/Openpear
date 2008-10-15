@@ -59,11 +59,11 @@
             <p>OpenID対応サイトで利用すれば、新たにアカウントを作成したり、ログインするために別々のIDやパスワードを入力する必要がなくなります。</p>
         </div>
 
-    <div style="width:100%">&nbsp;</div>
+    <div style="width:100%;clear:left;">&nbsp;</div>
     <h3>登録されている OpenID 一覧</h3>
     <rt:loop param="object_list" var="object">
-        <p>{$object.url}</p>
-        <form action="{$rhaco.url('maintainer/delete_openid')}" mehtod="post">
+        <p><a href="{$object.url}">{$object.url}</a></p>
+        <form action="{$rhaco.url('maintainer/delete_openid')}" method="post">
             <input type="hidden" name="url" value="{$object.url}" />
             <input type="submit" value="削除" />
         </form>

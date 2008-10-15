@@ -85,7 +85,7 @@
     <input name="WORKING_DIR">
         <title>作業用ディレクトリ</title>
         <description>パッケージングに使用する一時ディレクトリ</description>
-        <data>{$rhaco.path()}/work/build</data>
+        <data>{$rhaco.path()}work/build</data>
     </input>
     <input name="SVN_URL">
         <title>Subversion のURL</title>
