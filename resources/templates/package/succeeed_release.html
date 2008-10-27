@@ -1,0 +1,18 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">{$object.name}のリリース - Open PEAR Server</rt:block>
+
+<rt:block name="info">パッケージのリリースが完了しました</rt:block>
+
+<rt:block name="contents">
+    <h3>リリース完了</h3>
+    <p>パッケージのリリースが完了しました。以下のコマンドでインストール／アップデートできます</p>
+    <p class="commands">pear install openpear/{$object.name}</p>
+    <p class="commands">pear upgrade openpear/{$object.name}</p>
+
+    <h3>詳細ログ</h3>
+    <p>ビルド時のログです。もしパッケージングに失敗しているときや、Openpear.org の誤動作などありましたら、このログを添えて開発者まで連絡してください。</p>
+    <pre>{$buildLog}</pre>
+
+</rt:block>

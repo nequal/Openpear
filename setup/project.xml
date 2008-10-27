@@ -73,6 +73,10 @@
             <column name="contents" type="text" />
         </table>
     </database>
+	<input name="CHANNEL">
+		<title>Channel DOMAIN</title>
+		<data>openpear.org</data>
+	</input>
     <input name="SVN_PATH">
         <title>Subversionのディレクトリ</title>
         <description>SVNのパス</description>

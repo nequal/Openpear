@@ -15,6 +15,20 @@ class SvnUtil
         $this->svn_path = $svn_path;
     }
 
+    /*
+     * XML 形式で取得して結果を返す
+     * @param string $cmd
+     * @param string $args
+     * @return mixed
+     */
+    function execute($cmd, $args){
+        $xml = $this->cmd($this->svn_path. ' '. $cmd. ' --xml '. $args);
+        if(SimpleTag::setof($tag, $xml)){
+            return $tag->toHash();
+        }
+        return $xml;
+    }
+
     function cp($src, $dst, $option=''){
         $r = $this->_cmd(sprintf("%s copy %s %s %s", $this->svn_path, $src, $dst, $option));
     }

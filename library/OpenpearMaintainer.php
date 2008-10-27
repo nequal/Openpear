@@ -74,7 +74,6 @@ class OpenpearMaintainer extends Openpear
                 Header::redirect(Rhaco::url('maintainer/add_openid'));
             }
         }
-        exit;
         $this->message('OpenID の削除に失敗しました', true);
         Header::redirect(Rhaco::url('maintainer/add_openid'));
     }

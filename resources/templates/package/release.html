@@ -14,33 +14,33 @@
 		</div>
 		<div class="field">
 			<label for="build_path">対象ディレクトリ</label>
-			<p>/{$object.name}/<input type="text" name="build_path" /></p>
+			<p>/{$object.name}/<input type="text" name="build_path" value="trunk" /></p>
 		</div>
 		<div class="field">
-		    <label for="version">バージョン</label>
-		    <p><input name="version" type="text" size="10" /></p>
+		    <label for="version|release_ver">バージョン</label>
+		    <p><input name="version|release_ver" type="text" size="10" /></p>
 		</div>
 		<div class="field">
-		    <label for="stability">リリース状態</label>
-		    <p><select name="stability">
+		    <label for="version|release_stab">リリース状態</label>
+		    <p><select name="version|release_stab">
 		    	<option value="stable" selected>stable</option><option value="beta">beta</option><option value="alpha">alpha</option>
 		    </select></p>
 		</div>
 		<div class="field">
-			<label for="license_name">ライセンス</label>
-			<p><input type="text" name="license_name" size="22" /></p>
+			<label for="license|name">ライセンス</label>
+			<p><input type="text" name="license|name" size="22" /></p>
 		</div>
 		<div class="field">
-			<label for="license_url">ライセンス参照先</label>
-			<p><input type="text" name="license_url" size="40" /></p>
+			<label for="license|uri">ライセンス参照先</label>
+			<p><input type="text" name="license|uri" size="40" /></p>
 		</div>
 		<div class="field">
-			<label for="php_min">PHPバージョン(最小)</label>
-			<p><input type="text" name="php_min" size="10" /></p>
+			<label for="version|php_min">PHPバージョン(最小)</label>
+			<p><input type="text" name="version|php_min" size="10" /></p>
 		</div>
 		<div class="field">
-			<label for="pear_min">PEARバージョン(最小)</label>
-			<p><input type="text" name="pear_min" size="10" /></p>
+			<label for="version|pear_min">PEARバージョン(最小)</label>
+			<p><input type="text" name="version|pear_min" size="10" /></p>
 		</div>
 		<div class="field">
 		    <p><input type="submit" value="リリース" /></p>
@@ -53,10 +53,10 @@
 		</script>
 		<p><a href="#" id="extConfigSwitch">詳細な設定</a></p>
 		<div id="extConfig" style="display:none;">
-			<p>ここの設定をもっと増やしたい訳です</p>
+			<p>これらは、必須な設定ではありません。</p>
 			<div class="field">
-				<label for="baseinstalldir">インストール先</label>
-				<p><input type="text" name="baseinstalldir" size="30" /></p>
+				<label for="package|baseinstalldir">インストール先</label>
+				<p><input type="text" name="package|baseinstalldir" size="30" /></p>
 			</div>
 			<div class="field">
 			    <p><input type="submit" value="リリース" /></p>

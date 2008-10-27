@@ -96,10 +96,12 @@ class Openpear extends Views
 
     function getServerDB(){
         static $db = null;
-        Rhaco::import('model.ServerPackages');
-        Rhaco::import('model.ServerMaintainers');
-        Rhaco::import('model.ServerCategories');
-        if(!Variable::istype('DbUtil', $db)) $db = new DbUtil(ServerPackages::connection());
+        if(!Variable::istype('DbUtil', $db)){
+            Rhaco::import('model.ServerPackages');
+            Rhaco::import('model.ServerMaintainers');
+            Rhaco::import('model.ServerCategories');
+            $db = new DbUtil(ServerPackages::connection());
+        }
         return $db;
     }
 
@@ -124,6 +126,16 @@ class Openpear extends Views
         }
         Rhaco::end();
     }
+    function xml($data, $name='result'){
+        $xml = Variable::toSimpleTag($name, $data);
+        if(empty($xml)){
+            Http::status(404);
+        } else {
+            Header::write(array('Content-type' => 'text/xml; charset=utf-8'));
+            echo $xml->get(true);
+        }
+        Rhaco::end();
+    }
     function loginRequired(){
         RequestLogin::loginRequired(new LoginCondition());
         if(!RequestLogin::isLoginSession()){
@@ -133,13 +145,13 @@ class Openpear extends Views
     }
     function _notFound(){
         parent::_notFound();
-        $parser = $this->parser();
-        $parser->setTemplate('error/404.html');
-        return $parser;
+        $this->setTemplate('error/404.html');
+        return $this->parser();
     }
     function _forbidden(){
-    	Http::status(403);
-        return new HtmlParser('error/403.html');
+        Http::status(403);
+        $this->setTemplate('error/403.html');
+        return $this->parser();
     }
 }
 

@@ -47,7 +47,7 @@ class OpenpearPackage extends Openpear
             $parser = new HtmlParser('package/maintainer.html');
             $parser->setVariable('object', $p);
             return $parser;
-        } else $this->_forbidden();
+        } else return $this->_forbidden();
     }
     function maintainer_add($package){
         $this->loginRequired();
@@ -118,38 +118,35 @@ class OpenpearPackage extends Openpear
 
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
         if(Variable::istype('Package', $p) && $this->isMaintainer($p, $u, true)){
-            // fixme
-            $default = array(
-                'version' => '0.1.0',
-                'stability' => 'stable',
-                'license_name' => 'New BSD License',
-                'license_url' => 'http://creativecommons.org/licenses/BSD/',
-                'php_min' => '4.3.3',
-                'pear_min' => '1.4.0',
-                'build_path' => 'trunk',
-                'baseinstalldir' => '/',
-            );
             if(strpos($package, '_') !== false){
                 $path = explode('_', $package);
                 array_pop($path);
-                $default['baseinstalldir'] .= implode('/', $path);
+                $baseinstalldir .= implode('/', $path);
             }
+            $release = new Release($package, $this->getVariable('package|baseinstalldir', $baseinstalldir));
+            $default = empty($p->latestRelase) ? $release->get() : unserialize($p->latestRelease);
+
             $parser = new HtmlParser('package/release.html');
             if($this->isPost()){
-                $release = new Release($package, $this->getVariable('baseinstalldir', $default['baseinstalldir']));
-                $release->setVersion($this->getVariable('version', $default['version']), $this->getVariable('stability', $default['stability']));
-                $release->setLicense($this->getVariable('license_name', $default['license_name']), $this->getVariable('license_url', $default['license_url']));
-                $release->setMin($this->getVariable('php_min', $default['php_min']), $this->getVariable('pear_min', $default['pear_min']));
+                $variables = $this->getVariable();
+                foreach($variables as $name => $value){
+                    if(strpos($name, '|') === false) continue;
+                    list($cat, $name) = explode('|', $name, 2);
+                    $release->set($cat, $name, $value);
+                }
                 foreach($p->maintainers as $maintainer){
                     $release->addMaintainer($maintainer->name, $maintainer->fullname, $maintainer->mail, $maintainer->role);
                 }
                 $release->description = $p->description;
-                if($release->build($package. '/'. $this->getVariable('build_path', $default['build_path']))){
-                    $this->message('パッケージをリリースしました (version '.$this->getVariable('version', $default['version']).')');
+                if($release->build($package. '/'. $this->getVariable('build_path', 'trunk'))){
+                    $this->message('パッケージをリリースしました (version '.$this->getVariable('version|release_ver', '0.1.0').')');
                     Header::redirect(Rhaco::url('package/').$package);
                 }
-                echo nl2br($release->buildLog);
-                Rhaco::end();// debug.
+                $p->setLatestRelease(serialize($release->get()));
+                $this->setTemplate('package/succeeed_release.html');
+                $this->setVariable('buildLog', $release->buildLog);
+                $this->setVariable('object', $p);
+                return $this->parser();
             } else $parser->setVariable($default);
             $parser->setVariable('object', $p);
             $parser->setVariable('version', $this->getLatestVersion($package, '0.1.0'));

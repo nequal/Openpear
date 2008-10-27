@@ -13,7 +13,7 @@ class Release
             'package_name' => null,
             'package_type' => 'php',
             'baseinstalldir' => '/',
-            'channel' => 'pear.riaf.jp',
+            'channel' => 'openpear.org',
             'summary_file' => 'desc.txt',
             'description_file' => 'desc.txt',
             'notes_file' => 'notes.txt',
@@ -31,14 +31,38 @@ class Release
             'uri' => 'http://creativecommons.org/licenses/BSD/',
         ),
     );
+    var $packageName;
     var $description = '';
     var $notes = '';
     var $buildLog = '';
 
     function Release($name, $baseinstalldir='/'){
-        $this->variables['package']['package_name'] = $name;
+        $this->variables['package']['package_name'] = $this->packageName = $name;
         $this->variables['package']['baseinstalldir'] = $baseinstalldir;
     }
+
+    /**
+     * 値をセットする
+     * @param string $cat   カテゴリ
+     * @param string $name  パラメタ名
+     * @param string $value 値
+     * @return boolean
+     */
+    function set($cat, $name, $value){
+        if(!isset($this->variables[$cat])) $this->variables[$cat] = array();
+        return $this->variables[$cat][$name] = $value;
+    }
+
+    function get(){
+        $results = array('build_path' => 'trunk');
+        foreach($this->variables as $cat => $variables){
+            foreach($variables as $name => $value){
+                $results[sprintf('%s|%s', $cat, $name)] = $value;
+            }
+        }
+        return $results;
+    }
+
     function setVersion($num, $stab='stable'){
         $this->variables['version']['release_ver'] = $num;
         $this->variables['version']['release_stab'] = $stab;
@@ -75,10 +99,13 @@ class Release
     }
 
     function build($path){
-        $work_path = Rhaco::constant('WORKING_DIR');
+        $this->verify();
+        $work_path = Rhaco::constant('WORKING_DIR'). '/'. md5($path);
 
         $svn = new SvnUtil();
-        $svn->_cmd('rm -rf '. $work_path);
+        if(!is_dir(Rhaco::constant('WORKING_DIR'))) $svn->_cmd('mkdir -p '. Rhaco::constant('WORKING_DIR'));
+        if(file_exists($work_path))
+            $svn->_cmd('rm -rf '. $work_path);
         FileUtil::cp(Rhaco::resource('skelton'), $work_path);
         chdir($work_path);
         $this->writeINI($work_path.'/build.conf');
@@ -94,7 +121,7 @@ class Release
         system($work_path.'/build');
         $this->buildLog = ob_get_clean();
 
-        $files = FileUtil::ls($work_path.'/release');
+        $files = FileUtil::ls($work_path. '/release');
         $ret = false;
         foreach($files as $file){
             if($file->getExtension() == '.tgz'){
@@ -103,6 +130,11 @@ class Release
             }
         }
         // タグ打ちとかする？
+        $svn->cmd(sprintf('copy file://%s/%s/%s file://%s/%s/tags/%s-%s -m "%s"',
+            Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path),
+            Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $this->variables['version']['release_ver'], $this->variables['version']['release_stab'],
+            '[Add Tag:Release] '. $this->packageName
+        );
         return $ret;
     }
     function registerPackage($packageFile){
@@ -121,6 +153,9 @@ class Release
             return false;
         }
         return true;
+    }
+    function verify(){
+        $this->variables['package']['channel'] = Rhaco::constant('CHANNEL', 'openpear.org');
     }
 }
 
