@@ -27,7 +27,7 @@ $(function(){
         <div id="favorites">
 	        <rt:if param="{$isLogin}"><button id="favorite">&nbsp;イイネ!&nbsp;</button> <span id="favoriteMessage"></span></rt:if>
 	        <p><rt:loop param="{$object.favorites}" var="favorite">
-	           <span><a href="{$rhaco.url('maintainer')}/{$facvorite.name}">{$favorite.fullname}</a></span>
+	           <span><a href="{$rhaco.url('maintainer')}/{$favorite.name}">{$favorite.fullname}</a></span>
 	        </rt:loop></p>
         </div>
         <rt:if param="{$isMaintainer}">
