@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title><rt:block name="title">Open PEAR Server</rt:block></title>
-	<meta name="description" content="Open PEAR Server" />
-	<meta name="keywords" content="web, application" />
+	<title><rt:block name="title">openpear Server</rt:block></title>
+	<meta name="description" content="openpear.org - openpear makes you able to make and publish PEAR libraries easier." />
+	<meta name="keywords" content="web,application,php,pear,library,openpear,nequal" />
 	<link href="css/main.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript">google.load("jquery", "1.2");</script>
@@ -25,7 +25,7 @@
 </head>
 <body>
 	<div id="header">
-		<h1><a href="{$rhaco.url()}">Open PEAR Server</a></h1>
+		<h1><a href="{$rhaco.url()}"><img src="images/header_logo.gif" alt="openpear" /></a></h1>
 		<ul id="menu">
 			<li><a href="{$rhaco.url()}">about</a></li>
 <rt:if param="{$isLogin}">
@@ -46,8 +46,8 @@
 		<div class="wrap">
 			<div id="image"></div>
 			<div class="box">
-				<h2>Welcome to <em title="PEAR専用共有リポジトリ&amp;PEAR Channel Server">Open PEAR Server</em></h2>
-				<p>PHPユーザーにとって、PEARライブラリはとても便利なものですが、そのライブラリを自分で作って公開することはとても気軽にできることではありませんでした。Open PEAR Server を使うと、用意された Subversion のリポジトリから自動でパッケージングし PEAR Channel への登録も同時に行うことが出来ます。PHP開発者はこの機会に是非登録して、あなたの作成したライブラリを共有しませんか？</p>
+				<h2>Welcome to <em title="PEAR専用共有リポジトリ&amp;PEAR Channel Server">openpear.org</em></h2>
+				<p>PHPユーザーにとって、PEARライブラリはとても便利なものですが、そのライブラリを自分で作って公開することはとても気軽にできることではありませんでした。openpear を使うと、用意された Subversion のリポジトリから自動でパッケージングし PEAR Channel への登録も同時に行うことが出来ます。PHP開発者はこの機会に是非登録して、あなたの作成したライブラリを共有しませんか？</p>
 			</div>
 		</div>
 	</div>
@@ -68,7 +68,7 @@
 <rt:block name="contents">
 		<div class="col">
 			<h3><span class="red">How to</span> use?</h3>
-			<p>Open PEAR Server に登録されているパッケージは、すべて<a href="http://pear.php.net/">本家PEAR</a>に登録されているパッケージと同様に使用することができます。PEARコマンドが使用できる環境で以下のコマンドを入力してください。</p>
+			<p>openpear Server に登録されているパッケージは、すべて<a href="http://pear.php.net/">本家PEAR</a>に登録されているパッケージと同様に使用することができます。PEARコマンドが使用できる環境で以下のコマンドを入力してください。</p>
             <p class="info">pear channel-discover pear.riaf.jp</p>
             <p>パッケージのインストールは次のようにできます。</p>
             <p class="info">pear install openpear/<b>パッケージ名</b></p>
@@ -81,8 +81,8 @@
 		</div>
 		<div class="col last">
 			<h3>How to join <span class="red">PEAR Server</span></h3>
-			<p>PHP開発者は誰でもOpen PEAR Serverに登録することができます！<a href="{$rhaco.url('login')}">こちらからログイン</a>して、今すぐメンテナー登録を行いましょう。もちろん、すべてのサービスは無料で利用することが出来ます。</p>
-			<p class="info">Open PEAR Server は、<a href="http://riaf.jp/">riaf</a>@<a href="http://nequal.jp">nequal</a>が個人で運営しています。すべてのサービスは無料です。また、
+			<p>PHP開発者は誰でもopenpear に登録することができます！<a href="{$rhaco.url('login')}">こちらからログイン</a>して、今すぐメンテナー登録を行いましょう。もちろん、すべてのサービスは無料で利用することが出来ます。</p>
+			<p class="info">openpear は、<a href="http://riaf.jp/">riaf</a>@<a href="http://nequal.jp">nequal</a>が個人で運営しています。すべてのサービスは無料です。また、
 運営者はこのサービスを利用することによって生じるいかなる損害についても責任を負うものではありません。</p>
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post"><p>
 <input type="hidden" name="cmd" value="_s-xclick" />
@@ -97,11 +97,11 @@
 		
 	<div id="footer">
 		<p class="right">
-        Design: <a href="http://www.solucija.com/" title="Information Architecture and Web Design">Luka Cvrk</a> &middot;
         Powered: <a href="http://riaf.jp/">riaf</a> with <a href="http://nequal.jp/"><img src="images/nequal_badge_120x27_w_powered_by.gif" /></a>
-        <a href="http://rhaco.org/"><img src="http://m.rhaco.org/img/badges/rhaco_logo_124x27_mono_white.gif" border="0" alt="Made with rhaco." title="Made with rhaco." align="top" /></a>
+        <a href="http://rhaco.org/"><img src="http://m.rhaco.org/img/badges/rhaco_logo_124x27_mono_white.gif" border="0" alt="Made with rhaco." title="Made with rhaco." align="top" /></a><br />
+        Design based on: <a href="http://www.solucija.com/" title="Information Architecture and Web Design">Luka Cvrk</a>
         </p>
-		<p>&copy; Copyright 2008 <a href="{$rhaco.url()}">Open PEAR Server</a> &middot; All Rights Reserved</p>
+		<p>&copy; Copyright 2008 <a href="{$rhaco.url()}">openpear.org</a> &middot; All Rights Reserved</p>
 	</div>
 </body>
 </html>
