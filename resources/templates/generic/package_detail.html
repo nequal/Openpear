@@ -21,7 +21,7 @@ $(function(){
 </script>
 
         <h3>{$object.name}</h3>
-        <p>Subversion Repository: <b><a href="{$rhaco.constant('SVN_URL')}{$object.name}">{$rhaco.constant('SVN_URL')}{$object.name}</a></b> / Latest Release: <b>{$latestVersion}</b></p>
+        <p>Subversion Repository: <b><a href="{$rhaco.url('repository')}/{$object.name}">{$rhaco.url('repository')}/{$object.name}</a></b> / Latest Release: <b>{$latestVersion}</b></p>
         <p>{$of.d($object.description)}</p>
         <h4>このプロジェクトを応援する開発者!</h4>
         <div id="favorites">
@@ -32,7 +32,7 @@ $(function(){
         </div>
         <rt:if param="{$isMaintainer}">
         <p class="info">
-        	開発は、svn クライアントで <b>{$rhaco.constant('SVN_URL')}{$object.name}</b> をチェックアウトして行ってください<br />
+        	開発は、svn クライアントで <b>{$rhaco.constant('SVN_URL')}/{$object.name}</b> をチェックアウトして行ってください<br />
         	プロジェクトの管理は<a href="{$rhaco.url('package')}/{$object.name}/settings">プロジェクト情報編集</a>で行えます</p>
         </rt:if>
         

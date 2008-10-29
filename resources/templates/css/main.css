@@ -85,7 +85,11 @@ dd {
     width: 100%;
 }
 .repository th {
+    padding: 10px;
     background: #ccc;
+}
+.repository td {
+    padding: 5px;
 }
 .repository tr.even td {
     background: #eee;
