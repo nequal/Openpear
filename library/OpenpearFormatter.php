@@ -21,4 +21,8 @@ class OpenpearFormatter
     function st($str){
         return is_string($str) ? strip_tags($str) : '';
     }
+    function dn($str){
+        $bn = dirname($str);
+        return $bn == '.' ? '' : $bn;
+    }
 }

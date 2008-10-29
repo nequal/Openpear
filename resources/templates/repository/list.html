@@ -12,11 +12,17 @@
 		<tr>
 			<th>rev</th><th>name</th><th>author</th>
 		</tr>
+		<rt:if param="{$path}">
+		<tr class="odd">
+			<td align="center"> - </td>
+			<td><a href="{$rhaco.url('repository')}{$of.bn($path)}">..</a></td>
+		</tr>
+		</rt:if>
 <rt:loop param="entries" var="entry">
 		<tr class="{$f.evenodd($key)}">
 			<td align="right">{$entry['commit']['revision']}</td>
-			<td><rt:ifnot param="{$entry['name']}" value="openpear"><a href="{$rhaco.url('repository')}{$path}/{$entry['name']}">{$entry['name']}</a><rt:else /> - </rt:if></td>
-			<td><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></td>
+			<td><a href="{$rhaco.url('repository')}{$path}/{$entry['name']}">{$entry['name']}</a></td>
+			<td><rt:if param="{$entry['commit']['author']}" value="openpear"> - <rt:else /><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></rt:if></td>
 		</tr>
 </rt:loop>
 
