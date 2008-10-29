@@ -94,3 +94,6 @@ dd {
 .repository tr.even td {
     background: #eee;
 }
+pre.prettyprint {
+    font-size: 12px;
+}
