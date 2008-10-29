@@ -80,3 +80,10 @@ dd {
 #favorites p span {
     margin-left: 5px;
 }
+
+.repository {
+    width: 100%;
+}
+.repository th {
+    background: #ccc;
+}

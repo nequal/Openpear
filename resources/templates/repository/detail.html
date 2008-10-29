@@ -10,7 +10,7 @@
 		});
 		</script>
 </rt:block>
-<rt:block name="info">実際のリポジトリ上のURL <a href="{$rhaco.constant('SVN_URL')}{$f.escape($path)}/{$entry['name']}">{$rhaco.constant('SVN_URL')}{$f.escape($path)}/{$entry['name']}</a></rt:block>
+<rt:block name="info">実際のリポジトリ上のURL <a href="{$rhaco.constant('SVN_URL')}{$path}">{$rhaco.constant('SVN_URL')}{$path}</a></rt:block>
 
 <rt:block name="contents">
 	<h3>リポジトリブラウザ</h3>
@@ -21,6 +21,7 @@
 		<dd><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></dd>
 	</dl>
 	<rt:if param="{$body}">
+	<h3>ソース</h3>
 		<pre class="prettyprint">
 {$f.escape($body)}
 		</pre>

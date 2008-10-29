@@ -7,7 +7,6 @@ class OpenpearRepository extends Openpear
 
     function browse($path='/'){
         if(empty($path)) $path = '/';
-        $this->setVariable('path', $path);
         $path = sprintf('file://%s/%s%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path);
         $svn = new SvnUtil();
         
@@ -15,6 +14,7 @@ class OpenpearRepository extends Openpear
         $kind = $info['entry']['kind'];
         
         $files = $svn->execute('list', $path);
+        $this->setVariable('path', (isset($files['list']['path']) && !empty($files['list']['path'])) ? $files['list']['path'] : '');
         switch($kind){
             case 'file':
                 // file
@@ -24,12 +24,13 @@ class OpenpearRepository extends Openpear
                         $this->setVariable('body', $svn->cmd('cat '. $path));
                     }
                 }
-                $this->setVariable('entry', $files['entry']);
+                $this->setVariable('entry', $files['list']['entry']);
                 return $this->parser('repository/detail.html');
 
             case 'dir':
-            // dir
-                $this->setVariable('entries', $files['list']['entry']);
+                // dir
+                $entries = isset($files['list']['entry']['kind']) ? array($files['list']['entry']) : $files['list']['entry'];
+                $this->setVariable('entries', $entries);
                 return $this->parser('repository/list.html');
 
             default:
