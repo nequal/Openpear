@@ -15,7 +15,7 @@
 <rt:loop param="entries" var="entry">
 		<tr>
 			<td>{$entry['commit']['revision']}</td>
-			<td><a href="{$rhaco.url('repository')}/{$entry['path']}">{$entry['path']}</a></td>
+			<td><a href="{$rhaco.url('repository')}{$f.escape($path)}/{$entry['name']}">{$entry['name']}</a></td>
 			<td><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></td>
 		</tr>
 </rt:loop>
