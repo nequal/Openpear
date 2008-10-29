@@ -11,8 +11,8 @@ class OpenpearRepository extends Openpear
         $path = sprintf('file://%s/%s%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path);
         $svn = new SvnUtil();
         
-        $files = $svn->execute('info', $path);
-        if(isset($files['entry']['kind']) && $files['entry']['kind'] == 'file'){
+        $files = $svn->execute('list', $path);
+        if(isset($files['list']['entry']['kind']) && $files['list']['entry']['kind'] == 'file'){
             // file
             if($file = explode('.', $path)){
                 $ext = array_pop($file);
@@ -24,7 +24,7 @@ class OpenpearRepository extends Openpear
             return $this->parser('repository/detail.html');
         } else {
             // dir
-            $this->setVariable('entries', $files['entry']);
+            $this->setVariable('entries', $files['list']['entry']);
             return $this->parser('repository/list.html');
         }
     }
