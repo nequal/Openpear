@@ -21,7 +21,7 @@ class Release
         'version' => array(
             'release_ver' => '0.1.0',
             'release_stab' => 'stable',
-            'api_ver' => '0.1.2',
+            'api_ver' => '0.1.0',
             'api_stab' => 'stable',
             'php_min' => '4.3.3',
             'pear_min' => '1.4.0',
@@ -57,7 +57,7 @@ class Release
         $results = array('build_path' => 'trunk');
         foreach($this->variables as $cat => $variables){
             foreach($variables as $name => $value){
-                $results[sprintf('%s|%s', $cat, $name)] = $value;
+                $results[sprintf('%s___l___%s', $cat, $name)] = $value;
             }
         }
         return $results;

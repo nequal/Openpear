@@ -118,20 +118,22 @@ class OpenpearPackage extends Openpear
 
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
         if(Variable::istype('Package', $p) && $this->isMaintainer($p, $u, true)){
+            $baseinstalldir = '/';
             if(strpos($package, '_') !== false){
                 $path = explode('_', $package);
                 array_pop($path);
                 $baseinstalldir .= implode('/', $path);
             }
-            $release = new Release($package, $this->getVariable('package|baseinstalldir', $baseinstalldir));
+            $release = new Release($package, $this->getVariable('package___l___baseinstalldir', $baseinstalldir));
             $default = empty($p->latestRelase) ? $release->get() : unserialize($p->latestRelease);
 
             $parser = new HtmlParser('package/release.html');
             if($this->isPost()){
                 $variables = $this->getVariable();
                 foreach($variables as $name => $value){
-                    if(strpos($name, '|') === false) continue;
-                    list($cat, $name) = explode('|', $name, 2);
+                    if(strpos($name, '___l___') === false) continue;
+                    list($cat, $name) = explode('___l___', $name, 2);
+                    if(empty($name)) continue;
                     $release->set($cat, $name, $value);
                 }
                 foreach($p->maintainers as $maintainer){
@@ -139,7 +141,7 @@ class OpenpearPackage extends Openpear
                 }
                 $release->description = $p->description;
                 if($release->build($package. '/'. $this->getVariable('build_path', 'trunk'))){
-                    $this->message('パッケージをリリースしました (version '.$this->getVariable('version|release_ver', '0.1.0').')');
+                    $this->message('パッケージをリリースしました (version '.$this->getVariable('version___l___release_ver', '0.1.0').')');
                     Header::redirect(Rhaco::url('package/').$package);
                 }
                 $p->setLatestRelease(serialize($release->get()));

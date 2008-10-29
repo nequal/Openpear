@@ -15,6 +15,11 @@
 		<dd>{$object.fullname}</dd>
 	</dl>
 
+	<h3>プロフィール</h3>
+	<div class="profile">
+		{$of.d($object.profile)}
+	</div>
+
 	<h3>あなたが参加しているパッケージ</h3>
 	<?php $object_list = array_chunk($packages, 3); ?>
 	<rt:loop param="object_list" var="row">

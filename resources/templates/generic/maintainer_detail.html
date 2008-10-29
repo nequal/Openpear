@@ -6,7 +6,7 @@
 <rt:block name="info"><rt:if param="{$isLogin}">登録していない PHP 開発者が居たら、是非 Open PEAR Server へ招待してください<rt:else />メンテナーの登録は、今すぐOpenIDで<a href="{$rhaco.url('login')}">ログイン</a>！</rt:if></rt:block>
 <rt:block name="contents">
         <h3><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></h3>
-        <p>{$f.toA($f.text2html($object.profile))}</p>
+        <p>{$of.d($object.profile, 'profile')}</p>
 
 	<rt:if param="{$object.packages}">
 		<h3>{$object.fullname} が参加しているパッケージ</h3>
@@ -15,7 +15,7 @@
 		    <rt:loop param="row" var="object">
 		        <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
 		            <h3><a href="{$rhaco.url('package')}/{$object.name}">{$object.name}</a></h3>
-		            <p>{$f.toA($f.text2html($object.description))}</p>
+		            <p>{$of.d($object.description)}</p>
 		        </div>
 		    </rt:loop>
 		    <br clear="all" />

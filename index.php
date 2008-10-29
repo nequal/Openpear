@@ -12,6 +12,7 @@ Rhaco::import('model.LoginCondition');
 Rhaco::import('Openpear');
 Rhaco::import('OpenpearPackage');
 Rhaco::import('OpenpearMaintainer');
+Rhaco::import('OpenpearFormatter');
 
 RequestLogin::silent(new LoginCondition());
 
@@ -117,5 +118,6 @@ if($request->isSession('message')){
     $parser->setVariable('message', $request->getSession('message'));
     $request->clearSession('message');
 }
+$parser->setVariable('of', new OpenpearFormatter);
 $parser->write();
 
