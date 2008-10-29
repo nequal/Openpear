@@ -31,7 +31,9 @@ class OpenpearRepository extends Openpear
 
             case 'dir':
                 // dir
-                $entries = isset($files['list']['entry']['kind']) ? array($files['list']['entry']) : $files['list']['entry'];
+                $entries = array();
+                if(isset($files['list']['entry']))
+                    $entries = isset($files['list']['entry']['kind']) ? array($files['list']['entry']) : $files['list']['entry'];
                 $this->setVariable('entries', $entries);
                 return $this->parser('repository/list.html');
 

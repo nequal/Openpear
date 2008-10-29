@@ -15,7 +15,8 @@
 		<rt:if param="{$path}">
 		<tr class="odd">
 			<td align="center"> - </td>
-			<td><a href="{$rhaco.url('repository')}{$of.bn($path)}">..</a></td>
+			<td><a href="{$rhaco.url('repository')}{$of.dn($path)}">..</a></td>
+			<td> - </td>
 		</tr>
 		</rt:if>
 <rt:loop param="entries" var="entry">
