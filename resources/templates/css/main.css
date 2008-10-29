@@ -153,3 +153,9 @@ e
 .repository tr.dir td.name {
     font-weight: bold;
 }
+
+.repository tr.dir td.revision {
+  width: 10%;
+  white-space: nowrap;
+}
+
