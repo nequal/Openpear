@@ -4,11 +4,6 @@
 <rt:block name="title">{$f.escape($path)} - リポジトリブラウザ - Open PEAR Server</rt:block>
 <rt:block name="adHeader">
 		<script src="http://media.riaf.org/google-code-prettify/src/prettify.js" type="text/javascript"></script>
-		<script type="text/javascript">
-		$(function(){
-			prettyPrint();
-		});
-		</script>
 </rt:block>
 <rt:block name="info">実際のリポジトリ上のURL <a href="{$rhaco.constant('SVN_URL')}{$path}">{$rhaco.constant('SVN_URL')}{$path}</a></rt:block>
 
@@ -25,5 +20,6 @@
 		<pre class="prettyprint">
 {$f.escape($body)}
 		</pre>
+		<script type="text/javascript"> prettyPrint(); </script>
 	</rt:if>
 </rt:block>
