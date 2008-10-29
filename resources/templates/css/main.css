@@ -154,7 +154,8 @@ pre.prettyprint {
     font-weight: bold;
 }
 
-.repository tr.dir td.revision {
+.repository th.revision ,
+.repository td.revision {
   width: 10%;
   white-space: nowrap;
 }
