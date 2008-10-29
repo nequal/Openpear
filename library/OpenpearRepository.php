@@ -15,7 +15,7 @@ class OpenpearRepository extends Openpear
         
         $files = $svn->execute('list', $path);
         $this->setVariable('path', (isset($files['list']['path']) && !empty($files['list']['path'])) ? 
-            str_replace(sprintf('file://%s/%s/', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), '', $files['list']['path'])
+            str_replace(sprintf('file://%s/%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), '', $files['list']['path'])
             : '');
         switch($kind){
             case 'file':

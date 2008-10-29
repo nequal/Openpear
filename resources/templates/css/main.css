@@ -87,3 +87,6 @@ dd {
 .repository th {
     background: #ccc;
 }
+.repository tr.even td {
+    background: #eee;
+}

@@ -7,8 +7,8 @@ class Maintainer extends MaintainerTable{
     var $role = 'lead';
 
     function beforeInsert($db){
-        $denyNames = array('signup', 'settings', 'add_openid', 'delete_openid');
-        if(in_array($this->name, $denyNames)) return false;
+        $denyNames = array('signup', 'settings', 'add_openid', 'delete_openid', 'openpear');
+        if(in_array($this->name, $denyNames)) return ExceptionTrigger::raise(new GenericException('name is couldn\'t use'));
         return true;
     }
 
