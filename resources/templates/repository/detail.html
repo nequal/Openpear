@@ -15,6 +15,8 @@
 		<dd>{$entry['commit']['revision']}</dd>
 		<dt>編集者</dt>
 		<dd><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></dd>
+        <dt>パス</td>
+        <dd><a href="{$rhaco.url('repository')}/{$of.dn($path)}">{$of.dn($path)}</a></dd>
 	</dl>
 	<rt:if param="{$body}">
 	<h3>ソース</h3>
