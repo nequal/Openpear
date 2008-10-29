@@ -1,0 +1,24 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">{$f.escape($path)} - リポジトリブラウザ - Open PEAR Server</rt:block>
+
+<rt:block name="info">実際のリポジトリ上のURL <a href="{$rhaco.constant('SVN_URL')}{$f.escape($path)}">{$rhaco.constant('SVN_URL')}{$f.escape($path)}</a></rt:block>
+
+<rt:block name="contents">
+	<h3>リポジトリブラウザ</h3>
+
+	<table>
+		<tr>
+			<th>rev</th><th>name</th><th>author</th>
+		</tr>
+<rt:loop param="entries" var="entry">
+		<tr>
+			<td>{$entry['commit']['revision']}</td>
+			<td><a href="{$rhaco.url('repository')}/{$entry['path']}">{$entry['path']}</a></td>
+			<td><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></td>
+		</tr>
+</rt:loop>
+
+	</table>
+</rt:block>

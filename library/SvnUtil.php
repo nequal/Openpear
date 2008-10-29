@@ -22,7 +22,7 @@ class SvnUtil
      * @return mixed
      */
     function execute($cmd, $args){
-        $xml = $this->cmd($this->svn_path. ' '. $cmd. ' --xml '. $args);
+        $xml = $this->cmd($cmd. ' --xml '. $args);
         if(SimpleTag::setof($tag, $xml)){
             return $tag->toHash();
         }
@@ -41,8 +41,8 @@ class SvnUtil
     function cmd($cmd){
         Logger::debug('svn called: '. $cmd);
         $r = $this->_cmd(sprintf('%s %s', $this->svn_path, $cmd));
-    Logger::deep_debug('svn result: '. $r);
-    return $r;
+        Logger::deep_debug('svn result: '. $r);
+        return $r;
     }
 
     function _cmd($cmd){

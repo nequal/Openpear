@@ -1,0 +1,28 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">{$f.escape($path)} - リポジトリブラウザ - Open PEAR Server</rt:block>
+<rt:block name="adHeader">
+		<script src="http://media.riaf.org/google-code-prettify/src/prettify.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		$(function(){
+			prettyPrint();
+		});
+		</script>
+</rt:block>
+<rt:block name="info">実際のリポジトリ上のURL <a href="{$rhaco.constant('SVN_URL')}/{$entry['path']}">{$rhaco.constant('SVN_URL')}/{$entry['path']}</a></rt:block>
+
+<rt:block name="contents">
+	<h3>リポジトリブラウザ</h3>
+	<dl>
+		<dt>リビジョン</dt>
+		<dd>{$entry['commit']['revision']}</dd>
+		<dt>編集者</dt>
+		<dd><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></dd>
+	</dl>
+	<rt:if param="{$body}">
+		<pre class="prettyprint">
+{$f.escape($body)}
+		</pre>
+	</rt:if>
+</rt:block>

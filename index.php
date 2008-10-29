@@ -105,6 +105,11 @@ $parser = Urls::parser(array(
         'method' => 'detail',
     ),
     
+    '^repository(\/.*?)$' => array(
+        'class' => 'OpenpearRepository',
+        'method' => 'browse'
+    ),
+    
     '^api\/maintainers$' => array(
         'class' => 'OpenpearAPI',
         'method' => 'maintainers',
