@@ -26,7 +26,7 @@ class OpenpearMaintainer extends Openpear
         Header::redirect(Rhaco::url('login'));
     }
     function read(){
-        $parser = parent::read(new Maintainer(), new C(Q::order(Maintainer::columnName()), Q::pager(99)));
+        $parser = parent::read(new Maintainer(), new C(Q::pager(18)));
         return $parser;
     }
     function detail($name){

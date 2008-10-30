@@ -61,6 +61,13 @@ class Maintainer extends MaintainerTable{
         $salt = $a[array_rand($a)] . $a[array_rand($a)];
         return crypt($p, $salt);
     }
+    
+    function views(){
+        return array(
+            'search_fields' => 'name,profile,fullname',
+            'ordering' => 'name',
+        );
+    }
 }
 
 ?>

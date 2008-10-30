@@ -6,6 +6,14 @@
 <rt:block name="info"><rt:if param="{$isLogin}">登録していない PHP 開発者が居たら、是非 openpear へ招待してください<rt:else />メンテナーの登録は、今すぐOpenIDで<a href="{$rhaco.url('login')}">ログイン</a>！</rt:if></rt:block>
 
 <rt:block name="contents">
+	<div id="search_form">
+		<form action="{$rhaco.uri()}" method="get" rt:reference="true">
+			<label for="q">メンテナ検索</label>
+			<p><input type="text" name="q" size="18" /> 
+				<input type="submit" value="検索" /></p>
+		</form>
+	</div>
+
 	<?php $object_list = array_chunk($object_list, 3); ?>
 	<rt:loop param="object_list" var="row">
 	    <rt:loop param="row" var="object">
@@ -16,4 +24,8 @@
 	    </rt:loop>
 	    <br clear="all" />
 	</rt:loop>
+
+	<div id="pager">
+		<rt:pager />
+	</div>
 </rt:block>
