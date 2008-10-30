@@ -178,6 +178,10 @@ class OpenIDAuth
             return $headers['X-XRDS-Location'];
         }
 
+        if($this->parseXRDS($this->server)){
+            return $this->server;
+        }
+
         $this->version = '1.1';
         $pTag = new SimpleTag();
         $pTag->set($response, "html");
@@ -203,6 +207,15 @@ class OpenIDAuth
             // httpsが駄目ならhttp
             list($header_text, $response) = $this->discover_http('http://'.$this->server, 'HEAD');
         }
+
+        /*
+        if($this->parseXRDS('https://'. $this->server)){
+            return 'https://'. $this->server;
+        } else if($this->parseXRDS('http://'. $this->server)) {
+            return 'http://'. $this->server;
+        }
+        */
+
         $headers = $this->parseResponseHeader($header_text);
         if (isset($headers['X-XRDS-Location'])) {
             $this->version = '2.0';
