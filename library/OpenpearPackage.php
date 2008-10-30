@@ -137,13 +137,15 @@ class OpenpearPackage extends Openpear
                 $release->description = $p->description;
                 if($release->build($package. '/'. $this->getVariable('build_path', 'trunk'))){
                     $this->message('パッケージをリリースしました (version '.$this->getVariable('version___l___release_ver', '0.1.0').')');
-                    Header::redirect(Rhaco::url('package/').$package);
+                    $p->setLatestRelease(serialize($release->get()));
+                    $this->dbUtil->update($p);
+                    $this->setTemplate('package/succeeed_release.html');
+                    $this->setVariable('buildLog', $release->buildLog);
+                    $this->setVariable('object', $p);
+                    return $this->parser();
                 }
-                $p->setLatestRelease(serialize($release->get()));
-                $this->setTemplate('package/succeeed_release.html');
+                $this->message('build package failed.');
                 $this->setVariable('buildLog', $release->buildLog);
-                $this->setVariable('object', $p);
-                return $this->parser();
             } else $parser->setVariable($default);
             $parser->setVariable('object', $p);
             $parser->setVariable('version', $this->getLatestVersion($package, '0.1.0'));
