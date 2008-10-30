@@ -8,7 +8,7 @@
 <rt:block name="contents">
 	<h3>パッケージをリリースする</h3>
     <p class="info">以下の設定でビルドを行います</p>
-    {$release.getHtml()}
+    <p>{$release.getHtml()}</p>
 
     <form action="{$rhaco.url('package')}/{$object.name}/release/do" method="post">
         <rt:loop param="vals" var="v">

@@ -195,17 +195,17 @@ dd {
     margin-left: 5px;
 }
 
-.repository {
+.repository, .release {
     width: 100%;
 }
-.repository th {
+.repository th, .release th {
     padding: 10px;
     background: #ccc;
 }
-.repository td {
+.repository td, .release td {
     padding: 5px;
 }
-.repository tr.even td {
+.repository tr.even td, .release tr.even td {
     background: #eee;
 }
 pre.prettyprint {

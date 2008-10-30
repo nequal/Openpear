@@ -136,6 +136,7 @@ class OpenpearPackage extends Openpear
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
         if($this->isPost() && $this->isMaintainer($p, $u, true)){
             $release = $this->_getRelease($p);
+            $this->clearVariable('pathinfo');
             $this->setVariable('vals', $this->getVariable());
             $this->setVariable('release', $release);
             $this->setVariable('object', $p);

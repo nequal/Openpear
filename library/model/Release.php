@@ -1,6 +1,7 @@
 <?php
 require_once 'PEAR/Server2.php';
 Rhaco::import('SvnUtil');
+Rhaco::import('tag.model.TemplateFormatter');
 
 class Release
 {
@@ -170,8 +171,10 @@ class Release
         $html = '<table class="release">';
         foreach($this->variables as $catName => $cat){
             $html .= sprintf('<tr><th colspan="2">%s</th></tr>', Message::_($catName));
+            $i = 0;
             foreach($cat as $k => $v){
-                $html .= sprintf('<tr><td class="key">%s</td><td class="value">%s</td></tr>', Message::_($k) , $v);
+                $html .= sprintf('<tr　class="%s"><td class="key">%s</td><td class="value">%s</td></tr>',
+                TemplateFormatter::evenodd($i++), Message::_($k) , $v);
             }
         }
         $html .= '</table>';
