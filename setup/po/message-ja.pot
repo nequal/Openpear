@@ -222,11 +222,6 @@ msgstr "ページを表示する権限がありません"
 msgid "Not Found"
 msgstr "ページが見つかりません"
 
-#: resources/templates/error/404.html:8
-
-msgid "404 <span class="red">Not</span> Found"
-msgstr ""
-
 #: resources/templates/generic/maintainer_form.html:7
 
 msgid "Account Settings"
@@ -320,20 +315,6 @@ msgstr "ログイン"
 msgid "Welcome to"
 msgstr ""
 
-#: resources/templates/index.html:72
-
-msgid "<span class="red">How to</span> use?"
-msgstr ""
-
-#: resources/templates/index.html:80
-
-msgid "The <span class="red">Easiest</span>"
-msgstr ""
-
-#: resources/templates/index.html:85
-
-msgid "How to join <span class="red">openpear</span>"
-msgstr ""
 
 #: resources/templates/maintainer/signup.html:4
 #: resources/templates/maintainer/signup.html:7
