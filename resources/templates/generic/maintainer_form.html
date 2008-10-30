@@ -4,30 +4,30 @@
 <rt:block name="title">ユーザー情報設定 - openpear</rt:block>
 
 <rt:block name="contents">
-        <h3>ユーザー情報設定</h3>
+        <h3>_('Account Settings')</h3>
         <form action="{$rhaco.uri()}" method="post" rt:reference="true">
             <div class="field">
-                <label for="name"><b>Subversionアカウント名</b></label>
+                <label for="name"><b>_('Subversion Account')</b></label>
                 <p><b>{$name}</b></p>
             </div>
             <div class="field">
-                <label for="password"><b>Subversionパスワード</b></label>
+                <label for="password"><b>_('Subversion Password')</b></label>
                 <p><input type="password" size="16" value="" name="password" /></p>
             </div>
             <div class="field">
-                <label for="mail">メールアドレス</label>
+                <label for="mail">_('mail')</label>
                 <p><input type="text" size="30" value="{$openid_sreg_email}" name="mail" /></p>
             </div>
             <div class="field">
-                <label for="fullname"><b>名前</b></label>
+                <label for="fullname"><b>_('fullname')</b></label>
                 <p><input type="text" size="20" value="{$openid_sreg_nickname}" name="fullname" /></p>
             </div>
             <div class="field">
-                <label for="profile">自己紹介</label>
+                <label for="profile">_('profile')</label>
                 <p><textarea name="profile" rows="20" cols="50"></textarea></p>
             </div>
             <div class="field">
-                <p><input type="submit" value="update" /></p>
+                <p><input type="submit" value="_('update')" /></p>
             </div>
         </form>
         <br />

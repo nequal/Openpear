@@ -1,7 +1,7 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
 
-<rt:block name="title">プロジェクト情報<rt:if param="{$generic_title}" value="create">作成<rt:else />編集</rt:if> - openpear</rt:block>
+<rt:block name="title">_('Package Settings')<rt:if param="{$generic_title}" value="create">作成<rt:else />編集</rt:if> - openpear</rt:block>
 
 <rt:block name="info">一度設定したプロジェクト名は変更できません。注意してください。</rt:block>
 <rt:block name="contents">
@@ -10,10 +10,10 @@
 		<p><a href="{$rhaco.url('package')}/{$name}/release">パッケージをリリースする</a></p>
 		<p><a href="{$rhaco.url('package')}/{$name}/maintainer">メンテナ管理</a></p>
 </rt:if>
-        <h3>パッケージ情報</h3>
+        <h3>_('Package Settings')</h3>
         <form action="{$rhaco.uri()}" method="post" rt:reference="true">
             <div class="field">
-                <label for="name"><b>プロジェクト名</b></label>
+                <label for="name"><b>_('name')</b></label>
                 <rt:if param="{$generic_title}" value="create">
                 <p><input type="text" size="20" value="" name="name" /> (半角英数字と_（アンダースコア）が使えます)</p>
                 <rt:else />
@@ -21,11 +21,11 @@
                 </rt:if>
             </div>
             <div class="field">
-                <label for="description">プロジェクト概要</label>
+                <label for="description">_('description')</label>
                 <p><textarea name="description" rows="20" cols="50"></textarea></p>
             </div>
             <div class="field">
-                <label><b>パブリック設定</b></label>
+                <label><b>_('public')</b></label>
                 <p><input type="radio" name="public" value="0" />メンテナを手動管理する&nbsp;<input type="radio" name="public" value="1" />すべてのユーザーが編集可能</p>
             </div>
             <div class="field">

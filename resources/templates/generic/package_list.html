@@ -1,15 +1,15 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
 
-<rt:block name="title">プロジェクト - openpear</rt:block>
+<rt:block name="title">_('packages') - openpear</rt:block>
 
 <rt:block name="info">新しいプロジェクトの追加は<a href="{$rhaco.url('packages/create')}">プロジェクト情報作成</a>から行えます</rt:block>
 <rt:block name="contents">
   <div id="search_form">
     <form action="{$rhaco.uri()}" method="get" rt:reference="true">
-      <label for="q">パッケージ検索</label>
+      <label for="q">_('Package Search')</label>
       <p><input type="text" name="q" id="search_q" /> 
-        <input type="submit" value="検索" /></p>
+        <input type="submit" value="_('search')" /></p>
     </form>
   </div>
 
@@ -19,7 +19,7 @@
     <rt:loop param="row" var="object">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
             <h3><a href="{$rhaco.url('package')}/{$object.name}">{$object.name}</a></h3>
-            <div style="text-align:right;">latest release: {$object.getLatestVersion('not yet')}</div>
+            <div style="text-align:right;">_('Latest Release:') {$object.getLatestVersion('not yet')}</div>
             <p>{$f.text2html($of.st($of.d($object.description)), 200, 10)}</p>
         </div>
     </rt:loop>

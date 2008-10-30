@@ -1,21 +1,21 @@
 <rt:extends href="index.html" />
 <rt:block name="teaser"></rt:block>
 
-<rt:block name="title">マイページ - openpear</rt:block>
+<rt:block name="title">_('mypage') - openpear</rt:block>
 
 <rt:block name="info">登録情報は<a href="{$rhaco.url('maintainer/settings')}">こちらから変更できます</a>
  あなたのアカウントに <a href="{$rhaco.url('maintainer/add_openid')}">OpenID を追加する</a>こともできます</rt:block>
 
 <rt:block name="contents">
-	<h3>登録情報</h3>
+	<h3>_('Your Settings')</h3>
 	<dl>
-		<dt>ユーザー名</dt>
+		<dt>_('Subversion Account')</dt>
 		<dd>{$object.name}</dd>
-		<dt>名前</dt>
+		<dt>_('fullname')</dt>
 		<dd>{$object.fullname}</dd>
 	</dl>
 
-	<h3>プロフィール</h3>
+	<h3>_('profile')</h3>
 	<div class="profile">
 		{$of.d($object.profile)}
 	</div>

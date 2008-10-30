@@ -1,12 +1,12 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
 
-<rt:block name="title">{$f.escape($path)} - リポジトリブラウザ - openpear</rt:block>
+<rt:block name="title">{$f.escape($path)} - _('repository browser') - openpear</rt:block>
 
 <rt:block name="info">実際のリポジトリ上のURL <a href="{$rhaco.constant('SVN_URL')}{$path}">{$rhaco.constant('SVN_URL')}{$path}</a></rt:block>
 
 <rt:block name="contents">
-	<h3>リポジトリブラウザ</h3>
+	<h3>_('repository browser')</h3>
 
     <rt:if param="{$path}">
         <p>package: <a href="{$rhaco.url('package')}/{$of.pp($path)}">{$of.pp($path)}</a></p>

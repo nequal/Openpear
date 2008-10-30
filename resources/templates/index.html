@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title><rt:block name="title">openpear :: Open PEAR Repository Channel</rt:block></title>
-	<meta name="description" content="openpear.org - openpear makes you able to make and publish PEAR libraries easier." />
+	<meta name="description" content="_('openpear.org - openpear makes you able to make and publish PEAR libraries easier.')" />
 	<meta name="keywords" content="web,application,php,pear,library,openpear,nequal" />
 	<link href="css/main.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -28,17 +28,17 @@
 	<div id="header">
 		<h1><a href="{$rhaco.url()}"><img src="images/header_logo.gif" alt="openpear" /></a></h1>
 		<ul id="menu">
-			<li><a href="{$rhaco.url()}">about</a></li>
+			<li><a href="{$rhaco.url()}">_('about')</a></li>
 <rt:if param="{$isLogin}">
-			<li><a href="{$rhaco.url('mypage')}">mypage</a></li>
+			<li><a href="{$rhaco.url('mypage')}">_('mypage')</a></li>
 </rt:if>
-			<li><a href="{$rhaco.url('package')}">packages</a></li>
-			<li><a href="{$rhaco.url('maintainer')}">maintainers</a></li>
-			<li><a href="{$rhaco.url('repository')}/">repository</a></li>
+			<li><a href="{$rhaco.url('package')}">_('packages')</a></li>
+			<li><a href="{$rhaco.url('maintainer')}">_('maintainers')</a></li>
+			<li><a href="{$rhaco.url('repository')}/">_('repository')</a></li>
 			<rt:if param="{$isLogin}">
-			<li><a href="{$rhaco.url('logout')}">logout</a></li>
+			<li><a href="{$rhaco.url('logout')}">_('logout')</a></li>
 			<rt:else />
-			<li><a href="{$rhaco.url('login')}">login</a></li>
+			<li><a href="{$rhaco.url('login')}">_('login')</a></li>
 			</rt:if>
 		</ul>
 	</div>
@@ -47,7 +47,7 @@
 		<div class="wrap">
 			<div id="image"></div>
 			<div class="box">
-				<h2>Welcome to <em title="PEAR 専用共有リポジトリ&amp;PEAR Channel Server">openpear.org</em></h2>
+				<h2>_('Welcome to') <em title="PEAR 専用共有リポジトリ&amp;PEAR Channel Server">openpear.org</em></h2>
 				<p>PHP ユーザーにとって、PEAR ライブラリはとても便利なものですが、そのライブラリを自分で作って公開することはとても気軽にできることではありませんでした。
                 openpear を使うと、用意された Subversion のリポジトリから自動でパッケージングし openpear のチャンネルへの登録も同時に行うことが出来ます。PHP 開発者はこの機会に是非登録して、あなたの作成したライブラリを共有しませんか？</p>
 			</div>
@@ -69,7 +69,7 @@
         </div>
 <rt:block name="contents">
 		<div class="col">
-			<h3><span class="red">How to</span> use?</h3>
+			<h3>_('<span class="red">How to</span> use?')</h3>
 			<p>openpear に登録されているパッケージは、すべて<a href="http://pear.php.net/">本家 PEAR</a> に登録されているパッケージと同様に使用することができます。PEAR コマンドが使用できる環境で以下のコマンドを入力してください。</p>
             <p class="info monospace">pear channel-discover {$rhaco.constant('CHANNEL')}</p>
             <p>パッケージのインストールは次のようにできます。</p>
@@ -77,12 +77,12 @@
             <p>各パッケージの詳細な使用方法はパッケージ毎のページをご覧下さい。</p>
 		</div>
 		<div class="col">
-			<h3>The <span class="red">Easiest</span></h3>
+			<h3>_('The <span class="red">Easiest</span>')</h3>
 			<p>もう PEAR パッケージ登録のための投票や、あのPEARパッケージ作成の苦痛を味わう必要はありません！</p>
             <blockquote class="info">&quot;夢のような話だ&quot;<br /><i>-- sotarok</i></blockquote>
 		</div>
 		<div class="col last">
-			<h3>How to join <span class="red">openpear</span></h3>
+			<h3>_('How to join <span class="red">openpear</span>')</h3>
 			<p>PHP 開発者は誰でもopenpear に登録することができます！<a href="{$rhaco.url('login')}">こちらからログイン</a>して、今すぐメンテナー登録を行いましょう。もちろん、すべてのサービスは無料で利用することが出来ます。</p>
 			<p class="info">openpear は、<a href="http://riaf.jp/">riaf</a>@<a href="http://nequal.jp">nequal</a>が個人で運営しています。すべてのサービスは無料です。また、
 運営者はこのサービスを利用することによって生じるいかなる損害についても責任を負うものではありません。</p>

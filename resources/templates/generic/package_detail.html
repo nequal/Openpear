@@ -24,7 +24,7 @@ $(function(){
 </script>
 
         <h3>{$object.name}</h3>
-        <p>Subversion Repository: <b><a href="{$rhaco.url('repository')}/{$object.name}">{$rhaco.url('repository')}/{$object.name}</a></b> / Latest Release: <b>{$latestVersion}</b></p>
+        <p>Subversion Repository: <b><a href="{$rhaco.url('repository')}/{$object.name}">{$rhaco.url('repository')}/{$object.name}</a></b> / _('Latest Release:') <b>{$latestVersion}</b></p>
         <p>{$of.d($object.description)}</p>
         <h4>このプロジェクトを応援する開発者!</h4>
         <div id="favorites">
@@ -39,13 +39,13 @@ $(function(){
         	プロジェクトの管理は<a href="{$rhaco.url('package')}/{$object.name}/settings">プロジェクト情報編集</a>で行えます</p>
         </rt:if>
         
-        <h3>メンテナー</h3>
+        <h3>_('maintainer')</h3>
 <?php $object_list = array_chunk($object->maintainers, 3); ?>
 <rt:loop param="object_list" var="row">
     <rt:loop param="row" var="object">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
             <h3><a href="{$rhaco.url('maintainer')}/{$object.name}"><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></a> ({$object.role})</h3>
-            <p>{$of.st($of.d($object.profile, $object.name))}</p>
+            <p>{$f.text2html($of.st($of.d($object.profile, $object.name)), 200, 10)}</p>
         </div>
     </rt:loop>
     <br clear="all" />

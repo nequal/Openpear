@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-30 18:35+0900\n"
+"POT-Creation-Date: 2008-10-30 21:35+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <team@exsample.com>\n"
@@ -30,6 +30,7 @@ msgstr "パッケージ"
 #: library/model/table/ChargeTable.php:106
 #: library/model/table/FavoriteTable.php:74
 #: library/model/table/OpenIdTable.php:48
+#: resources/templates/generic/package_detail.html:42
 
 msgid "maintainer"
 msgstr "メンテナ"
@@ -37,7 +38,7 @@ msgstr "メンテナ"
 #: library/model/table/ChargeTable.php:136
 
 msgid "role"
-msgstr "権限"
+msgstr "状態"
 
 #: library/model/table/ChargeTable.php:137
 
@@ -63,22 +64,28 @@ msgstr ""
 #: library/model/table/PackageTable.php:92
 #: library/model/table/ServerCategoriesTable.php:47
 #: library/model/table/ServerPackagesTable.php:236
+#: resources/templates/generic/package_form.html:16
 
 msgid "name"
 msgstr "名前"
 
 #: library/model/table/MaintainerTable.php:118
+#: resources/templates/generic/maintainer_form.html:18
 
 msgid "mail"
 msgstr "メールアドレス"
 
 #: library/model/table/MaintainerTable.php:143
 #: library/model/table/ServerMaintainersTable.php:78
+#: resources/templates/generic/maintainer_form.html:22
+#: resources/templates/mypage.html:14
 
 msgid "fullname"
 msgstr "フルネーム"
 
 #: library/model/table/MaintainerTable.php:168
+#: resources/templates/generic/maintainer_form.html:26
+#: resources/templates/mypage.html:18
 
 msgid "profile"
 msgstr "プロフィール"
@@ -101,11 +108,13 @@ msgstr "URL"
 
 #: library/model/table/PackageTable.php:117
 #: library/model/table/ServerPackagesTable.php:161
+#: resources/templates/generic/package_form.html:24
 
 msgid "description"
 msgstr "詳細"
 
 #: library/model/table/PackageTable.php:142
+#: resources/templates/generic/package_form.html:28
 
 msgid "public"
 msgstr "公開設定"
@@ -113,7 +122,7 @@ msgstr "公開設定"
 #: library/model/table/PackageTable.php:171
 
 msgid "latestRelease"
-msgstr "最終リリース設定"
+msgstr "最終リリース"
 
 #: library/model/table/PackageTable.php:225
 
@@ -161,9 +170,11 @@ msgid "licenselocation"
 msgstr ""
 
 #: library/model/table/ServerPackagesTable.php:211
+#: resources/templates/generic/maintainer_list.html:4
+#: resources/templates/index.html:36
 
 msgid "maintainers"
-msgstr ""
+msgstr "メンテナ一覧"
 
 #: library/model/table/ServerPackagesTable.php:261
 
@@ -200,6 +211,174 @@ msgstr ""
 msgid "contents"
 msgstr ""
 
+#: resources/templates/error/403.html:4
+#: resources/templates/error/403.html:8
+
+msgid "Forbiden"
+msgstr "ページを表示する権限がありません"
+
+#: resources/templates/error/404.html:4
+
+msgid "Not Found"
+msgstr "ページが見つかりません"
+
+#: resources/templates/error/404.html:8
+
+msgid "404 <span class="red">Not</span> Found"
+msgstr ""
+
+#: resources/templates/generic/maintainer_form.html:7
+
+msgid "Account Settings"
+msgstr "アカウント設定"
+
+#: resources/templates/generic/maintainer_form.html:10
+#: resources/templates/mypage.html:12
+
+msgid "Subversion Account"
+msgstr "Subversion ユーザー名"
+
+#: resources/templates/generic/maintainer_form.html:14
+
+msgid "Subversion Password"
+msgstr "Subversion パスワード"
+
+#: resources/templates/generic/maintainer_form.html:30
+
+msgid "update"
+msgstr "更新"
+
+#: resources/templates/generic/maintainer_list.html:11
+
+msgid "Maintainer Search"
+msgstr "メンテナ検索"
+
+#: resources/templates/generic/maintainer_list.html:13
+#: resources/templates/generic/package_list.html:12
+
+msgid "search"
+msgstr "検索"
+
+#: resources/templates/generic/package_detail.html:27
+#: resources/templates/generic/package_list.html:22
+
+msgid "Latest Release:"
+msgstr "最終リリース:"
+
+#: resources/templates/generic/package_form.html:4
+#: resources/templates/generic/package_form.html:13
+
+msgid "Package Settings"
+msgstr "パッケージの設定"
+
+#: resources/templates/generic/package_list.html:4
+#: resources/templates/index.html:35
+
+msgid "packages"
+msgstr "パッケージ一覧"
+
+#: resources/templates/generic/package_list.html:10
+
+msgid "Package Search"
+msgstr "パッケージ検索"
+
+#: resources/templates/index.html:6
+
+msgid "openpear.org - openpear makes you able to make and publish PEAR libraries easier."
+msgstr ""
+
+#: resources/templates/index.html:31
+
+msgid "about"
+msgstr "ホーム"
+
+#: resources/templates/index.html:33
+#: resources/templates/mypage.html:4
+
+msgid "mypage"
+msgstr "マイページ"
+
+#: resources/templates/index.html:37
+
+msgid "repository"
+msgstr "リポジトリ"
+
+#: resources/templates/index.html:39
+
+msgid "logout"
+msgstr "ログアウト"
+
+#: resources/templates/index.html:41
+#: resources/templates/login/redirect.html:9
+#: resources/templates/login.html:4
+
+msgid "login"
+msgstr "ログイン"
+
+#: resources/templates/index.html:50
+
+msgid "Welcome to"
+msgstr ""
+
+#: resources/templates/index.html:72
+
+msgid "<span class="red">How to</span> use?"
+msgstr ""
+
+#: resources/templates/index.html:80
+
+msgid "The <span class="red">Easiest</span>"
+msgstr ""
+
+#: resources/templates/index.html:85
+
+msgid "How to join <span class="red">openpear</span>"
+msgstr ""
+
+#: resources/templates/maintainer/signup.html:4
+#: resources/templates/maintainer/signup.html:7
+
+msgid "Sign Up"
+msgstr "メンテナ登録"
+
+#: resources/templates/maintainer/signup.html:34
+
+msgid "sign up"
+msgstr "登録"
+
+#: resources/templates/mypage.html:10
+
+msgid "Your Settings"
+msgstr "登録情報"
+
+#: resources/templates/repository/detail.html:4
+#: resources/templates/repository/detail.html:12
+#: resources/templates/repository/list.html:4
+#: resources/templates/repository/list.html:9
+
+msgid "repository browser"
+msgstr "リポジトリブラウザ"
+
+#: resources/templates/repository/detail.html:18
+
+msgid "revision"
+msgstr "リビジョン"
+
+#: resources/templates/repository/detail.html:20
+
+msgid "author"
+msgstr "編集者"
+
+#: resources/templates/repository/detail.html:22
+
+msgid "path"
+msgstr "ファイルパス"
+
+#: resources/templates/repository/detail.html:27
+
+msgid "source"
+msgstr "ソース"
+
 #: setup/project.xml:input
 
 msgid "Channel DOMAIN"
@@ -233,5 +412,10 @@ msgstr ""
 #: setup/project.xml:input
 
 msgid "Subversion のURL"
+msgstr ""
+
+#: setup/project.xml:input
+
+msgid "information"
 msgstr ""
 

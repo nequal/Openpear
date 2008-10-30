@@ -1,16 +1,16 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
 
-<rt:block name="title">メンテナー - openpear</rt:block>
+<rt:block name="title">_('maintainers') - openpear</rt:block>
 
 <rt:block name="info"><rt:if param="{$isLogin}">登録していない PHP 開発者が居たら、是非 openpear へ招待してください<rt:else />メンテナーの登録は、今すぐOpenIDで<a href="{$rhaco.url('login')}">ログイン</a>！</rt:if></rt:block>
 
 <rt:block name="contents">
 	<div id="search_form">
 		<form action="{$rhaco.uri()}" method="get" rt:reference="true">
-			<label for="q">メンテナ検索</label>
+			<label for="q">_('Maintainer Search')</label>
 			<p><input type="text" name="q" size="18" /> 
-				<input type="submit" value="検索" /></p>
+				<input type="submit" value="_('search')" /></p>
 		</form>
 	</div>
 
