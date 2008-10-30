@@ -114,6 +114,12 @@ $parser = Urls::parser(array(
         'class' => 'OpenpearAPI',
         'method' => 'maintainers',
     ),
+    
+    '^404$' => array(
+        'class' => 'Openpear',
+        'method' => '_notFound',
+        'default' => true,
+    ),
 ), $db);
 $request = new Request();
 $parser->setFilter('filter.OpenpearTemplateFilter');
