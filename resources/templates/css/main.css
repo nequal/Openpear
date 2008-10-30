@@ -35,7 +35,7 @@ h2 {
 h3 {
   font-size: 1.5em;
   border-bottom: 1px solid #eee;
-  margin: 0 0 .8em;
+  margin: 0 0 0.5em;
 }
 
 h3 a {
@@ -81,7 +81,9 @@ img {
   font-family: consolas, "Courier New", monospace;
 }
 
- 
+/* page layout
+ --------------------------------------------------*/ 
+
 #header {
   width: 900px;
   height: 100px;
@@ -97,10 +99,26 @@ img {
   list-style: none;
   margin-top: 50px;
 }
-  #menu li { display: inline; }
-  #menu a { display: block; float: left; margin-left: 30px; padding: 7px; text-decoration: none; font-size: 13px; color: #000000; }
-  #menu a:hover { color: #000; border-bottom: 2px solid #ccc; }
-  #menu .active a { border-bottom: 2px solid #C70012; color: #9D2900;}
+#menu li {
+  display: inline;
+}
+#menu a {
+  display: block;
+  float: left;
+  margin-left: 25px;
+  padding: 7px 7px 3px 7px;
+  text-decoration: none;
+  font-size: 13px;
+  color: #000000;
+}
+#menu a:hover {
+  color: #000;
+  border-bottom: 2px solid #ccc;
+}
+#menu .active a {
+border-bottom: 2px solid #C70012;
+  color: #9D2900;
+}
  
 #teaser { clear: both; height: 259px; background: #fff url(../images/teaserbg.jpg) repeat-x; }
   .box { float: left; padding: 66px 0 0; width: 480px; color: #f1e6e6; }
@@ -185,14 +203,18 @@ pre.prettyprint {
 
 #search_form {
   margin: 0 auto;
-  width: 300px;
 }
 #search_form form label {
   font-weight: bold;
 }
 #search_form form input[type=text] {
+  border: solid 1px #ccc;
+  width: 280px;
+  padding: 2px;
+
 }
 #search_form form input[type=submit] {
+  padding 1px 10px;
 }
 
 /* pager
