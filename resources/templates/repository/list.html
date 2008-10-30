@@ -10,23 +10,25 @@
 
 	<table class="repository">
 		<tr>
-			<th class="revision">rev</th><th>name</th><th>author</th>
+			<th>name</th><th class="revision">rev</th><th>author</th><th>comment</th>
 		</tr>
 		<rt:if param="{$path}">
 		<tr class="odd">
-			<td align="center"> - </td>
 			<td><a href="{$rhaco.url('repository')}{$of.dn($path)}">..</a></td>
-			<td> - </td>
+			<td align="right">{$rev}</td>
+			<td align="center"> - </td>
+			<td>{$f.text2html($log)}</td>
 		</tr>
 		</rt:if>
 <rt:loop param="entries" var="entry">
 		<tr class="{$f.evenodd($key)} {$entry['kind']}">
-			<td class="revision" align="right">{$entry['commit']['revision']}</td>
 			<td class="name">
 				<rt:if param="{$entry['kind']}" value="dir"><img src="{$rhaco.templateurl('images')}/dir.png" width="16" height="16" /> </rt:if>
 				<rt:if param="{$entry['kind']}" value="file"><img src="{$rhaco.templateurl('images')}/file.png" width="16" height="16" /> </rt:if>
 				<a href="{$rhaco.url('repository')}{$path}/{$entry['name']}">{$entry['name']}</a></td>
+			<td class="revision" align="right">{$entry['commit']['revision']}</td>
 			<td class="author"><rt:if param="{$entry['commit']['author']}" value="openpear"> - <rt:else /><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></rt:if></td>
+            <td class="log">{$f.text2html($entry['log'])}</td>
 		</tr>
 </rt:loop>
 

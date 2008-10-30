@@ -18,6 +18,7 @@
         <dt>パス</td>
         <dd><a href="{$rhaco.url('repository')}{$of.dn($path)}">{$of.dn($path)}</a></dd>
 	</dl>
+	<p class="info">{$f.text2html($entry['log'])}</p>
 	<rt:if param="{$body}">
 	<h3>ソース</h3>
 		<pre class="prettyprint">

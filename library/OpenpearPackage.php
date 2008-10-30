@@ -120,7 +120,7 @@ class OpenpearPackage extends Openpear
                 $baseinstalldir .= implode('/', $path);
             }
             $release = new Release($package, $this->getVariable('package___l___baseinstalldir', $baseinstalldir));
-            $default = empty($p->latestRelase) ? $release->get() : unserialize($p->latestRelease);
+            $default = empty($p->latestRelease) ? $release->get() : unserialize($p->latestRelease);
 
             $parser = new HtmlParser('package/release.html');
             if($this->isPost()){
