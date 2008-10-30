@@ -19,7 +19,7 @@
     <rt:loop param="row" var="object">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
             <h3><a href="{$rhaco.url('package')}/{$object.name}">{$object.name}</a></h3>
-            <p>{$of.d($object.description)}</p>
+            <p>{$f.text2html($of.st($of.d($object.description)), 200, 10)}</p>
         </div>
     </rt:loop>
     <br clear="all" />

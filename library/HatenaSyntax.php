@@ -277,8 +277,9 @@ class HatenaSyntax_Pre implements HatenaSyntax_MarkupSyntaxInterface
               ? htmlspecialchars($this->result, ENT_QUOTES)
               : $this->result;
     $this->result = '';
+    $class = $this->superPreFlag ? ' class="prettyprint"' : '';
     
-    return '<pre>' . PHP_EOL . $result . '</pre>' . PHP_EOL;
+    return '<pre'. $class. '>' . PHP_EOL . $result . '</pre>' . PHP_EOL;
   }
 }
 

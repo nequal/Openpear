@@ -11,7 +11,7 @@
 	    <rt:loop param="row" var="object">
 	        <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
 	            <h3><a href="{$rhaco.url('maintainer')}/{$object.name}"><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></a></h3>
-	            <p>{$of.st($of.d($object.profile, $object.name))}</p>
+	            <p>{$f.text2html($of.st($of.d($object.profile, $object.name)), 200, 10)}</p>
 	        </div>
 	    </rt:loop>
 	    <br clear="all" />

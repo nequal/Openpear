@@ -2,7 +2,10 @@
 <rt:block name="teaser"></rt:block>
 
 <rt:block name="title">{$object.name} - openpear</rt:block>
-
+<rt:block name="adHeader">
+<link href="http://media.riaf.org/google-code-prettify/src/prettify.css" rel="stylesheet" type="text/css" />
+<script src="http://media.riaf.org/google-code-prettify/src/prettify.js" type="text/javascript"></script>
+</rt:block>
 <rt:block name="info">新しいプロジェクトの追加は<a href="{$rhaco.url('packages/create')}">プロジェクト情報作成</a>から行えます</rt:block>
 <rt:block name="contents">
 <script type="text/javascript">
@@ -47,5 +50,5 @@ $(function(){
     </rt:loop>
     <br clear="all" />
 </rt:loop>
-
+<script type="text/javascript"> prettyPrint(); </script>
 </rt:block>
