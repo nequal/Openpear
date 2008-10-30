@@ -19,7 +19,7 @@ class OpenpearFormatter
         return $hatena->parse($string);
     }
     function st($str){
-        return is_string($str) ? strip_tags($str) : '';
+        return is_string($str) ? trim(strip_tags($str)) : '';
     }
     function dn($str){
         $dn = dirname($str);

@@ -18,6 +18,9 @@ class Release
             'description_file' => 'desc.txt',
             'notes_file' => 'notes.txt',
         ),
+        'role' => array(
+            'sh' => 'script',
+        ),
         'version' => array(
             'release_ver' => '0.1.0',
             'release_stab' => 'stable',
@@ -156,6 +159,8 @@ class Release
     }
     function verify(){
         $this->variables['package']['channel'] = Rhaco::constant('CHANNEL', 'openpear.org');
+        $this->variables['project']['src_dir'] = 'src';
+        $this->variables['project']['release_dir'] = 'release';
     }
 }
 
