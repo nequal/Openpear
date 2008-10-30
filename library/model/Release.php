@@ -173,7 +173,7 @@ class Release
             $html .= sprintf('<tr><th colspan="2">%s</th></tr>', Message::_($catName));
             $i = 0;
             foreach($cat as $k => $v){
-                $html .= sprintf('<tr　class="%s"><td class="key">%s</td><td class="value">%s</td></tr>',
+                $html .= sprintf('<tr class="%s"><td class="key">%s</td><td class="value">%s</td></tr>',
                 TemplateFormatter::evenodd($i++), Message::_($k) , $v);
             }
         }
