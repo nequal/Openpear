@@ -18,7 +18,7 @@
 <rt:loop param="object_list" var="row">
     <rt:loop param="row" var="object">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
-            <h3><a href="{$rhaco.url('package')}/{$object.name}">{$object.name}</a></h3>
+            <h4><a href="{$rhaco.url('package')}/{$object.name}">{$object.name}</a></h4>
             <div style="text-align:right;">_('Latest Release:') {$object.getLatestVersion('not yet')}</div>
             <p>{$f.text2html($of.st($of.d($object.description)), 200)}</p>
         </div>
