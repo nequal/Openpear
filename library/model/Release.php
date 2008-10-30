@@ -162,6 +162,21 @@ class Release
         $this->variables['project']['src_dir'] = 'src';
         $this->variables['project']['release_dir'] = 'release';
     }
+    /**
+     * 確認画面用
+     * @todo TemplateFormatter に入れる
+     */
+    function getHtml(){
+        $html = '<table class="release">';
+        foreach($this->variables as $catName => $cat){
+            $html .= sprintf('<tr><th colspan="2">%s</th></tr>', Message::_($catName));
+            foreach($cat as $k => $v){
+                $html .= sprintf('<tr><td class="key">%s</td><td class="value">%s</td></tr>', Message::_($k) , $v);
+            }
+        }
+        $html .= '</table>';
+        return $html;
+    }
 }
 
 ?>

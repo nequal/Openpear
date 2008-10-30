@@ -59,6 +59,14 @@ $parser = Urls::parser(array(
         'class' => 'OpenpearPackage',
         'method' => 'release',
     ),
+    '^package\/(.*?)\/release\/confirm$' => array(
+        'class' => 'OpenpearPackage',
+        'method' => 'release_confirm',
+    ),
+    '^package\/(.*?)\/release\/do$' => array(
+        'class' => 'OpenpearPackage',
+        'method' => 'release_do',
+    ),
     '^package\/(.*?)\/maintainer$' => array(
         'class' => 'OpenpearPackage',
         'method' => 'maintainer',

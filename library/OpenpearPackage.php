@@ -122,36 +122,68 @@ class OpenpearPackage extends Openpear
             $release = new Release($package, $this->getVariable('package___l___baseinstalldir', $baseinstalldir));
             $default = empty($p->latestRelease) ? $release->get() : unserialize($p->latestRelease);
 
-            $parser = new HtmlParser('package/release.html');
-            if($this->isPost()){
-                $variables = $this->getVariable();
-                foreach($variables as $name => $value){
-                    if(strpos($name, '___l___') === false) continue;
-                    list($cat, $name) = explode('___l___', $name, 2);
-                    if(empty($name)) continue;
-                    $release->set($cat, $name, $value);
-                }
-                foreach($p->maintainers as $maintainer){
-                    $release->addMaintainer($maintainer->name, $maintainer->fullname, $maintainer->mail, $maintainer->role);
-                }
-                $release->description = $p->description;
-                if($release->build($package. '/'. $this->getVariable('build_path', 'trunk'))){
-                    $this->message('パッケージをリリースしました (version '.$this->getVariable('version___l___release_ver', '0.1.0').')');
-                    $p->setLatestRelease(serialize($release->get()));
-                    $this->dbUtil->update($p);
-                    $this->setTemplate('package/succeeed_release.html');
-                    $this->setVariable('buildLog', $release->buildLog);
-                    $this->setVariable('object', $p);
-                    return $this->parser();
-                }
-                $this->message('build package failed.');
-                $this->setVariable('buildLog', $release->buildLog);
-            } else $parser->setVariable($default);
-            $parser->setVariable('object', $p);
-            $parser->setVariable('version', $p->getLatestVersion());
-            return $parser;
+            $this->setVariable($default);
+            $this->setVariable('object', $p);
+            $this->setVariable('version', $p->getLatestVersion());
+            return $this->parser('package/release.html');
         }
         return $this->_notFound();
+    }
+    function release_confirm($package){
+        $this->loginRequired();
+        $u = RequestLogin::getLoginSession();
+
+        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
+        if($this->isPost() && $this->isMaintainer($p, $u, true)){
+            $release = $this->_getRelease($p);
+            $this->setVariable('vals', $this->getVariable());
+            $this->setVariable('release', $release);
+            $this->setVariable('object', $p);
+            return $this->parser('package/release_confirm.html');
+        }
+        Header::redirect(Rhaco::url('package/'. $package. '/release'));
+    }
+    function release_do($package){
+        $this->loginRequired();
+        $u = RequestLogin::getLoginSession();
+
+        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
+        if($this->isPost() && $this->isMaintainer($p, $u, true)){
+            $release = $this->_getRelease($p);
+            if($release->build($package. '/'. $this->getVariable('build_path', 'trunk'))){
+                $this->message('パッケージをリリースしました (version '.$this->getVariable('version___l___release_ver', '0.1.0').')');
+                $p->setLatestRelease(serialize($release->get()));
+                $this->dbUtil->update($p);
+                $this->setVariable('buildLog', $release->buildLog);
+                $this->setVariable('object', $p);
+                return $this->parser('package/succeeed_release.html');
+            }
+            $this->message('build package failed.');
+        }
+        Header::redirect(Rhaco::url('package/'. $package. '/release'));
+    }
+    function _getRelease($p){
+        $baseinstalldir = '/';
+        if(strpos($p->name, '_') !== false){
+            $path = explode('_', $p->name);
+            array_pop($path);
+            $baseinstalldir .= implode('/', $path);
+        }
+        $release = new Release($p->name, $this->getVariable('package___l___baseinstalldir', $baseinstalldir));
+        $default = empty($p->latestRelease) ? $release->get() : unserialize($p->latestRelease);
+
+        $variables = $this->getVariable();
+        foreach($variables as $name => $value){
+            if(strpos($name, '___l___') === false) continue;
+            list($cat, $name) = explode('___l___', $name, 2);
+            if(empty($name)) continue;
+            $release->set($cat, $name, $value);
+        }
+        foreach($p->maintainers as $maintainer){
+            $release->addMaintainer($maintainer->name, $maintainer->fullname, $maintainer->mail, $maintainer->role);
+        }
+        $release->description = $p->description;
+        return $release;
     }
     function settings($package){
         $this->loginRequired();

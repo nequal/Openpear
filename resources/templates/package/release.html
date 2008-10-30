@@ -7,7 +7,7 @@
 
 <rt:block name="contents">
 	<h3>パッケージをリリースする</h3>
-	<form action="{$rhaco.uri()}" method="post" rt:reference="true">
+	<form action="{$rhaco.url('package')}/{$object.name}/release/confirm" method="post" rt:reference="true">
 		<div class="field">
 		    <label for="name">パッケージ名</label>
 		    <p>{$object.name}</p>

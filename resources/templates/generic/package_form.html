@@ -5,7 +5,7 @@
 
 <rt:block name="info">一度設定したプロジェクト名は変更できません。注意してください。</rt:block>
 <rt:block name="contents">
-<rt:if param="{$generic_title}" value="update">
+<rt:if param="{$object.id}">
 		<h3>管理メニュー</h3>
 		<p><a href="{$rhaco.url('package')}/{$name}/release">パッケージをリリースする</a></p>
 		<p><a href="{$rhaco.url('package')}/{$name}/maintainer">メンテナ管理</a></p>
@@ -14,10 +14,10 @@
         <form action="{$rhaco.uri()}" method="post" rt:reference="true">
             <div class="field">
                 <label for="name"><b>_('name')</b></label>
-                <rt:if param="{$generic_title}" value="create">
-                <p><input type="text" size="20" value="" name="name" /> (半角英数字と_（アンダースコア）が使えます)</p>
-                <rt:else />
+                <rt:if param="{$object.id}">
                 <p>{$name}</p>
+                <rt:else />
+                <p><input type="text" size="20" value="" name="name" /> (半角英数字と_（アンダースコア）が使えます)</p>
                 </rt:if>
             </div>
             <div class="field">
