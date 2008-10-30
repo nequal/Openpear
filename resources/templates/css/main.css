@@ -37,6 +37,9 @@ h3 {
   border-bottom: 1px solid #eee;
   margin: 0 0 0.5em;
 }
+h3.big {
+  font-size: 2.5em;
+}
 
 h3 a {
   text-decoration: none;
@@ -47,6 +50,21 @@ h3 a:hover {
   font-style: italic;
 }
 
+h4 {
+  font-size: 1.5em;
+  border-bottom: 1px solid #eee;
+  font-weight: 900;
+  font-family: Verdana, Osaka, "メイリオ";
+  letter-spacing: -0.1em;
+  margin: 0 0 0.5em;
+}
+h4 a {
+  text-decoration: none;
+}
+h4 a:hover {
+  text-decoration: none;
+  font-style: italic;
+}
 p {
   font-family: Arial,"ＭＳ Ｐゴシック" ;
   margin: 0 0 2em 0;
@@ -165,7 +183,9 @@ dl {
 dt {
   margin: 5px;
   font-weight: bold;
-    border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  font-size: 1.4em;
+  color: #666;
 }
 dd {
   margin: 5px 20px;

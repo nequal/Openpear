@@ -9,27 +9,27 @@
 <rt:block name="info">実際のリポジトリ上のURL <a href="{$rhaco.constant('SVN_URL')}{$path}">{$rhaco.constant('SVN_URL')}{$path}</a></rt:block>
 
 <rt:block name="contents">
-	<h3>_('repository browser')</h3>
+  <h3 class="big">_('repository browser')
     <rt:if param="{$path}">
-        <p>package: <a href="{$rhaco.url('package')}/{$of.pp($path)}">{$of.pp($path)}</a></p>
+        : package <a href="{$rhaco.url('package')}/{$of.pp($path)}">{$of.pp($path)}</a>
     </rt:if>
-
-	<dl>
-		<dt>_('revision')</dt>
-		<dd>{$entry['commit']['revision']}</dd>
-		<dt>_('author')</dt>
-		<dd><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></dd>
+  </h3>
+  <dl>
+    <dt>_('revision')</dt>
+    <dd>{$entry['commit']['revision']}</dd>
+    <dt>_('author')</dt>
+    <dd><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></dd>
         <dt>_('path')</dd>
         <dd><a href="{$rhaco.url('repository')}{$of.dn($path)}">{$of.dn($path)}</a></dd>
         <dt>_('last modified')</dt>
         <dd>{$f.dateformat($entry['commit']['date'])}</dd>
-	</dl>
-	<p class="info">{$f.text2html($entry['log'])}</p>
-	<rt:if param="{$body}">
-	<h3>_('source')</h3>
-		<pre class="prettyprint">
+  </dl>
+  <p class="info">{$f.text2html($entry['log'])}</p>
+  <rt:if param="{$body}">
+  <h3 class="big">_('source')</h3>
+    <pre class="prettyprint">
 {$f.escape($body)}
-		</pre>
-		<script type="text/javascript"> prettyPrint(); </script>
-	</rt:if>
+    </pre>
+    <script type="text/javascript"> prettyPrint(); </script>
+  </rt:if>
 </rt:block>
