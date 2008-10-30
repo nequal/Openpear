@@ -23,10 +23,10 @@ class OpenpearPackage extends Openpear
     function detail($name){
         $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name), Q::depend()));
         if(!isset($parser->variables['object'])) return $parser;
-        $parser->setVariable('latestVersion', $this->getLatestVersion($name, 'no release'));
+        $p = $parser->variables['object'];
+        $parser->setVariable('latestVersion', $p->getLatestVersion('no release'));
         if(RequestLogin::isLoginSession()){
             $u = RequestLogin::getLoginSession();
-            $p = $parser->variables['object'];
             $parser->setVariable('isMaintainer', $this->isMaintainer($p, $u, true));
         }
         return $parser;
@@ -148,7 +148,7 @@ class OpenpearPackage extends Openpear
                 $this->setVariable('buildLog', $release->buildLog);
             } else $parser->setVariable($default);
             $parser->setVariable('object', $p);
-            $parser->setVariable('version', $this->getLatestVersion($package, '0.1.0'));
+            $parser->setVariable('version', $p->getLatestVersion());
             return $parser;
         }
         return $this->_notFound();

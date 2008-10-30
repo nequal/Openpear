@@ -7,6 +7,15 @@ Rhaco::import('SvnUtil');
 class Package extends PackageTable{
     var $favorites;
     
+    function getLatestVersion($default='0.1.0'){
+        $lr = unserialize($this->latestRelease);
+        return isset($lr['version___l___release_ver']) ? $lr['version___l___release_ver'] : $default;
+    }
+    
+    function beforeInsert(){
+        $this->created = $this->updated = time();
+        return true;
+    }
     function afterInsert($db){
         // add charge
         $m = RequestLogin::getLoginSession();
@@ -26,8 +35,12 @@ class Package extends PackageTable{
         FileUtil::mkdir($wp.'/tags');
         $svn->cmd('add '.$wp.'/trunk '.$wp.'/tags');
         $svn->cmd(sprintf('ci %s -m "[Create Base Directory] %s"', $wp, $this->name));
+        return true;
     }
-
+    function beforeUpdate(){
+        $this->updated = time();
+        return true;
+    }
     function afterSelect($db){
         if(!empty($this->dependCharges)){
             $c = new C(Q::order(Maintainer::columnName()));
