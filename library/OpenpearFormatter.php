@@ -25,4 +25,8 @@ class OpenpearFormatter
         $dn = dirname($str);
         return ($dn == '.') ? '' : $dn;
     }
+    function pp($str){
+        list(, $n) = explode('/', $str);
+        return $n;
+    }
 }

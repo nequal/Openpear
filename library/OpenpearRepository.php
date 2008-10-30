@@ -43,7 +43,7 @@ class OpenpearRepository extends Openpear
                     );
                 }
                 $this->setVariable('rev', $info['entry']['commit']['revision']);
-                $this->setVariable('log', $this->_getLog($path, $info['entry']['commit']['revision']))
+                $this->setVariable('log', $this->_getLog($path, $info['entry']['commit']['revision']));
                 $this->setVariable('entries', $entries);
                 return $this->parser('repository/list.html');
 

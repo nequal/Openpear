@@ -8,6 +8,12 @@
 <rt:block name="contents">
 	<h3>リポジトリブラウザ</h3>
 
+    <rt:if param="{$path}">
+        <p>package: <a href="{$rhaco.url('package')}/{$of.pp($path)}">{$of.pp($path)}</a></p>
+    </rt:if>
+
+    <p class="info"><b>r{$rev}</b>: {$f.text2html($log)}</p>
+
 	<table class="repository">
 		<tr>
 			<th>name</th><th class="revision">rev</th><th>author</th><th>comment</th>
@@ -15,9 +21,9 @@
 		<rt:if param="{$path}">
 		<tr class="odd">
 			<td><a href="{$rhaco.url('repository')}{$of.dn($path)}">..</a></td>
-			<td align="right">{$rev}</td>
 			<td align="center"> - </td>
-			<td>{$f.text2html($log)}</td>
+			<td align="center"> - </td>
+			<td align="center"> - </td>
 		</tr>
 		</rt:if>
 <rt:loop param="entries" var="entry">

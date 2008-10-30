@@ -10,6 +10,10 @@
 
 <rt:block name="contents">
 	<h3>リポジトリブラウザ</h3>
+    <rt:if param="{$path}">
+        <p>package: <a href="{$rhaco.url('package')}/{$of.pp($path)}">{$of.pp($path)}</a></p>
+    </rt:if>
+
 	<dl>
 		<dt>リビジョン</dt>
 		<dd>{$entry['commit']['revision']}</dd>
