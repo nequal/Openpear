@@ -1,0 +1,237 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-10-30 18:35+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <team@exsample.com>\n"
+
+#: library/model/table/ChargeTable.php:56
+#: library/model/table/MaintainerTable.php:67
+#: library/model/table/PackageTable.php:66
+
+msgid "id"
+msgstr ""
+
+#: library/model/table/ChargeTable.php:81
+#: library/model/table/FavoriteTable.php:49
+#: library/model/table/ServerPackagesTable.php:286
+
+msgid "package"
+msgstr "パッケージ"
+
+#: library/model/table/ChargeTable.php:106
+#: library/model/table/FavoriteTable.php:74
+#: library/model/table/OpenIdTable.php:48
+
+msgid "maintainer"
+msgstr "メンテナ"
+
+#: library/model/table/ChargeTable.php:136
+
+msgid "role"
+msgstr "権限"
+
+#: library/model/table/ChargeTable.php:137
+
+msgid "lead"
+msgstr ""
+
+#: library/model/table/ChargeTable.php:137
+
+msgid "developer"
+msgstr ""
+
+#: library/model/table/ChargeTable.php:137
+
+msgid "contributor"
+msgstr ""
+
+#: library/model/table/ChargeTable.php:137
+
+msgid "helper"
+msgstr ""
+
+#: library/model/table/MaintainerTable.php:93
+#: library/model/table/PackageTable.php:92
+#: library/model/table/ServerCategoriesTable.php:47
+#: library/model/table/ServerPackagesTable.php:236
+
+msgid "name"
+msgstr "名前"
+
+#: library/model/table/MaintainerTable.php:118
+
+msgid "mail"
+msgstr "メールアドレス"
+
+#: library/model/table/MaintainerTable.php:143
+#: library/model/table/ServerMaintainersTable.php:78
+
+msgid "fullname"
+msgstr "フルネーム"
+
+#: library/model/table/MaintainerTable.php:168
+
+msgid "profile"
+msgstr "プロフィール"
+
+#: library/model/table/MaintainerTable.php:193
+
+msgid "password"
+msgstr "パスワード"
+
+#: library/model/table/MaintainerTable.php:218
+#: library/model/table/PackageTable.php:196
+
+msgid "created"
+msgstr "作成時刻"
+
+#: library/model/table/OpenIdTable.php:73
+
+msgid "url"
+msgstr "URL"
+
+#: library/model/table/PackageTable.php:117
+#: library/model/table/ServerPackagesTable.php:161
+
+msgid "description"
+msgstr "詳細"
+
+#: library/model/table/PackageTable.php:142
+
+msgid "public"
+msgstr "公開設定"
+
+#: library/model/table/PackageTable.php:171
+
+msgid "latestRelease"
+msgstr "最終リリース設定"
+
+#: library/model/table/PackageTable.php:225
+
+msgid "updated"
+msgstr "更新時刻"
+
+#: library/model/table/ServerCategoriesTable.php:72
+
+msgid "desctn"
+msgstr ""
+
+#: library/model/table/ServerMaintainersTable.php:53
+
+msgid "hundle"
+msgstr ""
+
+#: library/model/table/ServerMaintainersTable.php:103
+
+msgid "email"
+msgstr ""
+
+#: library/model/table/ServerMaintainersTable.php:128
+
+msgid "stats"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:86
+
+msgid "channel"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:111
+
+msgid "date"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:136
+
+msgid "dependencies"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:186
+
+msgid "licenselocation"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:211
+
+msgid "maintainers"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:261
+
+msgid "notes"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:311
+
+msgid "stability"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:336
+
+msgid "state"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:361
+
+msgid "summary"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:386
+
+msgid "version"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:411
+
+msgid "filesize"
+msgstr ""
+
+#: library/model/table/ServerPackagesTable.php:436
+
+msgid "contents"
+msgstr ""
+
+#: setup/project.xml:input
+
+msgid "Channel DOMAIN"
+msgstr ""
+
+#: setup/project.xml:input
+
+msgid "SVNのパス"
+msgstr ""
+
+#: setup/project.xml:input
+
+msgid "Subversionのディレクトリ"
+msgstr ""
+
+#: setup/project.xml:input
+
+msgid "リポジトリの名前"
+msgstr ""
+
+#: setup/project.xml:input
+
+msgid "パッケージングに使用する一時ディレクトリ"
+msgstr ""
+
+#: setup/project.xml:input
+
+msgid "作業用ディレクトリ"
+msgstr ""
+
+#: setup/project.xml:input
+
+msgid "Subversion のURL"
+msgstr ""
+

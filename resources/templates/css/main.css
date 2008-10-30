@@ -240,3 +240,7 @@ pre.prettyprint {
   color: #fff;
   background: #A0000E;
 }
+
+div.section p {
+  margin: 0.2em 0;
+}
