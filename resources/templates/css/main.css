@@ -181,3 +181,23 @@ pre.prettyprint {
 #search_form form input[type=submit] {
 }
 
+/* pager
+ ********** */
+
+#pager {
+  text-align: center;
+}
+
+#pager span {
+  margin: 2px;
+  font-size: 12px;
+}
+
+#pager strong,
+#pager a {
+  padding: 5px;
+}
+#pager a:hover {
+  color: #fff;
+  background: #A0000E;
+}

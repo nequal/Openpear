@@ -1,7 +1,7 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
 
-<rt:block name="title">{$object.name}のリリース - Open PEAR Server</rt:block>
+<rt:block name="title">{$object.name}のリリース - openpear</rt:block>
 
 <rt:block name="info">パッケージのリリースが完了しました</rt:block>
 
@@ -12,7 +12,7 @@
     <p class="commands">pear upgrade openpear/{$object.name}</p>
 
     <h3>詳細ログ</h3>
-    <p>ビルド時のログです。もしパッケージングに失敗しているときや、Openpear.org の誤動作などありましたら、このログを添えて開発者まで連絡してください。</p>
+    <p>ビルド時のログです。もしパッケージングに失敗しているときや、openpear.org の誤動作などありましたら、このログを添えて開発者まで連絡してください。</p>
     <pre>{$buildLog}</pre>
 
 </rt:block>
