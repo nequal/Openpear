@@ -34,10 +34,8 @@ h2 {
 
 h3 {
   font-size: 1.5em;
-  border-left: 7px solid #9D2900;
-  border-bottom: 1px solid #9D2900;
+  border-bottom: 1px solid #eee;
   margin: 0 0 .8em;
-  padding-left: 10px;
 }
 
 h3 a {
