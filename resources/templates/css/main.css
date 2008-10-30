@@ -6,7 +6,7 @@
 *{ margin: 0; padding: 0; }*
 
 body {
-  margin: 50px 0 0;
+  margin: 0 0;
   background: #fff url(../images/bg.gif) repeat-x;
   font: .74em "Trebuchet MS", Arial, Sans-Serif, "ＭＳ Ｐゴシック";
   color: #444;
@@ -82,12 +82,16 @@ img {
 }
 
  
-#header { width: 900px; height: 50px; margin: 0 auto; }
-  #menu  { float: right; padding: 6px 0 0 0; list-style: none; }
-    #menu li { display: inline; }
-    #menu a { display: block; float: left; margin-left: 30px; padding: 7px; text-decoration: none; font-size: 13px; color: #000000; }
-    #menu a:hover { color: #000; border-bottom: 2px solid #ccc; }
-    #menu .active a { border-bottom: 2px solid #C70012; color: #9D2900;}
+#header {
+  width: 900px;
+  height: 100px;
+  margin: 0 auto;
+}
+#menu  { float: right; padding: 6px 0 0 0; list-style: none; }
+  #menu li { display: inline; }
+  #menu a { display: block; float: left; margin-left: 30px; padding: 7px; text-decoration: none; font-size: 13px; color: #000000; }
+  #menu a:hover { color: #000; border-bottom: 2px solid #ccc; }
+  #menu .active a { border-bottom: 2px solid #C70012; color: #9D2900;}
  
 #teaser { clear: both; height: 259px; background: #fff url(../images/teaserbg.jpg) repeat-x; }
   .box { float: left; padding: 66px 0 0; width: 480px; color: #f1e6e6; }
@@ -187,16 +191,22 @@ pre.prettyprint {
 
 #pager {
   text-align: center;
+  height: 40px;
 }
 
 #pager span {
   margin: 2px;
-  font-size: 12px;
+  font-size: 13px;
+  border: solid 1px #ccc;
+  float: left;
+  display: block;
 }
 
 #pager strong,
 #pager a {
-  padding: 5px;
+  padding: 2px 6px;
+  display: block;
+  font-weight: bold;
 }
 #pager a:hover {
   color: #fff;
