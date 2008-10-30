@@ -8,10 +8,70 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-30 21:35+0900\n"
+"POT-Creation-Date: 2008-10-31 05:55+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <team@exsample.com>\n"
+
+# === for Release confirm
+msgid "project"
+msgstr "プロジェクト"
+
+msgid "src_dir"
+msgstr "ソースディレクトリ"
+
+msgid "release_dir"
+msgstr "パッケージ格納先"
+
+msgid "package_name"
+msgstr "パッケージ名"
+
+msgid "package_type"
+msgstr "パッケージタイプ"
+
+msgid "baseinstalldir"
+msgstr "インストール先"
+
+msgid "channel"
+msgstr "チャンネル"
+
+msgid "summary_file"
+msgstr "概要"
+
+msgid "description_file"
+msgstr "詳細説明"
+
+msgid "notes_file"
+msgstr "更新履歴"
+
+msgid "version"
+msgstr "バージョン"
+
+msgid "release_ver"
+msgstr "リリースバージョン"
+
+msgid "release_stab"
+msgstr "リリース状態"
+
+msgid "api_ver"
+msgstr "APIバージョン"
+
+msgid "api_stab"
+msgstr "API状態"
+
+msgid "php_min"
+msgstr "PHPバージョン（最小）"
+
+msgid "pear_min"
+msgstr "PEARインストーラ（最小）"
+
+msgid "license"
+msgstr "ライセンス"
+
+msgid "uri"
+msgstr "参照先"
+
+# ===
 
 #: library/model/table/ChargeTable.php:56
 #: library/model/table/MaintainerTable.php:67
@@ -315,7 +375,6 @@ msgstr "ログイン"
 msgid "Welcome to"
 msgstr ""
 
-
 #: resources/templates/maintainer/signup.html:4
 #: resources/templates/maintainer/signup.html:7
 
@@ -331,6 +390,16 @@ msgstr "登録"
 
 msgid "Your Settings"
 msgstr "登録情報"
+
+#: resources/templates/package/release_confirm.html:17
+
+msgid "release"
+msgstr "リリース"
+
+#: resources/templates/package/release_confirm.html:23
+
+msgid "cancel"
+msgstr "キャンセル"
 
 #: resources/templates/repository/detail.html:4
 #: resources/templates/repository/detail.html:12
@@ -355,7 +424,12 @@ msgstr "編集者"
 msgid "path"
 msgstr "ファイルパス"
 
-#: resources/templates/repository/detail.html:27
+#: resources/templates/repository/detail.html:24
+
+msgid "last modified"
+msgstr ""
+
+#: resources/templates/repository/detail.html:29
 
 msgid "source"
 msgstr "ソース"
