@@ -53,7 +53,7 @@ class OpenpearRepository extends Openpear
         }
     }
     function _getLog($path, $rev='HEAD'){
-        $key = array($path, $rev);
+        $key = is_numeric($rev) ? $rev : array($path, $rev);
         $log = '';
         $svn = new SvnUtil();
         if(Cache::isExpiry($key, 3600*24*30*12)){
