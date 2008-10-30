@@ -11,7 +11,7 @@ Rhaco::import('model.Release');
 class OpenpearPackage extends Openpear
 {
     function read(){
-        $parser = parent::read(new Package(), new C(Q::orderDesc(Package::columnUpdated()), Q::pager(18)));
+        $parser = parent::read(new Package(), new C(Q::pager(18)));
         return $parser;
     }
     function create(){
@@ -19,11 +19,6 @@ class OpenpearPackage extends Openpear
         $parser = parent::create(new Package(), Rhaco::url('package/'. $this->getVariable('name', '')));
         $parser->setVariable('public', 1);
         return $parser;
-    }
-    function search(){
-        if($this->isVariable('w')){
-            $parser = parent::read(new Package(), new C(Q::ilike(Package::columnDescription(), $this->getVariable('w'), 'p'), Q::orderDesc(Package::columnUpdated()), Q::pager(18)));
-        } else return $this->read();
     }
     function detail($name){
         $parser = parent::detail(new Package(), new C(Q::eq(Package::columnName(), $name), Q::depend()));

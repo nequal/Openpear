@@ -50,6 +50,12 @@ class Package extends PackageTable{
             $this->favorites = $db->select(new Maintainer(), $c);
         }
     }
+    function views(){
+        return array(
+            'search_fields' => 'name,description',
+            'ordering' => '-updated',
+        );
+    }
 }
 
 ?>

@@ -148,7 +148,7 @@ dd {
 }
 pre.prettyprint {
     font-size: 12px;
-    font-family: consolas, "Courier New", mono-space;
+    font-family: consolas, "Courier New", monospace;
 }
 .repository tr.dir td.name {
     font-weight: bold;
@@ -158,5 +158,17 @@ pre.prettyprint {
 .repository td.revision {
   width: 10%;
   white-space: nowrap;
+}
+
+#search_form {
+  margin: 0 auto;
+  width: 300px;
+}
+#search_form form label {
+  font-weight: bold;
+}
+#search_form form input[type=text] {
+}
+#search_form form input[type=submit] {
 }
 

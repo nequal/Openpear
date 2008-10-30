@@ -5,6 +5,15 @@
 
 <rt:block name="info">新しいプロジェクトの追加は<a href="{$rhaco.url('packages/create')}">プロジェクト情報作成</a>から行えます</rt:block>
 <rt:block name="contents">
+	<div id="search_form">
+		<form action="{$rhaco.uri()}" method="get" rt:reference="true">
+			<label for="q">パッケージ検索</label>
+			<p><input type="text" name="q" size="18" /> 
+				<input type="submit" value="検索" /></p>
+		</form>
+	</div>
+
+
 <?php $object_list = array_chunk($object_list, 3); ?>
 <rt:loop param="object_list" var="row">
     <rt:loop param="row" var="object">
@@ -15,5 +24,9 @@
     </rt:loop>
     <br clear="all" />
 </rt:loop>
+
+	<div id="pager">
+		<rt:pager />
+	</div>
 
 </rt:block>
