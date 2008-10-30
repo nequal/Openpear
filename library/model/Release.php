@@ -131,10 +131,10 @@ class Release
         }
         // タグ打ちとかする？
         $svn->cmd(sprintf('copy file://%s/%s/%s file://%s/%s/tags/%s-%s -m "%s"',
-            Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path),
+            Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path,
             Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $this->variables['version']['release_ver'], $this->variables['version']['release_stab'],
             '[Add Tag:Release] '. $this->packageName
-        );
+        ));
         return $ret;
     }
     function registerPackage($packageFile){

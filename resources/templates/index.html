@@ -65,13 +65,13 @@
 
 	<div class="wrap">
         <div style="margin: 10px 0;">
-            <p class="info" id="information"><rt:block name="info"><span style="color: red; font-weight: bold;"><i>openpear.org</i> のリリースに向けて、絶賛テスト中！ <a href="http://trac.nequal.jp/milestone/openpear.org-1.0.0">&raquo; trac</a></span></rt:block></p>
+            <p class="info" id="information"><rt:block name="info">{$rhaco.constant('INFORMATION')}</rt:block></p>
         </div>
 <rt:block name="contents">
 		<div class="col">
 			<h3><span class="red">How to</span> use?</h3>
 			<p>openpear に登録されているパッケージは、すべて<a href="http://pear.php.net/">本家 PEAR</a> に登録されているパッケージと同様に使用することができます。PEAR コマンドが使用できる環境で以下のコマンドを入力してください。</p>
-            <p class="info monospace">pear channel-discover pear.riaf.jp</p>
+            <p class="info monospace">pear channel-discover {$rhaco.constant('CHANNEL')}</p>
             <p>パッケージのインストールは次のようにできます。</p>
             <p class="info monospace">pear install openpear/<b>パッケージ名</b></p>
             <p>各パッケージの詳細な使用方法はパッケージ毎のページをご覧下さい。</p>

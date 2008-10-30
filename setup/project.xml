@@ -95,4 +95,8 @@
         <title>Subversion のURL</title>
         <data>http://svn.openpear.org/</data>
     </input>
+    <input name="INFORMATION">
+        <title>information</title>
+        <data>Welcome to openpear.org</data>
+    </input>
 </project>
