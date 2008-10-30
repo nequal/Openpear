@@ -7,7 +7,7 @@ class OpenpearRepository extends Openpear
     var $allowExt = array('txt','php','css','js','pl','cgi','rb','py','phps','c');
 
     function browse($path='/'){
-        if(empty($path)) $path = '/';
+        if(empty($path) || preg_match('/\s/', $path)) $path = '/';
         $path = sprintf('file://%s/%s%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path);
         $svn = new SvnUtil();
         
