@@ -9,6 +9,9 @@
 require_once '__settings__.php';
 error_reporting(E_ALL);
 
+// FIXME!!
+date_default_timezone_set('Asia/Tokyo');
+
 Rhaco::import('model.Charge');
 Rhaco::import('model.Maintainer');
 Rhaco::import('model.Package');
