@@ -87,7 +87,16 @@ img {
   height: 100px;
   margin: 0 auto;
 }
-#menu  { float: right; padding: 6px 0 0 0; list-style: none; }
+#header h1 {
+  margin-top: 50px;
+}
+
+#menu  {
+  float: right;
+  padding: 6px 0 0 0;
+  list-style: none;
+  margin-top: 50px;
+}
   #menu li { display: inline; }
   #menu a { display: block; float: left; margin-left: 30px; padding: 7px; text-decoration: none; font-size: 13px; color: #000000; }
   #menu a:hover { color: #000; border-bottom: 2px solid #ccc; }
@@ -197,15 +206,12 @@ pre.prettyprint {
 #pager span {
   margin: 2px;
   font-size: 13px;
-  border: solid 1px #ccc;
-  float: left;
-  display: block;
 }
 
 #pager strong,
 #pager a {
-  padding: 2px 6px;
-  display: block;
+  border: solid 1px #ccc;
+  padding: 3px 7px;
   font-weight: bold;
 }
 #pager a:hover {
