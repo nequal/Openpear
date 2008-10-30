@@ -11,10 +11,11 @@ class OpenpearRepository extends Openpear
         $path = sprintf('file://%s/%s%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path);
         $svn = new SvnUtil();
         
-        $info = $svn->execute('info', $path);
+        $info = $svn->execute('info', escapeshellarg($path));
+        if(!isset($info['entry']['kind'])) return $this->_notFound();
         $kind = $info['entry']['kind'];
         
-        $files = $svn->execute('list', $path);
+        $files = $svn->execute('list', escapeshellarg($path));
         $this->setVariable('path', (isset($files['list']['path']) && !empty($files['list']['path'])) ? 
             str_replace(sprintf('file://%s/%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), '', $files['list']['path'])
             : '');
@@ -24,7 +25,7 @@ class OpenpearRepository extends Openpear
                 if($file = explode('.', $path)){
                     $ext = array_pop($file);
                     if(in_array($ext, $this->allowExt)){
-                        $this->setVariable('body', $svn->cmd('cat '. $path));
+                        $this->setVariable('body', $svn->cmd('cat '. escapeshellarg($path)));
                     }
                 }
                 $files['list']['entry']['log'] = $this->_getLog($path, $files['list']['entry']['commit']['revision']);
@@ -56,7 +57,7 @@ class OpenpearRepository extends Openpear
         $log = '';
         $svn = new SvnUtil();
         if(Cache::isExpiry($key, 3600*24*30*12)){
-            $logs = $svn->execute('log -r '. $rev, $path);
+            $logs = $svn->execute('log -r '. $rev, escapeshellarg($path));
             $log = isset($logs['logentry']['msg']) ? $logs['logentry']['msg'] : '';
             Cache::set($key, $log);
         } else {
