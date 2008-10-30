@@ -66,11 +66,20 @@ a:hover {
 img {
   border: 0;
 }
+
+/* classes
+ **** */
 .red {
   color: #9D2900;
 }
-  
-.wrap { width: 900px; margin: 0 auto; }
+.wrap {
+  width: 900px;
+  margin: 0 auto;
+}
+.monospace {
+  font-family: consolas, "Courier New", monospace;
+}
+
  
 #header { width: 900px; height: 50px; margin: 0 auto; }
   #menu  { float: right; padding: 6px 0 0 0; list-style: none; }
