@@ -25,7 +25,20 @@ $(function(){
 
         <h3 class="big">{$object.name}</h3>
         <p>Subversion Repository: <b><a href="{$rhaco.url('repository')}/{$object.name}">{$rhaco.url('repository')}/{$object.name}</a></b> / _('Latest Release:') <b>{$latestVersion}</b></p>
-        <p>{$of.d($object.description)}</p>
+       
+        <div class="description">
+        {$of.d($object.description)}
+        </div>
+
+        <?php $latestRelease = unserialize($object->latestRelease); ?>
+
+        <rt:ifnot param="{$latestVersion}" value="no release">
+        <h3 class="big">_('How to Install')</h3>
+        <p class="monospace info">
+        sudo pear install openpear/{$object.name}<rt:ifnot param="{$latestRelease['version___l___release_stab']}" value="stable">-{$latestRelease['version___l___release_stab']}</rt:ifnot>
+        </p>
+        </rt:ifnot>
+
         <h4>このプロジェクトを応援する開発者!</h4>
         <div id="favorites">
 	        <rt:if param="{$isLogin}"><button id="favorite">&nbsp;イイネ!&nbsp;</button> <span id="favoriteMessage"></span></rt:if>

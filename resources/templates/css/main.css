@@ -150,7 +150,7 @@ border-bottom: 2px solid #C70012;
 .col { float: left; width: 276px; margin: 0 30px 10px 0; overflow: hidden; }
   .last { float: right; margin: 0; }
   .info { border: 1px solid #e0e0e0; background: #f4f4f4; padding: 7px; }
-  .col p {line-height: 1.4em;}
+  .col p {line-height: 1.7em;}
 
 #footer { clear: both; width: 900px; margin: 0 auto; padding: 15px; border-top: 1px solid #e0e0e0; background: #fff url(../images/small_logotype.jpg) no-repeat right 13px; } 
 #footer .right { 
@@ -196,6 +196,9 @@ dd {
     margin-left: 5px;
 }
 
+/* repository
+ ------------------- */
+
 .repository, .release {
     width: 100%;
 }
@@ -223,6 +226,9 @@ pre.prettyprint {
   white-space: nowrap;
 }
 
+/* search form
+ ------------------- */
+
 #search_form {
   margin: 0 auto;
 }
@@ -240,7 +246,7 @@ pre.prettyprint {
 }
 
 /* pager
- ********** */
+ ------------------- */
 
 #pager {
   text-align: center;
@@ -265,4 +271,12 @@ pre.prettyprint {
 
 div.section p {
   margin: 0.2em 0;
+}
+
+/* package
+ ------------------- */
+.description {
+  margin: 5px 5px 10px 10px;
+  padding-left: 10px;
+  border-left: solid 2px #ccc;
 }

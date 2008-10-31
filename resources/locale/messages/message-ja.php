@@ -40,6 +40,7 @@ Message::add(array(
 "Subversion Account"=>"Subversion ユーザー名",
 "Subversion Password"=>"Subversion パスワード",
 "update"=>"更新",
+"install"=>"インストール",
 "Maintainer Search"=>"メンテナ検索",
 "search"=>"検索",
 "Latest Release:"=>"最終リリース:",
@@ -61,5 +62,6 @@ Message::add(array(
 "author"=>"編集者",
 "path"=>"ファイルパス",
 "source"=>"ソース",
+"How to Install"=>"インストール方法",
 ));
 ?>
