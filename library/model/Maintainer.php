@@ -13,7 +13,13 @@ class Maintainer extends MaintainerTable{
         return true;
     }
     function beforeUpdate($db){
-        $this->hashPassword();
+        $u = RequestLogin::getLoginSession();
+        if(empty($this->password) && $this->id == $u->id)
+            $this->password = $u->password;
+        else if(empty($this->password))
+            return ExceptionTrigger::raise(new GenericException('password is could not empty'));
+        else if($this->id == $u->id && $this->password != $u->password)
+            $this->hashPassword();
         return true;
     }
     function afterInsert($db){
