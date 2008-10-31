@@ -69,7 +69,7 @@ h4 a:hover {
 p {
   font-family: Arial,"ＭＳ Ｐゴシック" ;
   margin: 0 0 2em 0;
-  line-height: 1.8em;
+  line-height: 1.7em;
 }
 em {
   border-bottom: 1px dotted #fff;
@@ -147,9 +147,10 @@ border-bottom: 2px solid #C70012;
   .step { cursor: pointer; color: #FAFDDD; padding: 4px 0 0 11px; margin: 0 35px 0 0; font-size: 1.4em; float: left; text-align: center; background: url(../images/step.gif) no-repeat; height: 30px; }
   .step a { color: #fff; margin: 0 10px 0 0; }
   
-.col { float: left; width: 276px; margin: 0 30px 16px 0; overflow: hidden; }
+.col { float: left; width: 276px; margin: 0 30px 10px 0; overflow: hidden; }
   .last { float: right; margin: 0; }
   .info { border: 1px solid #e0e0e0; background: #f4f4f4; padding: 7px; }
+  .col p {line-height: 1.4em;}
 
 #footer { clear: both; width: 900px; margin: 0 auto; padding: 15px; border-top: 1px solid #e0e0e0; background: #fff url(../images/small_logotype.jpg) no-repeat right 13px; } 
 #footer .right { 
