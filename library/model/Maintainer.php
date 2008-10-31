@@ -9,11 +9,11 @@ class Maintainer extends MaintainerTable{
     function beforeInsert($db){
         $denyNames = array('signup', 'settings', 'add_openid', 'delete_openid', 'openpear');
         if(in_array($this->name, $denyNames)) return ExceptionTrigger::raise(new GenericException('name is couldn\'t use'));
+        $this->hashPassword();
         return true;
     }
 
     function afterInsert($db){
-        $this->hashPassword();
         $this->updateAccountFile($db);
         return true;
     }
@@ -37,7 +37,6 @@ class Maintainer extends MaintainerTable{
 
     function updateAccountFile($db){
         $accounts = array();
-        $accounts[] = sprintf('%s:%s', Rhaco::constant('SYSTEM_USER'), Maintainer::_h(Rhaco::constant('SYSTEM_PASS')));
         $maintainers = $db->select(new Maintainer());
         foreach($maintainers as $maintainer){
             $accounts[] = sprintf('%s:%s', $maintainer->getName(), $maintainer->getPassword());
