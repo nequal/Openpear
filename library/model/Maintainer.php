@@ -12,13 +12,15 @@ class Maintainer extends MaintainerTable{
         $this->hashPassword();
         return true;
     }
-
+    function beforeUpdate($db){
+        $this->hashPassword();
+        return true;
+    }
     function afterInsert($db){
         $this->updateAccountFile($db);
         return true;
     }
     function afterUpdate($db){
-        $this->hashPassword();
         $this->updateAccountFile($db);
         if(RequestLogin::isLoginSession()){
             $u = RequestLogin::getLoginSession();
