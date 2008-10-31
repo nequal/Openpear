@@ -43,7 +43,7 @@ class Maintainer extends MaintainerTable{
         foreach($maintainers as $maintainer){
             $accounts[] = sprintf('%s:%s', $maintainer->getName(), $maintainer->getPassword());
         }
-        if(!empty($accounts) && count($accounts) > 1)
+        if(!empty($accounts) && count($accounts) > 0)
             file_put_contents(sprintf('%s/%s.passwd', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), implode("\n", $accounts));
     }
 
