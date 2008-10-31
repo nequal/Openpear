@@ -1,4 +1,4 @@
-<project name="Open PEAR Server" version="0.1.0" pathinfo="index.php">
+<project name="Open PEAR Server" version="1.0.0" pathinfo="index.php">
     <description>
         共用のPEAR Channelリポジトリサービス
     </description>
