@@ -273,9 +273,9 @@ div.section p {
   margin: 0.2em 0;
 }
 
-/* package
+/* package, profile
  ------------------- */
-.description {
+.description, .profile {
   margin: 5px 5px 10px 10px;
   padding-left: 10px;
   border-left: solid 2px #ccc;
