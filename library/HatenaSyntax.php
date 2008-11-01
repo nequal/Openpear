@@ -56,7 +56,7 @@ class HatenaSyntax
     $this->addMarkupSyntax(new HatenaSyntax_Pre(false, $this->getOption('htmlescape', false)))
          ->addMarkupSyntax(new HatenaSyntax_Pre(true));
     
-    $this->addInlineSyntax(new HatenaSyntax_Link());
+    $this->addInlineSyntax(new HatenaSyntax_Link($this->getOption('htmlescape', false)));
     
     // 非汎用文法
     // applyInlineSyntaxでついでにこの文法も適用される。
@@ -345,16 +345,22 @@ class HatenaSyntax_Footnote
 
 class HatenaSyntax_Link implements HatenaSyntax_InlineSyntaxInterface
 {
+  protected $escaping;
+  public function __construct($flag = false)
+  {
+    $this->escaping = !!$flag;
+  }
   public function parse($line)
   {
     return
-      preg_replace_callback('/\[(https?:\/\/[^:]+)(:title=([^\]]*))?\]/', 
-      create_function('$m', '
-        return "<a href=\"{$m[1]}\">" 
-              . (isset($m[3]) ? $m[3] : $m[1] )
-              . "</a>";
-      '),
-      $line);
+      preg_replace_callback('/\[(https?:\/\/[^:]+)(:title=([^\]]*))?\]/', array($this, 'process'), $line);
+  }
+  public function process($matches)
+  {
+    // 間違ってるように見えるが間違っていない
+    $url = $this->escaping ? $matches[1] : htmlspecialchars($matches[1], ENT_QUOTES);
+    $cont = isset($matches[3]) ? ($this->escaping ? $matches[3] : htmlspecialchars($matches[3], ENT_QUOTES)) : $url;
+    return "<a href=\"{$url}\">{$cont}</a>";
   }
 }
 

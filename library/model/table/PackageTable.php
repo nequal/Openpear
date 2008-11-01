@@ -24,6 +24,7 @@ class PackageTable extends TableObjectBase{
 	var $created;
 	/**  */
 	var $updated;
+	var $dependRepositoryLogs;
 	var $dependFavorites;
 	var $dependCharges;
 	var $maintainers;
@@ -64,7 +65,7 @@ class PackageTable extends TableObjectBase{
 		if(!Rhaco::isVariable("_R_D_C_","Package::Id")){
 			$column = new Column("column=id,variable=id,type=serial,size=22,primary=true,",__CLASS__);
 			$column->label(Message::_("id"));
-			$column->depend("Favorite::Package","Charge::Package");
+			$column->depend("RepositoryLog::Package","Favorite::Package","Charge::Package");
 			Rhaco::addVariable("_R_D_C_",$column,"Package::Id");
 		}
 		return Rhaco::getVariable("_R_D_C_",null,"Package::Id");
@@ -246,6 +247,12 @@ class PackageTable extends TableObjectBase{
 	}
 
 
+	function setDependRepositoryLogs($value){
+		$this->dependRepositoryLogs = $value;
+	}
+	function getDependRepositoryLogs(){
+		return $this->dependRepositoryLogs;
+	}
 	function setDependFavorites($value){
 		$this->dependFavorites = $value;
 	}

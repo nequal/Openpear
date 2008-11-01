@@ -26,6 +26,15 @@
             <column name="url" unique="true" require="true" type="string" uniquewith="maintainer" />
         </table>
 
+        <table name="repository_log">
+            <column name="revision" type="int" />
+            <column name="author" type="string" />
+            <column name="package" type="int" reference="package.id" />
+            <column name="log" type="text" />
+            <column name="diff" type="text" />
+            <column name="date" type="timestamp" />
+        </table>
+
         <table name="favorite">
             <column name="package" type="int" reference="package.id" uniquewith="maintainer" />
             <column name="maintainer" type="int" reference="maintainer.id" uniquewith="package" />
