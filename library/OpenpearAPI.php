@@ -14,11 +14,11 @@ class OpenpearAPI extends Openpear
     /**
      * 新規登録されたパッケージRSS
      */
-    function feedNewPackage($limit=20){
+    function feedNewPackage(){
         $packages = $this->dbUtil->select(new Package(), new C(
             Q::orderDesc(Package::columnUpdated()),
             Q::eq(Package::columnCreated(), Package::columnUpdated()),
-            Q::pager($limit)
+            Q::pager(20)
         ));
         $this->_opPackageFeed($packages,
             '新規パッケージ',
@@ -28,12 +28,12 @@ class OpenpearAPI extends Openpear
     /**
      * 更新があったパッケージ
      */
-    function feedUpdatePackage($limit=20){
+    function feedUpdatePackage(){
         $packages = $this->dbUtil->select(new Package(), new C(
             Q::orderDesc(Package::columnUpdated()),
-            Q::pager($limit)
+            Q::pager(20)
         ));
-        $this->_opPackageFeed($oackages,
+        $this->_opPackageFeed($packages,
             '更新パッケージ',
             'リリースされたり、パッケージ情報が更新されたパッケージ'
         );
