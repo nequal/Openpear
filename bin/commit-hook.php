@@ -32,7 +32,7 @@ $package = $db->get(new Package(), new C(Q::eq(Package::columnName(), $packageNa
 if(!Variable::istype('Package', $package)) exit;
 
 // diff を丸ごと保存してたらそれ SVN じゃねえか感があるからファイル名だけ
-serialize($changed, $diff);
+$diff = serialize($changed);
 // log message
 system(sprintf('/usr/bin/svnlook log -r %d %s', $revision, $path), $log);
 
