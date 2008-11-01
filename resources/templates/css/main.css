@@ -176,8 +176,12 @@ form div.field label {
     text-align: right;
     width: 170px;
 }
-form div.field p {
-    margin: 5px 180px;
+form div.field p ,
+form div.field div {
+  margin: 5px 15px 5px 180px;
+}
+form div.field ul.info-list {
+  margin-left: 30px;
 }
 dl {
   margin: 10px;

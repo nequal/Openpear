@@ -17,11 +17,32 @@
                 <rt:if param="{$object.id}">
                 <p>{$name}</p>
                 <rt:else />
-                <p><input type="text" size="20" value="" name="name" /> (半角英数字と_（アンダースコア）が使えます)</p>
+                <p><input type="text" size="50" value="" name="name" /> (半角英数字と_（アンダースコア）が使えます)<br />
+                </p>
+                <div class="info">
+                <strong>命名のヒント</strong><br />
+パッケージの名前に制限はありませんが、一般的には、<br />
+<ul class="info-list">
+<li>クラスは、そのクラスの用途が分かる名前に</li>
+<li>分類がわかるように名前付けをし、単語単位でアンダースコア(" ") で区切る</li>
+</ul>
+することで、より探しやすく、使いやすいパッケージになります。<br />
+<strong>例）</strong><br />
+Net_Socket <br />
+Net_Socket_Error <br />
+<strong>例 ２つ以上の単語から成り立つ名詞の場合）</strong><br />
+Net_TokyoTyrant<br />
+<br />
+PEAR 本家のカテゴリー分けも参考にしてみてください：<a href="http://pear.php.net/packages.php">http://pear.php.net/packages.php</a><br />
+</div>
+
                 </rt:if>
             </div>
             <div class="field">
                 <label for="description">_('description')</label>
+                <p>
+                ※はてな記法が使えます：<a href="http://hatenadiary.g.hatena.ne.jp/keyword/%e3%81%af%e3%81%a6%e3%81%aa%e8%a8%98%e6%b3%95%e4%b8%80%e8%a6%a7">はてな記法一覧</a>
+                </p>
                 <p><textarea name="description" rows="20" cols="50"></textarea></p>
             </div>
             <div class="field">
