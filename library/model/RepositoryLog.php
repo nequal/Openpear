@@ -5,8 +5,9 @@ Rhaco::import('SvnUtil');
  * 
  */
 class RepositoryLog extends RepositoryLogTable{
-    function parseSvnlookChanged($lines){
+    function parseSvnlookChanged($str){
         $result = array();
+        $lines = explode("\n", $str);
         foreach($lines as $line){
             if(empty($line)) continue;
             $result[] = array(

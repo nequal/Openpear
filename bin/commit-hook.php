@@ -7,6 +7,13 @@
 require_once dirname(dirname(__FILE__)). '/__init__.php';
 Rhaco::import('model.RepositoryLog');
 
+// もういいわかった
+function e($cmd){
+    ob_start();
+    passthru($cmd);
+    return ob_get_clean();
+}
+
 $path = isset($argv[1]) ? $argv[1] : Rhaco::constant('SVN_PATH'). '/'. Rhaco::constant('SVN_NAME');
 
 // リビジョン指定してくれないとヤーよ！
@@ -14,7 +21,7 @@ $revision = isset($argv[2]) ? $argv[2] : null;
 if(!is_numeric($revision) || $revision < 1) exit;
 
 // どのファイルが変更されたの？
-exec(sprintf('/usr/bin/svnlook changed -r %d %s', $revision, $path), $changed);
+$changed = e(sprintf('/usr/bin/svnlook changed -r %d %s', $revision, $path));
 $changed = RepositoryLog::parseSvnlookChanged($changed);
 
 // DB 接続するよ
@@ -22,7 +29,7 @@ $db = new DbUtil(RepositoryLog::connection());
 if(!Variable::istype('DbUtil', $db)) exit;
 
 // 誰がコミットした？
-system(sprintf('/usr/bin/svnlook author -r %d %s', $revision, $path), $author);
+$author = e(sprintf('/usr/bin/svnlook author -r %d %s', $revision, $path));
 
 // 変更されたファイルのパスからパッケージ名を判定するよ
 list($packageName) = explode('/', $changed[0]['path']);
@@ -34,9 +41,9 @@ if(!Variable::istype('Package', $package)) exit;
 // diff を丸ごと保存してたらそれ SVN じゃねえか感があるからファイル名だけ
 $diff = serialize($changed);
 // log message
-system(sprintf('/usr/bin/svnlook log -r %d %s', $revision, $path), $log);
+$log = e(sprintf('/usr/bin/svnlook log -r %d %s', $revision, $path));
 
-system(sprintf('/usr/bin/env LANG=en_US.utf-8 /usr/bin/svnlook date -r %d %s', $revision, $path), $date);
+$date = e(sprintf('/usr/bin/env LANG=en_US.utf-8 /usr/bin/svnlook date -r %d %s', $revision, $path));
 
 $repLog = new RepositoryLog();
 $repLog->setRevision($revision);
