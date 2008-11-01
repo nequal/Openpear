@@ -6,8 +6,6 @@
 <rt:block name="contents">
   <h3 class="big">_('change set') {$object.revision}</h3>
   <dl>
-    <dt>_('revision')</dt>
-    <dd>{$object.revision}</dd>
     <dt>_('author')</dt>
     <dd>{$of.gravatar($author.mail, 's=16')} <a href="{$rhaco.url('maintainer')}/{$author.name}">{$f.escape($author.fullname)}</a></dd>
     <dt>_('package')</dt>

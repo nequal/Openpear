@@ -14,7 +14,7 @@ $revision = isset($argv[2]) ? $argv[2] : null;
 if(!is_numeric($revision) || $revision < 1) exit;
 
 // どのファイルが変更されたの？
-$changed = system(sprintf('/usr/bin/svnlook changed -r %d %s', $revision, $path));
+system(sprintf('/usr/bin/svnlook changed -r %d %s', $revision, $path), $changed);
 $changed = RepositoryLog::parseSvnlookChanged($changed);
 
 // DB 接続するよ
@@ -22,8 +22,7 @@ $db = new DbUtil(RepositoryLog::connection());
 if(!Variable::istype('DbUtil', $db)) exit;
 
 // 誰がコミットした？
-$author = system(sprintf('/usr/bin/svnlook author -r %d %s', $revision, $path));
-$author = trim($author);
+system(sprintf('/usr/bin/svnlook author -r %d %s', $revision, $path), $author);
 
 // 変更されたファイルのパスからパッケージ名を判定するよ
 list($packageName) = explode('/', $changed[0]['path']);
@@ -33,15 +32,15 @@ $package = $db->get(new Package(), new C(Q::eq(Package::columnName(), $packageNa
 if(!Variable::istype('Package', $package)) exit;
 
 // diff を丸ごと保存してたらそれ SVN じゃねえか感があるからファイル名だけ
-$diff = serialize($changed);
+serialize($changed, $diff);
 // log message
-$log = system(sprintf('/usr/bin/svnlook log -r %d %s', $revision, $path));
+system(sprintf('/usr/bin/svnlook log -r %d %s', $revision, $path), $log);
 
-$date = system(sprintf('/usr/bin/env LANG=en_US.utf-8 /usr/bin/svnlook date -r %d %s', $revision, $path));
+system(sprintf('/usr/bin/env LANG=en_US.utf-8 /usr/bin/svnlook date -r %d %s', $revision, $path), $date);
 
 $repLog = new RepositoryLog();
 $repLog->setRevision($revision);
-$repLog->setAuthor($author);
+$repLog->setAuthor(trim($author));
 $repLog->setPackage($package->id);
 $repLog->setLog(trim($log));
 $repLog->setDiff($diff);

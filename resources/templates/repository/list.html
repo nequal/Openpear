@@ -32,7 +32,7 @@
 				<rt:if param="{$entry['kind']}" value="dir"><img src="{$rhaco.templateurl('images')}/dir.png" width="16" height="16" /> </rt:if>
 				<rt:if param="{$entry['kind']}" value="file"><img src="{$rhaco.templateurl('images')}/file.png" width="16" height="16" /> </rt:if>
 				<a href="{$rhaco.url('repository')}{$path}/{$entry['name']}">{$entry['name']}</a></td>
-			<td class="revision" align="right">{$entry['commit']['revision']}</td>
+			<td class="revision" align="right"><a href="{$rhaco.url('changeset')}/{$entry['commit']['revision']}">{$entry['commit']['revision']}</a></td>
 			<td class="author"><rt:if param="{$entry['commit']['author']}" value="openpear"> - <rt:else /><a href="{$rhaco.url('maintainer')}/{$entry['commit']['author']}">{$entry['commit']['author']}</a></rt:if></td>
             <td class="log">{$f.text2html($entry['log'])}</td>
 		</tr>
