@@ -45,5 +45,5 @@ $repLog->setAuthor($author);
 $repLog->setPackage($package->id);
 $repLog->setLog(trim($log));
 $repLog->setDiff($diff);
-$repLog->setDate(trim($date));
+$repLog->setDate(substr($date, 0, 25));
 $db->insert($repLog);
