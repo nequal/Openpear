@@ -79,6 +79,7 @@ class OpenpearAPI extends Openpear
             $item = new RssItem20(sprintf('revision %s', $l->revision),
                 OpenpearFormatter::d($l->log), Rhaco::url('changeset/'. $l->revision));
             $item->setPubDate($l->date);
+            $item->setAuthor($l->author);
             $rss20->setItem($item);
         }
         $rss20->output();
