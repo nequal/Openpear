@@ -130,15 +130,15 @@ class Release
         foreach($files as $file){
             if($file->getExtension() == '.tgz'){
                 $ret = $this->registerPackage($file->getFullname());
+                // タグ打ちとかする？
+                $svn->cmd(sprintf('copy file://%s/%s/%s file://%s/%s/%s/tags/%s-%s -m "%s"',
+                    Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path,
+                    Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $this->packageName, $this->variables['version']['release_ver'], $this->variables['version']['release_stab'],
+                    '[Add Tag:Release] '. $this->packageName
+                ));
                 break;
             }
         }
-        // タグ打ちとかする？
-        $svn->cmd(sprintf('copy file://%s/%s/%s file://%s/%s/%s/tags/%s-%s -m "%s"',
-            Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path,
-            Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $this->packageName, $this->variables['version']['release_ver'], $this->variables['version']['release_stab'],
-            '[Add Tag:Release] '. $this->packageName
-        ));
         return $ret;
     }
     function registerPackage($packageFile){
