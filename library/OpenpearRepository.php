@@ -8,7 +8,7 @@ class OpenpearRepository extends Openpear
     var $allowExt = array('txt','php','css','js','pl','cgi','rb','py','phps','c');
 
     function changeset($revision){
-        $log = $this->dbUtil->get(new RepositoryLog(), new C(RepositoryLog::columnRevision(), $revision));
+        $log = $this->dbUtil->get(new RepositoryLog(), new C(Q::eq(RepositoryLog::columnRevision(), $revision)));
         if(Variable::istype('RepositoryLog', $log)){
             $this->setVariable('package', $this->dbUtil->get(new Package($log->package)));
             $this->setVariable('author', $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $log->author))));
