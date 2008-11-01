@@ -11,7 +11,7 @@ class RepositoryLog extends RepositoryLogTable{
         foreach($lines as $line){
             $result[] = array(
                 'status' => substr($line, 0, 2),
-                'type' => (trim(substr($line, -1, 0)) == '/') ? 'dir' : 'file',
+                'type' => (trim(substr($line, -1, 1)) == '/') ? 'dir' : 'file',
                 'path' => trim(substr($line, 2)),
             );
         }
