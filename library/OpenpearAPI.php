@@ -6,9 +6,56 @@
  * @license New BSD License
  * @version $Id$
  */
+Rhaco::import('tag.feed.Rss20');
+Rhaco::import('OpenpearFormatter');
 
 class OpenpearAPI extends Openpear
 {
+    /**
+     * 新規登録されたパッケージRSS
+     */
+    function feedNewPackage($limit=20){
+        $packages = $this->dbUtil->select(new Package(), new C(
+            Q::orderDesc(Package::columnUpdated()),
+            Q::eq(Package::columnCreated(), Package::columnUpdated()),
+            Q::pager($limit)
+        ));
+        $this->_opPackageFeed($packages,
+            '新規パッケージ',
+            'openpear に新しく登録されたパッケージ'
+        );
+    }
+    /**
+     * 更新があったパッケージ
+     */
+    function feedUpdatePackage($limit=20){
+        $packages = $this->dbUtil->select(new Package(), new C(
+            Q::orderDesc(Package::columnUpdated()),
+            Q::pager($limit)
+        ));
+        $this->_opPackageFeed($oackages,
+            '更新パッケージ',
+            'リリースされたり、パッケージ情報が更新されたパッケージ'
+        );
+    }
+    function _opPackageFeed($packages, $title, $desc){
+        $rss20 = new Rss20();
+        $rss20->setChannel(
+            $title,
+            $desc,
+            Rhaco::url('package'),
+            'ja'
+        );
+        foreach($packages as $p){
+            $item = new RssItem20($p->name,
+                OpenpearFormatter::d($p->description), Rhaco::url('package/'. $p->name));
+            $item->setPubDate($p->updated);
+            $rss20->setItem($item);
+        }
+        $rss20->output();
+        Rhaco::end();
+    }
+
     function maintainers(){
         $c = new Criteria();
         if($this->isVariable('q')){

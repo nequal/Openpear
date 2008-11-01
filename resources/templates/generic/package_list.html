@@ -1,5 +1,9 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
+<rt:block name="adHeader">
+<link rel="alternate" type="application/rss+xml" title="新着パッケージ" href="{$rhaco.url('feed/package/new')}" /> 
+<link rel="alternate" type="application/rss+xml" title="更新パッケージ" href="{$rhaco.url('feed/package/update')}" />
+</rt:block>
 
 <rt:block name="title">_('packages') - openpear</rt:block>
 

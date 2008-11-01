@@ -123,6 +123,15 @@ $parser = Urls::parser(array(
         'method' => 'maintainers',
     ),
     
+    '^feed\/package\/new$' => array(
+        'class' => 'OpenpearAPI',
+        'method' => 'feedNewPackage',
+    ),
+    '^feed\/package\/update$' => array(
+        'class' => 'OpenpearAPI',
+        'method' => 'feedUpdatePackage',
+    ),
+    
     '^404$' => array(
         'class' => 'Openpear',
         'method' => '_notFound',
