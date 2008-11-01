@@ -7,6 +7,7 @@
  * @version $Id$
  */
 Rhaco::import('tag.feed.Rss20');
+Rhaco::import('model.RepositoryLog');
 Rhaco::import('OpenpearFormatter');
 
 class OpenpearAPI extends Openpear
@@ -50,6 +51,34 @@ class OpenpearAPI extends Openpear
             $item = new RssItem20($p->name,
                 OpenpearFormatter::d($p->description), Rhaco::url('package/'. $p->name));
             $item->setPubDate($p->updated);
+            $rss20->setItem($item);
+        }
+        $rss20->output();
+        Rhaco::end();
+    }
+
+    function feedRepository(){
+        $repLogs = $this->dbUtil->select(new RepositoryLog(), new C(
+            Q::orderDesc(RepositoryLog::columnRevision()),
+            Q::pager(20)
+        ));
+        $this->_opRepositoryFeed($repLogs,
+            'commits log',
+            'commits log'
+        );
+    }
+    function _opRepositoryFeed($repLogs, $title, $desc){
+        $rss20 = new Rss20();
+        $rss20->setChannel(
+            $title,
+            $desc,
+            Rhaco::url('repository/'),
+            'ja'
+        );
+        foreach($repLogs as $l){
+            $item = new RssItem20(sprintf('revision %s', $l->revision),
+                OpenpearFormatter::d($l->log), Rhaco::url('log/'. $l->revision));
+            $item->setPubDate($l->date);
             $rss20->setItem($item);
         }
         $rss20->output();

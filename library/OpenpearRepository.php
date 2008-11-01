@@ -1,10 +1,23 @@
 <?php
 Rhaco::import('SvnUtil');
 Rhaco::import('io.Cache');
+Rhaco::import('model.RepositoryLog');
 
 class OpenpearRepository extends Openpear
 {
     var $allowExt = array('txt','php','css','js','pl','cgi','rb','py','phps','c');
+
+    function changeset($revision){
+        $log = $this->dbUtil->get(new RepositoryLog(), new C(RepositoryLog::columnRevision(), $revision));
+        if(Variable::istype('RepositoryLog', $log)){
+            $this->setVariable('package', $this->dbUtil->get(new Package($log->package)));
+            $this->setVariable('author', $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $log->author))));
+            $this->setVariable('object', $log);
+            $this->setVariable('changed', unserialize($log->diff));
+            return $this->parser('repository/log.html');
+        }
+        return $this->_notFound();
+    }
 
     function browse($path='/'){
         if(empty($path) || preg_match('/\s/', $path)) $path = '/';

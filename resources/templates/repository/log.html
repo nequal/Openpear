@@ -1,0 +1,26 @@
+<rt:extends href="../index.html" />
+<rt:block name="teaser"></rt:block>
+
+<rt:block name="title">_('change set') {$object['revision']} - openpear</rt:block>
+
+<rt:block name="contents">
+  <h3 class="big">_('change set') {$object['revision']}</h3>
+  <dl>
+    <dt>_('revision')</dt>
+    <dd>{$object['revision']}</dd>
+    <dt>_('author')</dt>
+    <dd>{$of.gravatar($author.mail, 's=16')} <a href="{$rhaco.url('maintainer')}/{$author.name}">{$f.escape($author.fullname)}</a></dd>
+    <dt>_('package')</dt>
+    <dd><a href="{$rhaco.url('package')}/{$package.name}">{$package.name}</a></dd>
+        <dt>_('message')</dd>
+        <dd>{$f.text2html($object['log'])}</dd>
+        <dt>_('timestamp')</dt>
+        <dd>{$f.dateformat($object['date'])}</dd>
+        <dt>_('files')</dt>
+        <dd><ul rt:param="{$changed}" rt:var="c">
+            <li class="{$c['type']} {$of.svnState($c['status'])}">
+                <a href="{$rhaco.url('repository')}/{$c['path']}">{$c['path']}</a>
+            </li>
+        </ul></dd>
+  </dl>
+</rt:block>

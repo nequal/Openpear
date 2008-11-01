@@ -49,4 +49,17 @@ class OpenpearFormatter
             $option['s'], $option['s']
         );
     }
+    function svnState($state){
+        switch($state){
+            case 'A ':
+                return 'added';
+            case 'D ':
+                return 'removed';
+            case 'U ':
+            case '_U':
+            case 'UU':
+                return 'modified';
+        }
+        return '';
+    }
 }

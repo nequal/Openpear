@@ -117,6 +117,10 @@ $parser = Urls::parser(array(
         'class' => 'OpenpearRepository',
         'method' => 'browse'
     ),
+    '^changeset\/(\d+)$' => array(
+        'class' => 'OpenpearRepository',
+        'method' => 'changeset',
+    ),
     
     '^api\/maintainers$' => array(
         'class' => 'OpenpearAPI',
@@ -130,6 +134,10 @@ $parser = Urls::parser(array(
     '^feed\/package\/update$' => array(
         'class' => 'OpenpearAPI',
         'method' => 'feedUpdatePackage',
+    ),
+    '^feed\/repository$' => array(
+        'class' => 'OpenpearAPI',
+        'method' => 'feedRepository',
     ),
     
     '^404$' => array(
