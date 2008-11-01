@@ -37,7 +37,7 @@ $diff = serialize($changed);
 // log message
 $log = system(sprintf('/usr/bin/svnlook log -r %d %s', $revision, $path));
 
-$date = system(sprintf('/usr/bin/env LANG=en_US.utf-8 /usr/bin/svnlook log -r %d %s', $revision, $path));
+$date = system(sprintf('/usr/bin/env LANG=en_US.utf-8 /usr/bin/svnlook date -r %d %s', $revision, $path));
 
 $repLog = new RepositoryLog();
 $repLog->setRevision($revision);
