@@ -14,7 +14,7 @@ $revision = isset($argv[2]) ? $argv[2] : null;
 if(!is_numeric($revision) || $revision < 1) exit;
 
 // どのファイルが変更されたの？
-system(sprintf('/usr/bin/svnlook changed -r %d %s', $revision, $path), $changed);
+exec(sprintf('/usr/bin/svnlook changed -r %d %s', $revision, $path), $changed);
 $changed = RepositoryLog::parseSvnlookChanged($changed);
 
 // DB 接続するよ

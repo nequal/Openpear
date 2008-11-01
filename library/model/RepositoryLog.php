@@ -5,10 +5,10 @@ Rhaco::import('SvnUtil');
  * 
  */
 class RepositoryLog extends RepositoryLogTable{
-    function parseSvnlookChanged($str){
+    function parseSvnlookChanged($lines){
         $result = array();
-        $lines = explode("\n", $str);
         foreach($lines as $line){
+            if(empty($line)) continue;
             $result[] = array(
                 'status' => substr($line, 0, 2),
                 'type' => (trim(substr($line, -1, 1)) == '/') ? 'dir' : 'file',
