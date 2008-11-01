@@ -1,8 +1,10 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
 <rt:block name="adHeader">
-<link rel="alternate" type="application/rss+xml" title="新着パッケージ" href="{$rhaco.url('feed/package/new')}" /> 
-<link rel="alternate" type="application/rss+xml" title="更新パッケージ" href="{$rhaco.url('feed/package/update')}" />
+    <link rel="alternate" type="application/rss+xml" title="新着パッケージ" href="{$rhaco.url('feed/package/new')}" /> 
+    <link rel="alternate" type="application/rss+xml" title="更新パッケージ" href="{$rhaco.url('feed/package/update')}" />
+    <rt:if param="{$pager.isPrev()}"><link rel="prev" href="{$rhaco.uri()}?{$pager.query($pager.prevPage)}" /></rt:if>
+    <rt:if param="{$pager.isNext()}"><link rel="next" href="{$rhaco.uri()}?{$pager.query($pager.nextPage)}" /></rt:if>
 </rt:block>
 
 <rt:block name="title">_('packages') - openpear</rt:block>
@@ -21,7 +23,7 @@
 <?php $object_list = array_chunk($object_list, 3); ?>
 <rt:loop param="object_list" var="row">
     <rt:loop param="row" var="object">
-        <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
+        <div class="col<rt:if param="{$key}" value="2"> last</rt:if> autopagerize_page_element">
             <h4><a href="{$rhaco.url('package')}/{$object.name}">{$object.name}</a></h4>
             <div style="text-align:right;">_('Latest Release:') {$object.getLatestVersion('not yet')}</div>
             <p>{$f.text2html($of.st($of.d($object.description)), 200)}</p>
