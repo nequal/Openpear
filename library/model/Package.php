@@ -25,7 +25,7 @@ class Package extends PackageTable{
         if(!$db->insert($charge)) return false;
 
         // create repository
-        $wp = Rhaco::constant('WORKING_DIR');
+        $wp = Rhaco::constant('WORKING_DIR'). '/NEWREP'. md5($this->name);
         $path = sprintf('file://%s/%s/%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $this->name);
         $svn = new SvnUtil();
         $svn->cmd(sprintf('mkdir %s -m "[Add Package] %s"', $path, $this->name));
