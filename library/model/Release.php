@@ -170,6 +170,7 @@ class Release
     function getHtml(){
         $html = '<table class="release">';
         foreach($this->variables as $catName => $cat){
+            if($catName == 'project') continue;
             $html .= sprintf('<tr><th colspan="2">%s</th></tr>', Message::_($catName));
             $i = 0;
             foreach($cat as $k => $v){
