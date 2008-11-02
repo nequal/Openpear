@@ -20,7 +20,13 @@ class OpenpearFormatter
         $hatena = new HatenaSyntax($options);
         return $hatena->parse($string);
     }
-    function st($str){
+    function st($str, $opt=''){
+        $allow = '';
+        foreach(explode(',', $opt) as $o){
+            $allow .= '<'. $o. '>';
+        }
+        if($allow)
+            return is_string($str) ? trim(strip_tags($str, $allow)) : '';
         return is_string($str) ? trim(strip_tags($str)) : '';
     }
     function dn($str){
