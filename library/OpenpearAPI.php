@@ -17,8 +17,7 @@ class OpenpearAPI extends Openpear
      */
     function feedNewPackage(){
         $packages = $this->dbUtil->select(new Package(), new C(
-            Q::orderDesc(Package::columnUpdated()),
-            Q::eq(Package::columnCreated(), Package::columnUpdated()),
+            Q::orderDesc(Package::columnCreated()),
             Q::pager(20)
         ));
         $this->_opPackageFeed($packages,
@@ -47,6 +46,7 @@ class OpenpearAPI extends Openpear
             Rhaco::url('package'),
             'ja'
         );
+        $rss20->channel->setImage($title, Rhaco::templateurl('images/header_logo.gif'), Rhaco::url('package'));
         foreach($packages as $p){
             $item = new RssItem20($p->name,
                 OpenpearFormatter::d($p->description), Rhaco::url('package/'. $p->name));
@@ -75,6 +75,7 @@ class OpenpearAPI extends Openpear
             Rhaco::url('repository/'),
             'ja'
         );
+        $rss20->channel->setImage($title, Rhaco::templateurl('images/header_logo.gif'), Rhaco::url('repository/'));
         foreach($repLogs as $l){
             $item = new RssItem20(sprintf('revision %s', $l->revision),
                 OpenpearFormatter::d($l->log), Rhaco::url('changeset/'. $l->revision));
