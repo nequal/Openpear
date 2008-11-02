@@ -24,7 +24,7 @@
         <dt>_('last modified')</dt>
         <dd>{$f.dateformat($entry['commit']['date'])}</dd>
   </dl>
-  <p class="info">{$f.text2html($entry['log'])}</p>
+  <p class="info">{$f.noop($f.text2html($entry['log']))}</p>
   <rt:if param="{$body}">
   <h3 class="big">_('source')</h3>
     <pre class="prettyprint">
