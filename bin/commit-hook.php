@@ -4,6 +4,7 @@
  *
  * /path/to/php /path/to/openpear/bin/commit-hook.php "$REPOS" "$REV"
  */
+chdir(dirname(__FILE__));
 require_once dirname(dirname(__FILE__)). '/__init__.php';
 Rhaco::import('model.RepositoryLog');
 

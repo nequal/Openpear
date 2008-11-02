@@ -297,3 +297,10 @@ div.section p {
 #files li.removed {
   list-style-image: url(../images/removed.png);
 }
+
+#goog-wm { }
+#goog-wm h3.closest-match { }
+#goog-wm h3.closest-match a { }
+#goog-wm h3.other-things { }
+#goog-wm ul li { }
+#goog-wm li.search-goog { display: block; }

@@ -1,6 +1,8 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
-
+<rt:block name="adHeader">
+    <link rel="alternate" type="application/rss+xml" title="repository feed" href="{$rhaco.url('feed/repository')}" />
+</rt:block>
 <rt:block name="title">{$path} - _('repository browser') - openpear</rt:block>
 
 <rt:block name="info">実際のリポジトリ上のURL <a href="{$rhaco.constant('SVN_URL')}{$path}">{$rhaco.constant('SVN_URL')}{$path}</a></rt:block>

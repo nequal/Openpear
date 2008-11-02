@@ -77,7 +77,7 @@ class OpenpearAPI extends Openpear
         );
         $rss20->channel->setImage($title, Rhaco::templateurl('images/header_logo.gif'), Rhaco::url('repository/'));
         foreach($repLogs as $l){
-            $item = new RssItem20(sprintf('revision %s', $l->revision),
+            $item = new RssItem20(sprintf('[%s] %s', $l->revision, str_replace(array("\n", "\r"), '', $l->log)),
                 OpenpearFormatter::d($l->log), Rhaco::url('changeset/'. $l->revision));
             $item->setPubDate($l->date);
             $item->setAuthor($l->author);

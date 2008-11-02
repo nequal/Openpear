@@ -1,7 +1,7 @@
 <rt:extends href="../index.html" />
 <rt:block name="teaser"></rt:block>
 <rt:block name="adHeader">
-    <link rel="alternate" type="application/rss+xml" title="新着パッケージ" href="{$rhaco.url('feed/package/new')}" /> 
+    <link rel="alternate" type="application/rss+xml" title="新着パッケージ" href="{$rhaco.url('feed/package/new')}" />
     <link rel="alternate" type="application/rss+xml" title="更新パッケージ" href="{$rhaco.url('feed/package/update')}" />
     <rt:if param="{$pager.isPrev()}"><link rel="prev" href="{$rhaco.uri()}?{$pager.query($pager.prevPage)}" /></rt:if>
     <rt:if param="{$pager.isNext()}"><link rel="next" href="{$rhaco.uri()}?{$pager.query($pager.nextPage)}" /></rt:if>
