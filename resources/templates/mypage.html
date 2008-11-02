@@ -8,7 +8,7 @@
 
 <rt:block name="contents">
 	<h3>_('Your Settings')</h3>
-	<p>{$of.gravatar($object.mail, 's=80')}</p>
+	<p>{$f.noop($of.gravatar($object.mail, 's=80'))}</p>
 	<dl>
 		<dt>_('Subversion Account')</dt>
 		<dd>{$object.name}</dd>
@@ -18,7 +18,7 @@
 
 	<h3>_('profile')</h3>
 	<div class="profile">
-		{$of.d($object.profile)}
+		{$f.noop($of.d($object.profile))}
 	</div>
 
 	<h3>あなたが参加しているパッケージ</h3>

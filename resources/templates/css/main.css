@@ -284,3 +284,16 @@ div.section p {
   padding-left: 10px;
   border-left: solid 2px #ccc;
 }
+
+#files li.dir {
+  font-weight: bold;
+}
+#files li.added {
+  list-style-image: url(../images/added.png);
+}
+#files li.modified {
+  list-style-image: url(../images/modified.png);
+}
+#files li.removed {
+  list-style-image: url(../images/removed.png);
+}

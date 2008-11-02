@@ -34,7 +34,7 @@
                 </rt:if>
                 <a href="{$rhaco.url('package')}/{$object.name}">{$object.name}</a></h4>
             <div style="text-align:right;">_('Latest Release:') {$object.getLatestVersion('not yet')}</div>
-            <p>{$f.text2html($of.st($of.d($object.description)), 200)}</p>
+            <p>{$f.noop($f.text2html($of.st($of.d($object.description)), 200))}</p>
         </div>
     </rt:loop>
     <br clear="all" />

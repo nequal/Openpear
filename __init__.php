@@ -17,3 +17,5 @@ Rhaco::import('model.Maintainer');
 Rhaco::import('model.Package');
 Rhaco::import('model.OpenId');
 Rhaco::import('model.Favorite');
+
+Rhaco::constant('HTML_TEMPLATE_ARG_ESCAPE', true);

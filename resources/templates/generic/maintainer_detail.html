@@ -5,19 +5,19 @@
 
 <rt:block name="info"><rt:if param="{$isLogin}">登録していない PHP 開発者が居たら、是非 openpear へ招待してください<rt:else />メンテナーの登録は、今すぐOpenIDで<a href="{$rhaco.url('login')}">ログイン</a>！</rt:if></rt:block>
 <rt:block name="contents">
-        <h3 class="big"><rt:if param="{$f.escape($object.fullname)}">{$f.escape($object.fullname)}<rt:else />{$object.name}</rt:if></h3>
+        <h3 class="big"><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></h3>
         <p>Subversion アカウント: {$object.name}</p>
-        <p>{$of.gravatar($object.mail, 's=80')}</p>
-        <div class="profile">{$of.d($object.profile, 'profile')}</div>
+        <p>{$f.noop($of.gravatar($object.mail, 's=80'))}</p>
+        <div class="profile">{$f.noop($of.d($object.profile, 'profile'))}</div>
 
   <rt:if param="{$object.packages}">
-    <h3 class="big">{$object.fullname} が参加しているパッケージ</h3>
+    <h3 class="big"><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if> が参加しているパッケージ</h3>
     <?php $object_list = array_chunk($object->packages, 3); ?>
     <rt:loop param="object_list" var="row">
         <rt:loop param="row" var="object">
             <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
                 <h4><a href="{$rhaco.url('package')}/{$object.name}">{$object.name}</a></h4>
-                <p>{$f.text2html($of.st($of.d($object.description)), 200, 10)}</p>
+                <p>{$f.noop($f.text2html($of.st($of.d($object.description)), 200, 10))}</p>
             </div>
         </rt:loop>
         <br clear="all" />
