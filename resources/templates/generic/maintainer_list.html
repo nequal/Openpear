@@ -22,7 +22,7 @@
   <rt:loop param="object_list" var="row">
       <rt:loop param="row" var="object">
           <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
-              <h4>{$of.gravatar($object.mail, 's=24')} <a href="{$rhaco.url('maintainer')}/{$object.name}"><rt:if param="{$object.fullname}">{$object.fullname}<rt:else />{$object.name}</rt:if></a></h4>
+              <h4>{$of.gravatar($object.mail, 's=24')} <a href="{$rhaco.url('maintainer')}/{$object.name}"><rt:if param="{$object.fullname}">{$f.escape($object.fullname)}<rt:else />{$object.name}</rt:if></a></h4>
               <p>{$f.text2html($of.st($of.d($object.profile, $object.name)), 200)}</p>
           </div>
       </rt:loop>

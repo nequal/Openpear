@@ -41,7 +41,7 @@
 <rt:loop param="maintainers" var="row">
     <rt:loop param="row" var="maintainer">
         <div class="col<rt:if param="{$key}" value="2"> last</rt:if>">
-            <h3>{$of.gravatar($maintainer.mail, 's=24')} <a href="{$rhaco.url('maintainer')}/{$maintainer.name}"><rt:if param="{$maintainer.fullname}">{$maintainer.fullname}<rt:else />{$maintainer.name}</rt:if></a> ({$maintainer.role})</h3>
+            <h3>{$of.gravatar($maintainer.mail, 's=24')} <a href="{$rhaco.url('maintainer')}/{$maintainer.name}"><rt:if param="{$maintainer.fullname}">{$f.escape($maintainer.fullname)}<rt:else />{$maintainer.name}</rt:if></a> ({$maintainer.role})</h3>
             <p>{$f.toA($f.text2html($maintainer.profile))}</p>
             <form action="{$rhaco.url('package')}/{$object.name}/maintainer/update" method="post">
                 <input type="hidden" name="id" value="{$maintainer.id}" />
