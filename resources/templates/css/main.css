@@ -298,6 +298,52 @@ div.section p {
   list-style-image: url(../images/removed.png);
 }
 
+.document{
+  margin-bottom: 20px;
+  padding: 5px;
+  border: 1px solid;
+}
+.document .name{
+  font-weight: bold;
+  color: #cc2222;
+}
+.document .path{
+  font-size: small;
+  color: #888888;
+}
+.document .description{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.documnet .funcs{
+}
+.document .funcs .func{
+  border: 1px solid;
+  border-color: #aaaaaa;
+  margin: 5px;
+  padding: 5px;
+  font-size: small;
+}
+.document .funcs .func .name{
+  color: #3333ff;
+}
+.document .funcs .func .test{
+  background-color: #9999aa;
+  border: 1px solid;
+  margin-left: 30px;
+  padding: 5px;
+}
+.document .funcs .func .onevars{
+  margin-left: 30px;
+  padding: 5px;
+}
+.document .funcs .func .onevars span{
+  background-color: #ff5555;
+  margin-right: 5px;
+  border: 1px solid;
+  padding: 2px;
+}
+
 #goog-wm { }
 #goog-wm h3.closest-match { }
 #goog-wm h3.closest-match a { }

@@ -38,7 +38,12 @@ class OpenpearRepository extends Openpear
                 if($file = explode('.', $path)){
                     $ext = array_pop($file);
                     if(in_array($ext, $this->allowExt)){
-                        $this->setVariable('body', $svn->cmd('cat '. escapeshellarg($path)));
+                        $body = $svn->cmd('cat '. escapeshellarg($path));
+                        $this->setVariable('body', $body);
+                        if($ext == 'php'){
+                            Rhaco::import('util.DocUtil');
+                            $this->setVariable('doc', new DocUtil($body, $path));
+                        }
                     }
                 }
                 $files['list']['entry']['log'] = $this->_getLog($path, $files['list']['entry']['commit']['revision']);

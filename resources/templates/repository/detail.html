@@ -25,6 +25,49 @@
         <dd>{$f.dateformat($entry['commit']['date'])}</dd>
   </dl>
   <p class="info">{$f.noop($f.text2html($entry['log']))}</p>
+
+  <rt:if param="{$doc}">
+  <h3 class="big">_('document')</h3>
+  <div class="document">
+    <a name="{$doc.name}"></a>
+    <div class="name">
+      {$doc.name}
+    
+      <rt:if param="{$doc.isSubclass()}">
+        &lt;{$doc.extends}&gt;
+      </rt:ifnot>
+    </div>
+    <div class="path">({$doc.path})</div>
+    <div class="description">
+      {$f.text2html($doc.description)}
+    </div>
+
+    <div class="funcs">
+      <rt:loop param="{$doc.function}" var="func">
+        <div class="func">
+          <a name="{$doc.name}::{$func.name}"></a>
+          <div class="name">{$func.name}</div>
+          <div class="description">
+            {$f.text2html($func.description)}
+          </div>
+          
+          <div class="onevars">
+            <rt:loop param="{$func.vars}" var="var">
+              <span class="onevar">{$f.text2html($var)}</span>
+            </rt:loop>
+          </div>
+
+          <rt:loop param="{$func.tests}" var="test">
+          <div class="test">
+            {$f.text2html($test)}
+          </div>
+          </rt:loop>
+        </div>
+      </rt:loop>
+    </div>
+  </div>
+  </rt:if>
+
   <rt:if param="{$body}">
   <h3 class="big">_('source')</h3>
     <pre class="prettyprint">
