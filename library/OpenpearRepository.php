@@ -42,7 +42,7 @@ class OpenpearRepository extends Openpear
                         $this->setVariable('body', $body);
                         if($ext == 'php'){
                             Rhaco::import('util.DocUtil');
-                            $this->setVariable('doc', new DocUtil($body, $getVariable('path')));
+                            $this->setVariable('doc', new DocUtil($body, $this->getVariable('path')));
                         }
                     }
                 }
