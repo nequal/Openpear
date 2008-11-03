@@ -38,7 +38,7 @@
     </div>
     <div class="path">({$doc.path})</div>
     <div class="description">
-      {$f.text2html($doc.description)}
+      {$f.noop($f.text2html($doc.description))}
     </div>
 
     <div class="funcs">
@@ -47,18 +47,18 @@
           <a name="{$doc.name}::{$func.name}"></a>
           <div class="name">{$func.name}</div>
           <div class="description">
-            {$f.text2html($func.description)}
+            {$f.noop($f.text2html($func.description))}
           </div>
           
           <div class="onevars">
             <rt:loop param="{$func.vars}" var="var">
-              <span class="onevar">{$f.text2html($var)}</span>
+              <span class="onevar">{$,noop($f.text2html($var))}</span>
             </rt:loop>
           </div>
 
           <rt:loop param="{$func.tests}" var="test">
           <div class="test">
-            {$f.text2html($test)}
+            {$f.noop($f.text2html($test))}
           </div>
           </rt:loop>
         </div>
