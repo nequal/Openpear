@@ -31,7 +31,18 @@ class OpenpearMaintainer extends Openpear
     }
     function detail($name){
         $parser = parent::detail(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $name), Q::depend()));
+        $parser->setVariable('recent_changesets', $this->dbUtil->select(new RepositoryLog(), new C(Q::eq(RepositoryLog::columnAuthor(), $name), Q::fact(), Q::pager(5), Q::orderDesc(RepositoryLog::columnRevision()))));
         return $parser;
+    }
+    function timeline($name){
+        $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $name), Q::depend()));
+        if(Variable::istype('Maintainer', $maintainer)){
+            $parser = parent::read(new RepositoryLog(), new C(Q::eq(RepositoryLog::columnAuthor(), $maintainer->name), Q::fact()));
+            $parser->setVariable('maintainer', $maintainer);
+            $parser->setTemplate('maintainer/timeline.html');
+            return $parser;
+        }
+        return $this->_notFound();
     }
     function settings(){
         $this->loginRequired();

@@ -18,6 +18,11 @@ class RepositoryLog extends RepositoryLogTable{
         }
         return $result;
     }
+    function views(){
+        return array(
+            'ordering' => '-id',
+        );
+    }
 }
 
 ?>

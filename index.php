@@ -108,6 +108,10 @@ $parser = Urls::parser(array(
         'class' => 'OpenpearMaintainer',
         'method' => 'deleteOpenId',
     ),
+    '^maintainer\/(.+)/timeline$' => array(
+        'class' => 'OpenpearMaintainer',
+        'method' => 'timeline',
+    ),
     '^maintainer\/(.+)$' => array(
         'class' => 'OpenpearMaintainer',
         'method' => 'detail',
