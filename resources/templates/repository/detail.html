@@ -52,7 +52,7 @@
           
           <div class="onevars">
             <rt:loop param="{$func.vars}" var="var">
-              <span class="onevar">{$,noop($f.text2html($var))}</span>
+              <span class="onevar">{$f.noop($f.text2html($var))}</span>
             </rt:loop>
           </div>
 

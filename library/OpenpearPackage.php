@@ -52,7 +52,7 @@ class OpenpearPackage extends Openpear
             if($this->isMaintainer($p, $u, true)){
                 $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $this->getVariable('maintainer'))));
                 if(Variable::istype('Maintainer', $maintainer)){
-                    if($this->isMaintainer($p, $maintainer)){
+                    if($this->isMaintainer($p, $maintainer, true)){
                         $this->message('既にメンテナ登録されています');
                         Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
                     }

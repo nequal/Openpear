@@ -235,6 +235,7 @@ class OpenIDAuth
         if ($_SESSION[$this->_session_namespace.'mac_expire'] < time()) {
             return false;
         }
+        if(!isset($variables['openid_signed'])) return false;
         $signes = explode(",", $variables['openid_signed']);
         $headers = array();
         foreach($signes as $s) {
