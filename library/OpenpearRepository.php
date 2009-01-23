@@ -21,7 +21,7 @@ class OpenpearRepository extends Openpear
 
     function browse($path='/'){
         if(empty($path) || preg_match('/\s/', $path)) $path = '/';
-        $path = sprintf('file://%s/%s%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'), $path);
+        $path = sprintf('file://%s/%s', Rhaco::constant('SVN_PATH'), $path);
         $svn = new SvnUtil();
         
         $info = $svn->execute('info', escapeshellarg($path));
@@ -30,7 +30,7 @@ class OpenpearRepository extends Openpear
         
         $files = $svn->execute('list', escapeshellarg($path));
         $this->setVariable('path', (isset($files['list']['path']) && !empty($files['list']['path'])) ? 
-            str_replace(sprintf('file://%s/%s', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), '', $files['list']['path'])
+            str_replace(array('file://', Rhaco::constant('SVN_PATH')), '', $files['list']['path'])
             : '');
         switch($kind){
             case 'file':

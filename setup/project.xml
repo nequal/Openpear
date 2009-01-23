@@ -1,4 +1,4 @@
-<project name="Open PEAR Server" version="1.0.0" pathinfo="index.php">
+<project name="Open PEAR Server" version="1.1.0" pathinfo="index.php">
     <description>
         共用のPEAR Channelリポジトリサービス
     </description>
@@ -33,6 +33,71 @@
             <column name="log" type="text" />
             <column name="diff" type="text" />
             <column name="date" type="timestamp" />
+        </table>
+
+        <table name="release">
+            <column name="package" type="int" primary="true" reference="package.id" />
+            
+            <column name="project_src_dir" label="[プロジェクト]ソース格納先" default="src" chartype="^[A-Za-z0-9\.\/\_\-]+$" />
+            <column name="project_release_dir" label="[プロジェクト]パッケージ格納先" default="release" chartype="^[A-Za-z0-9\.\/\_\-]+$" />
+            
+            <column name="package_package_name" label="[パッケージ]パッケージ名" require="true" />
+            <column name="package_package_type" default="php" label="[パッケージ]パッケージタイプ" />
+            <column name="package_baseinstalldir" label="[パッケージ]インストール先" chartype="^[A-Za-z0-9\.\/\_\-]+$" />
+            <column name="package_channel" default="openpear.org" label="[パッケージ]チャンネル" />
+            <column name="package_summary" type="text" label="[パッケージ]概要" />
+            <column name="package_description" type="text" label="[パッケージ]詳細説明" />
+            <column name="package_notes" type="text" label="[パッケージ]更新履歴" />
+            <extra name="package_summary_file" label="[パッケージ]概要(ファイル)" default="summary.txt" />
+            <extra name="package_description_file" label="[パッケージ]詳細説明(ファイル)" default="desc.txt" />
+            <extra name="package_notes_file" label="[パッケージ]更新履歴(ファイル)" default="notes.txt" />
+            
+            <column name="version_release_ver" default="1.0.0" label="[バージョン]リリースバージョン" chartype="^[0-9\.]+$" />
+            <column name="version_release_stab" default="stable" label="[バージョン]リリース状態">
+                <choices>
+                    <data>stable</data>
+                    <data>beta</data>
+                    <data>alpha</data>
+                </choices>
+            </column>
+            <column name="version_api_ver" default="1.0.0" label="[バージョン]APIバージョン" chartype="^[0-9\.]+$" />
+            <column name="version_api_vapi_stab" default="stable" label="[バージョン]API状態">
+                <choices>
+                    <data>stable</data>
+                    <data>beta</data>
+                    <data>alpha</data>
+                </choices>
+            </column>
+            <column name="version_php_min" default="5.2.0" label="[バージョン]PHPバージョン（最小）" chartype="^[0-9\.]+$" />
+            <column name="version_pear_min" default="1.7.2" label="[バージョン]PEARインストーラ（最小）" chartype="^[0-9\.]+$" />
+            
+            <column name="license_name" default="New BSD Licence" label="[ライセンス]ライセンス名" />
+            <column name="license_uri" default="http://creativecommons.org/licenses/BSD/" label="[ライセンス]ライセンス参照先" />
+            
+            <!-- __call とかである程度面倒みてやるしかないのではないか -->
+            <!-- role はseliarizeしましょうかね -->
+            <column name="role" type="text" label="[拡張子]拡張子毎のタイプの指定" />
+            <column name="file" type="text" label="[ファイル]" />
+            <column name="dep" type="text" label="[パッケージ依存関係]" />
+            <column name="installer" type="text" label="[インストーラ]" />
+        </table>
+
+        <table name="newproject_queue">
+            <column name="id" />
+            <column name="package" type="int" reference="package.id" />
+            <column name="maintainer" type="int" reference="maintainer.id" />
+            <column name="mail_possible" type="bool" default="true" />
+            <column name="created" type="timestamp" default="sysdate" />
+        </table>
+        <table name="release_queue">
+            <column name="id" />
+            <column name="package" type="int" reference="package.id" />
+            <column name="maintainer" type="int" reference="maintainer.id" />
+            <column name="revision" type="int" />
+            <column name="build_path" require="true" />
+            <column name="build_conf" type="text" />
+            <column name="mail_possible" type="bool" default="true" />
+            <column name="created" type="timestamp" default="sysdate" />
         </table>
 
         <table name="favorite">
@@ -82,18 +147,21 @@
             <column name="contents" type="text" />
         </table>
     </database>
-	<input name="CHANNEL">
-		<title>Channel DOMAIN</title>
-		<data>openpear.org</data>
-	</input>
+    <input name="CHANNEL">
+        <title>Channel DOMAIN</title>
+        <data>openpear.org</data>
+    </input>
     <input name="SVN_PATH">
         <title>Subversionのディレクトリ</title>
-        <description>SVNのパス</description>
-        <data>/home/openpear/svn</data>
+        <data>/home/openpear/svn/openpear</data>
     </input>
-    <input name="SVN_NAME">
-        <title>リポジトリの名前</title>
-        <data>openpear</data>
+    <input name="SVN_ACCESS_FILE">
+        <title>AuthzSVNAccessFile</title>
+        <data>/home/openpear/svn/openpear.access</data>
+    </input>
+    <input name="SVN_AUTH_FILE">
+        <title>AuthUserFile</title>
+        <data>/home/openpear/svn/openpear.passwd</data>
     </input>
     <input name="WORKING_DIR">
         <title>作業用ディレクトリ</title>
@@ -108,4 +176,12 @@
         <title>information</title>
         <data>Welcome to openpear.org</data>
     </input>
+    
+    <input name="GMAIL_ACCOUNT">
+        <title>Gmail Account</title>
+        <data>notify@openpear.org</data>
+    </input>
+    <password name="GMAIL_PASSWORD">
+        <title>Gmail Password</title>
+    </password>
 </project>

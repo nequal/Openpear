@@ -50,7 +50,7 @@ class Maintainer extends MaintainerTable{
             $accounts[] = sprintf('%s:%s', $maintainer->getName(), $maintainer->getPassword());
         }
         if(!empty($accounts) && count($accounts) > 0)
-            file_put_contents(sprintf('%s/%s.passwd', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME')), implode("\n", $accounts));
+            file_put_contents(Rhaco::constant('SVN_AUTH_FILE', '/home/openpear/svn/openpear.passwd'), implode("\n", $accounts));
     }
 
     function afterSelect($db){

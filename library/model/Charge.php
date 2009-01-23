@@ -18,7 +18,7 @@ class Charge extends ChargeTable{
     }
 
     function updateAccess($db){
-        $filename = sprintf('%s/%s.access', Rhaco::constant('SVN_PATH'), Rhaco::constant('SVN_NAME'));
+        $filename = Rhaco::constant('SVN_ACCESS_FILE', '/home/openpear/svn/openpear.access');
         $maintainers = $db->select(new Maintainer());
         $developers = array();
         foreach($maintainers as $maintainer) $developers[] = $maintainer->name;

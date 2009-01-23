@@ -15,7 +15,7 @@ function e($cmd){
     return ob_get_clean();
 }
 
-$path = isset($argv[1]) ? $argv[1] : Rhaco::constant('SVN_PATH'). '/'. Rhaco::constant('SVN_NAME');
+$path = isset($argv[1]) ? $argv[1] : Rhaco::constant('SVN_PATH');
 
 // リビジョン指定してくれないとヤーよ！
 $revision = isset($argv[2]) ? $argv[2] : null;

@@ -25,6 +25,8 @@ class MaintainerTable extends TableObjectBase{
 	/**  */
 	var $created;
 	var $dependOpenIds;
+	var $dependNewprojectQueues;
+	var $dependReleaseQueues;
 	var $dependFavorites;
 	var $dependCharges;
 	var $packages;
@@ -65,7 +67,7 @@ class MaintainerTable extends TableObjectBase{
 		if(!Rhaco::isVariable("_R_D_C_","Maintainer::Id")){
 			$column = new Column("column=id,variable=id,type=serial,size=22,primary=true,",__CLASS__);
 			$column->label(Message::_("id"));
-			$column->depend("OpenId::Maintainer","Favorite::Maintainer","Charge::Maintainer");
+			$column->depend("OpenId::Maintainer","NewprojectQueue::Maintainer","ReleaseQueue::Maintainer","Favorite::Maintainer","Charge::Maintainer");
 			Rhaco::addVariable("_R_D_C_",$column,"Maintainer::Id");
 		}
 		return Rhaco::getVariable("_R_D_C_",null,"Maintainer::Id");
@@ -244,6 +246,18 @@ class MaintainerTable extends TableObjectBase{
 	}
 	function getDependOpenIds(){
 		return $this->dependOpenIds;
+	}
+	function setDependNewprojectQueues($value){
+		$this->dependNewprojectQueues = $value;
+	}
+	function getDependNewprojectQueues(){
+		return $this->dependNewprojectQueues;
+	}
+	function setDependReleaseQueues($value){
+		$this->dependReleaseQueues = $value;
+	}
+	function getDependReleaseQueues(){
+		return $this->dependReleaseQueues;
 	}
 	function setDependFavorites($value){
 		$this->dependFavorites = $value;
