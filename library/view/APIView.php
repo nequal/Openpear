@@ -1,6 +1,6 @@
 <?php
 /**
- * OpenpearAPI
+ * APIView
  *
  * @author  riaf <riafweb@gmail.com>
  * @license New BSD License
@@ -8,9 +8,10 @@
  */
 Rhaco::import('tag.feed.Rss20');
 Rhaco::import('model.RepositoryLog');
-Rhaco::import('OpenpearFormatter');
+Rhaco::import('util.OpenpearFormatter');
+Rhaco::import('view.ViewBase');
 
-class OpenpearAPI extends Openpear
+class APIView extends ViewBase
 {
     /**
      * 新規登録されたパッケージRSS

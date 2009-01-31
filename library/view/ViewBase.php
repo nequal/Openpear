@@ -1,6 +1,6 @@
 <?php
 /**
- * Openpear
+ * ViewBase
  *
  * @author  riaf <riafweb@gmail.com>
  * @license New BSD License
@@ -9,7 +9,7 @@
 Rhaco::import('generic.Views');
 Rhaco::import('OpenIDAuth');
 
-class Openpear extends Views
+class ViewBase extends Views
 {
     function index(){
         $parser = new HtmlParser('index.html');

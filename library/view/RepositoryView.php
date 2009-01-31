@@ -2,8 +2,9 @@
 Rhaco::import('SvnUtil');
 Rhaco::import('io.Cache');
 Rhaco::import('model.RepositoryLog');
+Rhaco::import('view.ViewBase');
 
-class OpenpearRepository extends Openpear
+class RepositoryView extends ViewBase
 {
     var $allowExt = array('txt','php','css','js','pl','cgi','rb','py','phps','c');
 

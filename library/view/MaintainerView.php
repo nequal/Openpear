@@ -1,13 +1,14 @@
 <?php
 /**
- * OpenpearMaintainer
+ * MaintainerView
  *
  * @author  riaf <riafweb@gmail.com>
  * @license New BSD License
  * @version $Id$
  */
+Rhaco::import('view.ViewBase');
 
-class OpenpearMaintainer extends Openpear
+class MaintainerView extends ViewBase
 {
     function signup(){
         if($this->isPost() && $this->isSession('openId')){

@@ -9,143 +9,139 @@
 require_once '__init__.php';
 Rhaco::import('generic.Urls');
 Rhaco::import('model.LoginCondition');
-Rhaco::import('Openpear');
-Rhaco::import('OpenpearPackage');
-Rhaco::import('OpenpearMaintainer');
-Rhaco::import('OpenpearFormatter');
 
 RequestLogin::silent(new LoginCondition());
 
 $db = new DbUtil(Package::connection());
 $parser = Urls::parser(array(
     '^$' => array(
-        'class' => 'Openpear',
+        'class' => 'view.ViewBase',
         'method' => 'index',
     ),
     '^mypage$' => array(
-        'class' => 'Openpear',
+        'class' => 'view.ViewBase',
         'method' => 'mypage',
     ),
     '^login$' => array(
-        'class' => 'Openpear',
+        'class' => 'view.ViewBase',
         'method' => 'login',
     ),
     '^logout$' => array(
-        'class' => 'Openpear',
+        'class' => 'view.ViewBase',
         'method' => 'logout',
     ),
 
     '^package$' => array(
-        'class' => 'OpenpearPackage',
+        'class' => 'view.PackageView',
         'method' => 'read',
     ),
     '^packages\/create$' => array(
-        'class' => 'OpenpearPackage',
+        'class' => 'view.PackageView',
         'method' => 'create',
     ),
     '^packages\/search$' => array(
-        'class' => 'OpenpearPackage',
+        'class' => 'view.PackageView',
         'method' => 'search',
     ),
     '^packages\/favorite$' => array(
-        'class' => 'OpenpearAPI',
+        'class' => 'view.APIView',
         'method' => 'toggleFavorite',
     ),
     '^package\/(.*?)\/settings$' => array(
-        'class' => 'OpenpearPackage',
+        'class' => 'view.PackageView',
         'method' => 'settings',
     ),
     '^package\/(.*?)\/release$' => array(
-        'class' => 'OpenpearPackage',
+        'class' => 'view.PackageView',
         'method' => 'release',
     ),
     '^package\/(.*?)\/release\/confirm$' => array(
-        'class' => 'OpenpearPackage',
+        'class' => 'view.PackageView',
         'method' => 'release_confirm',
     ),
     '^package\/(.*?)\/release\/do$' => array(
-        'class' => 'OpenpearPackage',
+        'class' => 'view.PackageView',
         'method' => 'release_do',
     ),
     '^package\/(.*?)\/maintainer$' => array(
-        'class' => 'OpenpearPackage',
-        'method' => 'maintainer',
+        'class' => 'view.PackageMaintainerView',
+        'method' => 'read',
     ),
     '^package\/(.*?)\/maintainer\/add$' => array(
-        'class' => 'OpenpearPackage',
-        'method' => 'maintainer_add',
+        'class' => 'view.PackageMaintainerView',
+        'method' => 'add',
     ),
     '^package\/(.*?)\/maintainer\/update$' => array(
-        'class' => 'OpenpearPackage',
-        'method' => 'maintainer_update',
+        'class' => 'view.PackageMaintainerView',
+        'method' => 'update',
     ),
     '^package\/(.*?)\/maintainer\/remove$' => array(
-        'class' => 'OpenpearPackage',
-        'method' => 'maintainer_remove',
+        'class' => 'view.PackageMaintainerView',
+        'method' => 'remove',
     ),
     '^package\/(.+)$' => array(
-        'class' => 'OpenpearPackage',
+        'class' => 'view.PackageView',
         'method' => 'detail',
     ),
 
     '^maintainer$' => array(
-        'class' => 'OpenpearMaintainer',
+        'class' => 'view.MaintainerView',
         'method' => 'read',
     ),
     '^maintainer\/signup$' => array(
-        'class' => 'OpenpearMaintainer',
+        'class' => 'view.MaintainerView',
         'method' => 'signup',
     ),
     '^maintainer\/settings$' => array(
-        'class' => 'OpenpearMaintainer',
+        'class' => 'view.MaintainerView',
         'method' => 'settings',
     ),
     '^maintainer\/add_openid$' => array(
-        'class' => 'OpenpearMaintainer',
+        'class' => 'view.MaintainerView',
         'method' => 'addOpenId',
     ),
     '^maintainer\/delete_openid$' => array(
-        'class' => 'OpenpearMaintainer',
+        'class' => 'view.MaintainerView',
         'method' => 'deleteOpenId',
     ),
     '^maintainer\/(.+)/timeline$' => array(
-        'class' => 'OpenpearMaintainer',
+        'class' => 'view.MaintainerView',
         'method' => 'timeline',
     ),
     '^maintainer\/(.+)$' => array(
-        'class' => 'OpenpearMaintainer',
+        'class' => 'view.MaintainerView',
         'method' => 'detail',
     ),
     
     '^repository(\/.*?)$' => array(
-        'class' => 'OpenpearRepository',
+        'class' => 'view.RepositoryView',
         'method' => 'browse'
     ),
     '^changeset\/(\d+)$' => array(
-        'class' => 'OpenpearRepository',
+        'class' => 'view.RepositoryView',
         'method' => 'changeset',
     ),
     
     '^api\/maintainers$' => array(
-        'class' => 'OpenpearAPI',
+        'class' => 'view.APIView',
         'method' => 'maintainers',
     ),
     
     '^feed\/package\/new$' => array(
-        'class' => 'OpenpearAPI',
+        'class' => 'view.APIView',
         'method' => 'feedNewPackage',
     ),
     '^feed\/package\/update$' => array(
-        'class' => 'OpenpearAPI',
+        'class' => 'view.APIView',
         'method' => 'feedUpdatePackage',
     ),
     '^feed\/repository$' => array(
-        'class' => 'OpenpearAPI',
+        'class' => 'view.APIView',
         'method' => 'feedRepository',
     ),
     
     '^404$' => array(
-        'class' => 'Openpear',
+        'class' => 'view.ViewBase',
         'method' => '_notFound',
         'default' => true,
     ),
@@ -158,6 +154,6 @@ if($request->isSession('message')){
     $parser->setVariable('message', $request->getSession('message'));
     $request->clearSession('message');
 }
-$parser->setVariable('of', new OpenpearFormatter);
+$parser->setVariable('of', Rhaco::obj('util.OpenpearFormatter'));
 $parser->write();
 

@@ -1,14 +1,15 @@
 <?php
 /**
- * OpenpearPackage
+ * PackageView
  *
  * @author  riaf <riafweb@gmail.com>
  * @license New BSD License
  * @version $Id$
  */
 Rhaco::import('model.Release');
+Rhaco::import('view.ViewBase');
 
-class OpenpearPackage extends Openpear
+class PackageView extends ViewBase
 {
     function read(){
         $parser = parent::read(new Package(), new C(Q::pager(18)));
@@ -30,81 +31,6 @@ class OpenpearPackage extends Openpear
             $parser->setVariable('isMaintainer', $this->isMaintainer($p, $u, true));
         }
         return $parser;
-    }
-
-    // == ==
-
-    function maintainer($package){
-        $this->loginRequired();
-        $u = RequestLogin::getLoginSession();
-        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package), Q::depend()));
-        if($this->isMaintainer($p, $u, true)){
-            $parser = new HtmlParser('package/maintainer.html');
-            $parser->setVariable('object', $p);
-            return $parser;
-        } else return $this->_forbidden();
-    }
-    function maintainer_add($package){
-        $this->loginRequired();
-        $u = RequestLogin::getLoginSession();
-        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        if($this->isPost() && $this->isVariable('maintainer') && $this->isVariable('role')){
-            if($this->isMaintainer($p, $u, true)){
-                $maintainer = $this->dbUtil->get(new Maintainer(), new C(Q::eq(Maintainer::columnName(), $this->getVariable('maintainer'))));
-                if(Variable::istype('Maintainer', $maintainer)){
-                    if($this->isMaintainer($p, $maintainer, true)){
-                        $this->message('既にメンテナ登録されています');
-                        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
-                    }
-                    $charge = new Charge();
-                    $charge->setMaintainer($maintainer->id);
-                    $charge->setPackage($p->id);
-                    $charge->setRole($this->getVariable('role', 'lead'));
-                    if($charge->save($this->dbUtil)){
-                        $this->message('メンテナを追加しました');
-                        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
-                    }
-                }
-            }
-        }
-        $this->message('メンテナの追加に失敗しました', true);
-        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
-    }
-    function maintainer_update($package){
-        $this->loginRequired();
-        $u = RequestLogin::getLoginSession();
-        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        if($this->isPost() && $this->isVariable('id') && $this->isVariable('role') && $this->isMaintainer($p, $u, true)){
-            $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
-            if(Variable::istype('Charge', $charge)){
-                $charge->setRole($this->getVariable('role'));
-                if($charge->save($this->dbUtil)){
-                    $this->message('メンテナの状態を変更しました');
-                    Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
-                }
-            }
-        }
-        $this->message('メンテナ状態の変更に失敗しました', true);
-        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
-    }
-    function maintainer_remove($package){
-        $this->loginRequired();
-        $u = RequestLogin::getLoginSession();
-        $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        if($this->isPost() && $this->isVariable('id') && $this->isMaintainer($p, $u, true)){
-            $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
-            if(Variable::istype('Charge', $charge)){
-                $mc = $this->dbUtil->count(new Charge(), new C(Q::eq(Package::columnId(), $p->id)));
-                if($mc > 1){
-                    if($this->dbUtil->delete($charge)){
-                        $this->message('メンテナの解除を行いました');
-                        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
-                    }
-                }
-            }
-        }
-        $this->message('メンテナの解除に失敗しました', true);
-        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
     }
 
     function release($package){
