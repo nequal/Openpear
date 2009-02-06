@@ -10,9 +10,9 @@
 <rt:block name="contents">
 	<h3>_('repository browser')</h3>
 
-    <rt:if param="{$path}">
+    <rt:ifnot param="{$path}" value="/">
         <p>package: <a href="{$rhaco.url('package')}/{$of.pp($path)}">{$of.pp($path)}</a></p>
-    </rt:if>
+    </rt:ifnot>
 
     <p class="info"><b>r{$rev}</b>: {$f.noop($f.text2html($log))}</p>
 
@@ -20,14 +20,14 @@
 		<tr>
 			<th>name</th><th class="revision">rev</th><th>author</th><th>comment</th>
 		</tr>
-		<rt:if param="{$path}">
+		<rt:ifnot param="{$path}" value="/">
 		<tr class="odd">
 			<td><img src="{$rhaco.templateurl('images')}/dir.png" width="16" height="16" /> <a href="{$rhaco.url('repository')}{$of.dn($path)}">..</a></td>
 			<td align="center"> - </td>
 			<td align="center"> - </td>
 			<td align="center"> - </td>
 		</tr>
-		</rt:if>
+		</rt:ifnot>
 <rt:loop param="entries" var="entry">
 		<tr class="{$f.evenodd($key)} {$entry['kind']}">
 			<td class="name">

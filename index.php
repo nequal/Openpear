@@ -113,7 +113,7 @@ $parser = Urls::parser(array(
         'method' => 'detail',
     ),
     
-    '^repository(\/.*?)$' => array(
+    '^repository(\/.*?)?$' => array(
         'class' => 'view.RepositoryView',
         'method' => 'browse'
     ),
@@ -140,10 +140,9 @@ $parser = Urls::parser(array(
         'method' => 'feedRepository',
     ),
     
-    '^404$' => array(
-        'class' => 'view.ViewBase',
-        'method' => '_notFound',
-        'default' => true,
+    '^(.+?)$' => array(
+        'class' => 'view.StaticView',
+        'method' => 'page',
     ),
 ), $db);
 $request = new Request();

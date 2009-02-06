@@ -1,6 +1,6 @@
 <?php
 Rhaco::import("model.table.PackageTable");
-Rhaco::import('SvnUtil');
+Rhaco::import('model.NewprojectQueue');
 /**
  * 
  */
@@ -36,6 +36,12 @@ class Package extends PackageTable{
         $charge->setMaintainer($m->id);
         $charge->setPackage($this->id);
         if(!$db->insert($charge)) return false;
+        
+        $queue = new NewprojectQueue();
+        $queue->setMaintainer($m->id);
+        $queue->setPackage($this->id);
+        $db->insert($queue);
+        
         return true;
     }
     function beforeUpdate(){

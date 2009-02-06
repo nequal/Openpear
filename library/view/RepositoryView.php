@@ -1,13 +1,11 @@
 <?php
-Rhaco::import('SvnUtil');
+Rhaco::import('util.SvnUtil');
 Rhaco::import('io.Cache');
 Rhaco::import('model.RepositoryLog');
 Rhaco::import('view.ViewBase');
 
 class RepositoryView extends ViewBase
 {
-    var $allowExt = array('txt','php','css','js','pl','cgi','rb','py','phps','c');
-
     function changeset($revision){
         $log = $this->dbUtil->get(new RepositoryLog(), new C(Q::eq(RepositoryLog::columnRevision(), $revision)));
         if(Variable::istype('RepositoryLog', $log)){
@@ -20,53 +18,50 @@ class RepositoryView extends ViewBase
         return $this->_notFound();
     }
 
+    /**
+     * @todo revision
+     */
     function browse($path='/'){
         if(empty($path) || preg_match('/\s/', $path)) $path = '/';
-        $path = sprintf('file://%s/%s', Rhaco::constant('SVN_PATH'), $path);
-        $svn = new SvnUtil();
+        $this->setVariable('path', $path);
+        $path = sprintf('file://%s/%s', Rhaco::constant('SVN_PATH'), preg_replace('/\.+/', '.', $path));
         
-        $info = $svn->execute('info', escapeshellarg($path));
-        if(!isset($info['entry']['kind'])) return $this->_notFound();
-        $kind = $info['entry']['kind'];
-        
-        $files = $svn->execute('list', escapeshellarg($path));
-        $this->setVariable('path', (isset($files['list']['path']) && !empty($files['list']['path'])) ? 
-            str_replace(array('file://', Rhaco::constant('SVN_PATH')), '', $files['list']['path'])
-            : '');
-        switch($kind){
+        // エントリ情報を取得
+        $info = SvnUtil::info($path);
+        if(!isset($info['entry']['kind'])){
+            // 無かったら駄目
+            return $this->_notFound();
+        }
+        // ファイル情報一覧
+        $entries = SvnUtil::ls($path);
+        switch($info['entry']['kind']){
             case 'file':
-                // file
+                $file = $info['entry'];
+                // TODO: 外に出す
+                $allowExt = array('txt','php','css','js','pl','cgi','rb','py','phps','c');
                 if($file = explode('.', $path)){
                     $ext = array_pop($file);
-                    if(in_array($ext, $this->allowExt)){
-                        $body = $svn->cmd('cat '. escapeshellarg($path));
-                        $this->setVariable('body', $body);
-                        if($ext == 'php'){
-                            Rhaco::import('util.DocUtil');
-                            $this->setVariable('doc', new DocUtil($body, $this->getVariable('path')));
-                        }
+                    if(in_array($ext, $allowExt)){
+                        $this->setVariable('body', SvnUtil::cat($path));
                     }
                 }
-                $files['list']['entry']['log'] = $this->_getLog($path, $files['list']['entry']['commit']['revision']);
-                $this->setVariable('entry', $files['list']['entry']);
+                $file['log'] = $this->_getLog($path, $file['commit']['revision']);
+                $this->setVariable('entry', $file);
                 return $this->parser('repository/detail.html');
-
+                
             case 'dir':
-                // dir
-                $entries = array();
-                if(isset($files['list']['entry']))
-                    $entries = isset($files['list']['entry']['kind']) ? array($files['list']['entry']) : $files['list']['entry'];
-                foreach($entries as &$entry){
-                    $entry['log'] = $this->_getLog(
-                        $path. '/'. $entry['name'],
-                        $entry['commit']['revision']
-                    );
+                $files = array();
+                if(isset($entries['entry'])){
+                    $files = isset($entries['entry']['kind'])? array($entries['entry']): $entries['entry'];
+                }
+                foreach($files as &$file){
+                    $file['log'] = $this->_getLog($path. '/'. $file['name'], $file['commit']['revision']);
                 }
                 $this->setVariable('rev', $info['entry']['commit']['revision']);
                 $this->setVariable('log', $this->_getLog($path, $info['entry']['commit']['revision']));
-                $this->setVariable('entries', $entries);
+                $this->setVariable('entries', $files);
                 return $this->parser('repository/list.html');
-
+                
             default:
                 return $this->_notFound();
         }
@@ -74,9 +69,8 @@ class RepositoryView extends ViewBase
     function _getLog($path, $rev='HEAD'){
         $key = is_numeric($rev) ? $rev : array($path, $rev);
         $log = '';
-        $svn = new SvnUtil();
         if(Cache::isExpiry($key, 3600*24*30*12)){
-            $logs = $svn->execute('log -r '. $rev, escapeshellarg($path));
+            $logs = SvnUtil::log($path, 'r='. $rev);
             $log = isset($logs['logentry']['msg']) ? $logs['logentry']['msg'] : '';
             Cache::set($key, $log);
         } else {

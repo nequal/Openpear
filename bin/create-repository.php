@@ -2,8 +2,10 @@
 chdir(dirname(__FILE__));
 require_once dirname(dirname(__FILE__)). '/__init__.php';
 Rhaco::import('single_execution');
-Rhaco::import('Package');
+Rhaco::import('model.Package');
 Rhaco::import('model.NewprojectQueue');
+Rhaco::import('model.Charge');
+Rhaco::import('Gmail');
 
 new singleExecution();
 
@@ -18,6 +20,17 @@ if(Variable::istype('NewprojectQueue', $queue) && $package = $db->get(new Packag
     );
     if($queue->isMailPossible()){
         // send welcome mail!
+        $maintainers = $db->select(new Maintainer(), new C(
+            Q::eq(Maintainer::columnId(), Charge::columnMaintainer()),
+            Q::eq(Charge::columnPackage(), $package->getId())
+        ));
+        /*
+        $mail = new Gmail(Rhaco::constant('GMAIL_ACCOUNT'), Rhaco::constant('GMAIL_PASSWORD'));
+        foreach($maintaiers as $maintainer){
+            
+        }
+        */
     }
+    $db->delete($queue);
 }
 
