@@ -7,6 +7,19 @@ Rhaco::import('SvnUtil');
 class Package extends PackageTable{
     var $favorites;
     
+    /**
+     * メンテナかどうかを判定する
+     */
+    function isMaintainer(&$db, $maintainer, $strict=false){
+        if($strict == false && $this->isPublic()){
+            return true;
+        }
+        $charge = $db->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $this->getId()), Q::eq(Charge::columnMaintainer(), $maintainer->getId())));
+        if(Variable::istype('Charge', $charge)){
+            return true;
+        }
+        return false;
+    }
     function getLatestVersion($default='0.1.0'){
         $lr = unserialize($this->latestRelease);
         return isset($lr['version___l___release_ver']) ? $lr['version___l___release_ver'] : $default;
@@ -23,18 +36,6 @@ class Package extends PackageTable{
         $charge->setMaintainer($m->id);
         $charge->setPackage($this->id);
         if(!$db->insert($charge)) return false;
-
-        // create repository
-        $wp = Rhaco::constant('WORKING_DIR'). '/NEWREP'. md5($this->name);
-        $path = sprintf('file://%s/%s', Rhaco::constant('SVN_PATH'), $this->name);
-        $svn = new SvnUtil();
-        $svn->cmd(sprintf('mkdir %s -m "[Add Package] %s"', $path, $this->name));
-        $svn->_cmd('rm -rf '. $wp);
-        $svn->cmd(sprintf('co %s %s', $path, $wp));
-        FileUtil::mkdir($wp.'/trunk');
-        FileUtil::mkdir($wp.'/tags');
-        $svn->cmd('add '.$wp.'/trunk '.$wp.'/tags');
-        $svn->cmd(sprintf('ci %s -m "[Create Base Directory] %s"', $wp, $this->name));
         return true;
     }
     function beforeUpdate(){

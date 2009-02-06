@@ -83,15 +83,11 @@ class ViewBase extends Views
         return false;
     }
 
+    /**
+     * @deprecated
+     */
     function isMaintainer($package, $maintainer, $strict=false){
-        if($strict == false && $package->isPublic()){
-            return true;
-        }
-        $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $package->getId()), Q::eq(Charge::columnMaintainer(), $maintainer->getId())));
-        if(Variable::istype('Charge', $charge)){
-            return true;
-        }
-        return false;
+        return $package->isMaintainer($this->dbUtil, $maintainer, $strict);
     }
 
     function getServerDB(){
