@@ -27,7 +27,15 @@ if(Variable::istype('NewprojectQueue', $queue) && $package = $db->get(new Packag
         /*
         $mail = new Gmail(Rhaco::constant('GMAIL_ACCOUNT'), Rhaco::constant('GMAIL_PASSWORD'));
         foreach($maintaiers as $maintainer){
-            
+            if(empty($maintainer->mail)){
+                continue;
+            }
+            $parser = new HtmlParser();
+            $parser->setVariable('package', $package);
+            $parser->setVariable('maintainer', $maintainer);
+            $mail->to($maintainer->mail, $maintainer->fullname);
+            $mail->subject(Message::_('repository ready for your new package'));
+            $mail->message($parser->read('mail/newpackage.tpl'));
         }
         */
     }

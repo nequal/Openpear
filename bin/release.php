@@ -1,6 +1,7 @@
 <?php
 chdir(dirname(__FILE__));
 require_once dirname(dirname(__FILE__)). '/__init__.php';
+require_once 'PEAR/Server2.php';
 Rhaco::import('single_execution');
 Rhaco::import('util.SvnUtil');
 Rhaco::import('model.ReleaseQueue');
