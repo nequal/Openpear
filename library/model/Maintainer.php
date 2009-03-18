@@ -8,7 +8,7 @@ class Maintainer extends MaintainerTable{
 
     function beforeInsert($db){
         $denyNames = array('signup', 'settings', 'add_openid', 'delete_openid', 'openpear');
-        if(in_array($this->name, $denyNames)) return ExceptionTrigger::raise(new GenericException('name is couldn\'t use'));
+        if(in_array($this->name, $denyNames)) return ExceptionTrigger::raise(new GenericException('name is could not use'));
         $this->hashPassword();
         return true;
     }
@@ -17,7 +17,7 @@ class Maintainer extends MaintainerTable{
         if(empty($this->password) && $this->id == $u->id)
             $this->password = $u->password;
         else if(empty($this->password))
-            return ExceptionTrigger::raise(new GenericException('password is could not empty'));
+            return ExceptionTrigger::raise(new GenericException('password is could not be empty'));
         else if($this->id == $u->id && $this->password != $u->password)
             $this->hashPassword();
         return true;

@@ -68,20 +68,17 @@ class PackageMaintainerView extends ViewBase
         $this->loginRequired();
         $u = RequestLogin::getLoginSession();
         $p = $this->dbUtil->get(new Package(), new C(Q::eq(Package::columnName(), $package)));
-        if($this->isPost() && $this->isVariable('id') && $this->isMaintainer($p, $u, true)){
-            $charge = $this->dbUtil->get(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))));
-            if(Variable::istype('Charge', $charge)){
-                $mc = $this->dbUtil->count(new Charge(), new C(Q::eq(Package::columnId(), $p->id)));
-                if($mc > 1){
-                    if($this->dbUtil->delete($charge)){
-                        $this->message('メンテナの解除を行いました');
-                        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
-                    }
-                }
+        if(!Variable::istype('Package', $p)){
+            return $this->_notFound();
+        }
+        if($this->isPost() && $this->isVariable('id') && $p->isMaintainer($this->dbUtil, $u, true)){
+            if($this->dbUtil->delete(new Charge(), new C(Q::eq(Charge::columnPackage(), $p->id), Q::eq(Charge::columnMaintainer(), $this->getVariable('id'))))){
+                // success
+                Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
             }
         }
-        $this->message('メンテナの解除に失敗しました', true);
-        Header::redirect(Rhaco::url('package/'). $p->name. '/maintainer');
+        ExceptionTrigger::raise(new GenericException('remove the maintainer failed'));
+        return $this->read($package);
     }
 }
 

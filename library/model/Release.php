@@ -9,11 +9,16 @@ class Release extends ReleaseTable{
      * propertyをセットする。
      * ex) $release->setProp($request->getVariable());
      * 
+     * @param   array $params
      * @return  void
      */
-    function setProp($param){
+    function setProp($params){
+        /**
+         * $release = new Release();
+         * $request = new Request();
+         */
         // とりあえず全部つっこむ
-        ObjectUtil::hashConvObject($param, $this);
+        ObjectUtil::hashConvObject($params, $this);
         
         // めちゃEthnaっぽいwww
         // rhacoならdictつかえよwwww
@@ -35,18 +40,16 @@ class Release extends ReleaseTable{
         foreach($prop_def as $name => $prop){
             $tmp = array();
             if(isset($param[$name])){
-                $params = $param[$name];
-                if(is_array($params)){
-                    foreach($params as $val){
-                        $tmpv = array();
-                        foreach($prop as $k => $p){
-                            if(is_numeric($k)) $k = $p;
-                            if(isset($p['required']) && $p['required'] == true && (!isset($val[$k])) || empty($val[$k]))
-                                return ExceptionTrigger::raise(new GenericException('hmm...'));
-                            if(isset($val[$k]) && !empty($val[$k])) $tmpv[$k] = $val[$k];
-                        }
-                        if(!empty($tmpv)) $tmp[] = $tmpv;
+                $params = ArrayUtil::arrays($param[$name]);
+                foreach($params as $val){
+                    $tmpv = array();
+                    foreach($prop as $k => $p){
+                        if(is_numeric($k)) $k = $p;
+                        if(isset($p['required']) && $p['required'] == true && (!isset($val[$k])) || empty($val[$k]))
+                            return ExceptionTrigger::raise(new GenericException('hmm...'));
+                        if(isset($val[$k]) && !empty($val[$k])) $tmpv[$k] = $val[$k];
                     }
+                    if(!empty($tmpv)) $tmp[] = $tmpv;
                 }
             }
             $this->$name = serialize($tmp);

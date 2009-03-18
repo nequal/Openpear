@@ -12,6 +12,13 @@ class Charge extends ChargeTable{
         $this->updateAccess($db);
         return true;
     }
+    function beforeDelete($db){
+        $package_members = $db->count(new Charge(), new C(Q::eq(Charge::columnPackage(), $this->package)));
+        if($package_members < 2){
+            return ExceptionTrigger::raise(new GenericException('package required maintainers'));
+        }
+        return true;
+    }
     function afterDelete($db){
         $this->updateAccess($db);
         return true;

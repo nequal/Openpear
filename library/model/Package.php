@@ -9,6 +9,11 @@ class Package extends PackageTable{
     
     /**
      * メンテナかどうかを判定する
+     *
+     * @param   DbUtil      $db
+     * @param   Maintainer  $maintainer メンテナモデル
+     * @param   bool        $strict     メンテナリストに登録されているかをチェック
+     * @return  bool
      */
     function isMaintainer(&$db, $maintainer, $strict=false){
         if($strict == false && $this->isPublic()){
