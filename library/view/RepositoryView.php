@@ -25,15 +25,16 @@ class RepositoryView extends ViewBase
         if(empty($path) || preg_match('/\s/', $path)) $path = '/';
         $this->setVariable('path', $path);
         $path = sprintf('file://%s/%s', Rhaco::constant('SVN_PATH'), preg_replace('/\.+/', '.', $path));
+        $revision = $this->getVariable('rev', 'HEAD');
         
         // エントリ情報を取得
-        $info = SvnUtil::info($path);
+        $info = SvnUtil::info($path, array('revision' => $revision));
         if(!isset($info['entry']['kind'])){
             // 無かったら駄目
             return $this->_notFound();
         }
         // ファイル情報一覧
-        $entries = SvnUtil::ls($path);
+        $entries = SvnUtil::ls($path, array('revision' => $revision));
         switch($info['entry']['kind']){
             case 'file':
                 $file = $info['entry'];
@@ -42,7 +43,7 @@ class RepositoryView extends ViewBase
                 if($file = explode('.', $path)){
                     $ext = array_pop($file);
                     if(in_array($ext, $allowExt)){
-                        $this->setVariable('body', SvnUtil::cat($path));
+                        $this->setVariable('body', SvnUtil::cat($path, array('revision' => $file['commit']['revision'])));
                     }
                 }
                 $file['log'] = $this->_getLog($path, $file['commit']['revision']);
