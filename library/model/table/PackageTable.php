@@ -29,7 +29,9 @@ class PackageTable extends TableObjectBase{
 	var $dependNewprojectQueues;
 	var $dependReleaseQueues;
 	var $dependFavorites;
+	var $dependTagPackages;
 	var $dependCharges;
+	var $tags;
 	var $maintainers;
 
 
@@ -68,7 +70,7 @@ class PackageTable extends TableObjectBase{
 		if(!Rhaco::isVariable("_R_D_C_","Package::Id")){
 			$column = new Column("column=id,variable=id,type=serial,size=22,primary=true,",__CLASS__);
 			$column->label(Message::_("id"));
-			$column->depend("RepositoryLog::Package","Release::Package","NewprojectQueue::Package","ReleaseQueue::Package","Favorite::Package","Charge::Package");
+			$column->depend("RepositoryLog::Package","Release::Package","NewprojectQueue::Package","ReleaseQueue::Package","Favorite::Package","TagPackage::Package","Charge::Package");
 			Rhaco::addVariable("_R_D_C_",$column,"Package::Id");
 		}
 		return Rhaco::getVariable("_R_D_C_",null,"Package::Id");
@@ -280,11 +282,23 @@ class PackageTable extends TableObjectBase{
 	function getDependFavorites(){
 		return $this->dependFavorites;
 	}
+	function setDependTagPackages($value){
+		$this->dependTagPackages = $value;
+	}
+	function getDependTagPackages(){
+		return $this->dependTagPackages;
+	}
 	function setDependCharges($value){
 		$this->dependCharges = $value;
 	}
 	function getDependCharges(){
 		return $this->dependCharges;
+	}
+	function setTags($value){
+		$this->tags = $value;
+	}
+	function getTags(){
+		return $this->tags;
 	}
 	function setMaintainers($value){
 		$this->maintainers = $value;
