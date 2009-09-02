@@ -35,7 +35,7 @@ class OpenpearMessage extends Dao
         $this->type = 'normal';
     }
     
-    public function hasPermission(OpenpearMaintainer $maintainer){
+    public function permission(OpenpearMaintainer $maintainer){
         if($this->maintainer_to_id() === $maintainer->id()
             || $this->maintainer_from_id() === $maintainer->id()){
             return true;

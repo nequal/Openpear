@@ -12,7 +12,7 @@ try{
         
         /** 個別パッケージのマッピング */
         '^/package/(.+)$' => 'class=Openpear.PackageView,method=model,template=package/model.html',
-        '^/package/(.+)/download' => 'class=Openpear.PackageView,method=download,template=package/download.html',
+        '^/package/(.+)/download' => 'class=Openpear.ReleaseView,method=download,template=package/download.html',
         '^/package/(.+)/like' => 'class=Openpear.PackageView,method=add_favorite',
         '^/package/(.+)/unlike' => 'class=Openpear.PackageView,method=remove_favorite',
         /** Pacakge Manager */
@@ -22,6 +22,10 @@ try{
         '^/package/(.+)/manage' => 'class=Openpear.PackageView,method=manage,template=package/manage.html',
         '^/package/(.+)/manage/edit' => 'class=Openpear.PackageView,method=update,template=package/edit.html',
         '^/package/(.+)/manage/edit_do' => 'class=Openpear.PackageView,method=update_do',
+        /** release */
+        '^/package/(.+)/manage/release' => 'class=Openpear.ReleaseView,method=package_release,template=package/release.html',
+        '^/package/(.+)/manage/release_confirm' => 'class=Openpear.ReleaseView,method=package_release_confirm',
+        '^/package/(.+)/manage/release_do' => 'class=Openpear.ReleaseView,method=package_release_do',
         
         /** メンテナ */
         '^/maintainers' => 'class=Openpear.MaintainerView,method=models,template=maintainer/models.html',

@@ -7,7 +7,7 @@ class MessageView extends Openpear
         $user = $this->user();
         try {
             $message = C(OpenpearMessage)->find_get(Q::eq('id', $id));
-            if($massage->hasPermisson($user)){
+            if($massage->permission($user)){
                 if($message->maintainer_to_id() === $user->id()){
                     $message->unread(false);
                     $message->save(true);

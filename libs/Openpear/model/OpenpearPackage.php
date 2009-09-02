@@ -75,7 +75,7 @@ class OpenpearPackage extends Dao
     public function isPublic(){
         return (bool) ($this->public_level > 0);
     }
-    public function hasPermission(OpenpearMaintainer $maintainer, $exception=true){
+    public function permission(OpenpearMaintainer $maintainer, $exception=true){
         try {
             C(OpenpearCharge)->find_get(Q::eq('package_id', $this->id()), Q::eq('maintainer_id', $maintainer->id()));
         } catch(Exception $e){
@@ -185,7 +185,9 @@ class OpenpearPackage extends Dao
             $this->latest_release = C(OpenpearRelease)->find_get(Q::eq('package_id', $this->id()), Q::order('-id'));
             return $this->latest_release;
         } catch(Exception $e){}
-        return new OpenpearRelease();
+        $release = new OpenpearRelease();
+        $release->package_id($this->id());
+        return $release;
     }
     protected function getPackage_tags(){
         if(!empty($this->package_tags)) return $this->package_tags();

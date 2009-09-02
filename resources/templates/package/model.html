@@ -45,7 +45,7 @@
           <li><a href="{$t.url('package')}/{$package.name()}/download">Downloads</a></li>
           <li><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
           <li><a href="{$t.url('package')}/{$package.name()}/source">Source</a></li>
-          <rt:if param="{$package.hasPermisson($t.login_user(),false)}" value="true">
+          <rt:if param="{$package.permission($t.login_user(),false)}" value="true">
             <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
           </rt:if>
         </ul>

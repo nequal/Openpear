@@ -1,0 +1,271 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/1column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">Release \ Manage \ {$package.name()} \ Package \ Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('packages')}">Package</a> &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> &raquo; <a href="{$t.url('package')}/{$package.name()}/manage">Manage Package</a> &raquo; Release
+  </div>
+</rt:block>
+
+<rt:block name="extra_header">
+   <script type="text/javascript">
+      $(function()
+      {
+        $('#release-target').change(function()
+        {
+          $('#release-target-check').html(
+            '<img src="images/global-icon-loader.gif" />'
+            + ' Checking directory existance.'
+            );
+          //$('#release-dir-repo').html('/' + $(this).val());
+          $.get(
+            'checkrepo.php',
+            {package: "Package_Hoge", dir: $(this).val()},
+            function(data)
+            {
+              if (data.match(/^ng/)) {
+                $('#release-target-check').html(
+                  '<img src="images/global-icon-notice.png" />'
+                  + ' Target directory is not exists on the repository.'
+                  );
+              }
+              else if(data.match(/^ok/)) {
+                $('#release-target-check').html(
+                  '<img src="images/global-icon-checked.png" />'
+                  + ' Ok.'
+                  );
+                /*
+                $('#release-dir-tree').html(data);
+                */
+              }
+            }
+          );
+        });
+        $('#release-install-target').keyup(function()
+        {
+          $('#release-dir-server').html('/' + $(this).val());
+        });
+
+        $('#release-dir-server').html('/' + $(this).val());
+        //$('#release-target-tree').html('tree'); // ここはPHPで
+      });
+    </script>
+    <script type="text/javascript">
+      $(function()
+      {
+        var dep_id = 1;
+        var li_template = ' '
+           + '        <li id="release-dep-list-%id%">'
+           + '        <a class="fright" href="javascript:;" onclick="$(\'#release-dep-list-%id%\').remove();">'
+           + '          <img src="images/global-icon-notice.png" alt="[x]" />'
+           + '        </a>'
+           + '        <select name="dep[%id%][optional]" id="release-dep-optional-%id%">'
+           + '          <option value="1">Required</option>'
+           + '          <option value="2">Optional</option>'
+           + '        </select>'
+           + '        Package: <input type="text" name="dep[%id%][name]" class="small" value="%name%" />'
+           + ''
+           + '        <select name="dep[%id%][channel]" id="release-dep-chan-select-%id%"'
+           + '          onchange="if (this.value == \'99\') {'
+           + '          $(\'#release-dep-chan-input-outer-%id%\').show();'
+           + '          $(\'#release-dep-chan-input-%id%\').focus();'
+           + '          $(\'#release-dep-chan-select-%id%\').hide();}'
+           + '          ">'
+           + '          <option value="-1" selected>[select or input channel]</option>'
+           + '          <option value="1">openpear.org</option>'
+           + '          <option value="2">pear.php.net</option>'
+           + '          <option value="3">pecl.php.net</option>'
+           + '          <option value="4">__uri</option>'
+           + '          <option value="99">[other]</option>'
+           + '        </select>'
+           + '        <span id="release-dep-chan-input-outer-%id%" style="display:none;">'
+           + '          Channel: <input type="text" name="dep[%id%][channel_other]" class="small" value="%channel_other%" id="release-dep-chan-input-%id%"/>'
+           + '          <a href="javascript:;" onclick="'
+           + '            $(\'#release-dep-chan-input-outer-%id%\').hide();'
+           + '            $(\'#release-dep-chan-select-%id%\').show();'
+           + '            $(\'#release-dep-chan-select-%id%\').focus();'
+           + '            $(\'#release-dep-chan-select-%id%\').val(-%id%);'
+           + '            ">'
+           + '            <img src="images/global-icon-select.png" alt="select" />'
+           + '          </a>'
+           + '        </span>'
+           + '          (Required)'
+           + '        <br />'
+           + '        '
+           + '        <input type="text" name="dep[%id%][min]" class="tiny" value="%min%" /> &lt;= Version &lt;='
+           + '         <input type="text" name="dep[%id%][max]" class="tiny" value="%max%" /> (Optional)'
+           + '        </li>'
+          + ' ';
+        $('#release-dep-add').click(function()
+        {
+          append_dep(
+            dep_id,
+            {name: "", optional: "", channel: "", channel_other: "", min: "", max: ""}
+          );
+          dep_id++;
+        });
+
+        function append_dep(id, data)
+        {
+          var template_html = li_template.replace(/%id%/g, id);
+          for (var key in data) {
+            var re = new RegExp('%' + key + '%', "g");
+            template_html = template_html.replace(re, data[key]);
+          }
+
+          $('#release-dep-list').append(template_html);
+
+          $('#release-dep-optional-' + id).val(data.optional);
+          $('#release-dep-chan-select-' + id).val(data.channel);
+          $('#release-dep-chan-select-' + id).change();
+        }
+
+        function restore_dependency()
+        {
+          var deps = [
+            /* generated by PHP
+               */
+            {id: 1,
+             values: {name: "Package", optional: "1", channel: "99", channel_other: "pear.ethna.jp", min: "0.2", max: "0.9"}
+            }
+            ,{id: 2,
+             values: {name: "PackageName", optional: "2", channel: "3", min: "0.1", max: "0.9"}
+            }
+          /*
+            ,{id: 2,
+             values: {name: "Package", optional: "1", channel: "5", min: "0.2", max: "0.9"}
+            }
+             */
+          ];
+          for (var i = 0; i < deps.length ; i++) {
+            //alert(deps[i].values);
+            append_dep(deps[i].id, deps[i].values);
+            dep_id = deps[i].id;
+          }
+        };
+        restore_dependency();
+      });
+    </script>
+</rt:block>
+
+<rt:block name="contents">
+<div class="frame-class" id="sub-title">
+
+<div class="container-class">
+<h2 class="inline fleft"><a href="{$t.url('package')}/{$package.name()}">Package \ {$package.name()}</a></h2>
+<form id="sub-search-form" method="post">
+<input type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
+<input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
+</form>
+<br class="clear" />
+</div> <!-- #container-s -->
+</div> <!-- .frame-class -->
+
+<div class="frame-class">
+<div class="container-class" id="sub-main">
+
+  <div id="sub-package-navi">
+    <ul>
+      <li class="current"><a href="{$t.url('package')}/{$package.name()}">Top</a></li>
+      <li><a href="{$t.url('package')}/{$package.name()}/timeline">Timeline</a></li>
+      <li><a href="{$t.url('package')}/{$package.name()}/download">Downloads</a></li>
+      <li><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
+      <li><a href="{$t.url('package')}/{$package.name()}/source">Source</a></li>
+      <rt:if param="{$package.permission($t.login_user(),false)}" value="true">
+        <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
+      </rt:if>
+    </ul>
+  </div>
+
+<div id="sub-package-description">
+
+<div class="column1">
+
+<p><a href="{$t.url('package')}/{$package.name()}/manage">&laquo; back</a></p>
+
+<div class="column2-left">
+<h3>Release Package</h3>
+
+
+<form action="{$t.url('package')}/{$package.name()}/manage/release_confirm" method="post" id="release-package">
+
+  <dl>
+    <dt>Target revision <span class="red">*</span>: </dt>
+    <dd>
+    <input type="text" id="release-revision" class="tiny" value="1288" />
+    </dd>
+    <dt>Version <span class="red">*</span>: </dt>
+    <dd>
+    <input type="text" id="release-version" class="tiny" value="1.0.0" />
+    <select name="package-stab">
+      <option value="1">Stable</option>
+      <option value="2">Alpha</option>
+      <option value="3">Beta</option>
+    </select>
+    (Current: 1.0.0-alpha)
+    </dd>
+    <dt>Target directory : </dt>
+    <p class="caption"></p>
+    <dd>
+    Repository: /Package_Hoge/trunk/<input type="text" id="release-target" class="middle" value="" />
+    <span id="release-target-check"></span>
+    <br />
+    Install target: PEAR_DIR/<input type="text" id="release-install-target" class="middle" value="" />
+    <p class="ml10">
+    Example). If the install server's pear-dir is <span class="inline-pre">/usr/share/pear</span> then the package will be installed following path:
+    </p>
+    <pre class="ml10 caption">/usr/share/pear<span id="release-dir-server"></span></pre>
+    <!--
+    <pre id="release-dir-tree" class="ml10"></pre>
+    -->
+
+    </dd>
+    <dt>Notes: </dt>
+    <dd>
+    <textarea name="package-description" class="large">ここにはCHANGESファイルから自動生成した文字列が最初からはいっている</textarea>
+    </dd>
+    <dt>PHP min version / PEAR min version.</dt>
+    <dd>
+    PHP &gt;= <input type="text" id="release-phpmin" class="tiny" value="5.2.0" /> / PEAR &gt;= <input type="text" id="release-revision" class="tiny" value="1.8.2" />
+    </dd>
+    <dt>Dependencies</dt>
+    <dd>
+      <p class="caption">Package, Channel is required. Min/Max version is optional.</p>
+      <ul id="release-dep-list">
+
+      </ul>
+      <input type="button" id="release-dep-add" value="Add dependent package" />
+    </dd>
+    <dt>Additional Files</dt>
+    <dd>
+      <p class="caption">If you want to add source of script or data files etc., fill following forms:</p>
+      <span style="display:none;" id="release-add-list"><textarea class="huge"></textarea><br /></span>
+      <input type="button" id="release-dep-add" value="Add additional role files" onclick="$('#release-add-list').show();" />
+    </dd>
+  </dl>
+
+  <input type="submit" value="Confirm" class="small" />
+</form>
+
+
+
+</div> <!-- / column1 -->
+
+
+<br class="clear" />
+
+</div>
+
+
+</div>
+</div>
+
+</rt:block>

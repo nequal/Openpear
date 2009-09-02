@@ -56,20 +56,6 @@ class PackageView extends Openpear
     }
     
     /**
-     * Downloads
-     * 
-     * ## テンプレートにセットする値
-     * # 'package' => パッケージオブジェクト
-     * # 'object_list' => 最新リリースオブジェクトの配列
-     */
-    public function download($package_name){
-        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-        $this->vars('package', $package);
-        $this->vars('object_list', C(OpenpearRelease)->find_all(Q::eq('package_id', $package->id())));
-        return $this;
-    }
-    
-    /**
      * Fav 登録
      */
     public function add_favorite($package_name){
@@ -111,7 +97,7 @@ class PackageView extends Openpear
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-                $package->hasPermission($this->user());
+                $package->permission($this->user());
                 $package->add_tag($this->inVars('tag_name'), $this->inVars('prime', false));
                 C($package)->commit();
             } catch(Exception $e){die($e->getMessage());}
@@ -124,7 +110,7 @@ class PackageView extends Openpear
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-                $package->hasPermission($this->user());
+                $package->permission($this->user());
                 $package->remove_tag($this->inVars('tag_id'));
                 C($package)->commit();
             } catch(Exception $e){}
@@ -137,7 +123,7 @@ class PackageView extends Openpear
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-                $package->hasPermission($this->user());
+                $package->permission($this->user());
                 $package_tag = C(OpenpearPackageTag)->find_get(Q::eq('tag_id', $this->inVars('tag_id')), Q::eq('package_id', $package->id()));
                 $package_tag->prime(true);
                 $package_tag->save();
@@ -195,7 +181,7 @@ class PackageView extends Openpear
         $this->_login_required('packages/update');
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-            $package->hasPermission($this->user());
+            $package->permission($this->user());
             $this->vars('object', $package);
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
@@ -212,7 +198,7 @@ class PackageView extends Openpear
         $this->template('package/edit.html');
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-            $package->hasPermission($this->user());
+            $package->permission($this->user());
             $this->vars('package', $package);
             $this->vars('object', $package);
             if(!$this->isPost()){
@@ -229,7 +215,7 @@ class PackageView extends Openpear
         $this->_login_required('packages/update');
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->inVars('package_id')));
-            $package->hasPermission($this->user());
+            $package->permission($this->user());
             $package->set_vars($this->vars());
             $this->vars('packge', $package);
             return $this;
@@ -241,7 +227,7 @@ class PackageView extends Openpear
         $this->_login_required('packages/update');
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->inVars('id')));
-            $package->hasPermission($this->user());
+            $package->permission($this->user());
             $this->vars('name', $package->name());
             $package->set_vars($this->vars());
             $package->save();
