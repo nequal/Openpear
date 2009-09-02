@@ -1,0 +1,128 @@
+@charset 'utf-8';
+
+/**
+ * Openpear top style
+ *
+ * @description   openpear global styles
+ * @package       openpear
+ * @date          2009/02/01
+ * @author        sotarok
+ */
+
+/** main-column
+ */
+#top-main {
+  padding: 20px 0;
+  height: 270px;
+  border-top: solid 5px #ccc;
+  background: #7b011d url(../images/top-main-bg.gif) bottom repeat-x;
+  color: #eee;
+}
+#top-main h2 a {
+  color: #eee;
+
+}
+#top-main a {
+  color: #ccc;
+  border-bottom: dotted 1px #bbb;
+}
+#top-main a:hover {
+  border: none;
+  text-decoration: none;
+}
+
+#main-column {
+}
+
+#main-column-left {
+  margin-right: 330px;
+  padding: 0 10px;
+}
+
+#main-cat-list {
+  margin: 0;
+  padding: 0;
+}
+
+#main-cat-list li {
+  margin: 0;
+  padding: 2px 5px;
+  width: 130px;
+  float: left;
+  list-style: none;
+}
+#main-cat-more {
+  clear: left;
+  text-align: right;
+}
+
+#main-column-right {
+  float: right;
+  width: 320px;
+}
+#main-column-left h2 ,
+#main-column-right h2 {
+  margin-top: 0;
+  padding-top: 10px;
+}
+#main-column-right li {
+  padding: 0 0 3px 5px;
+}
+#main-column-right em {
+  color: #c0c0c0;
+  font-size: 0.8em;
+}
+
+#main-recent {
+  padding: 0;
+  margin: 0;
+}
+
+#main-recent li {
+  list-style: none;
+}
+
+/** main-section
+ */
+#main-section {
+  clear: both;
+}
+
+#main-section h2 {
+  font-family: Baskerville,"Baskerville Old Face","Constantia",Georgia,"Times New Roman",serif;
+  margin-left: 0;
+  padding-left: 0;
+}
+#main-section h2 .h2-init {
+  font-family: Baskerville,"Baskerville Old Face","Constantia",Georgia,"Times New Roman",serif;
+  color: #a00;
+  font-size: 1.6em;
+}
+#main-section div {
+  float: left;
+  margin-bottom: 15px;
+  width: 306px;
+}
+
+#main-section div#main-section-left ,
+#main-section div#main-section-center {
+  margin-right: 10px;
+}
+
+/** main-dream
+ */
+#main-dream {
+  clear: both;
+  background: #fcecc0 url(../images/top-main-dream.gif) bottom repeat-x;
+  padding: 30px 20px;
+  width: 340px;
+  margin: 15px auto;
+  font-style: italic;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: sx;
+}
+#main-dream em {
+  display: block;
+  text-align: right;
+}

@@ -1,0 +1,32 @@
+@charset 'utf-8';
+
+/**
+ * Openpear style for 3 column layout
+ *
+ * @description   Openpear style for 3 column layout
+ * @package       openpear
+ * @date          2009/02/01
+ * @author        sotarok
+ */
+
+.column3 {
+  clear: both;
+}
+
+.column3-left {
+  width: 200px;
+  margin-right: 15px;
+  float: left;
+}
+
+.column3-center {
+  width: 420px;
+  margin-right: 15px;
+  float: left;
+}
+
+.column3-right {
+  float: left;
+  width: 300px;
+}
+

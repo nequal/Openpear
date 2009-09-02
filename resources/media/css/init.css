@@ -1,0 +1,121 @@
+@charset 'utf-8';
+
+html {
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-family: "Trebuchet MS","Lucida Grande",  "メイリオ", "ＭＳ Ｐゴシック", "ヒラギノ角ゴ Pro W3", Osaka, Geneva;
+  line-height: 1.4em;
+}
+* {
+  font-family: "Trebuchet MS","Lucida Grande",  "メイリオ", "ＭＳ Ｐゴシック", "ヒラギノ角ゴ Pro W3", Osaka, Geneva;
+}
+
+img {
+  border: none;
+}
+
+a:link          {text-decoration: none; color: #6e0000; }
+a:visited       {text-decoration: none; color: #6e0000; }
+a:link:hover    {border-bottom: dotted 1px; color: #6e0000; }
+a:visited:hover {border-bottom: dotted 1px; color: #6e0000; }
+
+/* Heading Tags / Sections Initialize
+ ----------------------------------- */
+
+h2 {
+  line-height:100%;
+  font-size: 1.5em;
+  padding: 7px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  line-height:170%;
+  font-size: 1.35em;
+  margin: 1.2em 0 0.8em;
+}
+
+h4 {
+  line-height:160%;
+  font-size: 1.2em;
+  margin: 1.0em 0 0.6em;
+}
+
+h5 {
+  line-height:170%;
+  font-size:12px;
+
+}
+
+p {
+  line-height:160%;
+  margin: 0.8em 0 0.6em;
+}
+
+em {
+  color: #666;
+}
+
+pre {
+  padding: 8px;
+  border: solid 1px #ccc;
+  background: #f0f0dd;
+  overflow: auto;
+  font-family: "Courier New";
+}
+code {
+}
+input {
+}
+/*
+input:active {
+ padding: 4px 2px 2px 4px;
+ background: #f0f0f0;
+ border: solid 1px #ccc;
+ -moz-border-radius: 2px;
+ -webkit-border-radius: 2px;
+}
+*/
+
+
+
+
+/* List Tags Initialize
+ ----------------------------------- */
+
+dl dt {
+font-weight:bold;
+line-height: 150%;
+}
+
+dl dd {
+margin-left: 15px;
+line-height: 150%;
+padding-bottom: 10px;
+}
+
+ul ,
+ol {
+  margin-bottom: 10px;
+  margin-left: 15px;
+}
+ol li ,
+ul li {
+  margin-left: 5px;
+  line-height: 150%;
+}
+ul.ulist li {
+  background: #fff url(../images/li-bg.gif) 0 7px no-repeat;
+  padding : 5px 0 0 20px;
+  list-style: none;
+}
+
+ul li * {
+line-height: 150%;
+}
+
+

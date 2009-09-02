@@ -1,0 +1,87 @@
+<rt:extends href="../index.html" />
+
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+<rt:block name="title">Login \ Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="./">Home</a> &raquo; Login
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+  <div class="frame-class" id="sub-title">
+    
+    <div class="container-class">
+      <h2 class="inline fleft"><a href="{$t.url('account/login')}">Login</a></h2>
+      
+      <form action="{$t.url('packages')}" id="sub-search-form" method="post">
+        <input type="text" name="q" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
+        <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
+      </form>
+      <br class="clear" />
+    </div> <!-- #container-s -->
+  </div> <!-- .frame-class -->
+  
+  <div class="frame-class">
+    <div class="container-class" id="sub-main">
+      
+      <div class="column2">
+        
+        <div class="column2-left">
+          <rt:invalid>
+            <p class="error">__('Login or Password is incorrect.')</p>
+          </rt:invalid>
+          
+          <form action="{$t.url('account/login')}" method="post" id="login" rt:ref="true">
+            <fieldset>
+              <legend>__('Login or E-mail:')</legend><br />
+              <input type="text" name="mail" id="id" /><br />
+            </fieldset>
+            <fieldset>
+              <legend>__('Password:')</legend><br />
+              <input name="password" type="password" id="password" /><br />
+            </fieldset>
+            <fieldset>
+              <input type="submit" value="Login" id="login" />
+            </fieldset>
+          </form>
+          
+        </div>
+        
+        <div class="column2-right">
+          
+          <h3>__('Login with OpenID')</h3>
+          
+          <form action="{$t.url('account/login_openid')}" method="post" id="login-openid">
+            <input type="text" name="openid_url" id="openid-url" />
+            <input type="submit" value="Login" id="openid-login" />
+          </form>
+          
+          <form method="post" id="login-openid-major">
+            <div>
+              <img src="images/openid/hatena.png" onclick="$('#openid-url').val('http://www.hatena.ne.jp/' + prompt('hatena user id?') + '/'); $('#login-openid').submit(); return false;" />
+              <img src="images/openid/google.png" onclick="$('#openid-url').val('https://www.google.com/accounts/o8/id'); $('#login-openid').submit(); return false;" />
+              <img src="images/openid/livedoor.png" onclick="$('#openid-url').val('http://livedoor.com/'); $('#login-openid').submit(); return false;" />
+              <img src="./images/openid/mixi.png" onclick="$('#openid-url').val('https://mixi.jp/'); $('#login-openid').submit(); return false;" />
+              <img src="./images/openid/myspace.png" onclick="$('#openid-url').val('http://www.myspace.com/'); $('#login-openid').submit(); return false;" />
+              <img src="./images/openid/yahoo.png" onclick="$('#openid-url').val('http://www.yahoo.com/'); $('#login-openid').submit(); return false;" />
+              <img src="./images/openid/myopenid.png" onclick="$('#openid-url').val('https://www.myopenid.com/'); $('#login-openid').submit(); return false;" />
+            </div>
+          </form>
+          
+          <h3>__('Help')</h3>
+          
+          <ul class="list-standard">
+            <li><a href="{$t.url('account/signup')}">__('Create account')</a></li>
+            <li><a href="{$t.url('account/password_reminder')}">__('Forgot password')</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</rt:block>

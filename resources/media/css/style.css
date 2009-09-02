@@ -1,0 +1,540 @@
+@charset 'utf-8';
+
+@import url("nequal.css");
+@import url("init.css");
+@import url("class.css");
+
+/**
+ * Openpear global styles
+ *
+ * @description   openpear global styles
+ * @package       openpear
+ * @date          2009/02/01
+ * @author        sotarok
+ */
+
+/** layout
+*/
+
+html {
+  background: #f4f4f4;
+}
+body {
+
+}
+div {
+  /*
+  border: solid 1px #ccc !important;
+  */
+}
+
+#frame {
+  text-align: center;
+  background: #fff;
+}
+
+#container {
+  margin: 0 auto;
+  padding-top: 10px;
+}
+#container ,
+#container-s,
+#container-t {
+  /*
+  clear: both;
+  margin: 0 auto;
+  width: 950px;
+  text-align: left;
+  */
+}
+
+#container-s {
+}
+
+.frame-class {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  text-align: center;
+  clear: both;
+}
+.container-class {
+  clear: both;
+  margin: 0 auto;
+  width: 950px;
+  text-align: left;
+}
+
+.main-class {
+  clear: both;
+  margin-top: 10px;
+}
+
+#main {
+  /*
+  clear: both;
+  margin-top: 10px;
+  */
+}
+
+
+/** header
+*/
+#header {
+  font-family: "Lucida Grande",  "メイリオ", "ＭＳ Ｐゴシック", "ヒラギノ角ゴ Pro W3", Osaka, Geneva;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+#header h1 {
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
+#header h1 a {
+  border: none;
+}
+
+#header-navi {
+  float: right;
+}
+
+#header ul#header-navi-sub {
+  margin: 0;
+  padding: 2px 10px;
+  float: right;
+  background: #f0f0f0;
+  border: solid 1px #ddd;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+#header ul#header-navi-sub li {
+  float: left;
+  list-style: none;
+  font-size: 0.8em;
+  margin: 0;
+  padding: 0 6px;
+}
+
+#header ul#header-navi-sub li a {
+  color: #666;
+}
+
+#header ul#header-navi-global {
+  display: none;
+  margin: 0;
+  padding: 20px 0 0 20px;
+  background: #fff url(../images/global-ul-bg.gif) bottom left no-repeat; /* fixme */
+  clear: both;
+  float: right;
+}
+
+#header ul#header-navi-global li {
+  float: left;
+  font-size: 0.9em;
+  padding: 0;
+  margin: 0;
+  width: 105px;
+  background: #fff url(../images/global-li-bg.gif) repeat-x; /* fixme */
+  text-align: center;
+  list-style: none;
+}
+#header ul#header-navi-global li a {
+  display: block;
+  margin: 0 2px;
+  padding: 5px 10px 10px;
+  height: 20px;
+  background: #fff url(../images/global-li-a-bg.gif) repeat-x; /* fixme */
+  font-weight: bold;
+}
+
+#header ul#header-navi-global li a:hover {
+  background: #fff url(../images/global-li-a-hover-bg.gif) repeat-x; /* fixme */
+  text-decoration: none;
+}
+#header ul#header-navi-global li.current a {
+  background: #fff url(../images/global-li-a-bg-cur.gif) repeat-x; /* fixme */
+}
+
+/** topic-path
+ */
+#topic-path {
+  margin: 0;
+  padding: 0px 0 5px 0;
+  font-size: 0.75em;
+  float: left;
+}
+
+/** main
+ */
+#main-site-description {
+  font-style: italic;
+  text-align: center;
+}
+#main-search-form {
+  width: 500px;
+  margin: 5px auto;
+ /*
+  text-align: center;
+ font-size: 3em;
+ width: 300px;
+ */
+}
+
+#main-search-q {
+ font-size: 1.2em;
+ width: 400px;
+ padding: 4px;
+}
+#main-search-submit {
+ font-size: 1.2em;
+ padding: 4px;
+}
+
+/** sub pages
+ */
+#sub-title {
+  padding: 10px 0;
+  border-top: solid 2px #ccc;
+  background: #7b011d url(../images/top-main-bg.gif) bottom repeat-x;
+  color: #eee;
+}
+#sub-title h2 {
+  padding: 0;
+  margin: 0;
+  font-size: 2.2em;
+  line-height: 100%;
+}
+#sub-title a {
+  color: #eee;
+}
+#sub-title a:hover {
+  color: #ccc;
+  text-decoration: none;
+}
+
+#sub-main {
+  padding-bottom: 40px;
+}
+
+#sub-main h3 {
+  clear: both;
+}
+
+#sub-main h3.fleft {
+  float: left;
+}
+#sub-main h3.fright {
+  float: right;
+}
+
+#sub-search-form {
+  float: right;
+  margin: 5px 0;
+}
+#sub-search-form input {
+}
+#sub-search-form #sub-search-q {
+  width: 200px;
+  color: #666;
+}
+#sub-search-form #sub-search-submit {
+}
+
+/** timeline
+*/
+.timeline {
+}
+
+.timeline ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.timeline ul li a {
+  font-weight: bold;
+}
+.timeline ul li pre {
+  padding: 2px;
+}
+.timeline ul li img {
+  vertical-align: middle;
+}
+.timeline ul li {
+  margin-left: 0;
+  padding: 5px 0 5px 10px;
+  list-style: none;
+  border-bottom: solid 1px #ccc;
+}
+.timeline ul li.odd  {background: #fff; }
+.timeline ul li.even {background: #fff; }
+.timeline ul li:hover {background: #f5f5dc;}
+
+.timeline ul li div {
+  padding: 5px 0;
+}
+.timeline ul li .hl {
+  font-weight: bold;
+  background: #ffedab;
+  padding: 1px;
+}
+.timeline ul li div.timeline-type {
+  float: left;
+  padding-right: 5px;
+}
+.timeline ul li div.timeline-title {
+}
+.timeline ul li div.timeline-description {
+  clear: both;
+  padding-left: 20px;
+}
+.timeline ul li div.timeline-description ul li {
+  list-style: circle;
+  border: none;
+  padding: 1px;
+  list-style-position: outside;
+  margin-left: 15px;
+}
+.timeline ul li div.timeline-user {
+}
+.timeline ul li div.timeline-package {
+}
+
+.timeline-user
+{
+}
+
+.timeline-package
+{
+}
+
+
+/** login
+*/
+
+#login {
+  padding: 30px;
+  width: 450px;
+  /*
+  margin: 0 auto 80px;
+  */
+  margin: 40px 0;
+  font-size: 130%;
+  background: #f5f5dc;
+}
+
+#login fieldset {
+  padding: 0;
+  border: none;
+  margin: 10px 0;
+}
+
+#login fieldset legend {
+  font-size: 130%;
+  font-weight: bold;
+}
+
+#login fieldset input {
+  width: 400px;
+  font-size: 130%;
+}
+#login fieldset input#login {
+  width: auto;
+  padding: 5px 60px;
+  margin: 0;
+  background: #7b011d;
+  color: #fff;
+  border: none;
+}
+
+#login fieldset {
+}
+
+#openid-url {
+  background: url(../images/openid/openid.png) 3px 2px no-repeat;
+  border: solid 1px #ccc;
+  width: 200px;
+  padding: 3px 3px 3px 23px;
+}
+
+#login-openid-major {
+  margin: 10px 0;
+}
+#login-openid-major div {
+  padding: 4px;
+  background: #7B011D;
+  width: 180px;
+}
+#login-openid-major img {
+  border: solid 3px #fff;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  line-height: 100%;
+  display: inline;
+  vertical-align: middle;
+}
+
+/** form generic style
+ */
+form {
+}
+form dl {
+}
+form dl dt ,
+form dl dd {
+  margin-left: 5px;
+  padding: 5px;
+  padding-left: 10px;
+}
+form dl dt:hover,
+form dl dd:hover {
+}
+form dl dd:hover {
+  background: #f5f5dc;
+}
+form dl dt {
+  font-size: 1.1em;
+}
+form dl dd {
+}
+form select,
+form select > option,
+form input[type="text"],
+form textarea
+{
+  margin-bottom: 2px;
+  padding: 2px;
+  font-size: 1.0em;
+  font-family: "Courier New", Monaco, monospace;
+  border: solid 1px #ccc;
+}
+form select > option {
+  border: none;
+  padding: 0;
+}
+form select:focus,
+form input[type="text"]:focus,
+form textarea:focus
+{
+  background: #f7f6fb;
+  border: solid 1px #0073a8;
+}
+form textarea
+{
+  width: 350px;
+  height: 100px;
+}
+form .caption {
+  font-size: 0.9em;
+  color: #333;
+}
+
+form .error {
+  font-size: 0.9em;
+  border-bottom: dotted 1px #f00;
+  color: #f00;
+  font-weight: bold;
+}
+
+.maintainers {
+}
+
+/** 
+ */
+
+form input.huge
+{
+  width: 500px;
+  font-size: 1em;
+}
+form textarea.huge
+{
+  width: 500px;
+  height: 120px;
+}
+form input.large
+{
+  width: 400px;
+  font-size: 1em;
+}
+form textarea.large
+{
+  width: 400px;
+  height: 90px;
+}
+form input.middle
+{
+  width: 300px;
+  font-size: 1em;
+}
+form textarea.middle
+{
+  width: 300px;
+  height: 70px;
+}
+form input.small
+{
+  width: 200px;
+  font-size: 1em;
+}
+form textarea.small
+{
+  width: 200px;
+  height: 50px;
+}
+form input.tiny
+{
+  width: 80px;
+  font-size: 1em;
+}
+form#register textarea
+{
+  width: 350px;
+  height: 100px;
+}
+
+#release-add-list li ,
+#release-dep-list li {
+  list-style: circle;
+  padding-bottom: 10px;
+}
+
+/** footer
+*/
+.footer-wrap {
+  border-top: 2px solid #bbb;
+  background: #f4f4f4 url(../images/global-footer-bg.gif) repeat-x;
+}
+
+#footer {
+  color: #444;
+  font-size: 0.9em;
+  padding: 15px 0;
+  width: 950px;
+  height: 180px;
+  margin: 0 auto;
+  text-align: left;
+  color: #444;
+}
+#footer a {
+  color: #722;
+}
+#footer-menu {
+  margin: 0;
+  padding: 0;
+}
+
+#footer-menu li {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0 ;
+  display: inline;
+}
+#footer p {
+  margin: 0;
+}
+

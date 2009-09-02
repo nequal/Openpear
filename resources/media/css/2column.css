@@ -1,0 +1,59 @@
+@charset 'utf-8';
+
+/**
+ * Openpear style for 2 column layout
+ *
+ * @description   Openpear style for 2 column layout
+ * @package       openpear
+ * @date          2009/02/01
+ * @author        sotarok
+ */
+
+.column2 {
+  clear: both;
+}
+
+.column2 .column2-left {
+  width: 615px;
+  margin-right: 15px;
+  float: left;
+}
+
+.column2 .column2-right {
+  float: left;
+  width: 300px;
+}
+
+.w200px {width: 200px;}
+.w400px {width: 400px;}
+.w500px {width: 500px;}
+.w715px {width: 715px;}
+
+
+.column2-c {
+  clear: both;
+}
+
+.column2-c .column2-left {
+  width: 465px;
+  margin-right: 15px;
+  float: left;
+}
+
+.column2-c .column2-right {
+  float: left;
+  width: 465px;
+}
+
+.column2-l {
+  clear: both;
+}
+.column2-l .column2-left {
+  width: 405px;
+  margin-right: 15px;
+  float: left;
+}
+.column2-l .column2-right {
+  float: left;
+  width: 525px;
+}

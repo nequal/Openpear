@@ -1,0 +1,103 @@
+<rt:extends href="index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/dashboard.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">Dashboard \  Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">Home</a> &raquo; Maintainer \ {$maintainer.name()}
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+  <div class="frame-class" id="sub-title">
+    <div class="container-class">
+      <h2 class="inline fleft"><a href="{$t.url('maintainer')}/{$maintainer.name()}">Dashboard</a></h2>
+      <br class="clear" />
+    </div> <!-- #container-s -->
+  </div> <!-- .frame-class -->
+  
+  <div class="frame-class dashboard">
+    <div class="container-class" id="sub-main">
+
+  <div class="message-system info" id="system-message-1">
+    <a href="javascript:;"
+      onclick="
+      $.post(
+        'close.php',
+        {message_id: 1},
+        function(data) {
+          $('#system-message-1').SlideUp();
+        }
+      );
+      " class="fright">[x]</a>
+  Google Groups にまだ登録してないみたいなんですけど，登録してくださいよ．それとももうしました？
+  </div>
+
+<div class="column2">
+<div class="column2-left">
+
+<h3>Dashboard Timeline</h3>
+
+<div class="timeline timeline-dashboard">
+
+<ul rt:param="timelines" rt:var="timeline">
+  <li class="{$loop_evenodd}">
+    <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
+    <div class="timeline-title">
+      {$timeline.subject()}. <em> -- {$t.df($timeline.created())}</em>
+    </div>
+    <div class="timeline-description">
+      <img src="{$ot.gravatar($timeline.maintainer().mail(),32)}" alt="{$timeline.maintainer().name()}" width="32" class="user-icon fleft" />
+      {$timeline.description()}
+    </div>
+    <br class="clear">
+  </li>
+</ul>
+
+</div>
+
+</div> <!-- / column2-left -->
+<div class="column2-right">
+
+  <h3>My Packages</h3>
+
+  &raquo; <a href="{$t.url('packages/create')}">Create Package</a>
+  
+  <rt:loop param="my_package_charges" var="charge">
+    <div class="dashboard-packages">
+      <a href="{$t.url('package')}/{$charge.package().name()}" class="package-link">{$charge.package().name()}</a> <a href="{$t.url('package')}/{$charge.package().name()}/manage" class="manage-link">&raquo; manage</a> 
+      <p>Latest: <a href="{$t.url('package')}/{$charge.package().name()}/download">{$charge.package().latest_release().fmVersion()}</a>, {$charge.package().favored_count()} Fans</p>
+    </div>
+  </rt:loop>
+
+  <h3>Favorite Packages</h3>
+  <rt:loop param="my_favorites" var="favorite">
+    <div class="dashboard-packages">
+      <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a> <a href="{$t.url('package')}/{$favorite.package().name()}/download">{$favorite.package().latest_release().fmVersion()}</a> 
+    </div>
+  </rt:loop>
+</div>
+
+<br class="clear">
+</div> <!-- end of column2 -->
+
+
+<br class="clear">
+
+
+</div> <!-- / container-class sub-main -->
+
+
+</div>
+</div>
+
+</rt:block>
+
+
+

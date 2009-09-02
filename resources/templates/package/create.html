@@ -1,0 +1,397 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">New Package \ Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">Home</a> &raquo; New Package
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+  <div class="frame-class" id="sub-title">
+    
+    <div class="container-class">
+      <h2 class="inline fleft">New Package</h2>
+      
+      <form action="{$t.url('packages')}" id="sub-search-form" method="post">
+        <input name="q" type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
+        <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
+      </form>
+      <br class="clear" />
+    </div> <!-- #container-s -->
+  </div> <!-- .frame-class -->
+  
+  <div class="frame-class">
+    <div class="container-class" id="sub-main">
+      <div class="column2">
+        <div class="column2-left">
+          <form action="{$t.url('packages/create_confirm')}" method="post" id="new-package" rt:ref="true">
+            <dl>
+              <dt>Package name <span class="red">*</span>: </dt>
+              <dd>
+                <p class="caption">* This name should be {Category}[_{Sub Category}]_{Package Name}<br />
+                  <span class="red">(You can not change this later.)</span>
+                </p>
+                <p class="caption">For example: <br />
+                  ex1. ) Category and name, separated by underscores.<br />
+                  - Net_Socket<br />
+                  - Net_Socket_Error<br />
+                  ex2. ) Noun with more than one.<br />
+                  - Net_TokyoTyrant<br />
+                </p>
+                <rt:invalid param="name" messages="errors"><rt:loop param="errors" var="error" limit="1">
+                <p class="error">{$error}</p>
+                </rt:loop></rt:invalid>
+                <input type="text" name="name" id="package-name" class="small" />
+              </dd>
+              <dt>Description: </dt>
+              <dd>
+                <rt:invalid param="description" messages="errors"><rt:loop param="errors" var="error" limit="1">
+                <p class="error">{$error}</p>
+                </rt:loop></rt:invalid>
+                <p class="caption">* The description should be a short (maximum 250 characters).</p>
+                <textarea name="description" class="middle"></textarea>
+              </dd>
+              <dt>Url: </dt>
+              <dd>
+                <rt:invalid param="url" messages="errors"><rt:loop param="errors" var="error" limit="1">
+                <p class="error">{$error}</p>
+                </rt:loop></rt:invalid>
+                <input type="text" name="url" id="package-url" class="small" />
+              </dd>
+              <dt>Who one commit this package ?: </dt>
+              <dd>
+                <rt:invalid param="public_level" messages="errors"><rt:loop param="errors" var="error" limit="1">
+                <p class="error">{$error}</p>
+                </rt:loop></rt:invalid>
+                <select name="public_level">
+                  <option value="1">Anyone</option>
+                  <option value="0">Only maintainers (You can edit this in a package setting)</option>
+                </select>
+              </dd>
+              <dt>License: </dt>
+              <dd>
+                <rt:invalid param="license" messages="errors"><rt:loop param="errors" var="error" limit="1">
+                <p class="error">{$error}</p>
+                </rt:loop></rt:invalid>
+                <select name="license">
+                  <option value="[SELECT LICENSE]">[SELECT LICENSE]</option>
+                  <option value="2-Clause BSD License">2-Clause BSD License</option>
+                  <option value="3DFX GLIDE Source Code General Public License (glide)">3DFX GLIDE Source Code General Public License (glide)</option>
+                  <option value="Academic Free License">Academic Free License</option>
+                  <option value="Ace Style Limited BSD">Ace Style Limited BSD</option>
+
+                  <option value="ACE/TAO/CIAOLicense (ACETAOCIAO)">ACE/TAO/CIAOLicense (ACETAOCIAO)</option>
+                  <option value="Adaptive Public License">Adaptive Public License</option>
+                  <option value="Affero General Public License (AGPL)">Affero General Public License (AGPL)</option>
+                  <option value="ALPS License (ALPS)">ALPS License (ALPS)</option>
+                  <option value="Angband License (Angband)">Angband License (Angband)</option>
+                  <option value="Apache-ish License">Apache-ish License</option>
+
+                  <option value="Apache License 2.0">Apache License 2.0</option>
+                  <option value="Apache Software License (ASL)">Apache Software License (ASL)</option>
+                  <option value="Apple Public Source License (apple)">Apple Public Source License (apple)</option>
+                  <option value="Arev Fonts Copyright">Arev Fonts Copyright</option>
+                  <option value="AROS Public License version 1.1 (APL)">AROS Public License version 1.1 (APL)</option>
+                  <option value="Artistic License">Artistic License</option>
+
+                  <option value="Artistic License 2.0">Artistic License 2.0</option>
+                  <option value="Artistic License/GPL (artistic_gpl)">Artistic License/GPL (artistic_gpl)</option>
+                  <option value="Ascend.Net License (ANL)">Ascend.Net License (ANL)</option>
+                  <option value="Attribution Assurance Licenses">Attribution Assurance Licenses</option>
+                  <option value="Australian Public Licence B (OZPLB)">Australian Public Licence B (OZPLB)</option>
+                  <option value="bbbail.com">bbbail.com</option>
+
+                  <option value="Beerware">Beerware</option>
+                  <option value="Be Sample Code License (BeSCL)">Be Sample Code License (BeSCL)</option>
+                  <option value="Bitstream Vera Fonts Copyright">Bitstream Vera Fonts Copyright</option>
+                  <option value="BitTorrent Open Source License">BitTorrent Open Source License</option>
+                  <option value="Boost Software License">Boost Software License</option>
+                  <option value="Boost Software License - Version 1.0 (boost)">Boost Software License - Version 1.0 (boost)</option>
+
+                  <option value="BSD Copyright (BSD)">BSD Copyright (BSD)</option>
+                  <option value="Caglow Open Agreement (COA)">Caglow Open Agreement (COA)</option>
+                  <option value="Carnegie Mellon Licence (CMU)">Carnegie Mellon Licence (CMU)</option>
+                  <option value="CC0 1.0 Universal (CC0)">CC0 1.0 Universal (CC0)</option>
+                  <option value="CC Attribution-NonCommercial-NoDerivs 2.5 ">CC Attribution-NonCommercial-NoDerivs 2.5 </option>
+                  <option value="CC Attribution-NonCommercial-ShareAlike 3.0 (CC ByNcSa3)">CC Attribution-NonCommercial-ShareAlike 3.0 (CC ByNcSa3)</option>
+
+                  <option value="CC Attr-NC-NDW 3.0 Unported License. (BY-NC-ND)">CC Attr-NC-NDW 3.0 Unported License. (BY-NC-ND)</option>
+                  <option value="CeCILL2 Free Software License (CCL2)">CeCILL2 Free Software License (CCL2)</option>
+                  <option value="CeCILL-B Free Software License (CCLB)">CeCILL-B Free Software License (CCLB)</option>
+                  <option value="CeCILL-C Free Software License (CCLC)">CeCILL-C Free Software License (CCLC)</option>
+                  <option value="Celtx Public License (CePL)">Celtx Public License (CePL)</option>
+                  <option value="CIP4 Software License 2.0">CIP4 Software License 2.0</option>
+
+                  <option value="CircleMUD License (CircleMUD)">CircleMUD License (CircleMUD)</option>
+                  <option value="Clarified Artistic License">Clarified Artistic License</option>
+                  <option value="Claros Public License (CPL)">Claros Public License (CPL)</option>
+                  <option value="ClipBucket License Agreement (CBLA)">ClipBucket License Agreement (CBLA)</option>
+                  <option value="Closed Licence (cl)">Closed Licence (cl)</option>
+                  <option value="CNRI Open Source License for Durus-3.7">CNRI Open Source License for Durus-3.7</option>
+
+                  <option value="Common Development and Distribution License (CDDL 1.0)">Common Development and Distribution License (CDDL 1.0)</option>
+                  <option value="Common Public Attribution License (CPAL)">Common Public Attribution License (CPAL)</option>
+                  <option value="Common Public License 1.0">Common Public License 1.0</option>
+                  <option value="computer_associates_trusted">computer_associates_trusted</option>
+                  <option value="ConceptBase-FreeBSD-License (CBFreeBSD)">ConceptBase-FreeBSD-License (CBFreeBSD)</option>
+                  <option value="Crawl General Public Licence">Crawl General Public Licence</option>
+
+                  <option value="Creative Commons (CC)">Creative Commons (CC)</option>
+                  <option value="Creative Commons Attribution 2.0 Generic (CC-A 2.0)">Creative Commons Attribution 2.0 Generic (CC-A 2.0)</option>
+                  <option value="Creative Commons Attribution 2.5 Generic">Creative Commons Attribution 2.5 Generic</option>
+                  <option value="Creative Commons Attribution 3.0 (CC BY 3.0)">Creative Commons Attribution 3.0 (CC BY 3.0)</option>
+                  <option value="Creative Commons Attribution-No Derivative Works 3 (cc-by-nd-3)">Creative Commons Attribution-No Derivative Works 3 (cc-by-nd-3)</option>
+                  <option value="Creative Commons Attribution-Noncommercial 3.0 (CC BY-NC3)">Creative Commons Attribution-Noncommercial 3.0 (CC BY-NC3)</option>
+
+                  <option value="Creative Commons Attribution-Share Alike 2.0 DE">Creative Commons Attribution-Share Alike 2.0 DE</option>
+                  <option value="Creative Commons Attribution-ShareAlike 2.5">Creative Commons Attribution-ShareAlike 2.5</option>
+                  <option value="Creative Commons Attribution Share Alike 3.0">Creative Commons Attribution Share Alike 3.0</option>
+                  <option value="Creative Commons BY-NC-SA 2.0 (CC-BYNCSA2)">Creative Commons BY-NC-SA 2.0 (CC-BYNCSA2)</option>
+                  <option value="Creative Commons BY-NC-SA 2.5 Poland (CCBYNCSA25)">Creative Commons BY-NC-SA 2.5 Poland (CCBYNCSA25)</option>
+                  <option value="Creative Commons BY-NC-SA 3.0 (CC-BYNCSA3)">Creative Commons BY-NC-SA 3.0 (CC-BYNCSA3)</option>
+
+                  <option value="Creative Commons BY-SA 2.5">Creative Commons BY-SA 2.5</option>
+                  <option value="Creative Commons BY-SA 3.0">Creative Commons BY-SA 3.0</option>
+                  <option value="Creative Commons Noncommercial-Share Alike (cc license)">Creative Commons Noncommercial-Share Alike (cc license)</option>
+                  <option value="cSystem  (CLIS)">cSystem  (CLIS)</option>
+                  <option value="CUA Office Public License Version 1.0">CUA Office Public License Version 1.0</option>
+                  <option value="dashCommerce Core License">dashCommerce Core License</option>
+
+                  <option value="dashCommerce Store License">dashCommerce Store License</option>
+                  <option value="Dibi License version 1.0 (Dibi)">Dibi License version 1.0 (Dibi)</option>
+                  <option value="DikuMud License (Diku)">DikuMud License (Diku)</option>
+                  <option value="Distributable">Distributable</option>
+                  <rt:comment><option value="DON'T PANIC License 1.1 (DONTPANIC)">DON'T PANIC License 1.1 (DONTPANIC)</option></rt:comment>
+                  <option value="Do What The Fuck You Want To Public License (WTFPL)">Do What The Fuck You Want To Public License (WTFPL)</option>
+
+                  <option value="DrJava Open Source License">DrJava Open Source License</option>
+                  <option value="Eclipse Public License">Eclipse Public License</option>
+                  <option value="Eclipse Public License v1.0 (EPL v1.0)">Eclipse Public License v1.0 (EPL v1.0)</option>
+                  <option value="eCos license (eCos)">eCos license (eCos)</option>
+                  <option value="Educational Community License">Educational Community License</option>
+                  <option value="Educational Community License, Version 2.0 (ECL 2.0)">Educational Community License, Version 2.0 (ECL 2.0)</option>
+
+                  <option value="Eiffel Forum License V1.0">Eiffel Forum License V1.0</option>
+                  <option value="Eiffel Forum License V2.0">Eiffel Forum License V2.0</option>
+                  <option value="Emgu CV Commercial License">Emgu CV Commercial License</option>
+                  <option value="Entessa Public License V1.0">Entessa Public License V1.0</option>
+                  <option value="e-puck Open Source Hardware LicenseVersion 1.0">e-puck Open Source Hardware LicenseVersion 1.0</option>
+                  <option value="Erlang Public License (EPL)">Erlang Public License (EPL)</option>
+
+                  <option value="EU DataGrid Software License">EU DataGrid Software License</option>
+                  <option value="Fair License">Fair License</option>
+                  <option value="FAR File and Archive Manager License">FAR File and Archive Manager License</option>
+                  <option value="fnOrb OpenSource License">fnOrb OpenSource License</option>
+                  <option value="Frameworx License">Frameworx License</option>
+                  <option value="Free Art License (FAL)">Free Art License (FAL)</option>
+
+                  <option value="FreeImage Public License (FIPL)">FreeImage Public License (FIPL)</option>
+                  <option value="freepoint public license (fpl)">freepoint public license (fpl)</option>
+                  <option value="Freeware (Freeware)">Freeware (Freeware)</option>
+                  <option value="generama license (gra)">generama license (gra)</option>
+                  <option value="GNAT Modified General Public License (GMGPL)">GNAT Modified General Public License (GMGPL)</option>
+                  <option value="GNU Affero General Public License 3.0 (AGPL 3.0)">GNU Affero General Public License 3.0 (AGPL 3.0)</option>
+
+                  <option value="GNU Affero General Public License 3.0 or later (AGPL 3.0+)">GNU Affero General Public License 3.0 or later (AGPL 3.0+)</option>
+                  <option value="GNU Free Documentation License (GFDL)">GNU Free Documentation License (GFDL)</option>
+                  <option value="GNU General Public License 1.0 (GPL1)">GNU General Public License 1.0 (GPL1)</option>
+                  <option value="GNU General Public License 2.0 (GPL)">GNU General Public License 2.0 (GPL)</option>
+                  <option value="GNU General Public License 2.0 or later (GPL 2.0+)">GNU General Public License 2.0 or later (GPL 2.0+)</option>
+                  <option value="GNU General Public License 3 (GPL 3.0)">GNU General Public License 3 (GPL 3.0)</option>
+
+                  <option value="GNU General Public License 3 or later (GPL 3.0+)">GNU General Public License 3 or later (GPL 3.0+)</option>
+                  <option value="GNU Lesser General Public License 2.1 (LGPLv2.1)">GNU Lesser General Public License 2.1 (LGPLv2.1)</option>
+                  <option value="GNU Lesser General Public License 2.1 or later (LGPLv2.1+)">GNU Lesser General Public License 2.1 or later (LGPLv2.1+)</option>
+                  <option value="GNU Lesser General Public License 3 (LGPLv3)">GNU Lesser General Public License 3 (LGPLv3)</option>
+                  <option value="GPL + Classpath Exception (GPL+link)">GPL + Classpath Exception (GPL+link)</option>
+                  <option value="Grestul EULA">Grestul EULA</option>
+
+                  <option value="handelsvoorwaarden">handelsvoorwaarden</option>
+                  <option value="Health Level-7 Public License Version 1.0 (hl7pl)">Health Level-7 Public License Version 1.0 (hl7pl)</option>
+                  <option value="Hets License">Hets License</option>
+                  <option value="Historical Permission Notice and Disclaimer">Historical Permission Notice and Disclaimer</option>
+                  <option value="Honest Public License (HPL) (HPL)">Honest Public License (HPL) (HPL)</option>
+                  <option value="HS License">HS License</option>
+
+                  <option value="i9_license">i9_license</option>
+                  <option value="i9 License (i9)">i9 License (i9)</option>
+                  <option value="IBM Public License">IBM Public License</option>
+                  <option value="ImageMagick License">ImageMagick License</option>
+                  <option value="Indiana University Software Licence">Indiana University Software Licence</option>
+                  <rt:comment><option value="Initial Developer's PUBLIC LICENSE Version 1.0 (idpl)">Initial Developer's PUBLIC LICENSE Version 1.0 (idpl)</option></rt:comment>
+
+                  <option value="Intel Open Source License">Intel Open Source License</option>
+                  <option value="InterBase Public License (ipl)">InterBase Public License (ipl)</option>
+                  <option value="Internet Systems Consortium License (ISC)">Internet Systems Consortium License (ISC)</option>
+                  <option value="Ioke License (ioke)">Ioke License (ioke)</option>
+                  <option value="Jabber Open Source License">Jabber Open Source License</option>
+                  <option value="JA-SIG License (JASIG)">JA-SIG License (JASIG)</option>
+
+                  <option value="Java Research License (JRL)">Java Research License (JRL)</option>
+                  <option value="jBehave License (JBehave)">jBehave License (JBehave)</option>
+                  <option value="jMock Project License (jMock)">jMock Project License (jMock)</option>
+                  <option value="Justice832 (Justice832)">Justice832 (Justice832)</option>
+                  <option value="KBS CopyRight (KBS)">KBS CopyRight (KBS)</option>
+                  <option value="Krixware GPL (K/GPL)">Krixware GPL (K/GPL)</option>
+
+                  <option value="Latex Project Public License (LPPL)">Latex Project Public License (LPPL)</option>
+                  <rt:comment><option value="Lavi's License (LL)">Lavi's License (LL)</option></rt:comment>
+                  <option value="libpng license (libpng)">libpng license (libpng)</option>
+                  <option value="lighttpd revised BSD license">lighttpd revised BSD license</option>
+                  <option value="Linkware">Linkware</option>
+                  <option value="Lisp Lesser General Public License  (LLGPL)">Lisp Lesser General Public License  (LLGPL)</option>
+
+                  <option value="Lucent Public License (Plan9)">Lucent Public License (Plan9)</option>
+                  <option value="Lucent Public License Version 1.02">Lucent Public License Version 1.02</option>
+                  <option value="MAME™ Distribution License">MAME™ Distribution License</option>
+                  <option value="MapServer License">MapServer License</option>
+                  <option value="megawave2 public license">megawave2 public license</option>
+                  <option value="Microsoft Limited Public License (Ms-LPL)">Microsoft Limited Public License (Ms-LPL)</option>
+
+                  <option value="Microsoft Public License  (Ms-PL)">Microsoft Public License  (Ms-PL)</option>
+                  <option value="Microsoft Reciprocal License (Ms-RL)">Microsoft Reciprocal License (Ms-RL)</option>
+                  <option value="Microsoft Shared Source Permissive License (SS-PL)">Microsoft Shared Source Permissive License (SS-PL)</option>
+                  <option value="MirOS Licence (MirBSD)">MirOS Licence (MirBSD)</option>
+                  <option value="MIT License">MIT License</option>
+                  <option value="mitre">mitre</option>
+
+                  <option value="Motosoto License">Motosoto License</option>
+                  <option value="Mozilla-ish License">Mozilla-ish License</option>
+                  <option value="Mozilla Public License 1.0 (MPL)">Mozilla Public License 1.0 (MPL)</option>
+                  <option value="Mozilla Public License 1.1 (MPL 1.1)">Mozilla Public License 1.1 (MPL 1.1)</option>
+                  <option value="Multiple OSI Approved (MOSI)">Multiple OSI Approved (MOSI)</option>
+                  <option value="Nally License">Nally License</option>
+
+                  <option value="NASA Open Source Agreement 1.3">NASA Open Source Agreement 1.3</option>
+                  <option value="Naumen Public License">Naumen Public License</option>
+                  <option value="Nethack General Public License">Nethack General Public License</option>
+                  <option value="Nette License version 1.0 (Nette)">Nette License version 1.0 (Nette)</option>
+                  <option value="New BSD License (BSD)">New BSD License (BSD)</option>
+                  <option value="Nokia Open Source License (NOKOS)">Nokia Open Source License (NOKOS)</option>
+
+                  <option value="NUnit License">NUnit License</option>
+                  <option value="OCLC Research Public License 2.0">OCLC Research Public License 2.0</option>
+                  <option value="Open Font Licence (OFL)">Open Font Licence (OFL)</option>
+                  <option value="Open Group Test Suite License">Open Group Test Suite License</option>
+                  <option value="OpenLDAP Public License">OpenLDAP Public License</option>
+                  <option value="Open, libertarian and ostentatious license (OLOL)">Open, libertarian and ostentatious license (OLOL)</option>
+
+                  <option value="OpenMRS Public License (OPL)">OpenMRS Public License (OPL)</option>
+                  <option value="Open Publication License (OPL)">Open Publication License (OPL)</option>
+                  <option value="Open Software License (OSL)">Open Software License (OSL)</option>
+                  <option value="OpenSolaris Binary License (OSBL)">OpenSolaris Binary License (OSBL)</option>
+                  <option value="Open Source Community License - Type C (OSCL-C)">Open Source Community License - Type C (OSCL-C)</option>
+                  <option value="Oracle Open Source License - Berkeley DB">Oracle Open Source License - Berkeley DB</option>
+
+                  <option value="Phorum License">Phorum License</option>
+                  <option value="PHP License">PHP License</option>
+                  <option value="PicoContainer license (pico)">PicoContainer license (pico)</option>
+                  <option value="pircd license">pircd license</option>
+                  <option value="pjsip Standard License">pjsip Standard License</option>
+                  <option value="Plainly and Simply Free (psfree)">Plainly and Simply Free (psfree)</option>
+
+                  <option value="POV-Ray Distribution License">POV-Ray Distribution License</option>
+                  <option value="POV-Ray End User License">POV-Ray End User License</option>
+                  <option value="POV-Ray Source License">POV-Ray Source License</option>
+                  <option value="Public Domain">Public Domain</option>
+                  <option value="Python 2.4.2 license">Python 2.4.2 license</option>
+                  <option value="Python Software Foundation License">Python Software Foundation License</option>
+
+                  <option value="Qt Public License (QPL)">Qt Public License (QPL)</option>
+                  <option value="QuickFIX License (QFL)">QuickFIX License (QFL)</option>
+                  <option value="Rage3D engine license (Rage3D)">Rage3D engine license (Rage3D)</option>
+                  <option value="RealNetworks Public Source License V1.0">RealNetworks Public Source License V1.0</option>
+                  <option value="Reciprocal Public License">Reciprocal Public License</option>
+                  <option value="Reciprocal Public License 1.5 (RPL1.5)">Reciprocal Public License 1.5 (RPL1.5)</option>
+
+                  <option value="Remote Network Browser Licence (rnblic)">Remote Network Browser Licence (rnblic)</option>
+                  <option value="Revision License for Open Source Software (RL-OSS)">Revision License for Open Source Software (RL-OSS)</option>
+                  <option value="Ricoh Source Code Public License">Ricoh Source Code Public License</option>
+                  <option value="RISC OS Base License v1">RISC OS Base License v1</option>
+                  <option value="Ruby License">Ruby License</option>
+                  <option value="Scala License">Scala License</option>
+
+                  <option value="Scilab licence">Scilab licence</option>
+                  <option value="SFI Source Code license agreement (SFI-SCLA)">SFI Source Code license agreement (SFI-SCLA)</option>
+                  <option value="Simple Machines Forum License (SMF)">Simple Machines Forum License (SMF)</option>
+                  <option value="Simplified BSD License (BSD-2)">Simplified BSD License (BSD-2)</option>
+                  <option value="sisal.license">sisal.license</option>
+                  <option value="Sleepycat License">Sleepycat License</option>
+
+                  <option value="SNIA Public License v1.1 (SPL v1.1)">SNIA Public License v1.1 (SPL v1.1)</option>
+                  <option value="Spread Open Source License (SOSL)">Spread Open Source License (SOSL)</option>
+                  <option value="SugarCRM Public License 1.1.3">SugarCRM Public License 1.1.3</option>
+                  <option value="Summer Lightning Open Source (RU) (SLOS (RU))">Summer Lightning Open Source (RU) (SLOS (RU))</option>
+                  <option value="Sun Industry Standards Source License (SISSL)">Sun Industry Standards Source License (SISSL)</option>
+                  <option value="Sun Public License">Sun Public License</option>
+
+                  <option value="Sybase Open Watcom Public License 1.0">Sybase Open Watcom Public License 1.0</option>
+                  <option value="Symbian Example Source Code License">Symbian Example Source Code License</option>
+                  <option value="The Click License">The Click License</option>
+                  <option value="The Kannel Software License, Version 1.0">The Kannel Software License, Version 1.0</option>
+                  <option value="The Modelica License 1.1">The Modelica License 1.1</option>
+                  <option value="The Modelica License 2 (modelica-2)">The Modelica License 2 (modelica-2)</option>
+
+                  <option value="The Radiance Software License, Version 1.0">The Radiance Software License, Version 1.0</option>
+                  <option value="TMate Open Source License">TMate Open Source License</option>
+                  <option value="Transitive Grace Period Public Licence, v1.0">Transitive Grace Period Public Licence, v1.0</option>
+                  <option value="TrueCrypt Collective License">TrueCrypt Collective License</option>
+                  <option value="Ubuntu Component License Policy">Ubuntu Component License Policy</option>
+                  <option value="Umbraco UI Licence (UmbracoUI)">Umbraco UI Licence (UmbracoUI)</option>
+
+                  <option value="Unicode Terms of Use (unicode)">Unicode Terms of Use (unicode)</option>
+                  <option value="University of Illinois/NCSA Open Source License">University of Illinois/NCSA Open Source License</option>
+                  <rt:comment><option value="University of Washington's Pine license">University of Washington's Pine license</option></rt:comment>
+                  <option value="Unrestricted Forever (UF)">Unrestricted Forever (UF)</option>
+                  <option value="Verbatim copying (verbatim)">Verbatim copying (verbatim)</option>
+                  <option value="Vim License">Vim License</option>
+
+                  <option value="Vovida Software License v. 1.0">Vovida Software License v. 1.0</option>
+                  <option value="W3C License">W3C License</option>
+                  <option value="Whiskey Ware (WskyWare)">Whiskey Ware (WskyWare)</option>
+                  <option value="wxWindows Library License">wxWindows Library License</option>
+                  <option value="xdoclet-2 license (xdt-2)">xdoclet-2 license (xdt-2)</option>
+                  <option value="xdoclet-2-plugins-license (xdp2-lic)">xdoclet-2-plugins-license (xdp2-lic)</option>
+
+                  <option value="XFree86® Project Licence (version 1.1) (XFree86)">XFree86® Project Licence (version 1.1) (XFree86)</option>
+                  <option value="xinetd (xinetd)">xinetd (xinetd)</option>
+                  <option value="X.Net License">X.Net License</option>
+                  <option value="Yahoo! Public License, Version 1.1">Yahoo! Public License, Version 1.1</option>
+                  <option value="YAML under Commercial License (YAML-C)">YAML under Commercial License (YAML-C)</option>
+                  <option value="Zimbra Public License, Version 1.2">Zimbra Public License, Version 1.2</option>
+
+                  <option value="zlib/libpng license">zlib/libpng license</option>
+                  <option value="Zope Public License (ZPL)">Zope Public License (ZPL)</option>
+                  <option value="Zope Public License (ZPL) Version 2.1 (ZPL 2.1)">Zope Public License (ZPL) Version 2.1 (ZPL 2.1)</option>
+                  <option value="ZXGE Public License (zxpl)">ZXGE Public License (zxpl)</option>
+                </select>
+              </dd>
+            </dl>
+            <input type="submit" value="Create Package" class="small" />
+          </form>
+        </div>
+        
+        <div class="column2-right">
+          <h3>Notice:</h3>
+          
+          <ul class="list-standard2">
+            <li>Before create a pacakge, search packages and look for if there are similar packages.</li>
+            <li>You should name the package with recognizable name.</li>
+          </ul>
+        </div>
+        
+        <br class="clear" / >
+      </div>
+    </div>
+  </div>
+</rt:block>
+
+
+

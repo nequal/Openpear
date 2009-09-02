@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <meta name="robots" content="INDEX,FOLLOW" />
+  
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/top.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/openpear.js"></script>
+  
+  <!-- additinal header -->
+<rt:block name="extra_header">
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss" />
+</rt:block>
+  
+  <title><rt:block name="title">Openpear :: Open PEAR Repository Channel</rt:block></title>
+</head>
+<body>
+  <div id="nequal-pre-header"><a href="http://nequal.jp/" target="_blank">powered by nequal</a></div>
+  
+  <!-- id:frame start -->
+  <div id="frame">
+    <div id="container" class="container-class">
+      
+      <div id="header" class="main-class">
+        <h1><a href="{$t.url()}"><img src="images/header_logo.gif" alt="Openpear :: Open PEAR Repository Channel" /></a></h1>
+        
+        <div id="header-navi">
+          <ul id="header-navi-sub">
+          <rt:if param="{$t.logined()}" value="true">
+            <li><a href="{$t.url()}">Home</a> &nbsp; | </li>
+            <li><img src="{$ot.gravatar($t.login_user().mail(), 16)}" /></li>
+            <li><a href="{$t.url('dashboard')}">Dashboard</a></li>
+            <li><a href="{$t.url('maintainer')}/{$t.login_user().name()}">Profile</a></li>
+            <li><a href="{$t.url('account/logout')}">Log out</a></li>
+          <rt:else />
+            <li><a href="{$t.url()}">Home</a></li>
+            <li><a href="{$t.url('account/login')}">Login</a></li>
+          </rt:if>
+          </ul>
+
+          <ul id="header-navi-global">
+            <li><a href="">Timeline</a></li>
+            <li><a href="">Packages</a></li>
+            <li><a href="">Maintainers</a></li>
+            <li><a href="">Tickets</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <rt:block name="topic_path" />
+      
+    </div> <!-- end of #container -->
+    
+    <!-- main contents -->
+    <rt:block name="contents">
+    <div class="frame-class" id="top-main">
+      
+      <div class="container-class">
+        
+        <form action="{$t.url('search')}" id="main-search-form">
+          Search: <label><input type="radio" name="search_for" value="packages" checked /> Packages</label> <label><input type="radio" name="search_for" value="maintainers" />Maintainers</label> <br />
+          <input type="text" class="radius-2" name="q" id="main-search-q">
+          <input type="submit" class="radius-2 bold" value="Search" id="main-search-submit" />
+        </form>
+        
+        <div id="main-column">
+          
+          <div id="main-column-right">
+            <h2><a href="{$t.url('packages')}/releases">Recent Releases</a> <a href="{$t.url('packages/releases.atom')}"><img src="images/global-icon-feed.gif" alt="Feed: Recent Releases" /></a></h2>
+            <ul id="main-recent" rt:param="recent_releases" rt:var="release">
+              <li><a href="{$t.url('pacakge')}/{$release.package().name()}">{$release.package().name()}</a> <em>-- {$t.df($release.created(), 'Y/m/d')}</em></li>
+            </ul>
+          </div>
+          
+          <div id="main-column-left">
+            <h2><a href="{$t.url('packages')}/tags">Active Categories</a></h2>
+            <ul id="main-cat-list" rt:param="primary_tags" rt:var="tag">
+              <li><a href="{$t.url('packages')}?category={$t.htmlencode($tag->name())}">{$t.htmlencode($tag->name())}</a></li>
+            </ul>
+            <div id="main-cat-more">
+              <a href="{$t.url('packages')}/tags">more &raquo;</a>
+            </div>
+          </div>
+        </div>
+        
+      </div> <!-- #container-s -->
+    </div> <!-- .frame-class -->
+    
+    <div class="frame-class">
+      
+      <div class="container-class">
+        
+        <div id="main-section">
+          <p id="main-site-description">
+            Openpear is a PEAR Repository Channel and Subversion Hosting Service.
+          </p>
+          
+          <div id="main-section-left">
+            <h2><span class="h2-init">E</span>asiest</h2>
+            <p>
+              もう PEAR パッケージ登録のための投票や、あの PEAR パッケージ作成の苦痛を味わう必要あありません！
+              Openpear では、PEAR パッケージのビルド作業、チャンネル登録作業はすべて自動です！
+            </p>
+          </div>
+          
+          <div id="main-section-center">
+            <h2><span class="h2-init">S</span>hared</h2>
+            <p>
+              Openpear のソースコードはオープンに公開されています。バグを発見したからコミットしたい？開発者のいなくなってしまったパッケージをメンテナンスしたい？
+              その思いを現実のものにできます！
+            </p>
+          </div>
+          
+          <div id="main-section-right">
+            <h2><span class="h2-init">F</span>astest</h2>
+            <p>
+              Openpear を利用すれば、パッケージを作成し、リリースするまでのプロセスは PEAR 史上最速となるでしょう！
+              パッケージ利用者ももうライブラリを探しまわる必要はありません。
+            </p>
+          </div>
+        </div> <!-- #main-section -->
+        
+        <blockquote id="main-dream">
+          "夢のような話だ"
+          <em>-- sotarok</em>
+        </blockquote>
+        
+      </div>
+    </div>
+    </rt:block>
+    <!--/main contents -->
+    
+    <!-- footer -->
+    <div class="frame-class footer-wrap">
+      <div id="footer">
+        <ul id="footer-menu">
+          <li><a href="{$t.url('about')}">About</a> | </li>
+          <li><a href="">Blog</a> | </li>
+          <li><a href="">Logos</a> | </li>
+          <li><a href="">Google Group</a> | </li>
+          <li><a href="{$t.url('help')}">Help</a> | </li>
+          <li><a href="">Contact</a></li>
+        </ul>
+        <p>Copyright &copy; 2009 <a href="http://openpear.org/">Openpear</a>.  All Rights Reserved.</p>
+        <p><a href="{$t.url()}">Terms of Service</a> | <a href="{$t.url('policy')}">Privacy Policy</a>  | <a href="{$t.url('help')}">Help</a> </p>
+        <p>powered by <a href="http://nequal.jp/" target="_blank">nequal</a></p>
+        <p>hosted by <a href="http://www.dino.co.jp/" target="_blank">Dino Co.,Ltd.</a></p>
+      </div>
+    </div>
+    <!-- /footer -->
+    
+  </div><!-- end of #frame -->
+  
+  <pre><rt:invalid />
+<b>Variables:</b>
+<?php Log::d($this->vars);
+print("<b>Sessions:</b>\n");Log::d($_SESSION); ?>
+</pre>
+</body>
+</html>
+
+

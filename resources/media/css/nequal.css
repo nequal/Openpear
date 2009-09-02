@@ -1,0 +1,29 @@
+@charset 'utf-8';
+
+/**
+ * nequal global styles
+ *
+ * @description   nequal global styles
+ * @package       nequal
+ * @date          2009/02/01
+ * @author        sotarok
+ */
+
+
+#nequal-pre-header {
+  background: #333;
+  color: #fff;
+  text-align: right;
+  font-size: 14px;
+  height: 20px;
+}
+
+#nequal-pre-header a {
+  color: #fff;
+  padding-right: 10px;
+  font-family: "Century Gothic", Futura;
+  text-decoration: none;
+}
+
+#nequal-pre-header a:hover {
+}

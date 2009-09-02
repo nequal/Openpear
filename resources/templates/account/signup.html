@@ -1,0 +1,128 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+<rt:block name="title">Register \ Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="./">Home</a> &raquo; Register
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+  <div class="frame-class" id="sub-title">
+    
+    <div class="container-class">
+      <h2 class="inline fleft">Register</h2>
+      
+      <form action="{$t.url('packages')}" id="sub-search-form" method="post">
+        <input name="q" type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
+        <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
+      </form>
+      <br class="clear" />
+    </div> <!-- #container-s -->
+  </div> <!-- .frame-class -->
+  
+  <div class="frame-class">
+    <div class="container-class" id="sub-main">
+      <div class="column2">
+        <div class="column2-left">
+          <form action="{$t.url('account/signup_do')}" method="post" id="register" rt:ref="true">
+            <dl>
+              <dt>Subversion account name <span class="red">*</span>:</dt>
+              <dd>
+                <rt:invalid param="name" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="name" type="text" id="svn-name" class="small" /></dd>
+              <dt>Subversion password <span class="red">*</span>:</dt>
+              <dd>
+                <rt:invalid param="new_password" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="new_password" type="password" id="svn-pass" class="tiny" />
+              </dd>
+              <dt>Confirm password <span class="red">*</span>:</dt>
+              <dd>
+                <rt:invalid param="new_password_conf" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="new_password_conf" type="password" id="svn-pass-conf" class="tiny" />
+              </dd>
+              <dt>E-mail <span class="red">*</span>: </dt>
+              <dd>
+                <rt:invalid param="mail" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="mail" type="text" id="email" class="small" /></dd>
+              <dt>Username: </dt>
+              <dd>
+                <rt:invalid param="fullname" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="fullname" type="text" id="name" class="small" /></dd>
+              <dt>Profile: </dt>
+              <dd>
+                <rt:invalid param="profile" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <textarea name="profile" id="profile"></textarea>
+              </dd>
+              <dt>URL : </dt>
+              <dd>
+                <rt:invalid param="url" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="url" type="text" id="url" class="small" /></dd>
+              <dt>Location : </dt>
+              <dd>
+                <rt:invalid param="location" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="location" type="text" id="location" class="small" /></dd>
+            </dl>
+            
+            <input type="submit" value="Register" class="small" />
+          </form>
+          
+        </div>
+        
+        <div class="column2-right">
+        <rt:if param="{$openid}">
+          <h3>OpenID Identity</h3>
+          <p>
+            You are identified by:<br />
+            {$openid_identity}
+          </p>
+        <rt:else />
+          <h3>New register</h3>
+          <p>
+            Thank you for registration.
+          </p>
+        </rt:if>
+        </div>
+        <br class="clear" / >
+      </div>
+    </div>
+  </div>
+
+</rt:block>

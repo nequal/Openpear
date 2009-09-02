@@ -1,0 +1,96 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/maintainers.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">{$t.htmlencode($object.name())} \ Maintainer \  Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="./">Home</a> &raquo; Maintainer \ {$t.htmlencode($object.name())}
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+<div class="frame-class" id="sub-title">
+  <div class="container-class">
+    <h2 class="inline fleft"><a href="{$t.url('maintainer')}/{$t.htmlencode($object.name())}">Maintainer \ {$t.htmlencode($object.name())}</a></h2>
+    <br class="clear" />
+  </div> <!-- #container-s -->
+</div> <!-- .frame-class -->
+
+<div class="frame-class maintainers">
+  <div class="container-class" id="sub-main">
+    <div class="column2-l">
+      <div class="column2-left">
+        <img src="{$ot.gravatar($object.mail(), 64)}" width="64" id="maintainer-image" />
+        <h3 id="maintainer-name">{$t.htmlencode($object.name())}</h3><br />
+        <h3 id="maintainer-fullname">{$ot.str($object)}</h3>
+        <div id="maintainer-description">
+          <a href="#maintainer-package">Packages: {$ot.count($charges)}</a>, <a href="#maintainer-favs">Favorites {$ot.count($favorites)}</a>
+        </div>
+      </div> <!-- / column2-right -->
+      <div class="column2-right">
+        <table id="maintainer-profile">
+          <tr><th>Profile: </th><td>{$t.htmlencode($object.profile())}</td></tr>
+          <tr><th>URL: </th><td>{$t.htmlencode($object.url())}</td></tr>
+          <tr><th>Location: </th><td>{$t.htmlencode($object.location())}</td></tr>
+          <tr><th>Members Since: </th><td>{$t.df($object.created(), 'M d, Y')}</td></tr>
+        </table>
+      </div>
+      <br class="clear">
+    </div> <!-- end of column2-l -->
+    
+    <div class="column2-c">
+      <div class="column2-left">
+        <h3>Timeline <a href="{$t.url('maintainer')}/{$object.name()}/timelines.atom"><img src="images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
+        <div class="timeline timeline-user">
+          <ul rt:param="timelines" rt:var="timeline">
+            <li class="{$loop_evenodd}">
+              <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
+              <div class="timeline-title">
+                {$timeline.subject()}. <em> -- {$t.df($timeline.created())}</em>
+              </div>
+              <div class="timeline-description">
+                {$timeline.description()}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div> <!-- / column2-right -->
+      <div class="column2-right">
+        <h3 id="maintainer-package">Packages</h3>
+        
+        <rt:loop param="{$charges}" var="charge">
+          <div class="maintainer-package">
+            <rt:if param="{$charge.package().public_level()}" value="0">
+              <img src="./images/global-icon-protected.png" alt="this package is protected" class="fright" />
+            </rt:if>
+            <rt:if param="{$charge.package().liked($t.login_user())}" value="true">
+              <img src="./images/global-icon-star.png" class="fright" />
+            <rt:else />
+              <a href="{$t.url('package')}/{$charge.package().name()}/like/{$ot.hash('rand')}"><img src="./images/global-icon-star-add.png" class="fright" /></a>
+            </rt:if>
+            <h4><a href="{$t.url('package')}/{$charge.package().name()}">{$charge.package().name()}</a> (<a href="{$t.url('package')}/{$charge.package().name()}/download">{$charge.package().latest_release().fmVersion()}</a>) <span>({$charge.role()})</span></h4>
+            <p>{$charge.package().description()}</p>
+            <p><rt:if param="{$charge.package().primary_tag()}">Category: <a href="{$t.url('packages')}?category={$t.htmlencode($charge.package().primary_tag())}">{$t.htmlencode($charge.package().primary_tag())}</a> </rt:if><em>Last Update: {$t.df($charge.package().updated(), 'Y-m-d')}</em>
+            </p>
+          </div>
+        </rt:loop>
+        
+        <h3 id="maintainer-favs">Favorites</h3>
+        
+        <ul class="list-liner" rt:param="favorites" rt:var="favorite">
+          <li>&raquo; <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a></li>
+        </ul>
+      </div>
+    </div> <!-- end of column2-c -->
+    
+    <br class="clear">
+    
+  </div> <!-- / container-class sub-main -->
+</div>
+</rt:block>

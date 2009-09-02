@@ -1,0 +1,52 @@
+@charset 'utf-8';
+
+/**
+ * Openpear style for dashboard
+ *
+ * @description   Openpear style
+ * @package       openpear
+ * @date          2009/09/01
+ * @author        sotarok
+ */
+
+.dashboard #sub-main {
+  padding-top: 30px;
+}
+
+.dashboard-packages
+{
+  border: solid 1px #ccc;
+  background: #f0f0f0;
+  padding: 5px 10px;
+  margin: 2px 0;
+}
+
+.dashboard-packages .package-link
+{
+  font-weight: bold;
+}
+.dashboard-packages .manage-link
+{
+  font-size: 0.8em;
+}
+
+.dashboard-packages p
+{
+  margin: 0;
+}
+
+.timeline-dashboard
+{
+}
+
+.timeline-dashboard .user-icon
+{
+  margin-right: 10px;
+  padding: 2px;
+  border: solid 1px #ccc;
+}
+
+.timeline-dashboard li
+{
+  clear: left;
+}

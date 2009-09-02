@@ -1,0 +1,15 @@
+@charset 'utf-8';
+
+/**
+ * Openpear style for 1 column layout
+ *
+ * @description   openpear global styles
+ * @package       openpear
+ * @date          2009/02/01
+ * @author        sotarok
+ */
+
+.column1 {
+  padding: 20px 0;
+  clear: both;
+}

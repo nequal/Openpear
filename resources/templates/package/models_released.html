@@ -1,0 +1,38 @@
+<rt:extends href="models.html" />
+<rt:block name="sub_package_navi">
+<div id="sub-package-navi">
+ <ul>
+  <li class="current"><a href="{$t.url('packages')}?sort=released">Recent Releases</a></li>
+  <li><a href="{$t.url('packages')}?sort=updates">Updates</a></li>
+  <li><a href="{$t.url('packages')}?sort=favored">Favoered</a></li>
+ </ul>
+</div>
+</rt:block>
+<rt:block name="subtitle">Recent Released Packages</rt:block>
+
+<rt:block name="package_row">
+  <tr class="{$evenodd}">
+    <th class="">
+      <h4><a href="{$t.url('package')}/{$object.name()}">{$object.name()}</a></h4>
+      <p class="inline">Author: <img src="{$ot.gravatar($object.author().mail(),16)}" /> <a href="{$t.url('maintainer')}/{$object.author().name()}">{$ot.str($object.author())}</a></p> 
+      <p class="inline">Category: <a href="{$t.url('packages')}?category={$t.htmlencode($object.primary_tag().name())}">{$t.htmlencode($object.primary_tag().name())}</a></p>
+   </th>
+   <td class="nowrap">
+     <rt:if param="{$object.latest_release().id()}">
+      {$t.df($object.latest_release().created(), 'Y-m-d H:i')}
+     <rt:else />
+      No release.
+     </rt:if>
+   </td>
+   <td class="nowrap">
+     <rt:if param="{$object.latest_release().id()}">
+       {$t.df($object.latest_release().created(), 'Y-m-d H:i')}
+      <rt:else />
+       <a href="{$t.url('package')}/{$object.name()}/download">{$object.latest_release().fmVersion()}</a>
+      </rt:if>
+   </td>
+   <td class="description">
+    {$t.htmlencode($object.description())}
+   </td>
+  </tr>
+</rt:block>

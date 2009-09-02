@@ -1,0 +1,386 @@
+@charset 'utf-8';
+
+/**
+ * Openpear styles for package
+ *
+ * @description   openpear global styles
+ * @package       openpear
+ * @date          2009/04/2828
+ * @author        sotarok
+ */
+
+
+.packages {
+}
+
+.packages-table {
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  width: 950px;
+}
+
+
+.packages-table tr {
+}
+
+.packages-table tr.odd  td, .packages-table tr.odd th  { background: #ffffff; }
+.packages-table tr.even td, .packages-table tr.even th { background: #f9f9f9; }
+
+.packages-table thead th {
+  border-collapse: collapse;
+  border-bottom: solid 1px #333;
+}
+.packages-table th ,
+.packages-table td {
+  border-collapse: collapse;
+  border-bottom: dotted 1px #999;
+  padding: 10px;
+}
+.packages-table thead th {
+  text-align: center;
+}
+.packages-table tbody th {
+  text-align: left;
+  width: 30%;
+  padding: 3px 25px 10px 5px;
+  font-weight: normal;
+}
+.packages-table tbody th h4 {
+  font-size: 124%;
+  margin: 15px 0;
+  line-height: 110%;
+}
+.packages-table tbody td {
+  padding-top: 20px 5px;
+}
+
+.packages-table tbody th p ,
+.packages-table tbody td.description {
+  font-size: 88%;
+
+}
+
+.packages-table tbody tr:hover td ,
+.packages-table tbody tr:hover th {
+  background: #f5f5dc;
+}
+
+
+#sub-package-description h3 {
+  margin: 1.0em 0 0.6em;
+}
+#sub-package-description-category h3 {
+  line-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#sub-package-description-notify {
+  clear: both;
+  border: solid 1px #ccccff;
+}
+
+.sub-package-description {
+  padding: 0 0 10px 10px;
+  border: solid 1px #ccccff;
+  clear: both;
+  margin-bottom: 15px;
+}
+.sub-package-description .title {
+  margin: 0;
+  float: right;
+  padding: 5px 15px 5px 20px;
+  background: #000;
+  color: #fff;
+  font-size: 94%;
+  font-weight: bold;
+}
+.sub-package-description .description {
+  margin: 0;
+  padding: 10px;
+}
+
+
+#sub-package-navi {
+}
+
+#sub-package-navi ul {
+  margin: 0;
+  padding: 0;
+}
+
+#sub-package-navi ul li {
+  margin: 0 2px 10px 0 ;
+  padding: 0;
+  float: left;
+  list-style: none;
+}
+#sub-package-navi ul li a {
+  padding: 5px 20px;
+  display: block;
+  background: #7b011d;
+  color: #eee;
+}
+#sub-package-navi ul li a:hover {
+  text-decoration: none;
+  border: none;
+  background: #4e0415;
+}
+
+#sub-package-navi ul li.current a {
+  background: #4e0415;
+}
+
+#sub-package-navi ul li.admin a {
+  padding: 5px 20px 4px;
+  background: #fff;
+  border: solid 1px #4e0415;
+  border-top: none;
+  color: #4e0415;
+}
+#sub-package-navi ul li.admin a:hover {
+  background: #4e0415;
+  color: #fff;
+  border: none;
+}
+
+/* source
+ */
+.source-tree {
+  background: #f0f0f0;
+  color: #333;
+  float: right;
+  border: solid 1px #ccc;
+  position: relative;
+  padding: 0;
+  margin: 20px 0 0 0;
+  margin-bottom: 10px;
+}
+.source-tree li {
+  list-style: none;
+  margin: 0;
+  padding: 5px;
+  width: 150px;
+  text-align: right;
+}
+
+.source-tree ul#source-subtree {
+  position: absolute;
+  background: #f0f0f0;
+  border: solid 1px #ccc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  top: 31px;
+  left: -1px;
+  display: none;
+  /*
+  display: none;
+  */
+}
+.source-tree ul#source-subtree li {
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  white-space: nowrap;
+}
+.source-tree ul#source-subtree li a {
+  display: block;
+  padding: 5px;
+}
+.source-tree ul#source-subtree li a:hover {
+  background: #ccc;
+}
+/* downloads
+ */
+#package-source ,
+#sub-package-downloads {
+  clear: both;
+  width: 100%;
+  margin-bottom: 20px;
+  border: none;
+  border-collapse: collapse;
+}
+#package-source {
+  border: solid 1px #ccc;
+  font-size: 90%;
+  font-family: "Courier", "Courier New", Monaco, Terminal;
+}
+
+#package-source td,
+#package-source th {
+  padding: 4px;
+  border-collapse: collapse;
+}
+#package-source thead th {
+  background: #f0f0f0;
+  border-bottom: solid 1px #ccc;
+  font-weight: normal;
+}
+
+#sub-package-downloads td ,
+#sub-package-downloads th {
+  padding: 10px;
+  border-collapse: collapse;
+}
+
+#sub-package-downloads td {
+  vertical-align: top;
+}
+
+#sub-package-downloads tr {
+}
+#package-source tr.odd td ,
+#sub-package-downloads tr.odd td {
+}
+#package-source tr.even td ,
+#sub-package-downloads tr.even td {
+  background: #f9f9f9;
+}
+#package-source tbody tr:hover td ,
+#package-source tbody tr:hover th ,
+#sub-package-downloads tbody tr:hover td ,
+#sub-package-downloads tbody tr:hover th {
+  background: #f5f5dc;
+}
+
+#package-source tr td.icon    { padding-right: 0; width: 20px;}
+#package-source tr td.name    { }
+#package-source tr td.age     { width: 160px; white-space: nowrap;}
+#package-source tr td.comment { width: 50%;}
+
+#sub-package-downloads tbody td {
+  border-bottom: dotted 1px #999;
+}
+#sub-package-downloads thead th {
+  border-bottom: solid 1px #333;
+}
+
+#sub-package-downloads th {
+  vertical-align: top;
+  white-space: nowrap;
+  text-align: center;
+  font-weight: bold;
+}
+
+#sub-package-downloads td dl ,
+#sub-package-downloads td .list-standard li ,
+#sub-package-downloads td .list-standard {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* wiki
+ */
+
+.list-toc {
+  margin: 0.8em;
+  padding: 0;
+}
+.list-toc li {
+  margin: 0.2em 0 0.2em 1.5em;
+}
+
+#package-doc .toc {
+  font-size: 0.8em;
+  background: #fffbde;
+  border: solid 1px #ccc;
+  padding: 10px;
+  float: right;
+}
+#package-doc #wiki-toc {
+  margin: 0;
+  padding: 0;
+}
+#package-doc #wiki-toc ul {
+  margin: 0;
+}
+#package-doc #wiki-toc li {
+  margin-left: 10px;
+}
+
+#package-doc a {
+  border-bottom: dotted 1px #6e0000;
+}
+#package-doc a:hover {
+  border: none;
+}
+
+#package-doc strong {
+}
+#package-doc p {
+  line-height: 1.5em;
+}
+
+#package-doc h2 {
+  font-size: 1.6em;
+  margin: 1em 0;
+  padding: 0;
+}
+#package-doc h3 {
+  font-size: 1.4em;
+  margin: 1em 0;
+  padding: 0;
+}
+
+#package-doc h4 {
+  font-size: 1.2em;
+  margin: 1em 0;
+  padding: 0;
+}
+
+#package-doc h5 {
+  font-size: 1.1em;
+  margin: 1em 0;
+  padding: 0;
+}
+
+#package-doc ol ,
+#package-doc ul ,
+#package-doc dl {
+  margin: 1.2em 0;
+  padding: 0;
+}
+#package-doc ul.footnote {
+  border: dashed 1px #ccc;
+  padding: 10px;
+}
+
+#package-doc li ,
+#package-doc dd {
+  margin: 0.4em 0 0.4em 2em;
+}
+
+#package-doc dt {
+  font-weight: bold;
+}
+
+#package-doc dd {
+}
+
+#package-doc pre {
+}
+
+#package-doc table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#package-doc th ,
+#package-doc td {
+  vertical-align: top;
+  padding: 0.3em;
+  border-collapse: collapse;
+  border: solid 1px #ccc;
+}
+
+#package-doc th {
+  font-weight: bold;
+  background: #f0f0f0;
+  text-align: center;
+  border-bottom: solid 1px #999;
+}
+
+#package-doc td {
+}
