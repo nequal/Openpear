@@ -1,2 +1,0 @@
-#!/bin/sh
-/home/openpear/pear/pear/pearproj -t --configure ./build.conf --make -p ./
