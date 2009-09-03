@@ -110,10 +110,11 @@ class PearBuildconf extends Object
             $keys = explode('_', $key, 2);
             if(count($keys) === 1 && is_array($val)){
                 $section = array_shift($keys);
-                if(!isset($ret[$section])) $ret[$section] = array();
+                if(!isset($ret[$section]) && !self::special_section($section)) $ret[$section] = array();
                 foreach($val as $k => $obj){
                     if($obj instanceof Object){
-                        $ret[$obj->section()] = $obj->hash();
+                        $hash = $obj->hash();
+                        if(!empty($hash)) $ret[$obj->section()] = $hash;
                     } else $ret[$section][$k] = $obj;
                 }
             } else if(count($keys) === 2 && is_string($val)) {
@@ -143,7 +144,9 @@ class PearBuildconf extends Object
             Exceptions::add(new OpenpearException(), 'package_baseinstalldir');
         }
     }
-    
+    static public function special_section($section){
+        return isset(self::$_keys_[$section]);
+    }
     public function parse_ini_string($ini){
         $config = parse_ini_string($ini, true);
         if(empty($config)) return ;
@@ -157,11 +160,17 @@ class PearBuildconf extends Object
                 $parent_key = $k;
             }
             if($parent_key == 'installer'){
-                list($param, $opt) = explode('.', $key);
                 $installer = new PearBuildConfInstaller();
+                foreach($v as $key => $val){
+                    if($key === 'instructions'){
+                        $installer->instructions($val);
+                    } else {
+                        list($param, $opt) = explode('.', $key);
+                        $installer->{$opt}($param, $val);
+                        $installer->params($param);
+                    }
+                }
                 $installer->group_name($index);
-                $installer->params($param);
-                $installer->{$opt}($param, $val);
                 $this->installer($installer);
             } else if(in_array($parent_key, array('maintainer', 'file', 'dep'))) {
                 $class = 'PearBuildConf'. ucfirst($parent_key);
@@ -180,7 +189,6 @@ class PearBuildconf extends Object
                 $indexes[$parent_key]++;
             }
         }
-        return $result;
     }
 }
 
@@ -189,7 +197,7 @@ class PearBuildconfExtra extends Object
     protected function __hash__(){
         $ret = array();
         foreach($this->get_access_vars() as $key => $val){
-            if(!in_array($key, array('handlename', 'filename', 'package_name', 'group_name'))) $ret[$key] = $val;
+            if(!PearBuildconf::special_section($key) && !empty($val)) $ret[$key] = $val;
         }
         return $ret;
     }
@@ -240,8 +248,8 @@ class PearBuildconfFile extends PearBuildconfExtra
 class PearBuildConfDep extends PearBuildconfExtra
 {
     protected $package_name;
-    protected $type = 'required';
-    protected $channel = 'openpear.org';
+    protected $type;
+    protected $channel;
     protected $min;
     protected $max;
     static protected $__package_name__ = 'type=string';
@@ -272,6 +280,9 @@ class PearBuildConfInstaller extends PearBuildconfExtra
     
     protected function __hash__(){
         $ret = array();
+        if($this->isInstructions()){
+            $ret['instructions'] = $this->instructions();
+        }
         foreach($this->params() as $param){
             if($this->isPrompt($param)){
                 $ret[$param. '.prompt'] = $this->inPrompt($param);
