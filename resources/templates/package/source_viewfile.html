@@ -1,0 +1,43 @@
+<rt:extends href="source.html" />
+<rt:block name="package_main">
+  <h3 class="fleft">
+    <a href="">Hoge</a> / 
+    <a href="">src</a> / 
+    hoge.php
+  </h3>
+  
+  <ul class="source-tree">
+    <li id="source-tree">other tree <img src="images/global-icon-tree.png" class="vmiddle" />
+      <ul id="source-subtree">
+        <li><a href="{$t.url()}"><img src="images/global-icon-checked.png" alt="checked" class="vmiddle" /> trunk</a></li>
+        <li><a href="{$t.url()}">branches/hogefuga</a></li>
+        <li><a href="{$t.url()}">branches/hogefuga2</a></li>
+        <li><a href="{$t.url()}">branches/hogefuga3</a></li>
+        <li><a href="{$t.url()}">tags/0.2.0-beta</a></li>
+        <li><a href="{$t.url()}">tags/0.1.0-alpha</a></li>
+      </ul>
+    </li>
+  </ul>
+  
+  <p class="clear mt0">
+    Subversion URL: <a href="{$real_url}">{$real_url}</a>
+  </p>
+  
+  <div class="sub-package-description">
+    <p class="title">
+      Recent change
+    </p>
+    <p class="description">
+      <img src="{$ot.gravatar($info['recent']['maintainer'].mail())}" /> <a href="{$t.url('maintainer')}/{$info['recent']['maintainer'].name()}">{$info['recent']['maintainer'].name()}</a> <a href="{$t.url('package')}/{$package.name()}/changeset/{$info['recent']['revision']}">[{$info['recent']['revision']}]</a> <span class="italic darkgray"> -- {$t.df($ot.strtotime($info['recent']['date']))}</span><br />
+      {$t.html($info['recent']['msg'])}
+    </p>
+  </div>
+  <rt:if param="{$code}">
+    <div>
+      <code><pre class="prettyprint">{$t.htmlencode($code)}</pre></code>
+    </div>
+  </rt:if>
+
+  <br class="clear">
+
+</rt:block>

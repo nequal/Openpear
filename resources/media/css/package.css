@@ -287,6 +287,11 @@ h3 .changeset-time
   padding: 5px 10px;
   margin-bottom: 0;
 }
+.source-diff .diff *
+{
+  font-family: "Courier New", monospace;
+}
+
 .source-diff .diff
 {
   margin-top: 0;

@@ -7,6 +7,13 @@ class OpenpearTemplf
     final static public function gravatar($mail, $size=16){
         return sprintf('http://www.gravatar.com/avatar/%s?s=%d', md5($mail), $size);
     }
+    final static public function svn_log_msg($revision){
+        $log = Subversion::cmd('log', array(def('svn_root')), array('revision' => $revision));
+        return (string)$log[0]['msg'];
+    }
+    final static public function strtotime($str){
+        return strtotime($str);
+    }
     final static public function tlicon($type){
         switch($type){
             case 'release':

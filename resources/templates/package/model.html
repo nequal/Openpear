@@ -1,163 +1,117 @@
-<rt:extends href="../index.html" />
-<rt:block name="stylesheet">
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
-</rt:block>
-
+<rt:extends href="base.html" />
 <rt:block name="title">{$object.name()} \ Package \ Openpear</rt:block>
-
 <rt:block name="topic_path">
   <div id="topic-path">
     <a href="{$t.url()}">Home</a> &gt;&gt; <a href="$t.url('packages')">Package</a> &gt;&gt; {$object.name()}
   </div>
 </rt:block>
-
-<rt:block name="contents">
-  <div class="frame-class" id="sub-title">
-    <div class="container-class">
-      <h2 class="inline fleft"><a href="package_Hoge.html">Package \ {$object.name()}</a></h2>
-      <div id="sub-package-button-navi" class="fright">
-        <rt:if param="{$t.logined()}" value="true">
-          <rt:if param="{$object.liked($t.login_user())}" value="true">
-            <a href="{$t.url('package')}/{$object.name()}/unlike/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /></a>
-          <rt:else />
-            <a href="{$t.url('package')}/{$object.name()}/like/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /></a>
-          </rt:if>
+<rt:block name="package_navi_current_top"> class="current"</rt:block>
+<rt:block name="package_main">
+<div id="sub-package-description">
+  <div class="sub-package-description">
+    <p class="title">
+      Description
+    </p>
+    <p class="description">
+      {$object.description()}
+    </p>
+  </div>
+  <div id="sub-package-description-category">
+    <h3 class="inline fleft">Categories: </h3>
+    <ul class="list-liner" id="package-categories">
+      <rt:loop param="{$package.package_tags()}" var="package_tag">
+        <rt:if param="{$package_tag.prime()}" value="true">
+          <li class="bold"><a href="{$t.url('packages')}?category={$t.htmlencode($package_tag.tag().name())}">{$t.htmlencode($package_tag.tag().name())} (primary)</a></li>
+        <rt:else />
+          <li><a href="{$t.url('packages')}?category={$t.htmlencode($package_tag.tag().name())}">{$t.htmlencode($package_tag.tag().name())}</a></li>
         </rt:if>
-        <rt:if param="{$package.public_level()}" value="0">
-          <img src="./images/global-icon-protected.png" alt="this package is protected" />
-        </rt:if>
-      </div>
-
-      <br class="clear" />
-    </div> <!-- #container-s -->
-  </div> <!-- .frame-class -->
+      </rt:loop>
+      <li><input type="button" id="js-category-add-button" value="+Add" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
+      <li id="js-category-add-form" class="dnone"><form action="{$t.url('package')}/{$package.name()}/add_category" id="add-category" method="post"><input name="tag_name" type="text" size="30" id="add-category-tag_name" /><input type="hidden" name="prime" value="false" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#js-category-add-form').hide();">cancel</a></form></li>
+    </ul>
+  </div>
   
-  <div class="frame-class">
-    <div class="container-class" id="sub-main">
+  <div class="column2">
+    
+    <div class="column2-left">
+    
+      <h3>Recent Release</h3>
+    <rt:if param="{$recent_releases}">
+      <ul class="list-standard" rt:param="{$recent_releases}" rt:var="release">
+        <li>- <a href="{$t.url('package')}/{$object.name()}/download#{$release.id()}">{$release.fmVersion()}</a> <em>-- released on {$release.fmCreated()}</em></li>
+      </ul>
+      <pre>% pear install openpear/{$object.installName()}</pre>
+      <p class="aright"><a href="./package_Hoge_downloads.html">View All Releases &gt;&gt;</a></p>
       
-      <div id="sub-package-navi">
-        <ul>
-          <li class="current"><a href="{$t.url('package')}/{$package.name()}">Top</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/timeline">Timeline</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/download">Downloads</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/source">Source</a></li>
-          <rt:if param="{$package.permission($t.login_user(),false)}" value="true">
-            <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
-          </rt:if>
-        </ul>
-      </div>
-      
-      <div id="sub-package-description">
-        <div class="sub-package-description">
-          <p class="title">
-            Description
-          </p>
-          <p class="description">
-            {$object.description()}
-          </p>
-        </div>
-        <div id="sub-package-description-category">
-          <h3 class="inline fleft">Categories: </h3>
-          <ul class="list-liner" id="package-categories">
-            <rt:loop param="{$package.package_tags()}" var="package_tag">
-              <rt:if param="{$package_tag.prime()}" value="true">
-                <li class="bold"><a href="{$t.url('packages')}?category={$t.htmlencode($package_tag.tag().name())}">{$t.htmlencode($package_tag.tag().name())} (primary)</a></li>
-              <rt:else />
-                <li><a href="{$t.url('packages')}?category={$t.htmlencode($package_tag.tag().name())}">{$t.htmlencode($package_tag.tag().name())}</a></li>
-              </rt:if>
-            </rt:loop>
-            <li><input type="button" id="js-category-add-button" value="+Add" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
-            <li id="js-category-add-form" class="dnone"><form action="{$t.url('package')}/{$package.name()}/add_category" id="add-category" method="post"><input name="tag_name" type="text" size="30" id="add-category-tag_name" /><input type="hidden" name="prime" value="false" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#js-category-add-form').hide();">cancel</a></form></li>
-          </ul>
-        </div>
-        
-        <div class="column2">
-          
-          <div class="column2-left">
-          
-            <h3>Recent Release</h3>
-          <rt:if param="{$recent_releases}">
-            <ul class="list-standard" rt:param="{$recent_releases}" rt:var="release">
-              <li>- <a href="{$t.url('package')}/{$object.name()}/download#{$release.id()}">{$release.fmVersion()}</a> <em>-- released on {$release.fmCreated()}</em></li>
-            </ul>
-            <pre>% pear install openpear/{$object.installName()}</pre>
-            <p class="aright"><a href="./package_Hoge_downloads.html">View All Releases &gt;&gt;</a></p>
-            
-            <h3>Changes</h3>
-            <pre>* 2009-01-27 - Store old and new values for updates, and store all attributes on destroy.
-               Refactored revisioning methods to work as expected
+      <h3>Changes</h3>
+      <pre>* 2009-01-27 - Store old and new values for updates, and store all attributes on destroy.
+         Refactored revisioning methods to work as expected
 * 2008-10-10 - changed to make it work in development mode
 * 2008-04-19 - refactored to make compatible with dirty tracking in edge rails
-               and to stop storing both old and new values in a single audit
+         and to stop storing both old and new values in a single audit
 * 2008-04-18 - Fix NoMethodError when trying to access the :previous revision</pre>
 
-          <rt:else />
-            <p>No release.</p>
-          </rt:if>
-          </div>
-          
-          <div class="column2-right">
-            <h3>License</h3>
-            <p class="tiny-margin">
-              {$object.license()}
-            </p>
-            <h3>Maintainers</h3>
-            <ul class="list-liner" rt:param="{$maintainers}" rt:var="maintainer">
-              <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$ot.gravatar($maintainer.mail(), 16)}" /> {$maintainer.name()}</a></li>
-            </ul>
-            <br class="clear">
-            <h3>Fans</h3>
-            <p>
-              <img src="./images/global-icon-star.png" /> {$object.favored_count()}
-            </p>
-            <ul class="list-liner" rt:param="{$favored_maintainers}" rt:var="maintainer">
-              <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$ot.gravatar($maintainer.mail(), 16)}" /> {$maintainer.name()}</a></li>
-            </ul>
-            <br class="clear">
-            
-            <rt:if param="{$t.logined()}" value="true">
-              <rt:if param="{$object.liked($t.login_user())}" value="true">
-                <a href="{$t.url('package')}/{$object.name()}/unlike/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /> Remove your fav.</a>
-              <rt:else />
-                <a href="{$t.url('package')}/{$object.name()}/like/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /> Add your fav.</a>
-              </rt:if>
-              <br class="clear">
-            </rt:if>
-            
-            <rt:comment>
-            <h3>Dependencies</h3>
-            <ul class="list-standard">
-              <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
-              <li>- <a href="">pear/DB (>= 1.0.0)</a></li>
-            </ul>
-            </rt:comment>
-            <br class="clear">
-          </div>
-          
-        </div> <!-- end of column2 -->
-        
-        <div class="package-changes">
-        </div>
-        
-        <h3>Timeline <a href="{$t.url('package')}/{$object.name()}/timelines.atom"><img src="./images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
-        <div class="timeline timeline-user">
-          <ul rt:param="timelines" rt:var="timeline">
-            <li class="{$loop_evenodd}">
-              <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
-              <div class="timeline-title">
-                {$timeline.subject()}. <em> -- {$t.df($timeline.created())}</em>
-              </div>
-              <div class="timeline-description">
-                {$timeline.description()}
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <rt:else />
+      <p>No release.</p>
+    </rt:if>
     </div>
+    
+    <div class="column2-right">
+      <h3>License</h3>
+      <p class="tiny-margin">
+        {$object.license()}
+      </p>
+      <h3>Maintainers</h3>
+      <ul class="list-liner" rt:param="{$maintainers}" rt:var="maintainer">
+        <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$ot.gravatar($maintainer.mail(), 16)}" /> {$maintainer.name()}</a></li>
+      </ul>
+      <br class="clear">
+      <h3>Fans</h3>
+      <p>
+        <img src="./images/global-icon-star.png" /> {$object.favored_count()}
+      </p>
+      <ul class="list-liner" rt:param="{$favored_maintainers}" rt:var="maintainer">
+        <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$ot.gravatar($maintainer.mail(), 16)}" /> {$maintainer.name()}</a></li>
+      </ul>
+      <br class="clear">
+      
+      <rt:if param="{$t.logined()}" value="true">
+        <rt:if param="{$object.liked($t.login_user())}" value="true">
+          <a href="{$t.url('package')}/{$object.name()}/unlike/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /> Remove your fav.</a>
+        <rt:else />
+          <a href="{$t.url('package')}/{$object.name()}/like/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /> Add your fav.</a>
+        </rt:if>
+        <br class="clear">
+      </rt:if>
+      
+      <rt:comment>
+      <h3>Dependencies</h3>
+      <ul class="list-standard">
+        <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
+        <li>- <a href="">pear/DB (>= 1.0.0)</a></li>
+      </ul>
+      </rt:comment>
+      <br class="clear">
+    </div>
+    
+  </div> <!-- end of column2 -->
+  
+  <div class="package-changes">
   </div>
+  
+  <h3>Timeline <a href="{$t.url('package')}/{$object.name()}/timelines.atom"><img src="./images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
+  <div class="timeline timeline-user">
+    <ul rt:param="timelines" rt:var="timeline">
+      <li class="{$loop_evenodd}">
+        <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
+        <div class="timeline-title">
+          {$timeline.subject()}. <em> -- {$t.df($timeline.created())}</em>
+        </div>
+        <div class="timeline-description">
+          {$timeline.description()}
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
 </rt:block>

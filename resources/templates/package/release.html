@@ -1,4 +1,4 @@
-<rt:extends href="../index.html" />
+<rt:extends href="base.html" />
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
@@ -156,35 +156,7 @@
     </script>
 </rt:block>
 
-<rt:block name="contents">
-<div class="frame-class" id="sub-title">
-
-<div class="container-class">
-<h2 class="inline fleft"><a href="{$t.url('package')}/{$package.name()}">Package \ {$package.name()}</a></h2>
-<form id="sub-search-form" method="post">
-<input type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
-<input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
-</form>
-<br class="clear" />
-</div> <!-- #container-s -->
-</div> <!-- .frame-class -->
-
-<div class="frame-class">
-<div class="container-class" id="sub-main">
-
-  <div id="sub-package-navi">
-    <ul>
-      <li><a href="{$t.url('package')}/{$package.name()}">Top</a></li>
-      <li><a href="{$t.url('package')}/{$package.name()}/timeline">Timeline</a></li>
-      <li><a href="{$t.url('package')}/{$package.name()}/download">Downloads</a></li>
-      <li><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
-      <li><a href="{$t.url('package')}/{$package.name()}/source">Source</a></li>
-      <rt:if param="{$package.permission($t.login_user(),false)}" value="true">
-        <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
-      </rt:if>
-    </ul>
-  </div>
-
+<rt:block name="package_main">
 <div id="sub-package-description">
 
 <div class="column1">
@@ -193,7 +165,7 @@
 
 <div class="column2-left">
 <h3>Release Package</h3>
-
+<a href="{$t.url('package')}/{$package.name()}/manage/release/upload">&raquo; Release by upload.</a> <span class="caption"> -- if you want to release a package by uploading your tarball, click here.</span>
 
 <form action="{$t.url('package')}/{$package.name()}/manage/release_confirm" method="post" id="release-package">
 
@@ -262,10 +234,6 @@
 
 <br class="clear" />
 
-</div>
-
-
-</div>
 </div>
 
 </rt:block>

@@ -1,0 +1,115 @@
+<rt:extends href="base.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+  <link rel="stylesheet" href="js/prettify/prettify.css" type="text/css" media="all" />
+</rt:block>
+<rt:block name="extra_header"><script type="text/javascript" src="js/prettify/prettify.js"></script></rt:block>
+<rt:block name="title">Source \ {$package.name()} \ Package \ Openpear</rt:block>
+<rt:block name="package_navi_current_src"> class="current"</rt:block>
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('packages')}">Packages</a> &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> &raquo; Source
+  </div>
+</rt:block>
+
+<rt:block name="package_main">
+  <h3 class="fleft">
+    <a href="">Hoge</a> / 
+    <a href="">src</a> / 
+    Hoge
+  </h3>
+  
+  <ul class="source-tree">
+    <li id="source-tree">other tree <img src="images/global-icon-tree.png" class="vmiddle" />
+      <ul id="source-subtree">
+        <li><a href="{$t.url()}"><img src="images/global-icon-checked.png" alt="checked" class="vmiddle" /> trunk</a></li>
+        <li><a href="{$t.url()}">branches/hogefuga</a></li>
+        <li><a href="{$t.url()}">branches/hogefuga2</a></li>
+        <li><a href="{$t.url()}">branches/hogefuga3</a></li>
+        <li><a href="{$t.url()}">tags/0.2.0-beta</a></li>
+        <li><a href="{$t.url()}">tags/0.1.0-alpha</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <p class="clear mt0">
+    Subversion URL: <a href="{$real_url}">{$real_url}</a>
+  </p>
+  
+  <div class="sub-package-description">
+    <p class="title">
+      Recent change
+    </p>
+    <p class="description">
+      <img src="{$ot.gravatar($info['recent']['maintainer'].mail())}" /> <a href="{$t.url('maintainer')}/{$info['recent']['maintainer'].name()}">{$info['recent']['maintainer'].name()}</a> <a href="{$t.url('package')}/{$package.name()}/changeset/{$info['recent']['revision']}">[{$info['recent']['revision']}]</a> <span class="italic darkgray"> -- {$t.df($ot.strtotime($info['recent']['date']))}</span><br />
+      {$t.html($info['recent']['msg'])}
+    </p>
+  </div>
+  <div class="sub-package-description">
+    <p class="title">
+      Subversion externals
+    </p>
+    <p class="description">
+      していされてるばあいだけ表示<br />
+      svn:externals Hoge <a href="">http://hogehogehogehoge/</a>
+    </p>
+  </div>
+  
+  <table id="package-source">
+    <thead>
+      <tr>
+        <th></th>
+        <th>name</th>
+        <th>age</th>
+        <th class="w500px">comment</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr class="odd">
+        <td class="icon">
+          <img src="images/source_browser/dir.png" alt="dir" />
+        </td>
+        <td class="name">
+          <a href="{$t.request_url()}/..">..</a>
+        </td>
+        <td class="age">
+        </td>
+        <td class="comment">
+          
+        </td>
+      </tr>
+      <rt:loop param="tree" var="f">
+      <tr class="even">
+        <td class="icon">
+          <rt:if param="{$f['kind']}" value="dir">
+            <img src="images/source_browser/dir.png" alt="dir" />
+          <rt:else />
+            <img src="images/source_browser/file.png" alt="file" />
+          </rt:if>
+        </td>
+        <td class="name">
+          <rt:if param="{$f['kind']}" value="dir">
+            <a href="{$t.request_url()}/{$f['path']}">{$f['path']}</a>
+          <rt:else />
+            <a href="{$t.request_url()}/{$f['name']}">{$f['name']}</a>
+          </rt:if>
+        </td>
+        <td class="age">
+          <a href="{$t.url('package')}/{$package.name()}/changeset/{$f['commit']['revision']}">[{$f['commit']['revision']}]</a> {$t.df($f['commit']['date'])}
+        </td>
+        <td class="comment">
+          
+          {$t.html($f['log']['msg'])}
+          <img src="{$ot.gravatar($f['maintainer'].mail())}" /> <a href="{$t.url('maintainer')}/{$f['maintainer'].name()}">{$f['maintainer'].name()}</a>
+          
+        </td>
+      </tr>
+      </rt:loop>
+    </tbody>
+  </table>
+
+  <br class="clear">
+</rt:block>

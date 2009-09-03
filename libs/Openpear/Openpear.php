@@ -23,15 +23,6 @@ class Openpear extends Flow
         $this->m('Template')->statics('ot', 'Openpear.OpenpearTemplf');
     }
     
-    protected function _login_by_openid_redirect($server){
-        if(empty($server)){
-            throw new InvalidArgumentException('openid');
-        }
-    }
-    protected function _login_by_openid_callback(){
-        throw new OpenpearException('login failed');
-    }
-    
     protected function _login_required($redirect_to=null){
         if($this->isLogin()){
             return ;

@@ -1,0 +1,95 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/1column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">1232 \ Changest \ Hoge \ Package \ Openpear</rt:block>
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="./">Home</a> &raquo; <a href="packages.html">Package</a> &raquo; <a href="package_Hoge.html">Hoge</a> &raquo; Timeline &raquo; 1238
+  </div>
+</rt:block>
+
+<rt:block name="main">
+<div class="changeset-nav">
+
+  <a href="package_Hoge_changeset.html">&laquo; Previous Changes</a> | 
+  <a href="package_Hoge_changeset.html">Next Changes &raquo; </a> | 
+  <a href="package_Hoge_changeset.html">Latest</a>
+
+</div>
+<div class="column2-l">
+
+<div class="column2-left">
+
+  <h3>Changeset 1234 <em class="changeset-time">-- 2009-09-24 22:22:22</em></h3>
+  
+  <dl>
+    <dt>Author</dt>
+    <dd><img src="images/profile_sample.gif" /><a href="">sotarok</a>
+    </dd>
+    <dt>Comment</dt>
+    <dd>Commit message hera:<br />
+    fixd hogehogeho hogehogeho bug.
+    </dd>
+  </dl>
+
+</div> <!-- / column2-right -->
+<div class="column2-right">
+  <h3>Files</h3>
+  <ul class="changeset-files">
+    <li class="add"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge.php</a></li>
+    <li class="add"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge.php</a></li>
+    <li class="add"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge.php</a></li>
+    <li class="remove"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge/Piyo.php</a></li>
+    <li class="modified"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge/Fuga.php</a></li>
+  </ul>
+
+</div>
+
+<br class="clear">
+</div> <!-- end of column2-l -->
+
+<div class="column1 source-diff">
+  <h3>Diffs</h3>
+
+  <h4>src/Hoge.php</h4>
+  <pre class="diff">
+<span class="meta">@@ -272,6 +272,27 @@</span>
+   padding: 0;
+ }
+
+<span class="plus">+/* changeset</span>
+<span class="plus">+ */</span>
+<span class="plus">+.source-diff .diff</span>
+<span class="plus">+{</span>
+<span class="plus">+  font-family: "Courier New", monospace;</span>
+<span class="plus">+}</span>
+<span class="plus">+</span>
+<span class="plus">+.source-diff .plus</span>
+<span class="plus">+{</span>
+<span class="plus">+}</span>
+<span class="plus">+</span>
+<span class="plus">+.source-diff .minus</span>
+<span class="plus">+{</span>
+<span class="plus">+}</span>
+<span class="plus">+</span>
+<span class="minus">-.changeset-nav</span>
+<span class="minus">-{</span>
+<span class="minus">-  clear: both;</span>
+<span class="minus">-  text-align: right;</span>
+<span class="minus">-}</span>
+<span class="minus">-</span>
+
+ /* wiki
+  */
+</pre>
+
+
+</div> <!-- end of column2 -->
+
+</rt:block>

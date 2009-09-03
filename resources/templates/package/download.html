@@ -1,93 +1,61 @@
-<rt:extends href="../index.html">
+<rt:extends href="base.html">
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
-
 <rt:block name="title">Downloads \ {$package.name()} \ Package \ Openpear</rt:block>
-
 <rt:block name="topic_path">
   <div id="topic-path">
     <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url()}">Package</a> &raquo; {$package.name()}
   </div>
 </rt:block>
-
-<rt:block name="contents">
-<div class="frame-class" id="sub-title">
-  <div class="container-class">
-    <h2 class="inline fleft"><a href="package_Hoge.html">Package \ {$package.name()} \ Downloads</a></h2>
-    <form id="sub-search-form" method="post">
-      <input type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
-      <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
-    </form>
-    <br class="clear" />
-  </div> <!-- #container-s -->
-</div> <!-- .frame-class -->
-
-<div class="frame-class">
-  <div class="container-class" id="sub-main">
-    <div id="sub-package-navi">
-      <ul>
-        <li><a href="{$t.url('package')}/{$package.name()}">Top</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/timeline">Timeline</a></li>
-        <li class="current"><a href="{$t.url('package')}/{$package.name()}/download">Downloads</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/source">Source</a></li>
-        <rt:if param="{$package.permission($t.login_user(),false)}" value="true">
-          <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
-        </rt:if>
-      </ul>
-    </div>
-
-    <table id="sub-package-downloads">
-      <thead>
-        <tr>
-          <th>Version</th>
-          <th>Release Date</th>
-          <th>Download</th>
-          <th class="w500px">Information</th>
-        </tr>
-      </thead>
-      
-      <tbody>
-        <tr class="odd">
-          <td class="bold acenter">
-            1.3.0 beta
-          </td>
-          <td class="bold acenter">
-            2009-04-14
-          </td>
-          <td class="acenter">
-            <a href="">1.3.0-beta.tgz</a> / <a href="./package_Hoge_source.html#tags">Source</a>
-          </td>
-          <td>
-            <dl>
-              <dt>Dependencies:</dt>
-              <dd>
-                <ul class="list-standard">
-                  <li>- <a href="">PHP (&lt; 4.3.0 , 6.0.0 &gt;=)</a></li>
-                  <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
-                  <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
-                  <li>- <a href="">pear/DB (>= 1.0.0)</a></li>
-                </ul>
-              </dd>
-              <dt>Changes:</dt>
-              <dd>
-                <pre class="w500px">* 2009-01-27 - Store old and new values for updates, and store all attributes on destroy.
-               Refactored revisioning methods to work as expected
+<rt:block name="package_navi_current_download"> class="current"</rt:block>
+<rt:block name="package_main">
+<table id="sub-package-downloads">
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Release Date</th>
+      <th>Download</th>
+      <th class="w500px">Information</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <tr class="odd">
+      <td class="bold acenter">
+        1.3.0 beta
+      </td>
+      <td class="bold acenter">
+        2009-04-14
+      </td>
+      <td class="acenter">
+        <a href="">1.3.0-beta.tgz</a> / <a href="./package_Hoge_source.html#tags">Source</a>
+      </td>
+      <td>
+        <dl>
+          <dt>Dependencies:</dt>
+          <dd>
+            <ul class="list-standard">
+              <li>- <a href="">PHP (&lt; 4.3.0 , 6.0.0 &gt;=)</a></li>
+              <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
+              <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
+              <li>- <a href="">pear/DB (>= 1.0.0)</a></li>
+            </ul>
+          </dd>
+          <dt>Changes:</dt>
+          <dd>
+            <pre class="w500px">* 2009-01-27 - Store old and new values for updates, and store all attributes on destroy.
+           Refactored revisioning methods to work as expected
 * 2008-10-10 - changed to make it work in development mode
 * 2008-04-19 - refactored to make compatible with dirty tracking in edge rails
-               and to stop storing both old and new values in a single audit
+           and to stop storing both old and new values in a single audit
 * 2008-04-18 - Fix NoMethodError when trying to access the :previous revision</pre>
-              </dd>
-            </dl>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-
+          </dd>
+        </dl>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </rt:block>

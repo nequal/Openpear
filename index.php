@@ -32,6 +32,9 @@ try{
         '^/package/(.+)/doc' => 'class=Openpear.DocumentView,method=browse,template=package/document.html',
         '^/package/(.+)/doc/(.+)' => 'class=Openpear.DocumentView,method=browse,template=package/document.html',
         '^/package/(.+)/doc\.(.+?)/(.+)' => 'class=Openpear.DocumentView,method=browse_tag,template=package/document.html',
+        /** sources */
+        '^/package/(.+)/src(/?.+)?' => 'class=Openpear.SourceView,method=browse',
+        '^/package/(.+)/src\.(.+?)(/?.+)?' => 'class=Openpear.SourceView,method=browse_tag',
         
         /** メンテナ */
         '^/maintainers' => 'class=Openpear.MaintainerView,method=models,template=maintainer/models.html',

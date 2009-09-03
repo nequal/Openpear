@@ -1,5 +1,4 @@
-<rt:extends href="../index.html" />
-
+<rt:extends href="base.html" />
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
@@ -7,71 +6,41 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
   <link rel="stylesheet" href="js/prettify/prettify.css" type="text/css" media="all" />
 </rt:block>
-
+<rt:block name="extra_header"><script type="text/javascript" src="js/prettify/prettify.js"></script></rt:block>
 <rt:block name="title">Documentation \ {$package.name()} \ Package \ Openpear</rt:block>
-
 <rt:block name="topic_path">
   <div id="topic-path">
     <a href="{$t.url()}">Home</a> &gt;&gt; <a href="{$t.url('packages')}">Package</a> &gt;&gt; {$package.name()}
 </div>
-
-<rt:block name="contents">
-<div class="frame-class" id="sub-title">
-  <div class="container-class">
-    <h2 class="inline fleft"><a href="{$t.url('package')}/{$package.name()}">Package \ {$package.name()}</a></h2>
-    <form action="{$t.url('packages')}" id="sub-search-form" method="post">
-      <input name="q" type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
-      <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
-    </form>
-    <br class="clear" />
-  </div> <!-- #container-s -->
-</div> <!-- .frame-class -->
-
-<div class="frame-class">
-  <div class="container-class" id="sub-main">
-    <div id="sub-package-navi">
-      <ul>
-        <li><a href="{$t.url('package')}/{$package.name()}">Top</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/timeline">Timeline</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/download">Downloads</a></li>
-        <li class="current"><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/source">Source</a></li>
-        <rt:if param="{$package.permission($t.login_user(),false)}" value="true">
-          <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
+<rt:block name="package_navi_current_doc"> class="current"</rt:block>
+<rt:block name="package_main">    
+<div class="column2">
+  <div class="w715px column2-left">
+    <div id="package-doc">
+      {$body}
+    </div> <!-- end of package-doc -->
+  </div>
+  
+  <div class="w200px column2-right">
+    <h3>Table of Contents</h3>
+    <p class="aright">
+      <a href="">API Documentation &raquo;</a></p>
+      <ul class="list-toc" rt:param="tree" rt:var="f">
+        <rt:if param="{$f['kind']}" value="file">
+          <li><a href="{$t.url('package')}/{$package.name()}/doc/{$f['name']}">{$f['name']}</a></li>
         </rt:if>
       </ul>
-    </div>
-    
-    <div class="column2">
-      <div class="w715px column2-left">
-        <div id="package-doc">
-          {$body}
-        </div> <!-- end of package-doc -->
-      </div>
       
-      <div class="w200px column2-right">
-        <h3>Table of Contents</h3>
-        <p class="aright">
-          <a href="">API Documentation &raquo;</a></p>
-          <ul class="list-toc" rt:param="tree" rt:var="f">
-            <rt:if param="{$f['kind']}" value="file">
-              <li><a href="{$t.url('package')}/{$package.name()}/doc/{$f['name']}">{$f['name']}</a></li>
-            </rt:if>
-          </ul>
-          
-          <h3>Version Archive</h3>
-          <ul class="list-toc" rt:param="{$package.releases()}" rt:var="r">
-            <li><a href="{$t.url('package')}/{$package.name()}/doc.{$r.version()}-{$r.version_stab()}/README">{$r.fmVersion()}</a> <em class="small"> -- {$t.df($r.created(), 'Y-m-d')}</em>
-          </ul>
-          
-        </div>
-        
-        <br class="clear">
-      </div> <!-- end of column2 -->
+      <h3>Version Archive</h3>
+      <ul class="list-toc" rt:param="{$package.releases()}" rt:var="r">
+        <li><a href="{$t.url('package')}/{$package.name()}/doc.{$r.version()}-{$r.version_stab()}/README">{$r.fmVersion()}</a> <em class="small"> -- {$t.df($r.created(), 'Y-m-d')}</em>
+      </ul>
       
     </div>
     
-  </div>
+    <br class="clear">
+  </div> <!-- end of column2 -->
+  
 </div>
 
 </rt:block>
