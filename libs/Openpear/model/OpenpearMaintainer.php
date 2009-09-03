@@ -42,7 +42,7 @@ class OpenpearMaintainer extends Dao
      * 文字列表現
      */
     protected function __str__(){
-        return $this->isFullname()? $this->fullname(): $this->name();
+        return empty($this->fullname)? $this->name(): $this->fullname();
     }
     /**
      * 作成/更新前処理

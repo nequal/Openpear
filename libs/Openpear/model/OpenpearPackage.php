@@ -71,8 +71,14 @@ class OpenpearPackage extends Dao
     
     protected function __create_verify__(){
     }
+    protected function __after_create__(){
+        $queue = new OpenpearNewprojectQueue();
+        $queue->package_id($this->id());
+        $queue->maintainer_id($this->author_id());
+        $queue->save();
+    }
     
-    public function isPublic(){
+    public function is_public(){
         return (bool) ($this->public_level > 0);
     }
     public function permission(OpenpearMaintainer $maintainer, $exception=true){

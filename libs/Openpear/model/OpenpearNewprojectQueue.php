@@ -9,24 +9,31 @@ class OpenpearNewprojectQueue extends Dao
     protected $id;
     protected $package_id;
     protected $maintainer_id;
-    protected $mail_possible;
+    protected $mail_possible = true;
     protected $settings;
-    protected $trial_count;
+    protected $trial_count = 0;
     protected $created;
     
     static protected $__id__ = 'type=serial';
     static protected $__package_id__ = 'type=number,require=true';
     static protected $__maintainer_id__ = 'type=number,require=true';
-    static protected $__revision__ = 'type=number,require=true';
-    static protected $__build_path__ = 'type=string,require=true';
-    static protected $__build_conf__ = 'type=text,require=true';
-    static protected $__description__ = 'type=text,require=true';
-    static protected $__notes__ = 'type=text,require=true';
+    static protected $__mail_possible__ = 'type=boolean';
+    static protected $__settings__ = 'type=text';
     static protected $__trial_count__ = 'type=number';
     static protected $__created__ = 'type=timestamp';
     
     public function __init__(){
         $this->trial_count = 0;
         $this->created = time();
+    }
+    public function create(){
+        try {
+            /** @todo */
+        } catch (Exception $e){
+            Log::error($e->getMessage());
+            $this->trial_count += 1;
+            $this->save();
+            C($this)->commit();
+        }
     }
 }

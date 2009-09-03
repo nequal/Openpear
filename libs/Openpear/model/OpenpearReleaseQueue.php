@@ -33,4 +33,27 @@ class OpenpearReleaseQueue extends Dao
         $this->trial_count = 0;
         $this->created = time();
     }
+    
+    public function build(){
+        try {
+            require_once 'PEAR/Server2.php';
+            
+            $package = C(OpenpearPackage)->find_get('id', $this->package_id());
+            $work_path = work_path('build/'. $package->name());
+            
+            File::rm($work_path);
+            /** @todo */
+            
+            $this->__complete__();
+        } catch(Exception $e){
+            Log::error($e->getMessage());
+            $this->trial_count += 1;
+            $this->save();
+            C($this)->commit();
+        }
+    }
+    protected function __complete__(){
+        // release model
+        // svn tag
+    }
 }
