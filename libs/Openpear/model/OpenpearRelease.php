@@ -27,8 +27,8 @@ class OpenpearRelease extends Dao implements AtomInterface
     
     protected $package;
     protected $maintainer;
-    static protected $__package__ = 'type=OpenpearPackage,cond=package_id()id';
-    static protected $__maintainer__ = 'type=OpenpearMaintainer,cond=maintainer_id()id';
+    static protected $__package__ = 'type=OpenpearPackage,extra=true';
+    static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
     
     public function __init__(){
         $this->version = '1.0.0';
@@ -40,6 +40,16 @@ class OpenpearRelease extends Dao implements AtomInterface
         if(is_null($this->id)) return 'No Release';
         if($this->version_stab === 'stable') return $this->version();
         return sprintf('%s (%s)', $this->version, $this->version_stab);
+    }
+    protected function getPackage(){
+        if(is_object($this->package)) return $this->package;
+        $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
+        return $this->package;
+    }
+    protected function getMaintainer(){
+        if(is_object($this->maintainer)) return $this->maintainer;
+        $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
+        return $this->maintainer;
     }
     
     public function atom_id(){

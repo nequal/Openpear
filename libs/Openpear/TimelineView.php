@@ -3,6 +3,10 @@ import('org.rhaco.net.xml.Atom');
 
 class TimelineView extends Openpear
 {
+    function package_timeline($package_name){
+        Http::redirect(url('package/'. $package_name));
+    }
+    
     function atom(){
         Atom::convert('Openpear Timelines', url('timelines.atom'),
             C(OpenpearTimeline)->find_all(new Paginator(20), Q::order('-id'))

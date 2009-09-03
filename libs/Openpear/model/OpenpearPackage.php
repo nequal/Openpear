@@ -145,13 +145,11 @@ class OpenpearPackage extends Dao
         return $this->author;
     }
     protected function getReleases(){
-        static $releases;
-        if(!empty($releases)) return $releases;
+        if(!empty($this->releases)) return $this->releases;
         try{
-            $releases = C(OpenpearRelease)->find_all(Q::eq('package_id', $this->id));
-            return $releases;
+            $this->releases = C(OpenpearRelease)->find_all(Q::eq('package_id', $this->id()));
         } catch(Exception $e){}
-        return array();
+        return $this->releases;
     }
     protected function getMaintainers(){
         if(!empty($this->maintainers)) return $this->maintainers;

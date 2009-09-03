@@ -1,5 +1,6 @@
 <?php
 require dirname(__FILE__). '/__settings__.php';
+require dirname(__FILE__). '/__funcs__.php';
 import('Openpear');
 
 try{
@@ -12,6 +13,7 @@ try{
         
         /** 個別パッケージのマッピング */
         '^/package/(.+)$' => 'class=Openpear.PackageView,method=model,template=package/model.html',
+        '^/package/(.+)/timeline' => 'class=Openpear.TimelineView,method=package_timeline,template=package/timeline.html',
         '^/package/(.+)/download' => 'class=Openpear.ReleaseView,method=download,template=package/download.html',
         '^/package/(.+)/like' => 'class=Openpear.PackageView,method=add_favorite',
         '^/package/(.+)/unlike' => 'class=Openpear.PackageView,method=remove_favorite',
@@ -26,6 +28,10 @@ try{
         '^/package/(.+)/manage/release' => 'class=Openpear.ReleaseView,method=package_release,template=package/release.html',
         '^/package/(.+)/manage/release_confirm' => 'class=Openpear.ReleaseView,method=package_release_confirm',
         '^/package/(.+)/manage/release_do' => 'class=Openpear.ReleaseView,method=package_release_do',
+        /** document */
+        '^/package/(.+)/doc' => 'class=Openpear.DocumentView,method=browse,template=package/document.html',
+        '^/package/(.+)/doc/(.+)' => 'class=Openpear.DocumentView,method=browse,template=package/document.html',
+        '^/package/(.+)/doc\.(.+?)/(.+)' => 'class=Openpear.DocumentView,method=browse_tag,template=package/document.html',
         
         /** メンテナ */
         '^/maintainers' => 'class=Openpear.MaintainerView,method=models,template=maintainer/models.html',

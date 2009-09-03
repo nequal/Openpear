@@ -1,5 +1,6 @@
 <?php
 import('org.rhaco.service.OpenIDAuth');
+module('exception.OpenpearException');
 module('model.OpenpearChangeset');
 module('model.OpenpearCharge');
 module('model.OpenpearFavorite');

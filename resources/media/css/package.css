@@ -187,9 +187,11 @@
 .source-tree ul#source-subtree li a {
   display: block;
   padding: 5px;
+  border: none;
 }
 .source-tree ul#source-subtree li a:hover {
   background: #ccc;
+  border: none;
 }
 /* downloads
  */
@@ -268,6 +270,73 @@
 #sub-package-downloads td .list-standard {
   margin: 0;
   padding: 0;
+}
+
+/* changeset
+ */
+
+h3 .changeset-time
+{
+  font-size: 0.7em;
+}
+.source-diff h4
+{
+  border: solid 1px #ccc;
+  border-bottom: none;
+  background: #f0f0f0;
+  padding: 5px 10px;
+  margin-bottom: 0;
+}
+.source-diff .diff
+{
+  margin-top: 0;
+  font-family: "Courier New", monospace;
+  line-height: 1.1em;
+}
+
+.source-diff .meta
+{
+  font-weight: bold;
+  color: #006888;
+}
+
+.source-diff .plus
+{
+  color: #00984f;
+}
+
+.source-diff .minus
+{
+  color: #d70035;
+}
+
+.changeset-nav
+{
+  clear: both;
+  text-align: right;
+}
+
+.changeset-files
+{
+  margin: 0;
+  padding-left: 10px;
+}
+.changeset-files li
+{
+  list-style: none;
+  padding-left: 20px;
+}
+.changeset-files li.add
+{
+  background: url(../images/changeset-add.png) 0 4px no-repeat;
+}
+.changeset-files li.remove
+{
+  background: url(../images/changeset-remove.png) 0 4px no-repeat;
+}
+.changeset-files li.modified
+{
+  background: url(../images/changeset-modified.png) 0 4px no-repeat;
 }
 
 
