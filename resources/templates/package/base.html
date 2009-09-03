@@ -20,9 +20,7 @@
       <h2 class="inline fleft"><a href="{$t.url('package')}/{$package.name()}">Package \ {$package.name()}</a></h2>
       <div id="sub-package-button-navi" class="fright">
         <rt:if param="{$t.logined()}" value="true">
-          <rt:if param="{$package.liked($t.login_user())}" value="true">
-            <a href="{$t.url('package')}/{$package.name()}/unlike/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /></a>
-          <rt:else />
+          <rt:if param="{$package.liked($t.login_user())}" value="false">
             <a href="{$t.url('package')}/{$package.name()}/like/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /></a>
           </rt:if>
         </rt:if>
