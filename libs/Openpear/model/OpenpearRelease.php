@@ -1,6 +1,7 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.xml.Atom');
+import('Openpear.model.PearBuildconf');
 
 class OpenpearRelease extends Dao implements AtomInterface
 {

@@ -88,6 +88,36 @@ class PackageView extends Openpear
         }
         Http::redirect(url('package/'. $package_name));
     }
+    public function add_maintainer($package_name){
+        if($this->isPost() && $this->isVars('maintainer_name')){
+            $this->_login_required('package'. $package_name);
+            try {
+                $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+                $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $this->inVars('maintainer_name')));
+                $package->permission($this->user());
+                $charge = new OpenpearCharge();
+                $charge->maintainer_id($maintainer->id());
+                $charge->package_id($package->id());
+                $charge->save();
+                C($charge)->commit();
+            } catch(Exception $e){}
+        }
+        Http::redirect(url('package/'. $package_name. '/manage'));
+    }
+    public function remove_maintainer($package_name){
+        if($this->isPost() && $this->isVars('maintainer_id')){
+            $this->_login_required('package'. $package_name);
+            try {
+                $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+                $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->inVars('maintainer_id')));
+                $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $package->id()), Q::eq('maintainer_id', $maintainer->id()));
+                $charge->delete();
+                C($charge)->commit();
+            } catch(Exception $e){}
+        }
+        Http::redirect(url('package/'. $package_name. '/manage'));
+    }
+    
     /**
      * カテゴリ登録
      */
@@ -97,7 +127,7 @@ class PackageView extends Openpear
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-                $package->permission($this->user());
+                // $package->permission($this->user());
                 $package->add_tag($this->inVars('tag_name'), $this->inVars('prime', false));
                 C($package)->commit();
             } catch(Exception $e){die($e->getMessage());}
@@ -152,7 +182,7 @@ class PackageView extends Openpear
                 $package = new OpenpearPackage();
                 $package->set_vars($this->vars());
                 $package->author_id($user->id());
-                $package->save(false);
+                // $package->save(false);
                 Exceptions::validation();
                 $this->template('package/confirm.html');
                 return $this;

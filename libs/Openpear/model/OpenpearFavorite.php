@@ -9,8 +9,8 @@ class OpenpearFavorite extends Dao
     protected $package_id;
     protected $maintainer_id;
     
-    static protected $__package_id__ = 'type=number,require=true';
-    static protected $__maintainer_id__ = 'type=number,require=true';
+    static protected $__package_id__ = 'type=number,require=true,primary=true';
+    static protected $__maintainer_id__ = 'type=number,require=true,primary=true';
     
     protected $package;
     protected $maintainer;

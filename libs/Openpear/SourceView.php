@@ -26,9 +26,11 @@ class SourceView extends Openpear
         } else {
             Http::redirect(url('package/'. $package_name));
         }
+        $this->vars('path', $path);
         $this->vars('info', self::format_info($info));
         $this->vars('package', $package);
         $this->vars('real_url', File::absolute(def('svn_url'), implode('/', array($package->name(), $root, $path))));
+        $this->vars('externals', Subversion::cmd('propget', array('svn:externals', $info['url'])));
         return $this;
     }
     public function browse_tag($package_name, $tag, $path){

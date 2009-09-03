@@ -24,7 +24,7 @@
   <ul class="source-tree">
     <li id="source-tree">other tree <img src="images/global-icon-tree.png" class="vmiddle" />
       <ul id="source-subtree">
-        <li><a href="{$t.url()}"><img src="images/global-icon-checked.png" alt="checked" class="vmiddle" /> trunk</a></li>
+        <li><a href="{$t.url('package')}/{$package.name()}/src"><img src="images/global-icon-checked.png" alt="checked" class="vmiddle" /> trunk</a></li>
         <li><a href="{$t.url()}">branches/hogefuga</a></li>
         <li><a href="{$t.url()}">branches/hogefuga2</a></li>
         <li><a href="{$t.url()}">branches/hogefuga3</a></li>
@@ -47,15 +47,16 @@
       {$t.html($info['recent']['msg'])}
     </p>
   </div>
+  <rt:if param="{$externals}">
   <div class="sub-package-description">
     <p class="title">
       Subversion externals
     </p>
     <p class="description">
-      していされてるばあいだけ表示<br />
-      svn:externals Hoge <a href="">http://hogehogehogehoge/</a>
+      svn:externals {$t.htmlencode($externals)}
     </p>
   </div>
+  </rt:if>
   
   <table id="package-source">
     <thead>

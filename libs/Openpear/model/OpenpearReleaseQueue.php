@@ -1,5 +1,6 @@
 <?php
 import('org.rhaco.storage.db.Dao');
+import('Openpear.model.PearBuildconf');
 
 class OpenpearReleaseQueue extends Dao
 {
@@ -21,7 +22,7 @@ class OpenpearReleaseQueue extends Dao
     static protected $__package_id__ = 'type=number,require=true';
     static protected $__maintainer_id__ = 'type=number,require=true';
     static protected $__revision__ = 'type=number,require=true';
-    static protected $__build_path__ = 'type=string,require=true';
+    static protected $__build_path__ = 'type=string';
     static protected $__build_conf__ = 'type=text,require=true';
     static protected $__description__ = 'type=text';
     static protected $__notes__ = 'type=text';

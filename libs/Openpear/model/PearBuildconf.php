@@ -1,6 +1,6 @@
 <?php
 /**
- * きもい
+ * きもい。いずれまとめる。
  */
 class PearBuildconf extends Object
 {
@@ -16,16 +16,16 @@ class PearBuildconf extends Object
     protected $package_summary;
     protected $package_description;
     protected $package_notes;
-    protected $package_summary_file = 'summary.txt';
-    protected $package_description_file = 'desc.txt';
-    protected $package_notes_file = 'notes.txt';
+    protected $package_summary_file;
+    protected $package_description_file;
+    protected $package_notes_file;
     protected $role;
     protected $version_release_ver = '1.0.0';
     protected $version_release_stab = 'stable';
-    protected $version_api_ver = '1.0.0';
-    protected $version_api_stab = 'stable';
+    protected $version_api_ver;
+    protected $version_api_stab;
     protected $version_php_min = '5.1.6';
-    protected $version_pear_min = '1.8.0';
+    protected $version_pear_min = '1.8.2';
     protected $license_name = 'PHP License 3.01';
     protected $license_uri = 'http://openpear.org/license';
     protected $maintainer = array();
@@ -45,9 +45,9 @@ class PearBuildconf extends Object
     static protected $__package_summary__ = 'type=string';
     static protected $__package_description__ = 'type=string';
     static protected $__package_notes__ = 'type=text';
-    static protected $__package_summary_file__ = 'type=string,set=false';
-    static protected $__package_description_file__ = 'type=string,set=false';
-    static protected $__package_notes_file__ = 'type=string,set=false';
+    static protected $__package_summary_file__ = 'type=string';
+    static protected $__package_description_file__ = 'type=string';
+    static protected $__package_notes_file__ = 'type=string';
     static protected $__role__ = 'type=string{}';
     static protected $__version_release_ver__ = 'type=string,require=true';
     static protected $__version_release_stab__ = 'type=choice(stable,beta,alpha),require=true';
@@ -62,12 +62,19 @@ class PearBuildconf extends Object
     static protected $__dep__ = 'type=PearBuildConfDep[]';
     static protected $__installer__ = 'type=PearBuildConfInstaller[]';
     
-    static private $_keys_ = array('maintainer' => 'handlename', 'file' => 'filename', 'dep' => 'package_name', 'installer' => 'group_name');
+    static private $_keys_ = array(
+        'maintainer' => 'handlename',
+        'file' => 'filename',
+        'dep' => 'package_name',
+        'installer' => 'group_name',
+        'dep_o' => 'channel_other',
+    );
     
     /**
      * リクエストから一括で登録するとかにつかう。結構決め打ち
      */
     public function set_vars(array $vars){
+        $access_vars = $this->get_access_vars();
         foreach($vars as $name => $value){
             if(in_array($name, array('maintainer', 'file', 'dep'))){
                 $class = 'PearBuildConf'. ucfirst($name);
@@ -79,7 +86,7 @@ class PearBuildconf extends Object
             } else if($name === 'installer'){
                 // #pass むりぽw
             } else {
-                $this->{$name}($value);
+                if(array_key_exists($name, $access_vars)) $this->{$name}($value);
             }
         }
     }
@@ -129,13 +136,19 @@ class PearBuildconf extends Object
     private function is_version($var){
         return (bool) preg_match('/^\d+\.\d+\.\d+$/', $var);
     }
+    protected function getVersion_api_ver(){
+        return empty($this->version_api_ver)? $this->version_release_ver(): $this->version_api_ver;
+    }
+    protected function getVersion_api_stab(){
+        return empty($this->version_api_stab)? $this->version_release_stab(): $this->version_api_stab;
+    }
     protected function verifyVersion_release_ver(){
         if(!$this->is_version($this->version_release_ver)){
             Exceptions::add(new OpenpearException(), 'version_release_ver');
         }
     }
     protected function verifyVersion_api_ver(){
-        if(!$this->is_version($this->version_api_ver)){
+        if(!empty($this->version_api_ver) && !$this->is_version($this->version_api_ver)){
             Exceptions::add(new OpenpearException(), 'version_api_ver');
         }
     }
@@ -219,6 +232,13 @@ class PearBuildconfMaintainer extends PearBuildconfExtra
     static protected $__mail__ = 'type=email';
     static protected $__role__ = 'type=choice(lead,developer,contributor,helper)';
     
+    public function set_charge(OpenpearCharge $charge){
+        $this->handlename($charge->maintainer()->name());
+        $this->name(str($charge->maintainer()));
+        $this->mail($charge->maintainer()->mail());
+        $this->role($charge->role());
+        return $this;
+    }
     protected function __section__(){
         return 'maintainer://'. $this->handlename;
     }
@@ -250,12 +270,19 @@ class PearBuildConfDep extends PearBuildconfExtra
     protected $package_name;
     protected $type;
     protected $channel;
+    protected $channel_other;
     protected $min;
     protected $max;
     static protected $__package_name__ = 'type=string';
     static protected $__type__ = 'type=choice(required,optional)';
     static protected $__channel__ = 'type=string';
     
+    protected function setChannel($channel){
+        if($channel == 99){
+            $channel = $this->channel_other();
+        }
+        $this->channel = $channel;
+    }
     protected function __section__(){
         return 'dep://'. $this->package_name;
     }

@@ -1,4 +1,4 @@
-<rt:extends href="../index.html" />
+<rt:extends href="base.html" />
 
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
@@ -16,98 +16,69 @@
   </div>
 </rt:block>
 
-<rt:block name="contents">
-  <div class="frame-class" id="sub-title">
-    
-    <div class="container-class">
-      <h2 class="inline fleft"><a href="{$t.url('package')}/{$t.htmlencode($package.name())}">Package :: {$t.htmlencode($package.name())}</a></h2>
-      <form action="{$t.url('packages')}" id="sub-search-form" method="post">
-        <input name="q" type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
-        <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
-      </form>
-      <br class="clear" />
-    </div> <!-- #container-s -->
-  </div> <!-- .frame-class -->
-
-  <div class="frame-class">
-    <div class="container-class" id="sub-main">
-      <div id="sub-package-navi">
-        <ul>
-          <li><a href="{$t.url('package')}/{$package.name()}">Top</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/timeline">Timeline</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/download">Downloads</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/source">Source</a></li>
-          <rt:if param="{$package.permission($t.login_user(),false)}" value="true">
-            <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
+<rt:block name="package_main">
+<div id="sub-package-description">
+  <div class="column2">
+    <div class="column2-left">
+      <h3>Manage Package</h3>
+      <h4>Settings</h4>
+      <ul class="list-standard">
+        <li><a href="{$t.url('package')}/{$package.name()}/manage/edit">Package settings</a></li>
+      </ul>
+      
+      <h4>Release </h4>
+      
+      <ul class="list-standard">
+        <li><a href="{$t.url('package')}/{$package.name()}/manage/release">Release package</a></li>
+        <li><a href="{$t.url('package')}/{$package.name()}/manage/release/setting">Release setting</a></li>
+      </ul>
+      
+      <h4>Maintainers</h4>
+      
+      <ul class="list-standard">
+        <li>
+          <ul class="list-liner">
+            <rt:loop param="maintainers" var="m">
+            <li><img src="{$ot.gravatar($m.mail(),16)}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a></li>
+            </rt:loop>
+          </ul>
+        </li>
+        <li class="clear"><a href="javascript:;" onclick="$('#add-maintainer').show();">Add maintainer</a>
+          <form id="add-maintainer" class="dnone"><input type="text" size="30" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
+        </ul>
+        
+        <h4>Tags</h4>
+        <ul class="list-standard" rt:param="{$package.package_tags()}" rt:var="package_tag">
+          <rt:if param="{$package_tag.prime()}" value="true">
+            <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}" class="bold">{$package_tag.tag().name()} (Primary)</a></li>
+          <rt:else />
+            <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()}</a>
+              <form action="{$t.url('package')}/{$package.name()}/prime_category" class="inline" onsubmit="return window.confirm('Set this tag to primary (as a Category)?');" method="post"><input type="submit" value="set this to primary" /><input type="hidden" name="tag_id" value="{$package_tag.tag_id()}" /></form>
+              <form action="{$t.url('package')}/{$package.name()}/remove_category" class="inline" onsubmit="return window.confirm('Delete this tag?');" method="post">
+                <input type="image" src="./images/global-icon-notice.png" value="Delete" />
+                <input type="hidden" name="tag_id" value="{$package_tag.tag_id()}" />
+              </form>
+            </li>
           </rt:if>
+        </ul>
+        
+        <h4>Maintainance</h4>
+        <ul class="list-standard">
+          <li><a href="">Solicit maintainer</a></li>
+          <li><a href="">Set to "Not Maintained"</a></li>
         </ul>
       </div>
       
-      <div id="sub-package-description">
-        <div class="column2">
-          <div class="column2-left">
-            <h3>Manage Package</h3>
-            <h4>Settings</h4>
-            <ul class="list-standard">
-              <li><a href="{$t.url('package')}/{$package.name()}/manage/edit">Package settings</a></li>
-            </ul>
-            
-            <h4>Release </h4>
-            
-            <ul class="list-standard">
-              <li><a href="{$t.url('package')}/{$package.name()}/manage/release">Release package</a></li>
-              <li><a href="{$t.url('package')}/{$package.name()}/manage/release/setting">Release setting</a></li>
-            </ul>
-            
-            <h4>Maintainers</h4>
-            
-            <ul class="list-standard">
-              <li>
-                <ul class="list-liner">
-                  <rt:loop param="maintainers" var="m">
-                  <li><img src="{$ot.gravatar($m.mail(),16)}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a></li>
-                  </rt:loop>
-                </ul>
-              </li>
-              <li class="clear"><a href="javascript:;" onclick="$('#add-maintainer').show();">Add maintainer</a>
-                <form id="add-maintainer" class="dnone"><input type="text" size="30" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
-              </ul>
-              
-              <h4>Tags</h4>
-              <ul class="list-standard" rt:param="{$package.package_tags()}" rt:var="package_tag">
-                <rt:if param="{$package_tag.prime()}" value="true">
-                  <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}" class="bold">{$package_tag.tag().name()} (Primary)</a></li>
-                <rt:else />
-                  <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()}</a>
-                    <form action="{$t.url('package')}/{$package.name()}/prime_category" class="inline" onsubmit="return window.confirm('Set this tag to primary (as a Category)?');" method="post"><input type="submit" value="set this to primary" /><input type="hidden" name="tag_id" value="{$package_tag.tag_id()}" /></form>
-                    <form action="{$t.url('package')}/{$package.name()}/remove_category" class="inline" onsubmit="return window.confirm('Delete this tag?');" method="post">
-                      <input type="image" src="./images/global-icon-notice.png" value="Delete" />
-                      <input type="hidden" name="tag_id" value="{$package_tag.tag_id()}" />
-                    </form>
-                  </li>
-                </rt:if>
-              </ul>
-              
-              <h4>Maintainance</h4>
-              <ul class="list-standard">
-                <li><a href="">Solicit maintainer</a></li>
-                <li><a href="">Set to "Not Maintained"</a></li>
-              </ul>
-            </div>
-            
-            <div class="column2-right">
+      <div class="column2-right">
 
-              <br class="clear" />
+        <br class="clear" />
 
-            </div> <!-- end of column2 -->
-            
-            <br class="clear" />
-            
-          </div>
-
-        </div>
-      </div>
+      </div> <!-- end of column2 -->
+      
+      <br class="clear" />
+      
     </div>
+
   </div>
+</div>
 </rt:block>

@@ -77,14 +77,14 @@ class OpenpearPackage extends Dao
     }
     public function permission(OpenpearMaintainer $maintainer, $exception=true){
         try {
-            C(OpenpearCharge)->find_get(Q::eq('package_id', $this->id()), Q::eq('maintainer_id', $maintainer->id()));
+            $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $this->id()), Q::eq('maintainer_id', $maintainer->id()));
         } catch(Exception $e){
             if($exception === true){
                 throw new OpenpearException('Permission denied');
             }
             return false;
         }
-        return true;
+        return $charge;
     }
     public function liked(OpenpearMaintainer $maintainer){
         try {

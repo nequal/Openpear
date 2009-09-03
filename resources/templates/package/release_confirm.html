@@ -1,0 +1,70 @@
+<rt:extends href="base.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/1column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+<rt:block name="title">Confirm \ Release \ Manage \ {$package.name()} \ Package \ Openpear</rt:block>
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('packages')}">Package</a> &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> &raquo; <a href="{$t.url('package')}/{$package.name()}/manage">Manage Package</a> &raquo; Release\Confirm
+  </div>
+</rt:block>
+<rt:block name="package_main">
+<div id="sub-package-description">
+
+<div class="column1">
+
+<div class="column2-left">
+<h3>Release Package Confirm</h3>
+
+
+<form action="{$t.url('package')}/{$package.name()}/manage/release_do" method="post" id="release-package" rt:ref="true">
+
+  <dl>
+    <dt>Target revision: </dt>
+    <dd>
+    {$revision}
+    </dd>
+    <dt>Version: </dt>
+    <dd>
+    {$version_release_ver} - {$version_release_stab}
+    </dd>
+    <dt>Target directory : </dt>
+    <p class="caption"></p>
+    <dd>
+    Repository: /Package_Hoge/trunk/<span class="inline-pre">src</span>
+    <br />
+    Install target: PEAR_DIR/<span class="inline-pre"></span>
+    </dd>
+    <dt>Notes: </dt>
+    <dd>
+    ここにはCHANGESファイルから自動生成した文字列が最初からはいっている
+    </dd>
+    <dt>PHP min version / PEAR min version.</dt>
+    <dd>
+    PHP &gt;= {$version_php_min} / PEAR &gt;= {$version_pear_min}
+    </dd>
+    <dt>Dependencies</dt>
+    <dd>
+      <ul id="release-dep-list" rt:param="dep" rt:var="d">
+      <li>
+       Required : {$d['channel']}/{$d['package_name']}<br />
+       {$d['min']} &lt;= Version &lt;= {$d['max']}
+       </li>
+      </ul>
+    </dd>
+    <dt>Additional Files</dt>
+    <dd>
+    {$t.html($extra_conf)}
+    </dd>
+  </dl>
+  <input type="submit" value="Confirm" class="small" />
+</form>
+</div> <!-- / column1 -->
+<br class="clear" />
+</div>
+</div>
+</rt:block>
