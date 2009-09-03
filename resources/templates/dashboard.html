@@ -79,7 +79,7 @@
   <h3>Favorite Packages</h3>
   <rt:loop param="my_favorites" var="favorite">
     <div class="dashboard-packages">
-      <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a> <a href="{$t.url('package')}/{$favorite.package().name()}/download">{$favorite.package().latest_release().fmVersion()}</a> 
+      <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a><rt:if param="{$favorite.package().latest_release().id()}"> <a href="{$t.url('package')}/{$favorite.package().name()}/download">{$favorite.package().latest_release().fmVersion()}</a> </rt:if>
     </div>
   </rt:loop>
 </div>
