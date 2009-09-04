@@ -34,7 +34,7 @@ class OpenpearView extends Openpear
         $this->_login_required();
         $this->vars('maintainer', $this->user());
         $this->vars('my_package_charges', C(OpenpearCharge)->find_all(Q::eq('maintainer_id', $this->user()->id())));
-        $this->vars('timelines', C(OpenpearTimeline)->find_all());
+        $this->vars('timelines', OpenpearTimeline::get_by_maintainer($this->user()));
         $this->vars('my_favorites', C(OpenpearFavorite)->find_all(Q::eq('maintainer_id', $this->user()->id())));
         return $this;
     }
