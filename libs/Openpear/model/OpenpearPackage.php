@@ -83,6 +83,19 @@ class OpenpearPackage extends Dao
         $message->package_id($this->id());
         $message->description($created_message->read('messages/created.txt'));
         $message->save();
+        
+        $timeline = new OpenpearTimeline();
+        $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">created</span> a new package: <a href="%s">%s</a>',
+            url('maintainer/'. $this->author()->name()),
+            $this->author()->name(),
+            url('package/'. $this->name()),
+            $this->name()
+        ));
+        $timeline->description('Package description '. htmlspecialchars($this->description()));
+        $timeline->type('package_setting');
+        $timeline->package_id($this->id());
+        $timeline->maintainer_id($this->author_id());
+        $timeline->save();
     }
     
     public function is_public(){

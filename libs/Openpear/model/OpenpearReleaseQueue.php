@@ -42,6 +42,7 @@ class OpenpearReleaseQueue extends Dao
             $work_path = work_path('build/'. $package->name());
             
             File::rm($work_path);
+            
             /** @todo */
             
             $this->__complete__();

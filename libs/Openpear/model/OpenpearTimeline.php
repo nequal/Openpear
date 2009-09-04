@@ -31,27 +31,6 @@ class OpenpearTimeline extends Dao implements AtomInterface
         $this->created = time();
     }
     
-    static public function add_favorite(OpenpearFavorite $favorite){
-        $timeline = new self();
-        $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">liked</span> <a href="%s">%s</a>',
-            url('maintainer/'. $favorite->maintainer()->name()),
-            Templf::htmlencode(str($favorite->maintainer())),
-            url('package/'. $favorite->package()->name()),
-            $favorite->package()->name()
-        ));
-        $timeline->description(sprintf('<a href="%s">%s</a>: latest %s. %d fans.',
-            url('package/'. $favorite->package()->name()),
-            $favorite->package()->name(),
-            $favorite->package()->latest_release()->fmVersion(),
-            C(OpenpearFavorite)->find_count(Q::eq('package_id', $favorite->package_id()))
-        ));
-        $timeline->type('favorite');
-        $timeline->package_id($favorite->package_id());
-        $timeline->maintainer_id($favorite->maintainer_id());
-        $timeline->save();
-        C($timeline)->commit();
-    }
-    
     protected function getPackage(){
         if(is_object($this->package)) return $this->package;
         $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
