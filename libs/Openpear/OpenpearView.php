@@ -36,6 +36,19 @@ class OpenpearView extends Openpear
         $this->vars('my_package_charges', C(OpenpearCharge)->find_all(Q::eq('maintainer_id', $this->user()->id())));
         $this->vars('timelines', OpenpearTimeline::get_by_maintainer($this->user()));
         $this->vars('my_favorites', C(OpenpearFavorite)->find_all(Q::eq('maintainer_id', $this->user()->id())));
+        $this->vars('notices', C(OpenpearMessage)->find_all(Q::eq('maintainer_to_id', $this->user()->id()), Q::eq('type', 'system_notice'), Q::eq('unread', true)));
         return $this;
+    }
+    public function dashboard_message_hide(){
+        $this->_login_required();
+        try {
+            if($this->isPost() && $this->isVars('message_id')){
+                $message = C(OpenpearMessage)->find_get(Q::eq('id', $this->inVars('message_id')), Q::eq('maintainer_to_id', $this->user()->id()));
+                $message->unread(false);
+                $message->save(true);
+                echo 'ok';
+            }
+        } catch(Exception $e){}
+        exit;
     }
 }

@@ -78,6 +78,14 @@ class OpenpearMaintainer extends Dao
         $message->description($registered_message->read('messages/registered.txt'));
         $message->type('system');
         $message->save();
+        
+        $message = new OpenpearMessage();
+        $message->maintainer_to_id($this->id());
+        $message->subject('Please join Google Groups');
+        $message->description('Google Groups にまだ登録してないみたいなんですけど，登録してくださいよ．それとももうしました？');
+        $message->type('system_notice');
+        $message->mail(false);
+        $message->save();
     }
     
     protected function verifyUrl(){

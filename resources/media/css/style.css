@@ -312,6 +312,16 @@ div {
 {
 }
 
+.tags-primary a
+{
+  font-size: 1.3em;
+}
+
+.tags-all a
+{
+  font-size: 1.1em;
+}
+
 
 /** login
 */
@@ -405,6 +415,7 @@ form dl dd {
 form select,
 form select > option,
 form input[type="text"],
+form input[type="file"],
 form textarea
 {
   margin-bottom: 2px;
@@ -419,6 +430,7 @@ form select > option {
 }
 form select:focus,
 form input[type="text"]:focus,
+form input[type="file"]:focus,
 form textarea:focus
 {
   background: #f7f6fb;

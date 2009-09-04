@@ -23,11 +23,13 @@ class OpenpearMessage extends Dao
     static protected $__subject__ = 'type=string,require=true';
     static protected $__description__ = 'type=text,require=true';
     static protected $__unread__ = 'type=boolean';
-    static protected $__type__ = 'type=choice(system,notice,warning,normal)';
+    static protected $__type__ = 'type=choice(system,system_notice,notice,warning,normal)';
     static protected $__created__ = 'type=timestamp';
     
+    protected $mail = true;
     protected $maintainer_to;
     protected $maintainer_from;
+    static protected $__mail__ = 'type=boolean,extra=true';
     static protected $__maintainer_to__ = 'type=OpenpearMaintainer,extra=true';
     static protected $__maintainer_from__ = 'type=OpenpearMaintainer,extra=true';
     
@@ -37,17 +39,19 @@ class OpenpearMessage extends Dao
         $this->type = 'normal';
     }
     protected function __save_verify__(){
-        if($this->type() !== 'system' && $this->isMaintainer_from_id()){
+        if(!($this->type() === 'system' || $this->type() === 'system_notice') && $this->isMaintainer_from_id()){
             Exceptions::add(new RequiredDaoException('maintainer_from_id required'), 'maintainer_from_id');
         }
     }
     protected function __after_create__(){
-        $mail = new Gmail(def('gmail_account'), def('gmail_password'));
-        $mail->to($this->maintainer_to()->mail());
-        $mail->from(def('gmail_account'), 'Openpear');
-        $mail->subject($this->subject());
-        $mail->html($this->fmDescription());
-        $mail->send();
+        if($this->isMail()){
+            $mail = new Gmail(def('gmail_account'), def('gmail_password'));
+            $mail->to($this->maintainer_to()->mail());
+            $mail->from(def('gmail_account'), 'Openpear');
+            $mail->subject($this->subject());
+            $mail->html($this->fmDescription());
+            $mail->send();
+        }
     }
     
     public function permission(OpenpearMaintainer $maintainer){

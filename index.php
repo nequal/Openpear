@@ -65,6 +65,7 @@ try{
         // トップページ
         '' => 'class=Openpear.OpenpearView,method=index,template=index.html',
         '^/dashboard' => 'class=Openpear.OpenpearView,method=dashboard,template=dashboard.html',
+        '^/dashboard/message/hide' => 'class=Openpear.OpenpearView,method=dashboard_message_hide',
         '^/search' => 'class=Openpear.OpenpearView,method=search',
     ))->output();
 } catch(Exception $e) {

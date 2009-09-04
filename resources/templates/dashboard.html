@@ -25,19 +25,21 @@
   <div class="frame-class dashboard">
     <div class="container-class" id="sub-main">
 
-  <div class="message-system info" id="system-message-1">
-    <a href="javascript:;"
-      onclick="
-      $.post(
-        'close.php',
-        {message_id: 1},
-        function(data) {
-          $('#system-message-1').SlideUp();
-        }
-      );
-      " class="fright">[x]</a>
-  Google Groups にまだ登録してないみたいなんですけど，登録してくださいよ．それとももうしました？
-  </div>
+    <rt:loop param="notices" var="notice">
+      <div class="message-system info" id="system-message-{$notice.id()}">
+        <a href="javascript:;"
+          onclick="
+          $.post(
+            '{$t.url('dashboard/message/hide')}',
+            {message_id: {$notice.id()}},
+            function(data) {
+              $('#system-message-{$notice.id()}').SlideUp();
+            }
+          );
+          " class="fright">[x]</a>
+      {$notice.fmDescription()}
+      </div>
+    </rt:loop>
 
 <div class="column2">
 <div class="column2-left">
