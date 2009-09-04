@@ -91,7 +91,7 @@ class OpenpearPackage extends Dao
             url('package/'. $this->name()),
             $this->name()
         ));
-        $timeline->description('Package description '. htmlspecialchars($this->description()));
+        $timeline->description(htmlspecialchars($this->description()));
         $timeline->type('package_setting');
         $timeline->package_id($this->id());
         $timeline->maintainer_id($this->author_id());
