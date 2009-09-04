@@ -37,7 +37,10 @@ class OpenpearNewprojectQueue extends Dao
                 path('resources/skelton'),
                 File::absolute(def('svn_root'), $this->package()->name()),
             ),array(
-                'message' => '[New Package] '. $this->package()->name(),
+                'message' => sprintf('[New Package] %s (@%s)',
+                    $this->package()->name(),
+                    $this->maintainer->name()
+                ),
             ));
             // $message = new OpenpearMessage();
             // $message->subject('New Package is ready for your commit!');

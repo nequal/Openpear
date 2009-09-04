@@ -37,6 +37,20 @@ class SourceView extends Openpear
         $this->vars('tag', $tag);
         return $this->browse($package_name, $path);
     }
+    public function changeset($package_name, $revision){
+        $revision = intval($revision);
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $changeset = C(OpenpearChangeset)->find_get(Q::eq('revision', $revision), Q::eq('package_id', $package->id()));
+        $path = File::absolute(def('svn_root'), $package->name());
+        $log = Subversion::cmd('log', array($path), array('revision' => $revision, 'limit' => 1));
+        $diff = Subversion::cmd('diff', array($path), array('revision' => sprintf('%d:%d', $revision-1, $revision)));
+        $this->vars('package', $package);
+        $this->vars('changeset', $changeset);
+        $this->vars('log', $log);
+        $this->vars('diff', $diff);
+        return $this;
+    }
+    
     static public function format_tree(array $tree){
         foreach($tree as &$f){
             try {

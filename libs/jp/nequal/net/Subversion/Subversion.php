@@ -2,6 +2,7 @@
 class Subversion extends Object
 {
     static protected $__cmd_path__ = '/usr/bin/svn';
+    static protected $__look_cmd_path__ = '/usr/bin/svnlook';
     protected $_command_ = 'help';
     protected $_lang_ = 'ja_JP.utf8';
     protected $vars = array();
@@ -9,8 +10,9 @@ class Subversion extends Object
     static protected $__vars__ = 'type=mixed{}';
     static protected $__options__ = 'type=mixed{}';
     
-    static public function config_path($cmd_path){
+    static public function config_path($cmd_path, $look_cmd_path='/usr/bin/svnlook'){
         self::$__cmd_path__ = $cmd_path;
+        self::$__look_cmd_path__ = $look_cmd_path;
     }
     static public function config_lang($lang='ja_JP.utf8'){
         self::$_lang_ = $lang;
@@ -24,6 +26,27 @@ class Subversion extends Object
         foreach($vars as $key => $var) $svn->vars($key, $var);
         foreach($options as $key => $option) $svn->options($key, $option);
         return $svn->exec();
+    }
+    /**
+     * @@FIXME
+     */
+    static public function look($command, $vars=array(), $options=array(), $dict=null){
+        $cmd = isset(self::$_lang_)? sprintf('env LANG=%s ', self::$_lang_): '';
+        $cmd .= self::$__look_cmd_path__;
+        $cmd .= ' ';
+        $cmd .= $command;
+        foreach($options as $name => $value){
+            if($name === $value){
+                $cmd .= sprintf(' --%s', $name);
+            } else {
+                $cmd .= sprintf(' --%s=%s', $name, escapeshellarg($value));
+            }
+        }
+        foreach($vars as $var){
+            $cmd .= ' ';
+            $cmd .= escapeshellarg($var);
+        }
+        return self::__exec_cmd__($cmd);
     }
     
     public function exec(){
