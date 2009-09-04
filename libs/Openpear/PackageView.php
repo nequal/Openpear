@@ -174,22 +174,6 @@ class PackageView extends Openpear
         $this->template('package/create.html');
         return $this;
     }
-    public function create_confirm(){
-        $this->_login_required('packages/create');
-        $user = $this->user();
-        if($this->isPost()){
-            try {
-                $package = new OpenpearPackage();
-                $package->set_vars($this->vars());
-                $package->author_id($user->id());
-                // $package->save(false);
-                Exceptions::validation();
-                $this->template('package/confirm.html');
-                return $this;
-            } catch(Exception $e){}
-        }
-        return $this->create();
-    }
     public function create_do(){
         $this->_login_required('packages/create');
         $user = $this->user();
@@ -202,7 +186,9 @@ class PackageView extends Openpear
                 $package->add_maintainer($user);
                 C($package)->commit();
                 Http::redirect(url('package/'. $package->name()));
-            } catch(Exception $e){}
+            } catch(Exception $e){
+                Exceptions::add($e);
+            }
         }
         return $this->create();
     }

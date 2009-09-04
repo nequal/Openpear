@@ -8,7 +8,7 @@ try{
         /** パッケージ関連(global)のマッピング */
         '^/packages' => 'class=Openpear.PackageView,method=models',
         '^/packages/create' => 'class=Openpear.PackageView,method=create',
-        '^/packages/create_confirm' => 'class=Openpear.PackageView,method=create_confirm',
+        // '^/packages/create_confirm' => 'class=Openpear.PackageView,method=create_confirm',
         '^/packages/create_do' => 'class=Openpear.PackageView,method=create_do,redirect=/dashboard',
         
         /** 個別パッケージのマッピング */

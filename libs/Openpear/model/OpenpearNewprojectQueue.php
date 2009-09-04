@@ -22,18 +22,42 @@ class OpenpearNewprojectQueue extends Dao
     static protected $__trial_count__ = 'type=number';
     static protected $__created__ = 'type=timestamp';
     
+    protected $package;
+    protected $maintainer;
+    static protected $__package__ = 'type=OpenpearPackage,extra=true';
+    static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
+    
     public function __init__(){
         $this->trial_count = 0;
         $this->created = time();
     }
     public function create(){
         try {
-            /** @todo */
+            Subversion::cmd('import', array(
+                path('resources/skelton'),
+                File::absolute(def('svn_root'), $this->package()->name()),
+            ),array(
+                'message' => '[New Package] '. $this->package()->name(),
+            ));
+            // $message = new OpenpearMessage();
+            // $message->subject('New Package is ready for your commit!');
+            $this->delete();
+            C($this)->commit();
         } catch (Exception $e){
             Log::error($e->getMessage());
             $this->trial_count += 1;
             $this->save();
             C($this)->commit();
         }
+    }
+    protected function getPackage(){
+        if(is_object($this->package)) return $this->package;
+        $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
+        return $this->package;
+    }
+    protected function getMaintainer(){
+        if(is_object($this->maintainer)) return $this->maintainer;
+        $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
+        return $this->maintainer;
     }
 }

@@ -1,0 +1,20 @@
+** Congratulations
+Your package is now created.
+
+** To release package ...
+
+- first, checkout trunk from subversion repository.
+>||
+% svn co http://svn.openpear.org/{$package.name()}/trunk
+||<
+- edit some flies and commit.
+>||
+% touch {$package.name()}.php
+% svn add {$package.name()}.php
+% svn commit -m "First commit to {$package.name()}"
+||<
+- to release the package, access to [http://openpear.org/package/{$package.name()}/manage:title=manage page] and release it.
+
+** Help
+
+- See help: [http://openpear.org/help]

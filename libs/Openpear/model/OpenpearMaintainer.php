@@ -1,5 +1,4 @@
 <?php
-import('org.rhaco.net.mail.Gmail');
 import('org.rhaco.storage.db.Dao');
 
 class OpenpearMaintainer extends Dao
@@ -71,11 +70,14 @@ class OpenpearMaintainer extends Dao
      * - メールの送信
      */
     protected function __after_create__(){
-        
-        
-        /*
-        $mail = new Gmail(module_const('gmail_account'), module_const('gmail_password'));
-        */
+        $registered_message = new Template();
+        $registered_message->vars('maintainer', $this);
+        $message = new OpenpearMessage();
+        $message->maintainer_to_id($this->id());
+        $message->subject('Welcome to Openpear!');
+        $message->description($registered_message->read('messages/registered.txt'));
+        $message->type('system');
+        $message->save();
     }
     
     protected function verifyUrl(){

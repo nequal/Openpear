@@ -76,6 +76,13 @@ class OpenpearPackage extends Dao
         $queue->package_id($this->id());
         $queue->maintainer_id($this->author_id());
         $queue->save();
+        
+        $created_message = new Template();
+        $created_message->vars('package', $this);
+        $message = new OpenpearPackageMessage();
+        $message->package_id($this->id());
+        $message->description($created_message->read('messages/created.txt'));
+        $message->save();
     }
     
     public function is_public(){

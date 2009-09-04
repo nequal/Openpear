@@ -1,5 +1,4 @@
 <?php
-import('org.rhaco.service.OpenIDAuth');
 module('exception.OpenpearException');
 module('model.OpenpearChangeset');
 module('model.OpenpearCharge');
@@ -9,6 +8,7 @@ module('model.OpenpearMessage');
 module('model.OpenpearNewprojectQueue');
 module('model.OpenpearOpenidMaintainer');
 module('model.OpenpearPackage');
+module('model.OpenpearPackageMessage');
 module('model.OpenpearPackageTag');
 module('model.OpenpearRelease');
 module('model.OpenpearReleaseQueue');

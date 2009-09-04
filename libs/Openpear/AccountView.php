@@ -1,5 +1,5 @@
 <?php
-// require_once 'Auth/OpenID.php';
+import('org.rhaco.service.OpenIDAuth');
 
 class AccountView extends Openpear
 {
