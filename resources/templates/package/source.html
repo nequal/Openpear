@@ -81,7 +81,7 @@
         </td>
       </tr>
       <rt:loop param="tree" var="f">
-      <tr class="even">
+      <tr class="{$evenodd}">
         <td class="icon">
           <rt:if param="{$f['kind']}" value="dir">
             <img src="images/source_browser/dir.png" alt="dir" />
