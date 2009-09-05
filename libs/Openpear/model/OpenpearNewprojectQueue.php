@@ -39,7 +39,7 @@ class OpenpearNewprojectQueue extends Dao
             ),array(
                 'message' => sprintf('[New Package] %s (@%s)',
                     $this->package()->name(),
-                    $this->maintainer->name()
+                    $this->maintainer()->name()
                 ),
             ));
             // $message = new OpenpearMessage();
