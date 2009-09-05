@@ -16,9 +16,7 @@
 
 <rt:block name="package_main">
   <h3 class="fleft">
-    <a href="">Hoge</a> / 
-    <a href="">src</a> / 
-    Hoge
+    {$ot.srcpath_link($package,$path)}
   </h3>
   
   <ul class="source-tree">
@@ -92,11 +90,7 @@
           </rt:if>
         </td>
         <td class="name">
-          <rt:if param="{$f['kind']}" value="dir">
-            <a href="{$t.request_url()}/{$f['path']}">{$f['path']}</a>
-          <rt:else />
             <a href="{$t.request_url()}/{$f['name']}">{$f['name']}</a>
-          </rt:if>
         </td>
         <td class="age">
           <a href="{$t.url('package')}/{$package.name()}/changeset/{$f['commit']['revision']}">[{$f['commit']['revision']}]</a> {$t.df($f['commit']['date'])}

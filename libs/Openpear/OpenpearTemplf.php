@@ -14,6 +14,16 @@ class OpenpearTemplf
     final static public function strtotime($str){
         return strtotime($str);
     }
+    final static public function srcpath_link(OpenpearPackage $package, $path){
+        $ret = '';
+        $parent = '';
+        foreach(explode('/', $path) as $p){
+            $link = File::absolute(url(sprintf('package/%s/src/%s', $package->name())), implode('/', array($parent, $p)));
+            $ret .= sprintf('<a href="%s">%s</a>', $link, $p);
+            $parent .= $p;
+        }
+        return $ret;
+    }
     final static public function tlicon($type){
         switch($type){
             case 'release':
