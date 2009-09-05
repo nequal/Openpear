@@ -33,6 +33,7 @@ class AccountView extends Openpear
                     $openid_maintainer->maintainer_id($account->id());
                     $openid_maintainer->url($this->inSessions('openid_identity'));
                     $openid_maintainer->save();
+                    $this->rmSessions('openid_identity');
                 }
                 C($account)->commit();
             } catch(Exception $e){

@@ -1,0 +1,3 @@
+<rt:loop param="maintainers" var="maintainer">
+{$maintainer.name()}:{$maintainer.svn_password()}
+</rt:loop>

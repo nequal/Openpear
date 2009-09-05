@@ -19,6 +19,15 @@ class OpenpearCharge extends Dao
     static protected $__package__ = 'type=OpenpearPacakge,extra=true';
     static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
     
+    protected function __after_save__(){
+        $maintainers = C(OpenpearMaintainer)->find_all();
+        $packages = C(OpenpearPackage)->find_all();
+        $template = new Template();
+        $template->vars('maintainers', $maintainers);
+        $template->vars('packages', $packages);
+        File::write(def('svn_access_file'), $template->read('files/access.txt'));
+    }
+    
     protected function getPackage(){
         if(is_object($this->package)) return $this->package;
         $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));

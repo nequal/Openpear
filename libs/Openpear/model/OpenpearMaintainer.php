@@ -52,6 +52,12 @@ class OpenpearMaintainer extends Dao
             $this->svn_password = crypt($this->new_password());
         }
     }
+    protected function __after_save__(){
+        $template = new Template();
+        $template->vars('maintainers', C(OpenpearMaintainer)->find_all());
+        File::write(def('svn_passwd_file'), $template->read('files/passwd.txt'));
+    }
+    
     /**
      * 新規作成時検証
      */

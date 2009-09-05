@@ -49,7 +49,7 @@ class OpenpearMessage extends Dao
             $mail->to($this->maintainer_to()->mail());
             $mail->from(def('gmail_account'), 'Openpear');
             $mail->subject($this->subject());
-            $mail->html($this->fmDescription());
+            $mail->message(strip_tags($this->fmDescription()));
             $mail->send();
         }
     }

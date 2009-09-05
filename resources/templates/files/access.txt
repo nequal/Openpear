@@ -1,0 +1,13 @@
+[groups]
+developer = <rt:loop param="maintainers" var="maintainer">{$maintainer.name()}<rt:last><rt:else />,</rt:last></rt:loop>
+
+[/]
+* = r
+
+<rt:loop param="packages" var="package">
+[/{$package.name()}]
+<rt:if param="{$package.is_public()}" value="true">@developer = rw<rt:else /><rt:loop param="{$package.maintainers()}" var="maintainer">
+{$maintainer.name()} = rw
+</rt:loop></rt:if>
+
+</rt:loop>
