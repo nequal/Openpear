@@ -1,8 +1,5 @@
 <?php
-/**
- * きもい。いずれまとめる。
- */
-class PearBuildconf extends Object
+class PackageProjectorConfig extends Object
 {
     protected $project_src_dir = 'src';
     protected $project_release_dir = 'release';
@@ -57,10 +54,10 @@ class PearBuildconf extends Object
     static protected $__version_pear_min__ = 'type=string';
     static protected $__license_name__ = 'type=string';
     static protected $__license_uri__ = 'type=string';
-    static protected $__maintainer__ = 'type=PearBuildconfMaintainer[]';
-    static protected $__file__ = 'type=PearBuildconfFile[]';
-    static protected $__dep__ = 'type=PearBuildConfDep[]';
-    static protected $__installer__ = 'type=PearBuildConfInstaller[]';
+    static protected $__maintainer__ = 'type=PackageProjectorConfigMaintainer[]';
+    static protected $__file__ = 'type=PackageProjectorConfigFile[]';
+    static protected $__dep__ = 'type=PackageProjectorConfigDep[]';
+    static protected $__installer__ = 'type=PackageProjectorConfigInstaller[]';
     
     static private $_keys_ = array(
         'maintainer' => 'handlename',
@@ -77,7 +74,7 @@ class PearBuildconf extends Object
         $access_vars = $this->get_access_vars();
         foreach($vars as $name => $value){
             if(in_array($name, array('maintainer', 'file', 'dep'))){
-                $class = 'PearBuildConf'. ucfirst($name);
+                $class = 'PackageProjectorConfig'. ucfirst($name);
                 foreach($value as $v){
                     $obj = new $class();
                     $obj->cp($v);
@@ -100,7 +97,8 @@ class PearBuildconf extends Object
                 $ret .= sprintf("[%s]\n", $section);
             if(is_array($values)) foreach($values as $key => $val){
                 if(is_string($val)){
-                    $ret .= sprintf("%s = %s\n", $key, str_replace("\n", "", Text::uld($val)));
+                    $ret .= sprintf("%s = \"%s\"\n",
+                        $key, str_replace(array("\n", '"'), array("", '\"'), Text::uld($val)));
                 }
             }
             $ret .= "\n";
@@ -173,7 +171,7 @@ class PearBuildconf extends Object
                 $parent_key = $k;
             }
             if($parent_key == 'installer'){
-                $installer = new PearBuildConfInstaller();
+                $installer = new PackageProjectorConfigInstaller();
                 foreach($v as $key => $val){
                     if($key === 'instructions'){
                         $installer->instructions($val);
@@ -186,7 +184,7 @@ class PearBuildconf extends Object
                 $installer->group_name($index);
                 $this->installer($installer);
             } else if(in_array($parent_key, array('maintainer', 'file', 'dep'))) {
-                $class = 'PearBuildConf'. ucfirst($parent_key);
+                $class = 'PackageProjectorConfig'. ucfirst($parent_key);
                 $pk = self::$_keys_[$parent_key];
                 $obj = new $class();
                 $obj->cp($v);
@@ -202,131 +200,5 @@ class PearBuildconf extends Object
                 $indexes[$parent_key]++;
             }
         }
-    }
-}
-
-class PearBuildconfExtra extends Object
-{
-    protected function __hash__(){
-        $ret = array();
-        foreach($this->get_access_vars() as $key => $val){
-            if(!PearBuildconf::special_section($key) && !empty($val)) $ret[$key] = $val;
-        }
-        return $ret;
-    }
-    public function section(){
-        return $this->__section__();
-    }
-    protected function __section__(){
-        return null;
-    }
-}
-class PearBuildconfMaintainer extends PearBuildconfExtra
-{
-    protected $handlename;
-    protected $name;
-    protected $mail;
-    protected $role = 'lead';
-    static protected $__handlename__ = 'type=string,require=true';
-    static protected $__name__ = 'type=string,require=true';
-    static protected $__mail__ = 'type=email';
-    static protected $__role__ = 'type=choice(lead,developer,contributor,helper)';
-    
-    public function set_charge(OpenpearCharge $charge){
-        $this->handlename($charge->maintainer()->name());
-        $this->name(str($charge->maintainer()));
-        $this->mail($charge->maintainer()->mail());
-        $this->role($charge->role());
-        return $this;
-    }
-    protected function __section__(){
-        return 'maintainer://'. $this->handlename;
-    }
-    protected function __str__(){
-        return $handlename;
-    }
-}
-class PearBuildconfFile extends PearBuildconfExtra
-{
-    protected $filename;
-    protected $commandscript;
-    protected $ignore;
-    protected $platform;
-    protected $install;
-    protected $role;
-    static protected $__filename__ = 'type=string';
-    static protected $__commandscript__ = 'type=string';
-    static protected $__role__ = 'type=choice(php,data,doc,test,script,src)';
-    
-    protected function __section__(){
-        return 'file://'. $this->filename;
-    }
-    protected function __str__(){
-        return $filename;
-    }
-}
-class PearBuildConfDep extends PearBuildconfExtra
-{
-    protected $package_name;
-    protected $type;
-    protected $channel;
-    protected $channel_other;
-    protected $min;
-    protected $max;
-    static protected $__package_name__ = 'type=string';
-    static protected $__type__ = 'type=choice(required,optional)';
-    static protected $__channel__ = 'type=string';
-    
-    protected function setChannel($channel){
-        if($channel == 99){
-            $channel = $this->channel_other();
-        }
-        $this->channel = $channel;
-    }
-    protected function __section__(){
-        return 'dep://'. $this->package_name;
-    }
-    protected function __str__(){
-        return $package_name;
-    }
-}
-class PearBuildConfInstaller extends PearBuildconfExtra
-{
-    protected $group_name;
-    protected $instructions;
-    protected $params = array();
-    protected $prompt;
-    protected $type;
-    protected $default;
-    static protected $__group_name__ = 'type=string';
-    static protected $__instructions__ = 'type=string';
-    static protected $__params__ = 'type=string[]';
-    static protected $__prompt__ = 'type=string{}';
-    static protected $__type__ = 'type=string{}';
-    static protected $__default__ = 'type=string{}';
-    
-    protected function __hash__(){
-        $ret = array();
-        if($this->isInstructions()){
-            $ret['instructions'] = $this->instructions();
-        }
-        foreach($this->params() as $param){
-            if($this->isPrompt($param)){
-                $ret[$param. '.prompt'] = $this->inPrompt($param);
-            }
-            if($this->isType($param)){
-                $ret[$param. '.type'] = $this->inType($param);
-            }
-            if($this->isDefault($param)){
-                $ret[$param. '.default'] = $this->inDefault($param);
-            }
-        }
-        return $ret;
-    }
-    protected function __section__(){
-        return 'installer://'. $this->group_name;
-    }
-    protected function __str__(){
-        return $this->group_name;
     }
 }

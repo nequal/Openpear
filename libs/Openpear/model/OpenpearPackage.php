@@ -57,9 +57,8 @@ class OpenpearPackage extends Dao
     static protected $__package_tags__ = 'type=OpenpearPackageTag[],extra=true';
     static protected $__primary_tag__ = 'type=OpenpearTag,extra=true';
     
-    // TODO: ちゃんとしたメッセージを英語で書きたい(出力時国際化)
-    const NOTIFY_WANTED = 'メンテナ募集してます';
-    const NOTIFY_DEPRECATED = 'メンテナンスされていません';
+    const NOTIFY_WANTED = 'This package is accepting maintainers for admission.';
+    const NOTIFY_DEPRECATED = 'This package is not maintained.';
     
     public function __init__(){
         $this->created = time();
@@ -161,76 +160,82 @@ class OpenpearPackage extends Dao
         }
         return sprintf('%s-%s', $this->name(), $this->latest_release()->version_stab());
     }
-    protected function getAuthor(){
-        if($this->author instanceof OpenpearMaintainer){
-            return $this->author;
+    
+    public function set_extra_objects(){
+        // setting author
+        if($this->author instanceof OpenpearMaintainer === false){
+            try {
+                $this->author(C(OpenpearMaintainer)->find_get(Q::eq('id', $this->author_id())));
+            } catch(Exception $e){
+                Exceptions::add($e);
+            }
         }
-        try {
-            $this->author = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->author_id()));
-        } catch(Exception $e){}
-        return $this->author;
-    }
-    protected function getReleases(){
-        if(!empty($this->releases)) return $this->releases;
-        try{
-            $this->releases = C(OpenpearRelease)->find_all(Q::eq('package_id', $this->id()));
-        } catch(Exception $e){}
-        return $this->releases;
-    }
-    protected function getMaintainers(){
-        if(!empty($this->maintainers)) return $this->maintainers;
-        try{
-            $charges = C(OpenpearCharge)->find_all(Q::eq('package_id', $this->id()));
-            $maintainers = array();
-            foreach($charges as $charge){
-                $maintainers[] = $charge->maintainer();
+        // setting releases[]
+        if(empty($this->releases)){
+            try{
+                $this->releases(C(OpenpearRelease)->find_all(Q::eq('package_id', $this->id())));
+            } catch(Exception $e){
+                Exceptions::add($e);
             }
-            $this->maintainers = $maintainers;
-            return $this->maintainers;
-        } catch(Exception $e){}
-        return array();
-    }
-    protected function getFavored_maintainers(){
-        if(!empty($this->favored_maintainers)) return $this->favored_maintainers;
-        try{
-            $favs = C(OpenpearFavorite)->find_all(Q::eq('package_id', $this->id()));
-            $favored_maintainers = array();
-            foreach($favs as $fav){
-                $favored_maintainers[] = $fav->maintainer();
-            }
-            $this->favored_maintainers = $favored_maintainers;
-            return $this->favored_maintainers;
-        } catch(Exception $e){}
-        return array();
-    }
-    protected function getLatest_release(){
-        if($this->latest_release instanceof OpenpearRelease) return $this->latest_release;
-        try{
-            $this->latest_release = C(OpenpearRelease)->find_get(Q::eq('package_id', $this->id()), Q::order('-id'));
-            return $this->latest_release;
-        } catch(Exception $e){}
-        $release = new OpenpearRelease();
-        $release->package_id($this->id());
-        return $release;
-    }
-    protected function getPackage_tags(){
-        if(!empty($this->package_tags)) return $this->package_tags();
-        try {
-            $this->package_tags = C(OpenpearPackageTag)->find_all(Q::eq('package_id', $this->id()), Q::order('-prime'));
-        } catch(Exception $e){}
-        return $this->package_tags;
-    }
-    protected function getPrimary_tag(){
-        if($this->primary_tag instanceof OpenpearTag) return $this->primary_tag;
-        try {
-            foreach($this->package_tags() as $package_tag){
-                if($package_tag->prime() === true){
-                    $this->primary_tag = $package_tag->tag();
-                    break;
+        }
+        // setting maintainers[]
+        if(empty($this->maintainers)){
+            try{
+                $charges = C(OpenpearCharge)->find_all(Q::eq('package_id', $this->id()));
+                $maintainers = array();
+                foreach($charges as $charge){
+                    $maintainers[] = $charge->maintainer();
                 }
+                $this->maintainers($maintainers);
+            } catch(Exception $e){
+                Exceptions::add($e);
             }
-        } catch(Exception $e){}
-        return $this->primary_tag;
+        }
+        // setting favored maintainers
+        if(!empty($this->favored_maintainers)){
+            try{
+                $favs = C(OpenpearFavorite)->find_all(Q::eq('package_id', $this->id()));
+                $favored_maintainers = array();
+                foreach($favs as $fav){
+                    $favored_maintainers[] = $fav->maintainer();
+                }
+                $this->favored_maintainers($favored_maintainers);
+            } catch(Exception $e){
+                Exceptions::add($e);
+            }
+        }
+        // setting latest release
+        if($this->latest_release instanceof OpenpearRelease === false){
+            try{
+                $this->latest_release(C(OpenpearRelease)->find_get(Q::eq('package_id', $this->id()), Q::order('-id')));
+            } catch(Exception $e){
+                Exceptions::add($e);
+            }
+            $release = new OpenpearRelease();
+            $release->package_id($this->id());
+            $this->latest_release($release);
+        }
+        // setting package tags
+        if(!empty($this->package_tags)){
+            try {
+                $this->package_tags(C(OpenpearPackageTag)->find_all(Q::eq('package_id', $this->id()), Q::order('-prime')));
+            } catch(Exception $e){
+                Exceptions::add($e);
+            }
+        }
+        // setting primary tag
+        if($this->primary_tag instanceof OpenpearTag === false){
+            try {
+                foreach($this->package_tags() as $package_tag){
+                    if($package_tag->prime() === true){
+                        $this->primary_tag($package_tag->tag());
+                        break;
+                    }
+                }
+            } catch(Exception $e){
+                Exceptions::add($e);
+            }
+        }
     }
     
     protected function verifyName(){

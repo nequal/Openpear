@@ -1,6 +1,6 @@
 <?php
 import('org.rhaco.storage.db.Dao');
-import('Openpear.model.PearBuildconf');
+import('jp.nequal.pear.PackageProjector');
 
 class OpenpearReleaseQueue extends Dao
 {

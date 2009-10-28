@@ -170,10 +170,10 @@
     
   </div><!-- end of #frame -->
   
-  <pre><?php Exceptions::d(); ?>
-<b>Variables:</b>
+  <pre><b>Variables:</b>
 <?php Log::d($this->vars);
 print("<b>Sessions:</b>\n");Log::d($_SESSION); ?>
+<?php $e = new Exceptions;var_dump($e); ?>
 </pre>
 </body>
 </html>

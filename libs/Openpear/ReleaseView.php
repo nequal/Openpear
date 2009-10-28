@@ -1,6 +1,6 @@
 <?php
 import('org.rhaco.net.xml.Atom');
-import('Openpear.model.PearBuildconf');
+import('jp.nequal.pear.PackageProjector');
 
 class ReleaseView extends Openpear
 {
@@ -10,7 +10,7 @@ class ReleaseView extends Openpear
         $package->permission($this->user());
         if(!$this->isPost()){
             $this->vars('package_id', $package->id());
-            $this->cp(new PearBuildconf());
+            $this->cp(new PackageProjectorConfig());
         }
         $this->vars('package', $package);
         $this->vars('package_id', $package->id());
@@ -24,11 +24,11 @@ class ReleaseView extends Openpear
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->inVars('package_id')));
                 $charge = $package->permission($this->user());
-                $build_conf = new PearBuildconf();
+                $build_conf = new PackageProjectorConfig();
                 $build_conf->set_vars($this->vars());
                 if($this->isVars('extra_conf')) $build_conf->parse_ini_string($this->inVars('extra_conf'));
                 foreach(C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge){
-                    $build_conf->maintainer(R(PearBuildconfMaintainer)->set_charge($charge));
+                    $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
                 $this->sessions('openpear_release_vars', $this->vars());
@@ -48,11 +48,11 @@ class ReleaseView extends Openpear
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->inVars('package_id')));
                 $package->permission($this->user());
-                $build_conf = new PearBuildconf();
+                $build_conf = new PackageProjectorConfig();
                 $build_conf->set_vars($this->vars());
                 if($this->isVars('extra_conf')) $build_conf->parse_ini_string($this->inVars('extra_conf'));
                 foreach(C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge){
-                    $build_conf->maintainer(R(PearBuildconfMaintainer)->set_charge($charge));
+                    $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
                 $release_queue = new OpenpearReleaseQueue();

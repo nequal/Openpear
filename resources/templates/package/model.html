@@ -77,7 +77,7 @@
       
       <rt:if param="{$t.logined()}" value="true">
         <rt:if param="{$object.liked($t.login_user())}" value="true">
-          Remove your fav.</a>
+          <a href="{$t.url('package')}/{$object.name()}/unlike/{$ot.hash('rand')}" class="clear">Remove your fav.</a>
         <rt:else />
           <a href="{$t.url('package')}/{$object.name()}/like/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /> Add your fav.</a>
         </rt:if>

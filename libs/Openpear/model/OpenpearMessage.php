@@ -44,7 +44,8 @@ class OpenpearMessage extends Dao
         }
     }
     protected function __after_create__(){
-        if($this->isMail()){
+        if($this->mail()){
+            $this->set_extra_objects();
             $mail = new Gmail(def('gmail_account'), def('gmail_password'));
             $mail->to($this->maintainer_to()->mail());
             $mail->from(def('gmail_account'), 'Openpear');
@@ -61,20 +62,24 @@ class OpenpearMessage extends Dao
         }
         return false;
     }
+    
+    public function set_extra_objects(){
+        if($this->maintainer_to instanceof OpenpearMaintainer === false){
+            try{
+                $this->maintainer_to = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_to_id()));
+            }catch(Exception $e){}
+        }
+        if($this->maintainer_from instanceof OpenpearMaintainer === false){
+            try{
+                $this->maintainer_from = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_from_id()));
+            }catch(Exception $e){}
+        }
+    }
+    
     protected function formatDescription(){
         return HatenaSyntax::render($this->description());
     }
     protected function __str__(){
         return $this->subject();
-    }
-    protected function getMaintainer_to(){
-        if(is_object($this->maintainer_to)) return $this->maintainer_to;
-        $this->maintainer_to = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_to_id()));
-        return $this->maintainer_to;
-    }
-    protected function getMaintainer_from(){
-        if(is_object($this->maintainer_from)) return $this->maintainer_from;
-        $this->maintainer_from = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_from_id()));
-        return $this->maintainer_from;
     }
 }
