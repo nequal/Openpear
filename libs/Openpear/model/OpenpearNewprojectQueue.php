@@ -3,7 +3,6 @@ import('org.rhaco.storage.db.Dao');
 
 class OpenpearNewprojectQueue extends Dao
 {
-    protected $_database_ = 'openpear';
     protected $_table_ = 'newproject_queue';
     
     protected $id;

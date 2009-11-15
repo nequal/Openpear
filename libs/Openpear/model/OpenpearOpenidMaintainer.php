@@ -3,7 +3,6 @@ import('org.rhaco.storage.db.Dao');
 
 class OpenpearOpenidMaintainer extends Dao
 {
-    protected $_database_ = 'openpear';
     protected $_table_ = 'openid_maintainer';
     
     protected $maintainer_id;

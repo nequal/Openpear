@@ -4,7 +4,6 @@ import('org.rhaco.net.xml.Atom');
 
 class OpenpearTimeline extends Dao implements AtomInterface
 {
-    protected $_database_ = 'openpear';
     protected $_table_ = 'timeline';
     
     protected $id;

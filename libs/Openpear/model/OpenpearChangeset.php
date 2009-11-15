@@ -3,7 +3,6 @@ import('org.rhaco.storage.db.Dao');
 
 class OpenpearChangeset extends Dao
 {
-    protected $_database_ = 'openpear';
     protected $_table_ = 'changeset';
     
     protected $revision;

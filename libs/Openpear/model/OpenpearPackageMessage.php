@@ -4,7 +4,6 @@ import('org.rhaco.storage.db.Dao');
 
 class OpenpearPackageMessage extends Dao
 {
-    protected $_database_ = 'openpear';
     protected $_table_ = 'package_message';
     
     protected $id;

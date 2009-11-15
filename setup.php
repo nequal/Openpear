@@ -1,4 +1,6 @@
 <?php
+define("_CORE_URL_","http://rhaco.googlecode.com/files/core.tar.gz");
+
 function download_expand($url,$base_dir){
 	if(substr($base_dir,-1) != "/") $base_dir .= "/";
 	$fp = @gzopen($url,"rb");
@@ -67,8 +69,7 @@ function download_expand($url,$base_dir){
 ini_set("display_errors","On");
 ini_set("display_startup_errors","On");
 ini_set("html_errors","Off");
-$download_url = "http://rhaco.org/download/rhaco2.tar.gz";
-$default_path = str_replace("\\","/",getcwd())."/"."rhaco/";
+$default_path = str_replace("\\","/",getcwd())."/"."core/";
 $gui = (isset($_SERVER["HTTP_USER_AGENT"]) && !empty($_SERVER["HTTP_USER_AGENT"]));
 
 if(file_exists("./__settings__.php")) @include_once("./__settings__.php");
@@ -77,7 +78,7 @@ if(!class_exists("Object")){
 	if($gui){
 		if(isset($_POST["install_path"])) $install_path = $_POST["install_path"];
 	}else{
-		print("set or install[".$default_path."]: ");
+		print("core path[".$default_path."]: ");
 		$fp = fopen("php://stdin","r");
 		$buffer = "";
 		while(substr($buffer,-1) != "\n" && substr($buffer,-1) != "\r\n") $buffer .= fgets($fp,4096);
@@ -87,12 +88,11 @@ if(!class_exists("Object")){
 	}
 	if(!empty($install_path)){
 		if(substr($install_path,-1) !== "/") $install_path .= "/";
-		if(!is_file($install_path."jump.php")) download_expand($download_url,$install_path);
+		if(!is_file($install_path."jump.php")) download_expand(constant("_CORE_URL_"),$install_path);
 		@include_once($install_path."jump.php");
 	}
 }
 if(class_exists("Object")){
-	load_extension();
 	Setup::start();
 	exit;
 }
@@ -101,8 +101,9 @@ if(!$gui) exit;
 <html>
 <body>
 	<form method="post">
+		core path:
 		<input type="text" size="80" name="install_path" value="<?php print($default_path); ?>" />
-		<input type="submit" value="set or install" />
+		<input type="submit" value="submit" />
 	</form>
 </body>
 </html>

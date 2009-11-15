@@ -4,7 +4,6 @@ import('jp.nequal.pear.PackageProjector');
 
 class OpenpearReleaseQueue extends Dao
 {
-    protected $_database_ = 'openpear';
     protected $_table_ = 'release_queue';
     
     protected $id;

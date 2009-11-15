@@ -5,7 +5,6 @@ import('org.rhaco.net.mail.Gmail');
 
 class OpenpearMessage extends Dao
 {
-    protected $_database_ = 'openpear';
     protected $_table_ = 'message';
     
     protected $id;
