@@ -1,75 +1,71 @@
 <?php
 require dirname(__FILE__). '/__settings__.php';
 require dirname(__FILE__). '/__funcs__.php';
-import('Openpear');
-
-try{
-    R(Flow)->add_module(R('Openpear.module.OpenpearAccountModule'))->handler(array(
-        /** パッケージ関連(global)のマッピング */
-        'packages$' => 'class=Openpear.PackageView,method=models',
-        'packages/create$' => 'class=Openpear.PackageView,method=create',
-        // 'packages/create_confirm$' => 'class=Openpear.PackageView,method=create_confirm',
-        'packages/create_do$' => 'class=Openpear.PackageView,method=create_do,redirect=/dashboard',
+app(); ?>
+<app name="Openpear">
+    <class_module class="Log" module="org.rhaco.io.log.LogFile" />
+    <handler>
+        <module class="org.openpear.Openpear.module.OpenpearAccountModule" />
         
-        /** 個別パッケージのマッピング */
-        'package/(.+)$$' => 'class=Openpear.PackageView,method=model,template=package/model.html',
-        'package/(.+)/timeline$' => 'class=Openpear.TimelineView,method=package_timeline,template=package/timeline.html',
-        'package/(.+)/download$' => 'class=Openpear.ReleaseView,method=download,template=package/download.html',
-        'package/(.+)/like$' => 'class=Openpear.PackageView,method=add_favorite',
-        'package/(.+)/unlike$' => 'class=Openpear.PackageView,method=remove_favorite',
-        /** Pacakge Manager */
-        'package/(.+)/add_category$' => 'class=Openpear.PackageView,method=add_tag',
-        'package/(.+)/remove_category$' => 'class=Openpear.PackageView,method=remove_tag',
-        'package/(.+)/prime_category$' => 'class=Openpear.PackageView,method=prime_tag',
-        'package/(.+)/manage$' => 'class=Openpear.PackageView,method=manage,template=package/manage.html',
-        'package/(.+)/manage/edit$' => 'class=Openpear.PackageView,method=update,template=package/edit.html',
-        'package/(.+)/manage/edit_do$' => 'class=Openpear.PackageView,method=update_do',
-        /** release */
-        'package/(.+)/manage/release$' => 'class=Openpear.ReleaseView,method=package_release,template=package/release.html',
-        'package/(.+)/manage/release_confirm$' => 'class=Openpear.ReleaseView,method=package_release_confirm',
-        'package/(.+)/manage/release_do$' => 'class=Openpear.ReleaseView,method=package_release_do',
-        /** document */
-        'package/(.+)/doc$' => 'class=Openpear.DocumentView,method=browse,template=package/document.html',
-        'package/(.+)/doc/(.+)$' => 'class=Openpear.DocumentView,method=browse,template=package/document.html',
-        'package/(.+)/doc\.(.+?)/(.+)$' => 'class=Openpear.DocumentView,method=browse_tag,template=package/document.html',
-        /** sources */
-        'package/(.+)/src(/?.+)?$' => 'class=Openpear.SourceView,method=browse',
-        'package/(.+)/src\.(.+?)(/?.+)?$' => 'class=Openpear.SourceView,method=browse_tag',
+        <map url="" class="org.openpear.Openpear" method="index" template="index.html" />
+        <map url="search$" class="org.openpear.Openpear" method="search" />
+        <map url="dashboard$" class="org.openpear.Openpear" method="dashboard" template="dashboard.html" />
+        <map url="dashboard/message/hide$" class="org.openpear.Openpear" method="dashboard_message_hide" />
         
-        /** メンテナ */
-        'maintainers$' => 'class=Openpear.MaintainerView,method=models,template=maintainer/models.html',
-        'maintainer/(.+)$' => 'class=Openpear.MaintainerView,method=model,template=maintainer/model.html',
-        
-        /** アカウント関係のマッピング */
-        'account/login$$' => 'class=Openpear.AccountView,method=login,template=account/login.html,redirect=/dashboard',
-        'account/login_openid$' => 'class=Openpear.AccountView,method=login_by_openid,redirect=/dashboard',
-        'account/signup$' => 'class=Openpear.AccountView,method=signup,template=account/signup.html',
-        'account/signup_do$' => 'class=Openpear.AccountView,method=signup_do,success_redirect="/dashboard",fail_redirect="/account/signup"',
-        'account/logout$' => 'class=Openpear.AccountView,method=logout,redirect=/',
-        
-        /** Messages */
-        'message/inbox$' => 'class=Openpear.MessageView,method=inbox,template=message/inbox.html',
-        'message/sentbox$' => 'class=Openpear.MessageView,method=sentbox,template=message/sentbox.html',
-        'message/compose$' => 'class=Openpear.MessageView,method=compose,template=message/compose.html',
-        'message/compose/confirm$' => 'class=Openpear.MessageView,method=send_confirm,template=message/confirm.html',
-        'message/compose/send$' => 'class=Openpear.MessageView,method=send_do,redirect=/message/sentbox',
-        'message/(\d+)$' => 'class=Openpear.MessageView,method=model,template=message/detail.html,redirect=/message/inbox',
-        
-        /** timelines */
-        'timelines.atom$' => 'class=Openpear.TimelineView,method=atom',
-        'package/(.+)/timelines.atom$' => 'class=Openpear.TimelineView,method=atom_package',
-        'maintainer/(.+)/timelines.atom$' => 'class=Openpear.TimelineView,method=atom_maintainer',
-        
-        /** APIs */
-        
-        // トップページ
-        '' => 'class=Openpear.OpenpearView,method=index,template=index.html',
-        'dashboard$' => 'class=Openpear.OpenpearView,method=dashboard,template=dashboard.html',
-        'dashboard/message/hide$' => 'class=Openpear.OpenpearView,method=dashboard_message_hide',
-        'search$' => 'class=Openpear.OpenpearView,method=search',
-    ))->output();
-} catch(Exception $e) {
-    // 漏れたエラー
-    Log::error($e->getMessage());
-    Http::status_header(500);
-}
+        <maps class="org.openpear.Package">
+            <map url="packages$" method="models" />
+            <map url="packages/create$" method="create" />
+            <map url="packages/create_do$" method="create_do" redirect="/dashboard" />
+            <!-- package -->
+            <map url="package/(.+)$" method="model" template="package/model.html" />
+            <map url="package/(.+)/timeline$" method="package_timeline" template="package/timeline.html" />
+            <map url="package/(.+)/download$" method="download" template="package/download.html" />
+            <map url="package/(.+)/like$" method="add_favorite" />
+            <map url="package/(.+)/unlike$" method="remove_favorite" />
+            <!-- manage -->
+            <map url="package/(.+)/category/add$" method="add_tag" />
+            <map url="package/(.+)/category/remove$" method="remove_tag" />
+            <map url="package/(.+)/category/prime$" method="prime_tag" />
+            <map url="package/(.+)/manage$" method="manage" template="package/manage.html" />
+            <map url="package/(.+)/manage/edit$" method="edit" template="package/edit.html" />
+            <map url="package/(.+)/manage/edit_do$" method="update_do" />
+            <!-- release -->
+            <map url="package/(.+)/release$" method="package_release" template="package_release" />
+            <map url="package/(.+)/release_confirm$" method="package_release_confirm" />
+            <map url="package/(.+)/release_do$" method="package_release_do" />
+        </maps>
+        <maps class="org.openpear.Document">
+            <map url="package/(.+)/doc$" method="browse" template="package/document.html" />
+            <map url="package/(.+)/doc/(.+)$" method="browse" template="package/document.html" />
+            <map url="package/(.+)/doc\.(.+?)/(.+)$" method="browse_tag" template="package/document.html" />
+        </maps>
+        <maps class="org.openpear.Source">
+            <map url="package/(.+)/src(/?.+)?$" method="browse" />
+            <map url="package/(.+)/src\.(.+?)(/?.+)?$" method="browse_tag" />
+        </maps>
+        <maps class="org.openpear.Maintainer">
+            <map url="maintainers$" method="models" template="maintainer/models.html" />
+            <map url="maintainer/(.+)$" method="model" template="maintainer/model.html" />
+        </maps>
+        <maps class="org.openpear.Account">
+            <map url="account/login$" method="login" template="account/login.html" redirect="/dashboard" />
+            <map url="account/login_openid$" method="login_by_openid" redirect="/dashboard" />
+            <map url="account/signup$" method="signup" template="account/signup.html" />
+            <map url="account/signup_do$" method="signup_do" success_redirect="/dashboard" fail_redirect="/account/signup" /> 
+            <map url="account/logout$" method="logout" redirect="/" />
+        </maps>
+        <maps class="org.openpear.Message">
+            <map url="message/inbox$" method="inbox" template="message/inbox.html" />
+            <map url="message/sentbox$" method="sentbox" template="message/sentbox.html" />
+            <map url="message/compose$" method="compose" template="message/compose.html" />
+            <map url="message/compose/confirm$" method="send_confirm" template="message/confirm.html" />
+            <map url="message/compose/send$" method="send_do" redirect="/message/sentbox" />
+            <map url="message/(\d+)$" method="model" template="message/detail.html" redirect="/message/inbox" />
+        </maps>
+        <maps class="org.openpear.Timeline">
+            <map url="timelines.atom$" method="atom" />
+            <map url="package/(.+)/timelines.atom$" method="atom_package" />
+            <map url="maintainer/(.+)/timelines.atom$" method="atom_maintainer" />
+        </maps>
+    </handler>
+</app>
