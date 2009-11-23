@@ -67,16 +67,20 @@ class OpenpearChangeset extends Dao
         return $result;
     }
     
-    public function set_extra_objects(){
+    protected function getPackage(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
             }catch(Exception $e){}
         }
+        return $this->package;
+    }
+    protected function getMaintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
             }catch(Exception $e){}
         }
+        return $this->maintainer;
     }
 }

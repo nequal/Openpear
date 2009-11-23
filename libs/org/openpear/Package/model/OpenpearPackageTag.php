@@ -106,14 +106,18 @@ class OpenpearPackageTag extends Dao
         if($this->package instanceof OpenpearPackage){
             return $this->package;
         }
-        $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
+        try{
+            $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
+        }catch(Exception $e){}
         return $this->package;
     }
     protected function getTag(){
         if($this->tag instanceof OpenpearTag){
             return $this->tag;
         }
-        $this->tag = C(OpenpearTag)->find_get(Q::eq('id', $this->tag_id()));
+        try{
+            $this->tag = C(OpenpearTag)->find_get(Q::eq('id', $this->tag_id()));
+        }catch(Exception $e){}
         return $this->tag;
     }
 }

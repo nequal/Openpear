@@ -37,25 +37,27 @@ class OpenpearTimeline extends Dao implements AtomInterface
             $ids = array();
             foreach($favorites as $f) $ids[] = $f->package_id();
             foreach($charges as $c) $ids[] = $c->package_id();
-            $timelines = C(OpenpearTimeline)->find_all(Q::in('package_id', array_unique($ids)), Q::order('-id'));
-            foreach($timelines as &$t) $t->set_extra_objects();
-            return $timelines;
+            return C(OpenpearTimeline)->find_all(Q::in('package_id', array_unique($ids)), Q::order('-id'));
         } catch (Exception $e){
             return array();
         }
     }
     
-    public function set_extra_objects(){
+    protected function getPackage(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
             }catch(Exception $e){}
         }
+        return $this->package;
+    }
+    protected function getMaintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
             }catch(Exception $e){}
         }
+        return $this->maintainer;
     }
     
     public function atom_id(){

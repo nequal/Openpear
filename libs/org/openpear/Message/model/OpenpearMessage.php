@@ -45,7 +45,6 @@ class OpenpearMessage extends Dao
     }
     protected function __after_create__(){
         if($this->mail()){
-            $this->set_extra_objects();
             $mail = new Gmail();
             $mail->to($this->maintainer_to()->mail());
             $mail->from($mail->from(), 'Openpear');
@@ -63,17 +62,21 @@ class OpenpearMessage extends Dao
         return false;
     }
     
-    public function set_extra_objects(){
+    protected function getMaintainer_to(){
         if($this->maintainer_to instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer_to = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_to_id()));
             }catch(Exception $e){}
         }
+        return $this->maintainer_to;
+    }
+    protected function getMaintainer_from(){
         if($this->maintainer_from instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer_from = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_from_id()));
             }catch(Exception $e){}
         }
+        return $this->maintainer_from;
     }
     
     protected function formatDescription(){

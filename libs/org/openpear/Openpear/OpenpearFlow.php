@@ -28,19 +28,6 @@ class OpenpearFlow extends Flow
         exit;
     }
     
-    static protected function set_extra_objects($objects){
-        if(is_object($objects)){
-            $objects->set_extra_objects();
-            return $objects;
-        } else if(is_array($objects)){
-            foreach($objects as &$object){
-                if(is_object($object)) $object->set_extra_objects();
-            }
-            return $objects;
-        }
-        return $objects;
-    }
-    
     /**
      * テンプレートだけ表示したい（要らないだろうけど，いずれなんかの情報を与えたい）
      */

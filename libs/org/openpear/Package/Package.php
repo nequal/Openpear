@@ -54,7 +54,6 @@ class Package extends OpenpearFlow
      */
     public function model($package_name){
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-        $package->set_extra_objects();
         $this->vars('object', $package);
         $this->vars('package', $package);
         $this->vars('maintainers', $package->maintainers());

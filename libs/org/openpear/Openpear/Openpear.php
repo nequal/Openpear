@@ -38,7 +38,7 @@ class Openpear extends OpenpearFlow
     public function dashboard(){
         $this->_login_required();
         $this->vars('maintainer', $this->user());
-        $this->vars('my_package_charges', self::set_extra_objects(C(OpenpearCharge)->find_all(Q::eq('maintainer_id', $this->user()->id()))));
+        $this->vars('my_package_charges', C(OpenpearCharge)->find_all(Q::eq('maintainer_id', $this->user()->id())));
         $this->vars('timelines', OpenpearTimeline::get_by_maintainer($this->user()));
         $this->vars('my_favorites', C(OpenpearFavorite)->find_all(Q::eq('maintainer_id', $this->user()->id())));
         $this->vars('notices', C(OpenpearMessage)->find_all(Q::eq('maintainer_to_id', $this->user()->id()), Q::eq('type', 'system_notice'), Q::eq('unread', true)));

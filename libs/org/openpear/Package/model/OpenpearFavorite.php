@@ -17,17 +17,21 @@ class OpenpearFavorite extends Dao
     static protected $__package__ = 'type=OpenpearPackage,extra=true';
     static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
     
-    public function set_extra_objects(){
+    protected function getPackage(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
             }catch(Exception $e){}
         }
+        return $this->package;
+    }
+    protected function getMaintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
             }catch(Exception $e){}
         }
+        return $this->maintainer;
     }
     protected function __after_save__(){
         $this->recount_favorites();
