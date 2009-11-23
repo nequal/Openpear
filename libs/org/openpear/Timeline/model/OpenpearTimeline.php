@@ -37,7 +37,9 @@ class OpenpearTimeline extends Dao implements AtomInterface
             $ids = array();
             foreach($favorites as $f) $ids[] = $f->package_id();
             foreach($charges as $c) $ids[] = $c->package_id();
-            return C(OpenpearTimeline)->find_all(Q::in('package_id', array_unique($ids)), Q::order('-id'));
+            $timelines = C(OpenpearTimeline)->find_all(Q::in('package_id', array_unique($ids)), Q::order('-id'));
+            foreach($timelines as &$t) $t->set_extra_objects();
+            return $timelines;
         } catch (Exception $e){
             return array();
         }
