@@ -26,7 +26,7 @@ class OpenpearPackageMessage extends Dao
         $this->created = time();
         $this->type = 'maintainer';
     }
-    protected function formatDescription(){
+    protected function __fm_description__(){
         return HatenaSyntax::render($this->description());
     }
 }

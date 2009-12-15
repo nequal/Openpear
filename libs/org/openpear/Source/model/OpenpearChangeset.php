@@ -27,7 +27,30 @@ class OpenpearChangeset extends Dao
         $this->created = time();
     }
     
+    protected function __after_create__(){
+        // 美しくない
+        $path = preg_replace('@^file://@', '', def('svn_root'));
+        $message = Subversion::look('log', array($path), array('revision' => $this->revision));
+        $timeline = new OpenpearTimeline();
+        $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">committed</span> to <a href="%s">%s</a>',
+            url('maintainer/'. $this->maintainer()->name()),
+            $this->maintainer()->name(),
+            url('package/'. $this->package()->name()),
+            $this->package()->name()
+        ));
+        $timeline->description(sprintf('Changeset <a href="%s">[%d]</a>.<br />%s',
+            url(sprintf('package/%s/changeset/%d', $this->package()->name(), $this->revision)),
+            $this->revision,
+            nl2br(htmlspecialchars(Text::substring($message, 0, 200, 'utf-8'), ENT_QUOTES))
+        ));
+        $timeline->type('changeset');
+        $timeline->package_id($this->package_id());
+        $timeline->maintainer_id($this->maintainer_id());
+        $timeline->save();
+    }
+    
     static public function commit_hook($path, $revision, $message){
+        Log::debug(sprintf('commit hook: %s %d "%s"', $path, $revision, $message));
         $changed = Subversion::look('changed', array($path), array('revision' => $revision));
         $author = Subversion::look('author', array($path), array('revision' => $revision));
         $parsed_changed = self::parse_svnlook_changed($changed);
@@ -46,9 +69,8 @@ class OpenpearChangeset extends Dao
             $changeset->revision($revision);
             if($maintainer instanceof OpenpearMaintainer) $changeset->maintainer_id($maintainer->id());
             $changeset->package_id($package->id());
-            $changeset->changed($parsed_changed);
-            $changed->save();
-            C($changed);
+            $changeset->changed(serialize($parsed_changed));
+            $changeset->save(true);
         } catch(Exception $e){
             throw $e;
         }
@@ -67,7 +89,7 @@ class OpenpearChangeset extends Dao
         return $result;
     }
     
-    protected function getPackage(){
+    protected function __get_package__(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
@@ -75,7 +97,7 @@ class OpenpearChangeset extends Dao
         }
         return $this->package;
     }
-    protected function getMaintainer(){
+    protected function __get_maintainer__(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));

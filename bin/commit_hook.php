@@ -1,12 +1,17 @@
 <?php
 /**
- * php /path/to/commit_hook.php "$REPOS" "$REV" "$MES"
+ * REPOS="$1"
+ * REV="$2"
+ * LOG=`svnlook log -r $REV "$REPOS"`
+ * php /path/to/commit_hook.php "$REPOS" "$REV" "$LOG"
  */
-if($argc === 3){
+
+if($argc === 4){
     require dirname(dirname(__FILE__)). '/__settings__.php';
-    import('Openpear');
+    import('org.openpear.Openpear');
+    import('org.openpear.Source');
     
-    list($path, $revision, $message) = $argv;
+    list(, $path, $revision, $message) = $argv;
     try {
         OpenpearChangeset::commit_hook($path, $revision, $message);
     } catch (Exception $e){

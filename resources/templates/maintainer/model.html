@@ -52,7 +52,7 @@
             <li class="{$loop_evenodd}">
               <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
               <div class="timeline-title">
-                {$timeline.subject()}. <em> -- {$t.df($timeline.created())}</em>
+                {$timeline.subject()}. <em> -- {$ot.date_ago($timeline.fm_created())}</em>
               </div>
               <div class="timeline-description">
                 {$timeline.description()}
@@ -74,7 +74,7 @@
             <rt:else />
               <a href="{$t.url('package')}/{$charge.package().name()}/like/{$ot.hash('rand')}"><img src="./images/global-icon-star-add.png" class="fright" /></a>
             </rt:if>
-            <h4><a href="{$t.url('package')}/{$charge.package().name()}">{$charge.package().name()}</a> (<a href="{$t.url('package')}/{$charge.package().name()}/download">{$charge.package().latest_release().fmVersion()}</a>) <span>({$charge.role()})</span></h4>
+            <h4><a href="{$t.url('package')}/{$charge.package().name()}">{$charge.package().name()}</a> (<a href="{$t.url('package')}/{$charge.package().name()}/download">{$charge.package().latest_release().fm_version()}</a>) <span>({$charge.role()})</span></h4>
             <p>{$charge.package().description()}</p>
             <p><rt:if param="{$charge.package().primary_tag()}">Category: <a href="{$t.url('packages')}?category={$t.htmlencode($charge.package().primary_tag())}">{$t.htmlencode($charge.package().primary_tag())}</a> </rt:if><em>Last Update: {$t.df($charge.package().updated(), 'Y-m-d')}</em>
             </p>

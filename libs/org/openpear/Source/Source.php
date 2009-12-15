@@ -11,7 +11,7 @@ class Source extends OpenpearFlow
     public function browse($package_name, $path=''){
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $path = rtrim(ltrim($path, ' /.'), '/');
-        $root = $this->isVars('tag')? sprintf('tags/%s', $this->inVars('tag')): 'trunk';
+        $root = $this->is_vars('tag')? sprintf('tags/%s', $this->in_vars('tag')): 'trunk';
         $local_root = File::absolute(def('svn_root'), implode('/', array($package->name(), $root)));
         $repo_path = File::absolute($local_root, $path);
         $info = Subversion::cmd('info', array($repo_path));

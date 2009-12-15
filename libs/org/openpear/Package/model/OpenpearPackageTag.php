@@ -102,7 +102,7 @@ class OpenpearPackageTag extends Dao
         } catch(Exception $e){}
     }
     
-    protected function getPackage(){
+    protected function __get_package__(){
         if($this->package instanceof OpenpearPackage){
             return $this->package;
         }
@@ -111,7 +111,7 @@ class OpenpearPackageTag extends Dao
         }catch(Exception $e){}
         return $this->package;
     }
-    protected function getTag(){
+    protected function __get_tag__(){
         if($this->tag instanceof OpenpearTag){
             return $this->tag;
         }

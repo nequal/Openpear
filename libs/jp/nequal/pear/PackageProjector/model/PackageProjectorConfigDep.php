@@ -13,7 +13,7 @@ class PackageProjectorConfigDep extends PackageProjectorConfigExtra
     
     protected $_special_section_ = array('package_name', 'channel_other');
     
-    protected function setChannel($channel){
+    protected function __set_channel__($channel){
         if($channel == 99){
             $channel = $this->channel_other();
         }

@@ -37,7 +37,7 @@
             }
           );
           " class="fright">[x]</a>
-      {$notice.fmDescription()}
+      {$notice.fm_description()}
       </div>
     </rt:loop>
 
@@ -74,14 +74,14 @@
   <rt:loop param="my_package_charges" var="charge">
     <div class="dashboard-packages">
       <a href="{$t.url('package')}/{$charge.package().name()}" class="package-link">{$charge.package().name()}</a> <a href="{$t.url('package')}/{$charge.package().name()}/manage" class="manage-link">&raquo; manage</a> 
-      <p>Latest: <a href="{$t.url('package')}/{$charge.package().name()}/download">{$charge.package().latest_release().fmVersion()}</a>, {$charge.package().favored_count()} Fans</p>
+      <p>Latest: <a href="{$t.url('package')}/{$charge.package().name()}/download">{$charge.package().latest_release().fm_version()}</a>, {$charge.package().favored_count()} Fans</p>
     </div>
   </rt:loop>
 
   <h3>Favorite Packages</h3>
   <rt:loop param="my_favorites" var="favorite">
     <div class="dashboard-packages">
-      <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a><rt:if param="{$favorite.package().latest_release().id()}"> <a href="{$t.url('package')}/{$favorite.package().name()}/download">{$favorite.package().latest_release().fmVersion()}</a> </rt:if>
+      <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a><rt:if param="{$favorite.package().latest_release().id()}"> <a href="{$t.url('package')}/{$favorite.package().name()}/download">{$favorite.package().latest_release().fm_version()}</a> </rt:if>
     </div>
   </rt:loop>
 </div>

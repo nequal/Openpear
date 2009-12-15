@@ -1,17 +1,32 @@
 <?php
 import('org.openpear.Openpear.exception.OpenpearException');
-import('org.openpear.Maintainer.model.OpenpearMaintainer');
 
 class OpenpearFlow extends Flow
 {
     protected function __new__($dict=null){
-        $this->dict($dict);
-        parent::__new__();
-        $this->m('Template')->statics('ot', 'org.openpear.Openpear.OpenpearTemplf');
+        Log::debug($dict);
+        parent::__new__($dict);
+        $this->o('Template')->statics('ot', 'org.openpear.Openpear.OpenpearTemplf');
+    }
+    /**
+     * Json で出力する
+     */
+    protected function json_response($values){
+        header('Content-type: application/json; charset=utf-8');
+        if(is_array($values) || is_object($values)){
+            if($values instanceof Object){
+                echo json_encode($values->hash());
+            } else {
+                echo json_encode($values);
+            }
+        } else {
+            echo (string)$values;
+        }
+        exit;
     }
     
     protected function _login_required($redirect_to=null){
-        if($this->isLogin()){
+        if($this->is_login()){
             return ;
         }
         if($redirect_to === null){
@@ -36,3 +51,4 @@ class OpenpearFlow extends Flow
     }
     */
 }
+import('org.openpear.Maintainer');

@@ -18,18 +18,18 @@ class PackageProjectorConfigInstaller extends PackageProjectorConfigExtra
     
     protected function __hash__(){
         $ret = array();
-        if($this->isInstructions()){
+        if($this->is_instructions()){
             $ret['instructions'] = $this->instructions();
         }
         foreach($this->params() as $param){
-            if($this->isPrompt($param)){
-                $ret[$param. '.prompt'] = $this->inPrompt($param);
+            if($this->is_prompt($param)){
+                $ret[$param. '.prompt'] = $this->in_prompt($param);
             }
-            if($this->isType($param)){
-                $ret[$param. '.type'] = $this->inType($param);
+            if($this->is_type($param)){
+                $ret[$param. '.type'] = $this->in_type($param);
             }
-            if($this->isDefault($param)){
-                $ret[$param. '.default'] = $this->inDefault($param);
+            if($this->is_default($param)){
+                $ret[$param. '.default'] = $this->in_default($param);
             }
         }
         return $ret;

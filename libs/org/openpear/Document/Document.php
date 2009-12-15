@@ -8,8 +8,8 @@ class Document extends OpenpearFlow
     public function browse($package_name, $path='README'){
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $path = ltrim($path, ' /.');
-        $lang = $this->inVars('lang', App::lang());
-        $root = $this->isVars('tag')? sprintf('tags/doc/%s', $this->inVars('tag')): 'doc';
+        $lang = $this->in_vars('lang', App::lang());
+        $root = $this->is_vars('tag')? sprintf('tags/doc/%s', $this->in_vars('tag')): 'doc';
         $root = File::absolute(def('svn_root'), implode('/', array($package->name(), $root, $lang)));
         $repo_path = File::absolute($root, $path);
         $this->vars('package', $package);

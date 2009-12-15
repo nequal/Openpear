@@ -94,7 +94,7 @@ class OpenpearMaintainer extends Dao
         $message->save();
     }
     
-    protected function verifyUrl(){
+    protected function __is_url__(){
         if(!empty($this->url) && !preg_match('/s?https?:\/\/[\-_\.!~*\'\(\)a-zA-Z0-9;\/\?:@&=\+$,%#]+/i', $this->url)){
             return false;
         }
@@ -106,7 +106,7 @@ class OpenpearMaintainer extends Dao
      * 過去のパスワードはひどいので適宜修正
      */
     public function certify($password){
-        if($this->isPassword()){
+        if($this->is_password()){
             if($this->password() === sha1($password)) return true;
             return false;
         }

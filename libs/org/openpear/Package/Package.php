@@ -20,24 +20,24 @@ class Package extends OpenpearFlow
      * # 'paginator' => Paginator
      */
     public function models(){
-        $paginator = new Paginator(10, $this->inVars('page', 1));
-        switch(strtolower($this->inVars('sort', 'released'))){
+        $paginator = new Paginator(10, $this->in_vars('page', 1));
+        switch(strtolower($this->in_vars('sort', 'released'))){
             case 'updates':
-                $this->vars('object_list', C(OpenpearPackage)->find_page($this->inVars('q'), $paginator, '-updated'));
+                $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, '-updated'));
                 $this->template('package/models_updates.html');
                 break;
             
             case 'favored':
-                $this->vars('object_list', C(OpenpearPackage)->find_page($this->inVars('q'), $paginator, '-favored_count'));
+                $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, '-favored_count'));
                 $this->template('package/models_favored.html');
                 break;
                 
             case 'released':
             default:
-                $this->vars('object_list', C(OpenpearPackage)->find_page($this->inVars('q'), $paginator, '-released_at'));
+                $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, '-released_at'));
                 $this->template('package/models_released.html');
         }
-        $this->vars('paginator', $paginator->add(array('q' => $this->inVars('q'))));
+        $this->vars('paginator', $paginator->add(array('q' => $this->in_vars('q'))));
         return $this;
     }
     
@@ -99,11 +99,11 @@ class Package extends OpenpearFlow
         Http::redirect(url('package/'. $package_name));
     }
     public function add_maintainer($package_name){
-        if($this->isPost() && $this->isVars('maintainer_name')){
+        if($this->is_post() && $this->is_vars('maintainer_name')){
             $this->_login_required('package'. $package_name);
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-                $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $this->inVars('maintainer_name')));
+                $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $this->in_vars('maintainer_name')));
                 $package->permission($this->user());
                 $charge = new OpenpearCharge();
                 $charge->maintainer_id($maintainer->id());
@@ -115,11 +115,11 @@ class Package extends OpenpearFlow
         Http::redirect(url('package/'. $package_name. '/manage'));
     }
     public function remove_maintainer($package_name){
-        if($this->isPost() && $this->isVars('maintainer_id')){
+        if($this->is_post() && $this->is_vars('maintainer_id')){
             $this->_login_required('package'. $package_name);
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-                $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->inVars('maintainer_id')));
+                $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->in_vars('maintainer_id')));
                 $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $package->id()), Q::eq('maintainer_id', $maintainer->id()));
                 $charge->delete();
                 C($charge)->commit();
@@ -132,39 +132,39 @@ class Package extends OpenpearFlow
      * カテゴリ登録
      */
     public function add_tag($package_name){
-        if($this->isPost() && $this->isVars('tag_name')){
+        if($this->is_post() && $this->is_vars('tag_name')){
             $this->_login_required('package/'. $package_name);
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
                 // $package->permission($this->user());
-                $package->add_tag($this->inVars('tag_name'), $this->inVars('prime', false));
+                $package->add_tag($this->in_vars('tag_name'), $this->in_vars('prime', false));
                 C($package)->commit();
-            } catch(Exception $e){die($e->getMessage());}
+            } catch(Exception $e){}
         }
         Http::redirect(url('package/'. $package_name));
     }
     public function remove_tag($package_name){
-        if($this->isPost() && $this->isVars('tag_id')){
+        if($this->is_post() && $this->is_vars('tag_id')){
             $this->_login_required('package/'. $package_name);
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
                 $package->permission($this->user());
-                $package->remove_tag($this->inVars('tag_id'));
+                $package->remove_tag($this->in_vars('tag_id'));
                 C($package)->commit();
             } catch(Exception $e){}
         }
         Http::redirect(url('package/'. $package_name. '/manage'));
     }
     public function prime_tag($package_name){
-        if($this->isPost() && $this->isVars('tag_id')){
+        if($this->is_post() && $this->is_vars('tag_id')){
             $this->_login_required('package/'. $package_name);
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
                 $package->permission($this->user());
-                $package_tag = C(OpenpearPackageTag)->find_get(Q::eq('tag_id', $this->inVars('tag_id')), Q::eq('package_id', $package->id()));
+                $package_tag = C(OpenpearPackageTag)->find_get(Q::eq('tag_id', $this->in_vars('tag_id')), Q::eq('package_id', $package->id()));
                 $package_tag->prime(true);
                 $package_tag->save();
                 C($package_tag)->commit();
@@ -178,7 +178,7 @@ class Package extends OpenpearFlow
      */
     public function create(){
         $this->_login_required('packages/create');
-        if(!$this->isPost()){
+        if(!$this->is_post()){
             $this->cp(R(OpenpearPackage));
         }
         $this->template('package/create.html');
@@ -187,7 +187,7 @@ class Package extends OpenpearFlow
     public function create_do(){
         $this->_login_required('packages/create');
         $user = $this->user();
-        if($this->isPost()){
+        if($this->is_post()){
             try {
                 $package = new OpenpearPackage();
                 $package->set_vars($this->vars());
@@ -197,7 +197,7 @@ class Package extends OpenpearFlow
                 C($package)->commit();
                 Http::redirect(url('package/'. $package->name()));
             } catch(Exception $e){
-                throw $e;
+                // throw $e;
                 Exceptions::add($e);
             }
         }
@@ -228,7 +228,7 @@ class Package extends OpenpearFlow
             $package->permission($this->user());
             $this->vars('package', $package);
             $this->vars('object', $package);
-            if(!$this->isPost()){
+            if(!$this->is_post()){
                 foreach(array('id', 'name', 'description', 'url', 'public_level', 'license') as $k){
                     $this->vars($k, $package->{$k}());
                 }
@@ -241,7 +241,7 @@ class Package extends OpenpearFlow
     public function update_confirm(){
         $this->_login_required('packages/update');
         try {
-            $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->inVars('package_id')));
+            $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
             $package->permission($this->user());
             $package->set_vars($this->vars());
             $this->vars('packge', $package);
@@ -253,7 +253,7 @@ class Package extends OpenpearFlow
     public function update_do($package_name){
         $this->_login_required('packages/update');
         try {
-            $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->inVars('id')));
+            $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('id')));
             $package->permission($this->user());
             $this->vars('name', $package->name());
             $package->set_vars($this->vars());

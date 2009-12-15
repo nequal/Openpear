@@ -10,11 +10,11 @@ class Account extends OpenpearFlow
      * 新規登録フォーム
      */
     public function signup(){
-        if($this->inSessions('openid_identity')){
+        if($this->in_sessions('openid_identity')){
             $this->vars('openid', true);
-            $this->vars('openid_identity', $this->inSessions('openid_identity'));
+            $this->vars('openid_identity', $this->in_sessions('openid_identity'));
         } else $this->vars('openid', false);
-        if(!$this->isPost()){
+        if(!$this->is_post()){
             $this->cp(R(OpenpearMaintainer));
         }
         $this->template('account/signup.html');
@@ -24,19 +24,19 @@ class Account extends OpenpearFlow
      * 新規登録を実行する
      */
     public function signup_do(){
-        if($this->isPost()){
+        if($this->is_post()){
             $account = new OpenpearMaintainer();
             try {
                 $account->set_vars($this->vars());
-                $account->new_password($this->inVars('new_password'));
-                $account->new_password_conf($this->inVars('new_password_conf'));
+                $account->new_password($this->in_vars('new_password'));
+                $account->new_password_conf($this->in_vars('new_password_conf'));
                 $account->save();
-                if($this->isSessions('openid_identity')){
+                if($this->is_sessions('openid_identity')){
                     $openid_maintainer = new OpenpearOpenidMaintainer();
                     $openid_maintainer->maintainer_id($account->id());
-                    $openid_maintainer->url($this->inSessions('openid_identity'));
+                    $openid_maintainer->url($this->in_sessions('openid_identity'));
                     $openid_maintainer->save();
-                    $this->rmSessions('openid_identity');
+                    $this->rm_sessions('openid_identity');
                 }
                 C($account)->commit();
             } catch(Exception $e){
@@ -53,7 +53,7 @@ class Account extends OpenpearFlow
      * パスワードでログインする
      */
     public function login(){
-        if($this->isLogin()) Http::redirect(url('dashboard'));
+        if($this->is_login()) Http::redirect(url('dashboard'));
         try {
             if(parent::login()){
                 // TODO: 任意の転送先を設定できるようにする
@@ -67,8 +67,8 @@ class Account extends OpenpearFlow
      * OpenID でログインする
      */
     public function login_by_openid(){
-        if($this->isLogin()) Http::redirect(url('dashboard'));
-        if(OpenIDAuth::login($openid_user, $this->inVars('openid_url'))){
+        if($this->is_login()) Http::redirect(url('dashboard'));
+        if(OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))){
             try {
                 $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid_user->identity()));
                 $this->user($openid_maintainer->maintainer());

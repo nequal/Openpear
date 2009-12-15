@@ -9,7 +9,7 @@ class SubversionLog extends Subversion
     static protected $__raw__ = 'type=boolean';
     
     protected function __exec__(){
-        if($this->isRaw()){
+        if($this->is_raw()){
             return parent::__exec__();
         }
         $this->options('xml');

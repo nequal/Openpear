@@ -39,7 +39,7 @@ class OpenpearMessage extends Dao
         $this->type = 'normal';
     }
     protected function __save_verify__(){
-        if(!($this->type() === 'system' || $this->type() === 'system_notice') && $this->isMaintainer_from_id()){
+        if(!($this->type() === 'system' || $this->type() === 'system_notice') && $this->is_maintainer_from_id()){
             Exceptions::add(new RequiredDaoException('maintainer_from_id required'), 'maintainer_from_id');
         }
     }
@@ -49,7 +49,7 @@ class OpenpearMessage extends Dao
             $mail->to($this->maintainer_to()->mail());
             $mail->from($mail->from(), 'Openpear');
             $mail->subject($this->subject());
-            $mail->message(strip_tags($this->fmDescription()));
+            $mail->message(strip_tags($this->fm_description()));
             $mail->send();
         }
     }
@@ -62,7 +62,7 @@ class OpenpearMessage extends Dao
         return false;
     }
     
-    protected function getMaintainer_to(){
+    protected function __get_maintainer_to__(){
         if($this->maintainer_to instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer_to = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_to_id()));
@@ -70,7 +70,7 @@ class OpenpearMessage extends Dao
         }
         return $this->maintainer_to;
     }
-    protected function getMaintainer_from(){
+    protected function __get_maintainer_from__(){
         if($this->maintainer_from instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer_from = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_from_id()));
@@ -79,7 +79,7 @@ class OpenpearMessage extends Dao
         return $this->maintainer_from;
     }
     
-    protected function formatDescription(){
+    protected function __fm_description__(){
         return HatenaSyntax::render($this->description());
     }
     protected function __str__(){

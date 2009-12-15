@@ -53,8 +53,8 @@
             <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}" class="bold">{$package_tag.tag().name()} (Primary)</a></li>
           <rt:else />
             <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()}</a>
-              <form action="{$t.url('package')}/{$package.name()}/prime_category" class="inline" onsubmit="return window.confirm('Set this tag to primary (as a Category)?');" method="post"><input type="submit" value="set this to primary" /><input type="hidden" name="tag_id" value="{$package_tag.tag_id()}" /></form>
-              <form action="{$t.url('package')}/{$package.name()}/remove_category" class="inline" onsubmit="return window.confirm('Delete this tag?');" method="post">
+              <form action="{$t.url('package')}/{$package.name()}/category/prime" class="inline" onsubmit="return window.confirm('Set this tag to primary (as a Category)?');" method="post"><input type="submit" value="set this to primary" /><input type="hidden" name="tag_id" value="{$package_tag.tag_id()}" /></form>
+              <form action="{$t.url('package')}/{$package.name()}/category/remove" class="inline" onsubmit="return window.confirm('Delete this tag?');" method="post">
                 <input type="image" src="./images/global-icon-notice.png" value="Delete" />
                 <input type="hidden" name="tag_id" value="{$package_tag.tag_id()}" />
               </form>

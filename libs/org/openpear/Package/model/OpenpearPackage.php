@@ -161,16 +161,16 @@ class OpenpearPackage extends Dao
         return sprintf('%s-%s', $this->name(), $this->latest_release()->version_stab());
     }
     
-    protected function getAuthor(){
+    protected function __get_author__(){
         // setting author
         if($this->author instanceof OpenpearMaintainer === false){
             try {
-                $this->authorC(OpenpearMaintainer)->find_get(Q::eq('id', $this->author_id()));
+                $this->author = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->author_id()));
             } catch(Exception $e){}
         }
         return $this->author;
     }
-    protected function getReleases(){
+    protected function __get_releases__(){
         // setting releases[]
         if(empty($this->releases)){
             try{
@@ -179,7 +179,7 @@ class OpenpearPackage extends Dao
         }
         return $this->releases;
     }
-    protected function getMaintainers(){
+    protected function __get_maintainers__(){
         // setting maintainers[]
         if(empty($this->maintainers)){
             try{
@@ -193,9 +193,9 @@ class OpenpearPackage extends Dao
         }
         return $this->maintainers;
     }
-    protected function getFavored_maintainers(){
+    protected function __get_favored_maintainers__(){
         // setting favored maintainers
-        if(!empty($this->favored_maintainers)){
+        if(empty($this->favored_maintainers)){
             try{
                 $favs = C(OpenpearFavorite)->find_all(Q::eq('package_id', $this->id()));
                 $favored_maintainers = array();
@@ -207,7 +207,7 @@ class OpenpearPackage extends Dao
         }
         return $this->favored_maintainers;
     }
-    protected function getLatest_release(){
+    protected function __get_latest_release__(){
         // setting latest release
         if($this->latest_release instanceof OpenpearRelease === false){
             try{
@@ -219,16 +219,16 @@ class OpenpearPackage extends Dao
         }
         return $this->latest_release;
     }
-    protected function getPackage_tags(){
+    protected function __get_package_tags__(){
         // setting package tags
-        if(!empty($this->package_tags)){
+        if(empty($this->package_tags)){
             try {
                 $this->package_tags = C(OpenpearPackageTag)->find_all(Q::eq('package_id', $this->id()), Q::order('-prime'));
             } catch(Exception $e){}
         }
         return $this->package_tags;
     }
-    protected function getPrimary_tag(){
+    protected function __get_primary_tag__(){
         // setting primary tag
         if($this->primary_tag instanceof OpenpearTag === false){
             try {
@@ -243,7 +243,7 @@ class OpenpearPackage extends Dao
         $this->primary_tag;
     }
     
-    protected function verifyName(){
+    protected function __is_name__(){
         return (bool) preg_match('@^[A-Za-z][A-Za-z0-9_]+$@', $this->name);
     }
 }

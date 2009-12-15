@@ -17,7 +17,7 @@ class OpenpearTag extends Dao
     static protected $__package_count__ = 'type=number';
     
     protected $packages;
-    static protected $__packages__ = 'type=OpenpearPackage,extra=true';
+    static protected $__packages__ = 'type=OpenpearPackage[],extra=true';
     
     public function __init__(){
         $this->prime = false;
@@ -26,7 +26,7 @@ class OpenpearTag extends Dao
     protected function __str__(){
         return $this->name();
     }
-    protected function getPackages(){
+    protected function __get_package__s(){
         if(!empty($this->packages)) return $this->packages;
         $packages = array();
         try {

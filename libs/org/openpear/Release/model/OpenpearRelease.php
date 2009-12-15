@@ -37,12 +37,12 @@ class OpenpearRelease extends Dao implements AtomInterface
         $this->created = time();
     }
     
-    protected function formatVersion(){
+    protected function __fm_version__(){
         if(is_null($this->id)) return 'No Release';
         if($this->version_stab === 'stable') return $this->version();
         return sprintf('%s (%s)', $this->version, $this->version_stab);
     }
-    protected function getPackage(){
+    protected function __get_package__(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
@@ -50,7 +50,7 @@ class OpenpearRelease extends Dao implements AtomInterface
         }
         return $this->package;
     }
-    protected function getMaintainer(){
+    protected function __get_maintainer__(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));

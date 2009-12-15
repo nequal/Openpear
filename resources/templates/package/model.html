@@ -27,7 +27,7 @@
         </rt:if>
       </rt:loop>
       <li><input type="button" id="js-category-add-button" value="+Add" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
-      <li id="js-category-add-form" class="dnone"><form action="{$t.url('package')}/{$package.name()}/add_category" id="add-category" method="post"><input name="tag_name" type="text" size="30" id="add-category-tag_name" /><input type="hidden" name="prime" value="false" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#js-category-add-form').hide();">cancel</a></form></li>
+      <li id="js-category-add-form" class="dnone"><form action="{$t.url('package')}/{$package.name()}/category/add" id="add-category" method="post"><input name="tag_name" type="text" size="30" id="add-category-tag_name" /><input type="hidden" name="prime" value="false" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#js-category-add-form').hide();">cancel</a></form></li>
     </ul>
   </div>
   
@@ -38,7 +38,7 @@
       <h3>Recent Release</h3>
     <rt:if param="{$recent_releases}">
       <ul class="list-standard" rt:param="{$recent_releases}" rt:var="release">
-        <li>- <a href="{$t.url('package')}/{$object.name()}/download#{$release.id()}">{$release.fmVersion()}</a> <em>-- released on {$release.fmCreated()}</em></li>
+        <li>- <a href="{$t.url('package')}/{$object.name()}/download#{$release.id()}">{$release.fm_version()}</a> <em>-- released on {$release.fm_created()}</em></li>
       </ul>
       <pre>% pear install openpear/{$object.installName()}</pre>
       <p class="aright"><a href="./package_Hoge_downloads.html">View All Releases &gt;&gt;</a></p>

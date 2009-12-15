@@ -82,7 +82,7 @@
             <h3>Recent Release</h3>
           <rt:if param="{$recent_releases}">
             <ul class="list-standard" rt:param="{$recent_releases}" rt:var="release">
-              <li>- <a href="{$t.url('package')}/{$package.name()}/download#{$release.id()}">{$release.fmVersion()}</a> <em>-- released on {$release.fmCreated()}</em></li>
+              <li>- <a href="{$t.url('package')}/{$package.name()}/download#{$release.id()}">{$release.fm_version()}</a> <em>-- released on {$release.fm_created()}</em></li>
             </ul>
             <pre>% pear install openpear/{$package.installName()}</pre>
             <p class="aright"><a href="./package_Hoge_downloads.html">View All Releases &gt;&gt;</a></p>

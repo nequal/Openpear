@@ -21,12 +21,12 @@ class Openpear extends OpenpearFlow
     }
     
     public function search(){
-        switch($this->inVars('search_for', 'packages')){
+        switch($this->in_vars('search_for', 'packages')){
             case 'maintainers':
-                Http::redirect(url('maintainers'). '?q='. $this->inVars('q'));
+                Http::redirect(url('maintainers'). '?q='. $this->in_vars('q'));
             case 'packages':
             default:
-                Http::redirect(url('packages'). '?q='. $this->inVars('q'));
+                Http::redirect(url('packages'). '?q='. $this->in_vars('q'));
         }
         Http::redirect(url());
     }
@@ -47,8 +47,8 @@ class Openpear extends OpenpearFlow
     public function dashboard_message_hide(){
         $this->_login_required();
         try {
-            if($this->isPost() && $this->isVars('message_id')){
-                $message = C(OpenpearMessage)->find_get(Q::eq('id', $this->inVars('message_id')), Q::eq('maintainer_to_id', $this->user()->id()));
+            if($this->is_post() && $this->is_vars('message_id')){
+                $message = C(OpenpearMessage)->find_get(Q::eq('id', $this->in_vars('message_id')), Q::eq('maintainer_to_id', $this->user()->id()));
                 $message->unread(false);
                 $message->save(true);
                 echo 'ok';

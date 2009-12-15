@@ -6,16 +6,16 @@ class OpenpearAccountModule extends Object
         if($request->user() instanceof OpenpearMaintainer){
             return true;
         }
-        if($request->isPost()){
+        if($request->is_post()){
             try{
                 $user = C(OpenpearMaintainer)->find_get(
-                    Q::eq('mail', $request->inVars('mail')),
-                    Q::or_block(Q::eq('name', $request->inVars('login')))
+                    Q::eq('mail', $request->in_vars('mail')),
+                    Q::or_block(Q::eq('name', $request->in_vars('login')))
                 );
             } catch(Exception $e){
                 Exceptions::add($e, 'mail');
             }
-            if(is_object($user) && !$user->certify($request->inVars('password'))){
+            if(is_object($user) && !$user->certify($request->in_vars('password'))){
                 Exceptions::add(new Exception('password is incorrect'), 'password');
             }
             Exceptions::validation();

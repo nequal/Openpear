@@ -1,5 +1,7 @@
 <?php
 import('org.openpear.Openpear.OpenpearFlow');
+module('model.OpenpearMaintainer');
+module('model.OpenpearOpenidMaintainer');
 import('org.openpear.Package');
 import('org.openpear.Timeline');
 
@@ -24,9 +26,24 @@ class Maintainer extends OpenpearFlow
      * メンテナ検索
      */
     public function models(){
-        $paginator = new Paginator(20, $this->inVars('page', 1));
-        $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->inVars('q'), $paginator), 'name');
-        $this->vars('paginator', $paginator->add(array('q' => $this->inVars('q'))));
+        $paginator = new Paginator(20, $this->in_vars('page', 1));
+        $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator), 'name');
+        $this->vars('paginator', $paginator->add(array('q' => $this->in_vars('q'))));
         return $this;
+    }
+    public function update_json(){
+        if(!$this->is_login()){
+            return $this->json_response(array('status' => 'ng', 'error' => 'required sign-in'));
+        }
+        try {
+            if(!$this->is_post()) throw new OpenpearException('request method is unsupported');
+            $maintainer = $this->user();
+            $maintainer->set_vars($this->vars());
+            $maintainer->save(true);
+            Exceptions::validation();
+        } catch(Exception $e){
+            return $this->json_response(array('status' => 'ng', 'error' => $e->getMessage()));
+        }
+        return $this->json_response(array('status' => 'ok'));
     }
 }

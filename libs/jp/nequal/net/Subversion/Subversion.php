@@ -3,8 +3,8 @@ class Subversion extends Object
 {
     static protected $__cmd_path__ = '/usr/bin/svn';
     static protected $__look_cmd_path__ = '/usr/bin/svnlook';
+    static protected $_lang_ = 'ja_JP.UTF-8';
     protected $_command_ = 'help';
-    protected $_lang_ = 'ja_JP.utf8';
     protected $vars = array();
     protected $options = array();
     static protected $__vars__ = 'type=mixed{}';
@@ -14,7 +14,7 @@ class Subversion extends Object
         self::$__cmd_path__ = $cmd_path;
         self::$__look_cmd_path__ = $look_cmd_path;
     }
-    static public function config_lang($lang='ja_JP.utf8'){
+    static public function config_lang($lang='ja_JP.UTF-8'){
         self::$_lang_ = $lang;
     }
     static public function cmd_path(){

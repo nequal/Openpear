@@ -27,8 +27,8 @@ class Message extends OpenpearFlow
      */
     public function inbox(){
         $this->_login_required();
-        $user = $this->getUser();
-        $paginator = new Paginator(20, $this->inVars('page', 1));
+        $user = $this->user();
+        $paginator = new Paginator(20, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearMessage)->find_all(
             $paginator, Q::eq('maintainer_to_id', $user->id()), Q::order('-id')
         ));
@@ -39,8 +39,8 @@ class Message extends OpenpearFlow
      */
     public function sentbox(){
         $this->_login_required();
-        $user = $this->getUser();
-        $paginator = new Paginator(20, $this->inVars('page', 1));
+        $user = $this->user();
+        $paginator = new Paginator(20, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearMessage)->find_all(
            $paginator, Q::eq('maintainer_from_id', $user->id()), Q::order('-id')
         ));
@@ -55,7 +55,7 @@ class Message extends OpenpearFlow
     }
     public function send_confirm(){
         $this->_login_required();
-        if($this->isPost()){
+        if($this->is_post()){
             try {
                 $message = new OpenpearMessage();
                 $message->set_vars($this->vars());
@@ -67,7 +67,7 @@ class Message extends OpenpearFlow
     }
     public function send_do(){
         $this->_login_required();
-        if($this->isPost()){
+        if($this->is_post()){
             $message = new OpenpearMessage();
             $message->set_vars($this->vars());
             $message->save(true);

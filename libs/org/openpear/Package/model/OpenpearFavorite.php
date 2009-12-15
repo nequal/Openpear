@@ -17,7 +17,7 @@ class OpenpearFavorite extends Dao
     static protected $__package__ = 'type=OpenpearPackage,extra=true';
     static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
     
-    protected function getPackage(){
+    protected function __get_package__(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
@@ -25,7 +25,7 @@ class OpenpearFavorite extends Dao
         }
         return $this->package;
     }
-    protected function getMaintainer(){
+    protected function __get_maintainer__(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
@@ -45,7 +45,7 @@ class OpenpearFavorite extends Dao
         $timeline->description(sprintf('<a href="%s">%s</a>: latest %s. %d fans.',
             url('package/'. $this->package()->name()),
             $this->package()->name(),
-            $this->package()->latest_release()->fmVersion(),
+            $this->package()->latest_release()->fm_version(),
             C(OpenpearFavorite)->find_count(Q::eq('package_id', $this->package_id()))
         ));
         $timeline->type('favorite');
