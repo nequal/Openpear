@@ -66,44 +66,25 @@ function download_expand($url,$base_dir){
 		}
 	}
 }
+if(php_sapi_name() != 'cli') exit;
+
 ini_set("display_errors","On");
 ini_set("display_startup_errors","On");
 ini_set("html_errors","Off");
-$default_path = str_replace("\\","/",getcwd())."/"."core/";
-$gui = (isset($_SERVER["HTTP_USER_AGENT"]) && !empty($_SERVER["HTTP_USER_AGENT"]));
 
 if(file_exists("./__settings__.php")) @include_once("./__settings__.php");
 if(!class_exists("Object")){
-	$install_path = "";
-	if($gui){
-		if(isset($_POST["install_path"])) $install_path = $_POST["install_path"];
-	}else{
-		print("core path[".$default_path."]: ");
-		$fp = fopen("php://stdin","r");
-		$buffer = "";
-		while(substr($buffer,-1) != "\n" && substr($buffer,-1) != "\r\n") $buffer .= fgets($fp,4096);
-		fclose($fp);
-		$install_path = trim($buffer);
-		$install_path = empty($install_path) ? $default_path : $install_path;
-	}
+	$default_path = str_replace("\\","/",getcwd())."/"."core/";
+	print("core path[".$default_path."]: ");
+	fscanf(STDIN,"%s",$install_path);
+	$install_path = trim($install_path);
+	$install_path = empty($install_path) ? $default_path : $install_path;
+
 	if(!empty($install_path)){
 		if(substr($install_path,-1) !== "/") $install_path .= "/";
 		if(!is_file($install_path."jump.php")) download_expand(constant("_CORE_URL_"),$install_path);
 		@include_once($install_path."jump.php");
 	}
 }
-if(class_exists("Object")){
-	Setup::start();
-	exit;
-}
-if(!$gui) exit;
-?>
-<html>
-<body>
-	<form method="post">
-		core path:
-		<input type="text" size="80" name="install_path" value="<?php print($default_path); ?>" />
-		<input type="submit" value="submit" />
-	</form>
-</body>
-</html>
+if(class_exists("Object")) Setup::start();
+exit;
