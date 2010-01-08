@@ -2,7 +2,7 @@
 
 This is a web system of openpear.org.
 
-# License
+# New BSD License
 
     Copyright (c) 2009, nequal.
     All rights reserved.
