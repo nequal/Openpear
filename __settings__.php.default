@@ -1,0 +1,33 @@
+<?php
+if (!defined('__DIR__')) {
+    define('__DIR__', dirname(__FILE__));
+}
+
+require_once(__DIR__ . "/core/jump.php");
+App::config_path(__FILE__, "http://openpear.org/", __DIR__);
+
+Lib::config_path(path("libs"),path("vendors"));
+Template::config_path(__DIR__ . "/resources/templates", "http://openpear.org/resources/media");
+
+Log::config_level("debug");
+
+// SVN Settings
+import('jp.nequal.net.Subversion');
+def('svn_root', 'file:///path/to/repo');
+def('svn_url', 'http://svn.openpear.org');
+def('svn_access_file', '/path/to/openpear.access');
+def('svn_passwd_file', '/path/to/openpear.passwd');
+Subversion::config_path('/opt/local/bin/svn');
+
+// Gmail settings
+def('org.rhaco.net.mail.Gmail@login', 'notify@openpear.org');
+def('org.rhaco.net.mail.Gmail@password', 'xxxxxxxxxxxx');
+
+def('org.rhaco.io.log.LogFile@path', path("work/log"));
+
+// DB Settings
+def("org.rhaco.storage.db.Dbc@openpear",
+    "type=org.rhaco.storage.db.module.DbcMysql,host=localhost,dbname=xxx,user=xxx,password=xxx,encode=utf8,prefix=openpear_,upper=false,lower=false");
+
+// For PEAR
+set_include_path(path('libs_pear'). PATH_SEPARATOR. get_include_path());
