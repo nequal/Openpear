@@ -1,0 +1,127 @@
+<database>
+    <table name="openpear_account_maintainer">
+        <column name="maintainer_id" type="integer" require="true" primary="true" />
+        <column name="mail" type="email" require="true" />
+        <column name="password" />
+    </table>
+    <table name="openpear_changeset">
+        <column name="revision" type="integer" require="true" primary="true" />
+        <column name="maintainer_id" type="integer" />
+        <column name="package_id" type="integer" />
+        <column name="changed" type="text" />
+        
+    </table>
+    <table name="openpear_charge">
+        <column name="package_id" type="integer" require="true" />
+        <column name="maintainer_id" type="integer" require="true" />
+        <column name="role" require="true" type="choice" />
+    </table>
+    <table name="openpear_favorite">
+        <column name="package_id" type="integer" require="true" />
+        <column name="maintainer_id" type="integer" require="true" />
+    </table>
+    <table name="openpear_maintainer">
+        <column name="id" type="serial" />
+        <column name="name" require="true" />
+        <column name="mail" type="email" require="true" />
+        <column name="fullname" length="100" />
+        <column name="profile" type="text" />
+        <column name="url" />
+        <column name="location" length="100" />
+        <column name="password" />
+        <column name="svn_password" />
+        <column name="created" type="timestamp" />
+    </table>
+    <table name="openpear_message">
+        <column name="id" type="serial" />
+        <column name="maintainer_to_id" type="integer" require="true" />
+        <column name="maintainer_from_id" type="integer" />
+        <column name="subject" require="true" />
+        <column name="description" type="text" require="true" />
+        <column name="unread" type="boolean" />
+        <column name="type" type="choice" />
+        <column name="created" type="timestamp" />
+    </table>
+    <table name="openpear_newproject_queue">
+        <column name="id" type="serial" />
+        <column name="package_id" type="integer" require="true" />
+        <column name="maintainer_id" type="integer" require="true" />
+        <column name="mail_possible" type="boolean" />
+        <column name="settings" type="text" />
+        <column name="trial_count" type="integer" />
+        <column name="created" type="timestamp" />
+    </table>
+    <table name="openpear_openid_maintainer">
+        <column name="maintainer_id" type="integer" require="true" />
+        <column name="url" require="true" />
+    </table>
+    <table name="openpear_package">
+        <column name="id" type="serial" />
+        <column name="name" require="true" />
+        <column name="description" require="true" />
+        <column name="url" />
+        <column name="public_level" type="integer" />
+        <column name="external_repository" />
+        <column name="external_repository_type" type="choice" />
+        <column name="favored_count" type="integer" />
+        <column name="recent_changeset" type="integer" />
+        <column name="released_at" type="timestamp" />
+        <column name="latest_release_id" type="integer" />
+        <column name="author_id" type="integer" />
+        <column name="license" type="choice" />
+        <column name="license_uri" />
+        <column name="notify" />
+        <column name="created" type="timestamp" />
+        <column name="updated" type="timestamp" />
+    </table>
+    <table name="openpear_package_message">
+        <column name="id" type="serial" />
+        <column name="package_id" type="integer" require="true" />
+        <column name="description" require="true" />
+        <column name="unread" type="boolean" />
+        <column name="type" type="choice" />
+        <column name="created" type="timestamp" />
+    </table>
+    <table name="openpear_package_tag">
+        <column name="package_id" type="integer" require="true" />
+        <column name="tag_id" type="integer" require="true" />
+        <column name="prime" type="boolean" />
+    </table>
+    <table name="openpear_release">
+        <column name="id" type="serial" />
+        <column name="package_id" type="integer" require="true" />
+        <column name="maintainer_id" type="integer" require="true" />
+        <column name="version" length="30" />
+        <column name="version_stab" type="choice" />
+        <column name="notes" type="text" />
+        <column name="settings" type="text" />
+        <column name="created" type="timestamp" />
+    </table>
+    <table name="openpear_release_queue">
+        <column name="id" type="serial" />
+        <column name="package_id" type="integer" require="true" />
+        <column name="maintainer_id" type="integer" require="true" />
+        <column name="revision" />
+        <column name="build_path" />
+        <column name="build_conf" type="text" />
+        <column name="description" type="text" />
+        <column name="notes" type="text" />
+        <column name="trial_count" type="integer" />
+        <column name="created" type="timestamp" />
+    </table>
+    <table name="openpear_tag">
+        <column name="id" type="serial" />
+        <column name="name" require="true" />
+        <column name="prime" type="boolean" />
+        <column name="package_count" type="integer" />
+    </table>
+    <table name="openpear_timeline">
+        <column name="id" type="serial" />
+        <column name="subject" require="true" />
+        <column name="description" type="text" require="true" />
+        <column name="type" type="choice" />
+        <column name="package_id" type="integer" />
+        <column name="maintainer_id" type="integer" />
+        <column name="created" type="timestamp" />
+    </table>
+</database>
