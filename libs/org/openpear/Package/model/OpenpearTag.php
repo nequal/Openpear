@@ -19,7 +19,7 @@ class OpenpearTag extends Dao
     protected $packages;
     static protected $__packages__ = 'type=OpenpearPackage[],extra=true';
     
-    public function __init__(){
+    protected function __init__(){
         $this->prime = false;
         $this->package_count = 0;
     }

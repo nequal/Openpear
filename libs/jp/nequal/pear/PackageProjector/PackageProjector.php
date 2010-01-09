@@ -11,7 +11,7 @@ class PackageProjector extends Object
     static private $_working_dir_;
     private $_build_id_;
     
-    public function __init__(){
+    protected function __init__(){
         $this->_build_id_ = md5(time(). mt_rand());
     }
     public function config_working_dir($working_dir){

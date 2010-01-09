@@ -60,7 +60,7 @@ class OpenpearPackage extends Dao
     const NOTIFY_WANTED = 'This package is accepting maintainers for admission.';
     const NOTIFY_DEPRECATED = 'This package is not maintained.';
     
-    public function __init__(){
+    protected function __init__(){
         $this->created = time();
         $this->updated = time();
         $this->public_level = 1;

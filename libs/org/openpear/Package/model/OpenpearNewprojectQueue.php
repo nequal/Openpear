@@ -27,7 +27,7 @@ class OpenpearNewprojectQueue extends Dao
     static protected $__package__ = 'type=OpenpearPackage,extra=true';
     static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
     
-    public function __init__(){
+    protected function __init__(){
         $this->trial_count = 0;
         $this->created = time();
     }

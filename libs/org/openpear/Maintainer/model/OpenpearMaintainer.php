@@ -33,7 +33,7 @@ class OpenpearMaintainer extends Dao
     static protected $__new_password__ = 'extra=true';
     static protected $__new_password_conf__ = 'extra=true';
     
-    public function __init__(){
+    protected function __init__(){
         $this->created = time();
     }
     

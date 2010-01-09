@@ -33,7 +33,7 @@ class OpenpearMessage extends Dao
     static protected $__maintainer_to__ = 'type=OpenpearMaintainer,extra=true';
     static protected $__maintainer_from__ = 'type=OpenpearMaintainer,extra=true';
     
-    public function __init__(){
+    protected function __init__(){
         $this->created = time();
         $this->unread = true;
         $this->type = 'normal';

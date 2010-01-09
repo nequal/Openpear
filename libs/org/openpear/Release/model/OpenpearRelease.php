@@ -31,7 +31,7 @@ class OpenpearRelease extends Dao implements AtomInterface
     static protected $__package__ = 'type=OpenpearPackage,extra=true';
     static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
     
-    public function __init__(){
+    protected function __init__(){
         $this->version = '1.0.0';
         $this->version_stab = 'stable';
         $this->created = time();

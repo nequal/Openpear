@@ -29,7 +29,7 @@ class OpenpearReleaseQueue extends Dao
     static protected $__trial_count__ = 'type=number';
     static protected $__created__ = 'type=timestamp';
     
-    public function __init__(){
+    protected function __init__(){
         $this->trial_count = 0;
         $this->created = time();
     }
