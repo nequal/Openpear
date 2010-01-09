@@ -2,10 +2,10 @@
 require dirname(__FILE__). '/__settings__.php';
 require dirname(__FILE__). '/__funcs__.php';
 app(); ?>
-<app ns="Openpear">
+<app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear">
+    <description>http://github.com/nequal/Openpear</description>
     <class_module class="Log" module="org.rhaco.io.log.LogFile" />
-    <class_module class="Log" module="org.rhaco.io.log.LogFirebug" />
-    <handler>
+    <handler error_template="error.html">
         <module class="org.openpear.Openpear.module.OpenpearAccountModule" />
         
         <map url="" class="org.openpear.Openpear" method="index" template="index.html" />
