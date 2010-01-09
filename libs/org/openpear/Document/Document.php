@@ -1,7 +1,6 @@
 <?php
 require_once 'HatenaSyntax.php';
 import('jp.nequal.net.Subversion');
-import('org.openpear.Openpear.OpenpearFlow');
 
 class Document extends OpenpearFlow
 {

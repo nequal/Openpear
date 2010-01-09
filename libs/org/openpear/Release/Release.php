@@ -1,9 +1,6 @@
 <?php
 import('org.rhaco.net.xml.Atom');
 import('jp.nequal.pear.PackageProjector');
-import('org.openpear.Openpear.OpenpearFlow');
-module('model.OpenpearRelease');
-module('model.OpenpearReleaseQueue');
 
 class Release extends OpenpearFlow
 {

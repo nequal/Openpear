@@ -1,6 +1,4 @@
 <?php
-import('org.openpear.Openpear.exception.OpenpearException');
-
 class OpenpearFlow extends Flow
 {
     protected function __new__($dict=null){

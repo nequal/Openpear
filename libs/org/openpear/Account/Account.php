@@ -1,8 +1,5 @@
 <?php
 import('org.rhaco.service.OpenIDAuth');
-import('org.openpear.Openpear.OpenpearFlow');
-import('org.openpear.Maintainer.model.OpenpearMaintainer');
-import('org.openpear.Maintainer.model.OpenpearOpenidMaintainer');
 
 class Account extends OpenpearFlow
 {

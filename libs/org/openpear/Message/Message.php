@@ -1,7 +1,4 @@
 <?php
-import('org.openpear.Openpear.OpenpearFlow');
-module('model.OpenpearMessage');
-
 class Message extends OpenpearFlow
 {
     public function model($id){

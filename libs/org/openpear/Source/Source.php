@@ -1,7 +1,5 @@
 <?php
 import('jp.nequal.net.Subversion');
-import('org.openpear.Openpear.OpenpearFlow');
-module('model.OpenpearChangeset');
 
 class Source extends OpenpearFlow
 {

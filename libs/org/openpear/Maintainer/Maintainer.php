@@ -1,9 +1,4 @@
 <?php
-import('org.openpear.Openpear.OpenpearFlow');
-module('model.OpenpearMaintainer');
-module('model.OpenpearOpenidMaintainer');
-import('org.openpear.Package');
-import('org.openpear.Timeline');
 
 class Maintainer extends OpenpearFlow
 {

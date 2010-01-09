@@ -1,15 +1,4 @@
 <?php
-import('org.openpear.Openpear.OpenpearFlow');
-import('org.openpear.Timeline');
-import('org.openpear.Release');
-module('model.OpenpearCharge');
-module('model.OpenpearFavorite');
-module('model.OpenpearNewprojectQueue');
-module('model.OpenpearPackage');
-module('model.OpenpearPackageMessage');
-module('model.OpenpearPackageTag');
-module('model.OpenpearTag');
-
 class Package extends OpenpearFlow
 {
     /**

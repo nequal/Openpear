@@ -1,7 +1,5 @@
 <?php
 import('org.rhaco.net.xml.Atom');
-import('org.openpear.Openpear.OpenpearFlow');
-module('model.OpenpearTimeline');
 
 class Timeline extends OpenpearFlow
 {

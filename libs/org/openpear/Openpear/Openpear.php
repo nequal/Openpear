@@ -1,9 +1,5 @@
 <?php
 module('OpenpearFlow');
-import('org.openpear.Package');
-import('org.openpear.Release');
-import('org.openpear.Message');
-import('org.openpear.Timeline');
 
 class Openpear extends OpenpearFlow
 {
