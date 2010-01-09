@@ -52,10 +52,10 @@ class Account extends OpenpearFlow
     /**
      * パスワードでログインする
      */
-    public function login(){
+    public function account_login(){
         if($this->is_login()) Http::redirect(url('dashboard'));
         try {
-            if(parent::login()){
+            if($this->login()){
                 // TODO: 任意の転送先を設定できるようにする
                 $this->success_redirect();
             }
@@ -86,8 +86,8 @@ class Account extends OpenpearFlow
     /**
      * ログアウトする
      */
-    public function logout(){
-        parent::logout();
+    public function account_logout(){
+        $this->logout();
         $this->success_redirect();
     }
 }

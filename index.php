@@ -2,7 +2,7 @@
 require dirname(__FILE__). '/__settings__.php';
 require dirname(__FILE__). '/__funcs__.php';
 app(); ?>
-<app name="Openpear">
+<app ns="Openpear">
     <class_module class="Log" module="org.rhaco.io.log.LogFile" />
     <class_module class="Log" module="org.rhaco.io.log.LogFirebug" />
     <handler>
@@ -52,11 +52,11 @@ app(); ?>
             <map url="/(.+)$" method="model" template="maintainer/model.html" />
         </maps>
         <maps class="org.openpear.Account" url="account">
-            <map url="/login$" method="login" template="account/login.html" success_redirect="/dashboard" />
+            <map url="/login$" method="account_login" template="account/login.html" success_redirect="/dashboard" />
             <map url="/login_openid$" method="login_by_openid" success_redirect="/dashboard" />
             <map url="/signup$" method="signup" template="account/signup.html" />
             <map url="/signup_do$" method="signup_do" success_redirect="/dashboard" fail_redirect="/account/signup" /> 
-            <map url="/logout$" method="logout" success_redirect="/" />
+            <map url="/logout$" method="account_logout" success_redirect="/" />
         </maps>
         <maps class="org.openpear.Message" url="message">
             <map url="/inbox$" method="inbox" template="message/inbox.html" />
