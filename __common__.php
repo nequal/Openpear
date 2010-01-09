@@ -3,8 +3,8 @@
 function openpear_autoload_handler($class_name){
     $modules = array('Account', 'Document', 'Maintainer',
         'Message', 'Openpear', 'Package', 'Release', 'Source', 'Timeline');
-    if(isset($modules[$class_name])){
-        import('org.openpear.'. $modules[$class_name]);
+    if(in_array($class_name, $modules)){
+        import('org.openpear.'. $class_name);
     }
     $models = array(
         // models
