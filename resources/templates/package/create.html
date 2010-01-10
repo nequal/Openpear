@@ -50,7 +50,7 @@
                 </rt:loop></rt:invalid>
                 <input type="text" name="name" id="package-name" class="small" />
               </dd>
-              <dt>Description: </dt>
+              <dt>Description <span class="red">*</span>: </dt>
               <dd>
                 <rt:invalid param="description" messages="errors"><rt:loop param="errors" var="error" limit="1">
                 <p class="error">{$error}</p>
@@ -72,7 +72,7 @@
                 </rt:loop></rt:invalid>
                 <select name="public_level">
                   <option value="1">Anyone</option>
-                  <option value="0">Only maintainers (You can edit this in a package setting)</option>
+                  <option value="0">Only maintainers (You can edit maintainers in a package setting)</option>
                 </select>
               </dd>
               <dt>License: </dt>
