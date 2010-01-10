@@ -79,6 +79,8 @@
             <p><rt:if param="{$charge.package().primary_tag()}">Category: <a href="{$t.url('packages')}?category={$t.htmlencode($charge.package().primary_tag())}">{$t.htmlencode($charge.package().primary_tag())}</a> </rt:if><em>Last Update: {$t.df($charge.package().updated(), 'Y-m-d')}</em>
             </p>
           </div>
+          <rt:else />
+          <p class="info">{$t.htmlencode($object.name())} dosn't have any public package yet.</p>
         </rt:loop>
         
         <h3 id="maintainer-favs">Favorites</h3>
@@ -94,3 +96,4 @@
   </div> <!-- / container-class sub-main -->
 </div>
 </rt:block>
+

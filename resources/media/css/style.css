@@ -421,7 +421,7 @@ form textarea
   margin-bottom: 2px;
   padding: 2px;
   font-size: 1.0em;
-  font-family: "Courier New", Monaco, monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
   border: solid 1px #ccc;
 }
 form select > option {
