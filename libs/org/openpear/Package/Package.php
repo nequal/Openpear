@@ -187,7 +187,7 @@ class Package extends OpenpearFlow
                 Http::redirect(url('package/'. $package->name()));
             } catch(Exception $e){
                 // throw $e;
-                Exceptions::add($e);
+                // Exceptions::add($e);
             }
         }
         return $this->create();

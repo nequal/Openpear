@@ -26,7 +26,7 @@ class OpenpearPackage extends Dao
     
     static protected $__id__ = 'type=serial';
     static protected $__name__ = 'type=string,unique=true,require=true';
-    static protected $__description__ = 'type=string,max=250';
+    static protected $__description__ = 'type=string,require=true,max=250';
     static protected $__url__ = 'type=string';
     static protected $__public_level__ = 'type=number';
     static protected $__external_repository__ = 'type=string';
@@ -244,7 +244,10 @@ class OpenpearPackage extends Dao
         $this->primary_tag;
     }
     
-    protected function __is_name__(){
-        return (bool) preg_match('@^[A-Za-z][A-Za-z0-9_]+$@', $this->name);
+    protected function is_name(){
+         if(!preg_match('@^[A-Za-z][A-Za-z0-9_]+$@', $this->name)){
+             Exceptions::add(new OpenpearException('name is NOT valid. ### FIXME ###'), 'name');
+         }
+         return true;
     }
 }
