@@ -30,7 +30,7 @@ class OpenpearPackage extends Dao
     static protected $__url__ = 'type=string';
     static protected $__public_level__ = 'type=number';
     static protected $__external_repository__ = 'type=string';
-    static protected $__external_repository_type__ = 'type=choice(subversion,git)';
+    static protected $__external_repository_type__ = 'type=choice(Git,Mercurial,Subversion)';
     static protected $__favored_count__ = 'type=number,default=0';
     static protected $__recent_changeset__ = 'type=number';
     static protected $__released_at__ = 'type=timestamp';
@@ -64,6 +64,7 @@ class OpenpearPackage extends Dao
         $this->created = time();
         $this->updated = time();
         $this->public_level = 1;
+        $this->external_repository_type = "Git";
         $this->license = 'New BSD License (BSD)';
         $this->favored_count = 0;
     }
