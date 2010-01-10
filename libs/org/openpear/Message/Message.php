@@ -14,9 +14,7 @@ class Message extends OpenpearFlow
                 $this->vars('object', $message);
                 return $this;
             }
-        } catch(Exception $e){
-            Exceptions::add($e);
-        }
+        } catch(Exception $e){}
         $this->fail_redirect();
     }
     /**

@@ -37,7 +37,6 @@ class Account extends OpenpearFlow
                 }
                 C($account)->commit();
             } catch(Exception $e){
-                Exceptions::add($e);
                 return $this->signup();
             }
             $this->user($account);
@@ -73,7 +72,6 @@ class Account extends OpenpearFlow
                     $this->success_redirect();
                 }
             } catch(Exception $e){
-                Exceptions::add($e);
                 $this->sessions('openid_identity', $openid_user->identity());
                 Http::redirect(url('account/signup'));
             }

@@ -82,9 +82,7 @@ class Package extends OpenpearFlow
             $fav->find_delete(Q::eq('maintainer_id', $user->id()), Q::eq('package_id', $package->id()));
             $fav->recount_favorites();
             C(OpenpearFavorite)->commit();
-        } catch(Exception $e){
-            Log::error($e->getMessage());
-        }
+        } catch(Exception $e){}
         Http::redirect(url('package/'. $package_name));
     }
     public function add_maintainer($package_name){
@@ -185,10 +183,7 @@ class Package extends OpenpearFlow
                 $package->add_maintainer($user);
                 C($package)->commit();
                 Http::redirect(url('package/'. $package->name()));
-            } catch(Exception $e){
-                // throw $e;
-                // Exceptions::add($e);
-            }
+            } catch(Exception $e){}
         }
         return $this->create();
     }
@@ -250,9 +245,7 @@ class Package extends OpenpearFlow
             C($package)->commit();
             // $this->success_redirect();
             Http::redirect(url('package/'. $package->name(). '/manage'));
-        } catch(Exception $e){
-            Exceptions::add($e);
-        }
+        } catch(Exception $e){}
         return $this->update($package_name);
     }
 }

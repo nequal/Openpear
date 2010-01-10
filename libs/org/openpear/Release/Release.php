@@ -34,7 +34,6 @@ class Release extends OpenpearFlow
                 $this->vars('package', $package);
                 return $this;
             } catch(Exception $e){
-                Exceptions::add($e);
                 return $this->package_release($package_name);
             }
         }
@@ -63,7 +62,6 @@ class Release extends OpenpearFlow
                 C($release_queue)->commit();
                 Http::redirect(url('package/'. $package->name(). '/manage/release_queue_added'));
             } catch(Exception $e){
-                Exceptions::add($e);
                 return $this->package_release($package_name);
             }
         }
