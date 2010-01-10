@@ -12,6 +12,7 @@ app(); ?>
         <map url="search$" class="org.openpear.Openpear" method="search" />
         <map url="dashboard$" class="org.openpear.Openpear" method="dashboard" template="dashboard.html" />
         <map url="dashboard/message/hide$" class="org.openpear.Openpear" method="dashboard_message_hide" />
+        <map url="inbox$" class="org.openpear.Openpear" method="inbox" template="inbox.html" />
         
         <maps class="org.openpear.Package" url="package">
             <map url="s$" method="models" />

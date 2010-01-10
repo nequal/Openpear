@@ -1,0 +1,108 @@
+@charset 'utf-8';
+
+/**
+ * Openpear style for Inbox
+ *
+ * @description   Openpear style for Inbox
+ * @package       openpear
+ * @date          2010/01/11
+ * @author        sotarok
+ */
+
+#message-left {
+  width: 220px;
+  margin-right: 0px;
+}
+
+#message-box-list {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#message-box-list li {
+  list-style: none;
+  margin-left: 0;
+}
+#message-box-list li a {
+  display: block;
+  padding: 3px;
+}
+
+#message-box-list li:hover,
+#message-box-list .current ,
+#message-box-list .current {
+  border: solid 1px #7B011D;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  -o-border-radius: 5px;
+  background: #7B011D;
+}
+
+#message-box-list li:hover a ,
+#message-box-list .current a {
+  color: #fff;
+  border: none;
+}
+
+#message-list {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  border: solid 3px #7B011D;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+#message-list td ,
+#message-list th {
+  padding: 3px;
+  border: solid 1px #f0f0f0;
+  border-collapse: collapse;
+}
+
+#message-list td img ,
+#message-list th img {
+  vertical-align: middle;
+}
+
+#message-list thead {
+}
+
+#message-list thead th {
+  text-align: center;
+  background: #f0f0f0;
+  border-bottom: double 3px #7B011D;
+}
+
+#message-list thead th.message-list-title {
+  width: 50%;
+}
+
+#message-list tfoot {
+}
+
+#message-list tfoot td {
+  text-align: right;
+}
+
+#message-list tbody {
+}
+
+#message-list tbody tr.odd td {
+  background: #fafdff;
+}
+
+#message-list tbody tr.even td {
+}
+
+#message-list tbody tr.unread td {
+  font-weight: bold;
+}
+
+#message-list tbody tr.odd:hover td ,
+#message-list tbody tr.even:hover td ,
+#message-list tbody tr:hover td {
+  background: #d3d6dd;
+}
+

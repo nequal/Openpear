@@ -1,0 +1,96 @@
+<rt:extends href="index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/inbox.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">Inbox \  Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">Home</a> &raquo; Inbox
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+  <div class="frame-class" id="sub-title">
+    <div class="container-class">
+      <h2 class="inline fleft">Inbox</h2>
+      <br class="clear" />
+    </div> <!-- #container-s -->
+  </div> <!-- .frame-class -->
+
+
+<div class="container-class">
+  <div class="column2-lt">
+    <div class="column2-left" id="message-left">
+      <h3>Boxes</h3>
+
+      <ul id="message-box-list">
+        <li class="current"><a href="">System messages</a></li>
+        <li><a href="">Sent</a></li>
+      </ul>
+
+
+    </div> <!-- end of colmun2-left -->
+    <div class="column2-right">
+
+      <table id="message-list">
+        <thead>
+          <tr>
+            <th class="mesasge-list-from">From</th>
+            <th class="mesasge-list-date">Date</th>
+            <th class="message-list-title">Title</th>
+            <th class="message-list-op">Operations</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <a href="">Next</a> &raquo;
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr class="odd unread">
+            <td><img src="images/global-icon-mail.png" /> Openpear </td>
+            <td>2009-12-22 11:22:33</td>
+            <td><a href="">Your package "Net_TokyoTyrant" released!</a></td>
+            <td><img src="images/global-icon-delete.png" /></td>
+          </tr>
+          <tr class="even">
+            <td><img src="images/global-icon-mail.png" /> Openpear </td>
+            <td>2009-12-22 11:22:33</td>
+            <td><a href="">Package "Hoge_Fuga_Piyo" created.</a></td>
+            <td><img src="images/global-icon-delete.png" /></td>
+          </tr>
+          <tr class="odd">
+            <td><img src="images/global-icon-mail.png" /> Openpear </td>
+            <td>2009-12-22 11:22:33</td>
+            <td><a href="">Welcome to Openpear!</a></td>
+            <td><img src="images/global-icon-delete.png" /></td>
+          </tr>
+          <tr class="even">
+            <td><img src="images/global-icon-mail.png" /> Openpear </td>
+            <td>2009-12-22 11:22:33</td>
+            <td><a href="">Welcome to Openpear!</a></td>
+            <td><img src="images/global-icon-delete.png" /></td>
+          </tr>
+          <tr class="odd">
+            <td><img src="images/global-icon-mail.png" /> Openpear </td>
+            <td>2009-12-22 11:22:33</td>
+            <td><a href="">Welcome to Openpear!</a></td>
+            <td><img src="images/global-icon-delete.png" /></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br class="clear" />
+    </div> <!-- end of column2-right -->
+    <br class="clear" />
+  </div> <!-- end of colmun2-lt -->
+</div> <!-- end of container-class -->
+
+</rt:block>

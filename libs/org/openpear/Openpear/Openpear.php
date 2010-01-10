@@ -40,6 +40,7 @@ class Openpear extends OpenpearFlow
         $this->vars('notices', C(OpenpearMessage)->find_all(Q::eq('maintainer_to_id', $this->user()->id()), Q::eq('type', 'system_notice'), Q::eq('unread', true)));
         return $this;
     }
+
     public function dashboard_message_hide(){
         $this->_login_required();
         try {
@@ -51,5 +52,15 @@ class Openpear extends OpenpearFlow
             }
         } catch(Exception $e){}
         exit;
+    }
+
+    /**
+     * message box
+     * @todo
+     */
+    public function inbox()
+    {
+        $this->_login_required();
+        $this->vars('maintainer', $this->user());
     }
 }
