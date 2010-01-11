@@ -187,7 +187,7 @@ class Package extends OpenpearFlow
         }
         return $this->create();
     }
-    
+
     public function manage($package_name){
         $this->_login_required('packages/update');
         try {
@@ -200,27 +200,38 @@ class Package extends OpenpearFlow
         } catch(Exception $e){}
         Http::redirect(url('package/'. $package_name));
     }
-    
+
     /**
      * パッケージ情報更新
      */
-    public function update($package_name){
+    public function edit($package_name)
+    {
         $this->_login_required('packages/update');
-        $this->template('package/edit.html');
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
             $package->permission($this->user());
-            $this->vars('package', $package);
             $this->vars('object', $package);
+            $this->vars('package', $package);
+            $this->vars('maintainers', $package->maintainers());
             if(!$this->is_post()){
-                foreach(array('id', 'name', 'description', 'url', 'public_level', 'license') as $k){
-                    $this->vars($k, $package->{$k}());
+                foreach(array('id', 'name', 'description', 'url', 'public_level', 'external_repository', 'external_repository_type', 'license') as $k){
+                    if ($k == 'external_repository') {
+                        $p = $package->{$k}();
+                        if (!empty($p)) {
+                            $this->vars('repository_uri_select', '2');
+                        }
+                        $this->vars($k, $p);
+                    }
+                    else {
+                        $this->vars($k, $package->{$k}());
+                    }
                 }
             }
             return $this;
         } catch(Exception $e){}
         Http::redirect(url('package/'. $package_name));
     }
+
     /*
     public function update_confirm(){
         $this->_login_required('packages/update');
@@ -234,7 +245,7 @@ class Package extends OpenpearFlow
         Http::redirect(url());
     }
     */
-    public function update_do($package_name){
+    public function edit_do($package_name){
         $this->_login_required('packages/update');
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('id')));

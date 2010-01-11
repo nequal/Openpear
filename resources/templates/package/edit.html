@@ -1,12 +1,4 @@
-<rt:extends href="../index.html" />
-<rt:block name="stylesheet">
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="css/1column.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
-</rt:block>
-
+<rt:extends href="base.html" />
 <rt:block name="title">Manage \ {$package.name()} \ Package \ Openpear</rt:block>
 
 <rt:block name="topic_path">
@@ -15,34 +7,8 @@
   </div>
 </rt:block>
 
-<rt:block name="contents">
-  <div class="frame-class" id="sub-title">
-    <div class="container-class">
-      <h2 class="inline fleft"><a href="package_Hoge.html">Package \ Openpear_Util</a></h2>
-      <form action="{$t.url('packages')}" id="sub-search-form" method="post">
-        <input name="q" type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
-        <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
-      </form>
-      <br class="clear" />
-    </div> <!-- #container-s -->
-  </div> <!-- .frame-class -->
-  
-  <div class="frame-class">
-    <div class="container-class" id="sub-main">
-      <div id="sub-package-navi">
-        <ul>
-          <li><a href="{$t.url('package')}/{$package.name()}">Top</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/timeline">Timeline</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/download">Downloads</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/source">Source</a></li>
-          <rt:if param="{$package.permission($t.login_user(),false)}" value="true">
-            <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
-          </rt:if>
-        </ul>
-      </div>
-      
-      <div class="column1">
+<rt:block name="package_main">
+      <div class="column1 clear">
         <p><a href="{$t.url('package')}/{$package.name()}/manage">&laquo; back</a></p>
         <h3>Package Setting</h3>
         <form action="{$t.url('package')}/{$package.name()}/manage/edit_do" method="post" id="new-package" rt:ref="true">
@@ -57,6 +23,39 @@
               <p class="error">{$error}</p>
               </rt:loop></rt:invalid>
               <textarea name="description" class="middle"></textarea>
+            </dd>
+
+            <dt>Repository: </dt>
+            <dd>
+              <rt:invalid param="external_repository" messages="errors"><rt:loop param="errors" var="error" limit="1">
+              <p class="error">{$error}</p>
+              </rt:loop></rt:invalid>
+              <label><input type="radio" name="repository_uri_select" value="1">Subversion repository on Openpear (will be generated)</label><br/>
+              <label><input type="radio" name="repository_uri_select" id="repository-uri-select-2" value="2">External</label>
+              <p style="display: none" id="repository-uri-option">
+              <select name="external_repository_type" id="external-repository-type">
+                <option value="Subversion">Subversion</option>
+                <option value="Git">Git</option>
+                <option value="Mercurial">Mercurial</option>
+              </select> <input type="text" name="external_repository" id="external-repository" class="middle" />
+              </p>
+              <script type="text/javascript">
+                function repository_state_change()
+                {
+                  if ($('input[name="repository_uri_select"]:checked').val() == 2) {
+                    $('#repository-uri-option').show('slow');
+                    $('#external-repository').removeAttr('disabled');
+                    $('#external-repository-type').removeAttr('disabled');
+                  }
+                  else {
+                    $('#repository-uri-option').hide('slow');
+                    $('#external-repository').attr('disabled', 'disabled');
+                    $('#external-repository-type').attr('disabled', 'disabled');
+                  }
+                }
+                $('input[name="repository_uri_select"]').change(repository_state_change);
+                repository_state_change();
+              </script>
             </dd>
             <dt>Who one commit this package ?: </dt>
             <dd>
@@ -377,6 +376,5 @@
           <input type="submit" value="Update Package" class="small" />
         </form>
       </div> <!-- end of column1 -->
-    </div>
-  </div>
 </rt:block>
+

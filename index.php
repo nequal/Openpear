@@ -30,7 +30,7 @@ app(); ?>
             <map url="/(.+)/category/prime$" method="prime_tag" />
             <map url="/(.+)/manage$" method="manage" template="package/manage.html" />
             <map url="/(.+)/manage/edit$" method="edit" template="package/edit.html" />
-            <map url="/(.+)/manage/edit_do$" method="update_do" />
+            <map url="/(.+)/manage/edit_do$" method="edit_do" />
         </maps>
         <maps class="org.openpear.Release" url="package">
             <map url="/(.+)/manage/release$" method="package_release" template="package/release.html" />
