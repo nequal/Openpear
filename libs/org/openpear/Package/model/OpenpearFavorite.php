@@ -38,7 +38,7 @@ class OpenpearFavorite extends Dao
         $timeline = new OpenpearTimeline();
         $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">liked</span> <a href="%s">%s</a>',
             url('maintainer/'. $this->maintainer()->name()),
-            Templf::htmlencode(str($this->maintainer())),
+            C(Templf)->htmlencode(str($this->maintainer())),
             url('package/'. $this->package()->name()),
             $this->package()->name()
         ));
