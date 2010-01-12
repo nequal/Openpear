@@ -28,7 +28,14 @@
         </rt:if>
       </rt:loop>
       <li><input type="button" id="js-category-add-button" value="+Add" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
-      <li id="js-category-add-form" class="dnone"><form action="{$t.url('package')}/{$package.name()}/category/add" id="add-category" method="post"><input name="tag_name" type="text" size="30" id="add-category-tag_name" /><input type="hidden" name="prime" value="false" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#js-category-add-form').hide();">cancel</a></form></li>
+      <li id="js-category-add-form" class="dnone">
+      <form action="{$t.url('package')}/{$package.name()}/category/add" id="add-category" method="post">
+        <input name="tag_name" type="text" size="30" id="add-category-tag_name" />
+        <input type="hidden" name="prime" value="false" />
+        <input type="submit" value="add" />
+        <a href="javascript:;" onclick="$('#js-category-add-form').hide();">cancel</a>
+      </form>
+      </li>
     </ul>
   </div>
   
