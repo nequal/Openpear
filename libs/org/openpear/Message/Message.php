@@ -27,6 +27,7 @@ class Message extends OpenpearFlow
         $this->vars('object_list', C(OpenpearMessage)->find_all(
             $paginator, Q::eq('maintainer_to_id', $user->id()), Q::order('-id')
         ));
+        $this->vars('paginator', $paginator);
         return $this;
     }
     /**

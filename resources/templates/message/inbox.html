@@ -39,7 +39,7 @@
 
       <div id="message-list-outer">
 
-      <table id="message-list">
+      <table id="message-list" rt:param="object_list" rt:var="message">
         <thead>
           <tr>
             <th class="mesasge-list-from">From</th>
@@ -51,40 +51,16 @@
         <tfoot>
           <tr>
             <td colspan="4">
-              <p class="fleft m0">&laquo; <a href="">Previous</a></p>
-              <p class="fright m0"><a href="">Next</a> &raquo;</p>
+              <rt:if param="{$paginator.is_prev()}"><p class="fleft m0">&laquo; <a href="?{$paginator.query_prev()}">Previous</a></p></rt:if>
+              <rt:if param="{$paginator.is_next()}"><p class="fright m0"><a href="?{$paginator.query_prev()}">Next</a> &raquo;</p></rt:if>
             </td>
           </tr>
         </tfoot>
         <tbody>
-          <tr class="odd unread">
+          <tr class="{$loop_evenodd}<rt:if param="{$message.is_unread()}"> unread</rt:if>">
             <td><img src="images/global-icon-mail.png" /> Openpear </td>
-            <td><a href="">Your package "Net_TokyoTyrant" released!</a></td>
-            <td class="message-list-date">2009-12-22 11:22:33</td>
-            <td><img src="images/global-icon-delete.png" /></td>
-          </tr>
-          <tr class="even">
-            <td><img src="images/global-icon-mail.png" /> Openpear </td>
-            <td><a href="">Package "Hoge_Fuga_Piyo" created.</a></td>
-            <td class="message-list-date">2009-12-22 11:22:33</td>
-            <td><img src="images/global-icon-delete.png" /></td>
-          </tr>
-          <tr class="odd">
-            <td><img src="images/global-icon-mail.png" /> Openpear </td>
-            <td><a href="">Welcome to Openpear!</a></td>
-            <td class="message-list-date">2009-12-22 11:22:33</td>
-            <td><img src="images/global-icon-delete.png" /></td>
-          </tr>
-          <tr class="even">
-            <td><img src="images/global-icon-mail.png" /> Openpear </td>
-            <td><a href="">Welcome to Openpear!</a></td>
-            <td class="message-list-date">2009-12-22 11:22:33</td>
-            <td><img src="images/global-icon-delete.png" /></td>
-          </tr>
-          <tr class="odd">
-            <td><img src="images/global-icon-mail.png" /> Openpear </td>
-            <td><a href="">Welcome to Openpear!</a></td>
-            <td class="message-list-date">2009-12-22 11:22:33</td>
+            <td><a href="">{$t.htmlencode($message.subject())}</a></td>
+            <td class="message-list-date">{$message.fm_created()}</td>
             <td><img src="images/global-icon-delete.png" /></td>
           </tr>
         </tbody>
