@@ -243,11 +243,28 @@ class OpenpearPackage extends Dao
         }
         $this->primary_tag;
     }
-    
+
     protected function __is_name__(){
          if(!preg_match('@^[A-Za-z][A-Za-z0-9_]+$@', $this->name)){
              Exceptions::add(new OpenpearException('name is NOT valid. ### FIXME ###'), 'name');
          }
          return true;
+    }
+
+    public function repoistory_type_cmd() {
+        switch ($this->external_repository_type()) {
+            case "Git":
+                $s = "git clone";
+                break;
+            case "Mercurial":
+                $s = "hg clone";
+                break;
+            case "Subversion":
+                $s = "svn co";
+                break;
+            default:
+                $s = "";
+        }
+        return $s;
     }
 }
