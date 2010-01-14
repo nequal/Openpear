@@ -5,11 +5,11 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 <rt:block name="title">Downloads \ {$package.name()} \ Package \ Openpear</rt:block>
-<rt:block name="topic_path">
-  <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url()}">Package</a> &raquo; {$package.name()}
-  </div>
+
+<rt:block name="topic_path_path">
+<a href="{$t.url('pacakge')}/{$t.htmlencode($package.name())}">{$t.htmlencode($package.name())}</a> &raquo; Downloads
 </rt:block>
+
 <rt:block name="package_navi_current_download"> class="current"</rt:block>
 <rt:block name="package_main">
 <table id="sub-package-downloads">

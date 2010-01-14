@@ -1,10 +1,8 @@
 <rt:extends href="base.html" />
 <rt:block name="title">Manage \ {$package.name()} \ Package \ Openpear</rt:block>
 
-<rt:block name="topic_path">
-  <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('packages')}">Package</a> &raquo; <a href="{$t.url('packages')}/{$package.name()}">{$package.name()}</a> &raquo; <a href="{$t.url('packages')}/{$package.name()}/manage">Manage Package</a> &raquo; Package Setting
-  </div>
+<rt:block name="topic_path_path">
+    <a href="{$t.url('packages')}/{$package.name()}/manage">Manage Package</a> &raquo; Package Setting
 </rt:block>
 
 <rt:block name="package_main">

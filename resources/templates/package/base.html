@@ -10,7 +10,10 @@
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; <a href="$t.url('packages')">Package</a> &raquo; {$package.name()}
+    <a href="{$t.url()}">Home</a> &raquo; <a href="$t.url('packages')">Package</a> &raquo;
+    <rt:block name="topic_path_path">
+    {$package.name()}
+    </rt:block>
   </div>
 </rt:block>
 

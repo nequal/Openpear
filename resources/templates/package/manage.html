@@ -8,12 +8,10 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">Manage :: {$t.htmlencode($package.name())} :: Package :: Openpear</rt:block>
+<rt:block name="title">Manage \ {$t.htmlencode($package.name())} \ Package \ Openpear</rt:block>
 
-<rt:block name="topic_path">
-  <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('packages')}">Package</a> &raquo; <a href="{$t.url('pacakge')}/{$t.htmlencode($package.name())}">{$t.htmlencode($package.name())}</a> &raquo; Manage Package
-  </div>
+<rt:block name="topic_path_path">
+<a href="{$t.url('pacakge')}/{$t.htmlencode($package.name())}">{$t.htmlencode($package.name())}</a> &raquo; Manage Package
 </rt:block>
 
 <rt:block name="package_main">
