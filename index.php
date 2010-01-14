@@ -73,4 +73,6 @@ app(); ?>
             <map url="maintainer/(.+)/timelines\.atom$" method="atom_maintainer" />
         </maps>
     </handler>
+    
+   	<handler class="com.tokushimakazutaka.flow.parts.Docs" />
 </app>
