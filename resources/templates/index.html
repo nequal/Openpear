@@ -42,7 +42,7 @@
             <li><a href="{$t.url()}">Home</a> &nbsp; | </li>
             <li><img src="{$ot.gravatar($t.login_user().mail(), 16)}" /></li>
             <li><a href="{$t.url('dashboard')}">Dashboard</a></li>
-            <li><a href="{$t.url('inbox')}">Inbox</a></li>
+            <li><a href="{$t.url('message/inbox')}">Inbox</a></li>
             <li><a href="{$t.url('maintainer')}/{$t.login_user().name()}">Profile</a></li>
             <li><a href="{$t.url('account/logout')}">Log out</a></li>
           <rt:else />
@@ -170,12 +170,6 @@
     <!-- /footer -->
     
   </div><!-- end of #frame -->
-  
-  <pre><b>Variables:</b>
-<?php Log::d($this->vars);
-print("<b>Sessions:</b>\n");Log::d($_SESSION); ?>
-<?php var_dump(Exceptions::gets()); ?>
-</pre>
 </body>
 </html>
 

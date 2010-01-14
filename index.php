@@ -15,7 +15,6 @@ app(); ?>
             <map url="search"  method="search" />
             <map url="dashboard" method="dashboard" template="dashboard.html" />
             <map url="dashboard/message/hide" method="dashboard_message_hide" />
-            <map url="inbox" method="inbox" template="inbox.html" />
 		</maps>
 
         <maps class="org.openpear.Package" url="packages">
