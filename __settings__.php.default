@@ -9,6 +9,9 @@ Log::config_level("debug");
 def("org.rhaco.storage.db.Dbc@openpear",
     "type=org.rhaco.storage.db.module.DbcMysql,host=localhost,dbname=xxx,user=xxx,password=xxx,encode=utf8,prefix=openpear_,upper=false,lower=false");
 
+// Messenger settings (gmail account)
+def('org.openpear.Message@account','notify@openpear.org:password');
+
 // SVN Settings
 import('jp.nequal.net.Subversion');
 def('svn_root', 'file:///path/to/repo');
@@ -16,10 +19,6 @@ def('svn_url', 'http://svn.openpear.org');
 def('svn_access_file', '/path/to/openpear.access');
 def('svn_passwd_file', '/path/to/openpear.passwd');
 Subversion::config_path('/opt/local/bin/svn');
-
-// Gmail settings
-def('org.rhaco.net.mail.Gmail@login', 'notify@openpear.org');
-def('org.rhaco.net.mail.Gmail@password', 'xxxxxxxxxxxx');
 
 
 // For PEAR

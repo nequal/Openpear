@@ -3,6 +3,10 @@ require_once 'HatenaSyntax.php';
 import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.mail.Gmail');
 
+/**
+ * 
+ * @const account gmailアカウント:パスワード
+ */
 class OpenpearMessage extends Dao
 {
     protected $_database_ = 'openpear';
@@ -45,7 +49,10 @@ class OpenpearMessage extends Dao
     }
     protected function __after_create__(){
         if($this->mail()){
-            $mail = new Gmail();
+            $gmail_account = module_const("account");
+            if(strpos($gmail_account,":") === false) throw new RuntimeException("account: undef");
+            list($account,$password) = explode(":",$gmail_account,2);
+            $mail = new Gmail($account,$password);
             $mail->to($this->maintainer_to()->mail());
             $mail->from($mail->from(), 'Openpear');
             $mail->subject($this->subject());
