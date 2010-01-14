@@ -42,7 +42,7 @@ app(); ?>
             <!-- package -->
             <map url="/([^/]+)" method="model" template="package/model.html" />
             <map url="/(.+)/timeline" method="package_timeline" template="package/timeline.html" />
-            <map url="/(.+)/download" method="download" template="package/download.html" />
+            <map url="/(.+)/downloads" method="downloads" template="package/downloads.html" />
             <map url="/(.+)/like/(.+)" method="add_favorite" />
             <map url="/(.+)/unlike/(.+)" method="remove_favorite" />
         </maps>

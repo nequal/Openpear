@@ -259,4 +259,19 @@ class Package extends OpenpearFlow
         } catch(Exception $e){}
         return $this->update($package_name);
     }
+
+    /**
+     * Downloads
+     */
+    public function downloads($package_name)
+    {
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $this->vars('object', $package);
+        $this->vars('package', $package);
+        $this->vars('maintainers', $package->maintainers());
+        $releases = $package->releases();// TODO: sort
+        $this->vars('recent_releases', empty($releases)?$releases:array_reverse($releases));
+        // TODO: changes
+        return $this;
+    }
 }
