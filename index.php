@@ -4,7 +4,23 @@ require dirname(__FILE__). '/__funcs__.php';
 app(); ?>
 <app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" unmatch_redirect="/">
     <description>
-    	http://github.com/nequal/Openpear
+        http://github.com/nequal/Openpear
+        
+        インストール手順:
+            # HatenaSyntaxを利用しているのでinstallします
+            sudo pear upgrade
+            sudo pear channel-discover openpear.org
+            sudo pear install openpear/HatenaSyntax-beta
+        
+            mysqlに resources/schema.sql に流し込んでテーブル作成
+
+            # 基本設定
+            php setup.php
+            
+            # .htaccessを作成してpathinfoをきれいに        
+            php setup.php -write_htaccess /openpear
+            
+            その後、__settings__.php.defaultを参考に__settings__.phpに追記する
     </description>
 
     <handler error_template="error.html">
@@ -15,7 +31,7 @@ app(); ?>
             <map url="search"  method="search" />
             <map url="dashboard" method="dashboard" template="dashboard.html" />
             <map url="dashboard/message/hide" method="dashboard_message_hide" />
-		</maps>
+        </maps>
 
         <maps class="org.openpear.Package" url="packages">
             <map method="models" />
@@ -83,5 +99,5 @@ app(); ?>
         </maps>
     </handler>
     
-   	<handler class="com.tokushimakazutaka.flow.parts.Docs" />
+    <handler class="com.tokushimakazutaka.flow.parts.Docs" />
 </app>
