@@ -1,5 +1,6 @@
 .htaccess
 .project
+__repository__.xml
 __settings__.php
 vendors/
 core/

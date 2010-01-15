@@ -3,24 +3,24 @@ require dirname(__FILE__). '/__settings__.php';
 require dirname(__FILE__). '/__funcs__.php';
 app(); ?>
 <app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" unmatch_redirect="/">
+	<installation>
+        # HatenaSyntaxを利用しているのでinstallします
+        sudo pear upgrade
+        sudo pear channel-discover openpear.org
+        sudo pear install openpear/HatenaSyntax-beta
+        
+        mysqlに resources/schema.sql に流し込んでテーブル作成
+
+        # 基本設定
+        php setup.php
+            
+        # .htaccessを作成してpathinfoをきれいに        
+        php setup.php -write_htaccess /openpear
+            
+        その後、__settings__.php.defaultを参考に__settings__.phpに追記する
+	</installation>
     <description>
         http://github.com/nequal/Openpear
-        
-        インストール手順:
-            # HatenaSyntaxを利用しているのでinstallします
-            sudo pear upgrade
-            sudo pear channel-discover openpear.org
-            sudo pear install openpear/HatenaSyntax-beta
-        
-            mysqlに resources/schema.sql に流し込んでテーブル作成
-
-            # 基本設定
-            php setup.php
-            
-            # .htaccessを作成してpathinfoをきれいに        
-            php setup.php -write_htaccess /openpear
-            
-            その後、__settings__.php.defaultを参考に__settings__.phpに追記する
     </description>
 
     <handler error_template="error.html">
