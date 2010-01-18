@@ -11,6 +11,7 @@ class Openpear extends OpenpearFlow
      * # 'recent_releases' => 最新 OpenpearRelease モデルの配列
      */
     public function index(){
+        $this->vars('package_count', C(OpenpearPackage)->find_count());
         $this->vars('primary_tags', OpenpearPackageTag::getActiveCategories(16));
         $this->vars('recent_releases', C(OpenpearRelease)->find_page(null, new Paginator(20, 1), '-id'));
         return $this;

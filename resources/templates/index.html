@@ -6,10 +6,10 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <meta name="robots" content="INDEX,FOLLOW" />
-  
+
   <meta name="keywords" content="" />
   <meta name="description" content="" />
-  
+
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/top.css" type="text/css" media="all" />
@@ -18,24 +18,24 @@
 
   <script type="text/javascript" src="js/jquery.js"></script>
   <script type="text/javascript" src="js/openpear.js"></script>
-  
+
   <!-- additinal header -->
 <rt:block name="extra_header">
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$t.url('rss')}" />
 </rt:block>
-  
+
   <title><rt:block name="title">Openpear :: Open PEAR Repository Channel</rt:block></title>
 </head>
 <body>
   <div id="nequal-pre-header"><a href="http://nequal.jp/" target="_blank">powered by nequal</a></div>
-  
+
   <!-- id:frame start -->
   <div id="frame">
     <div id="container" class="container-class">
-      
+
       <div id="header" class="main-class">
         <h1><a href="{$t.url()}"><img src="images/header_logo.gif" alt="Openpear :: Open PEAR Repository Channel" /></a></h1>
-        
+
         <div id="header-navi">
           <ul id="header-navi-sub">
           <rt:if param="{$t.logined()}" value="true">
@@ -59,32 +59,53 @@
           </ul>
         </div>
       </div>
-      
+
       <rt:block name="topic_path" />
-      
+
     </div> <!-- end of #container -->
-    
+
     <!-- main contents -->
     <rt:block name="contents">
     <div class="frame-class" id="top-main">
-      
+
       <div class="container-class">
-        
-        <form action="{$t.url('search')}" id="main-search-form">
+        <div id="main-site-description">
+          <p class="fleft big">
+          <span class="big">{$package_count}</span> PEAR packages.
+          </p>
+          <p class="fright aright">
+          Openpear is a PEAR Repository Channel and Subversion Hosting Service.<br />
+          <span class="small">since November 2008</span>
+          </p>
+        </div>
+
+        <form action="{$t.url('search')}" id="main-search-form" class="clear">
           Search: <label><input type="radio" name="search_for" value="packages" checked /> Packages</label> <label><input type="radio" name="search_for" value="maintainers" />Maintainers</label> <br />
           <input type="text" class="radius-2" name="q" id="main-search-q">
           <input type="submit" class="radius-2 bold" value="Search" id="main-search-submit" />
         </form>
-        
+
         <div id="main-column">
-          
+
           <div id="main-column-right">
             <h2><a href="{$t.url('packages')}/releases">Recent Releases</a> <a href="{$t.url('packages/releases.atom')}"><img src="images/global-icon-feed.gif" alt="Feed: Recent Releases" /></a></h2>
             <ul id="main-recent" rt:param="recent_releases" rt:var="release">
               <li><a href="{$t.url('package')}/{$release.package().name()}">{$release.package().name()}</a> <em>-- {$t.df($release.created(), 'Y/m/d')}</em></li>
             </ul>
           </div>
-          
+
+          <div id="main-column-center">
+            <h2><a href="{$t.url('packages')}/ranking">Most Downloaded</a></h2>
+            <rt:comment>
+            <ul id="main-cat-list" rt:param="primary_tags" rt:var="tag">
+              <li><a href="{$t.url('packages')}?category={$t.htmlencode($tag->name())}">{$t.htmlencode($tag->name())}</a></li>
+            </ul>
+            <div id="main-cat-more">
+              <a href="{$t.url('packages')}/ranking">more &raquo;</a>
+            </div>
+            </rt:comment>
+          </div>
+
           <div id="main-column-left">
             <h2><a href="{$t.url('packages')}/tags">Active Categories</a></h2>
             <ul id="main-cat-list" rt:param="primary_tags" rt:var="tag">
@@ -95,19 +116,16 @@
             </div>
           </div>
         </div>
-        
+
       </div> <!-- #container-s -->
     </div> <!-- .frame-class -->
-    
+
     <div class="frame-class">
-      
+
       <div class="container-class">
-        
+
         <div id="main-section">
-          <p id="main-site-description">
-            Openpear is a PEAR Repository Channel and Subversion Hosting Service.
-          </p>
-          
+
           <div id="main-section-left">
             <h2><span class="h2-init">E</span>asiest</h2>
             <p>
@@ -115,7 +133,7 @@
               Openpear では、PEAR パッケージのビルド作業、チャンネル登録作業はすべて自動です！
             </p>
           </div>
-          
+
           <div id="main-section-center">
             <h2><span class="h2-init">S</span>hared</h2>
             <p>
@@ -123,7 +141,7 @@
               その思いを現実のものにできます！
             </p>
           </div>
-          
+
           <div id="main-section-right">
             <h2><span class="h2-init">F</span>astest</h2>
             <p>
@@ -132,17 +150,17 @@
             </p>
           </div>
         </div> <!-- #main-section -->
-        
+
         <blockquote id="main-dream">
           "夢のような話だ"
           <em>-- sotarok</em>
         </blockquote>
-        
+
       </div>
     </div>
     </rt:block>
     <!--/main contents -->
-    
+
     <!-- footer -->
     <div class="frame-class footer-wrap">
       <div id="footer">
@@ -168,7 +186,7 @@
       </div>
     </div>
     <!-- /footer -->
-    
+
   </div><!-- end of #frame -->
 </body>
 </html>
