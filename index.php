@@ -1,7 +1,8 @@
 <?php
 require dirname(__FILE__). '/__settings__.php';
 require dirname(__FILE__). '/__funcs__.php';
-app(); ?>
+app();
+?>
 <app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" unmatch_redirect="/">
 	<installation>
         # HatenaSyntaxを利用しているのでinstallします
