@@ -5,9 +5,6 @@ import('jp.nequal.pear.PackageProjector');
 
 class OpenpearRelease extends Dao implements AtomInterface
 {
-    protected $_database_ = 'openpear';
-    protected $_table_ = 'release';
-    
     protected $id;
     protected $package_id;
     protected $maintainer_id;

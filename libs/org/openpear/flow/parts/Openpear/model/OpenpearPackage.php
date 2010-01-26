@@ -1,11 +1,9 @@
 <?php
 import('org.rhaco.storage.db.Dao');
+module('exception.OpenpearException');
 
 class OpenpearPackage extends Dao
 {
-    protected $_database_ = 'openpear';
-    protected $_table_ = 'package';
-    
     protected $id;
     protected $name;
     protected $description;
@@ -266,5 +264,24 @@ class OpenpearPackage extends Dao
                 $s = "";
         }
         return $s;
+    }
+    static public function getActiveCategories($limit=10){
+        $categories = array();
+        try {
+            $packages = C(__CLASS__)->find_all(new Paginator($limit*5, 1), Q::order('-recent_changeset'));
+            foreach($packages as $package){
+                foreach($package->package_tags() as $package_tag){
+                    if($package_tag->prime() === true && !isset($categories[$package_tag->tag()->name()])){
+                        $categories[$package_tag->tag()->name()] = $package_tag->tag();
+                        if(count($categories) >= $limit){
+                            break 2;
+                        }
+                    }
+                }
+            }
+        } catch(Exception $e){
+            $categories = C(OpenpearTag)->find_all(new Paginator($limit, 1), Q::order('name'));
+        }
+        return $categories;
     }
 }

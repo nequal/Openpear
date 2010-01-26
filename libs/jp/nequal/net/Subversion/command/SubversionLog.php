@@ -1,8 +1,8 @@
 <?php
-import('jp.nequal.net.Subversion');
-import('jp.nequal.net.Subversion.exception.SubversionLogException');
+module('command.SubversionCommand');
+module('exception.SubversionLogException');
 
-class SubversionLog extends Subversion
+class SubversionLog extends SubversionCommand
 {
     protected $_command_ = 'log';
     protected $raw = false;

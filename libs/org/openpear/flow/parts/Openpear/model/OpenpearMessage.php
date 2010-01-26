@@ -2,16 +2,13 @@
 require_once 'HatenaSyntax.php';
 import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.mail.Gmail');
-
+module('exception.OpenpearException');
 /**
  * 
- * @const account gmailアカウント:パスワード
+ * @const account gmailアカウント,パスワード
  */
 class OpenpearMessage extends Dao
 {
-    protected $_database_ = 'openpear';
-    protected $_table_ = 'message';
-    
     protected $id;
     protected $maintainer_to_id;
     protected $maintainer_from_id;
@@ -44,14 +41,12 @@ class OpenpearMessage extends Dao
     }
     protected function __save_verify__(){
         if(!($this->type() === 'system' || $this->type() === 'system_notice') && $this->is_maintainer_from_id()){
-            Exceptions::add(new RequiredDaoException('maintainer_from_id required'), 'maintainer_from_id');
+            Exceptions::add(new OpenpearException('maintainer_from_id required'), 'maintainer_from_id');
         }
     }
     protected function __after_create__(){
         if($this->mail()){
-            $gmail_account = module_const("account");
-            if(strpos($gmail_account,":") === false) throw new RuntimeException("account: undef");
-            list($account,$password) = explode(":",$gmail_account,2);
+            list($account,$password) = module_const("gmail_account");
             $mail = new Gmail($account,$password);
             $mail->to($this->maintainer_to()->mail());
             $mail->from($mail->from(), 'Openpear');
@@ -72,6 +67,7 @@ class OpenpearMessage extends Dao
     protected function __get_maintainer_to__(){
         if($this->maintainer_to instanceof OpenpearMaintainer === false){
             try{
+            	// TODO Maintainer
                 $this->maintainer_to = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_to_id()));
             }catch(Exception $e){}
         }
@@ -80,6 +76,7 @@ class OpenpearMessage extends Dao
     protected function __get_maintainer_from__(){
         if($this->maintainer_from instanceof OpenpearMaintainer === false){
             try{
+            	// TODO Maintainer
                 $this->maintainer_from = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_from_id()));
             }catch(Exception $e){}
         }

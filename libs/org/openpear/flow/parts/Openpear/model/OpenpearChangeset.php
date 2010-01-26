@@ -3,9 +3,6 @@ import('org.rhaco.storage.db.Dao');
 
 class OpenpearChangeset extends Dao
 {
-    protected $_database_ = 'openpear';
-    protected $_table_ = 'changeset';
-    
     protected $revision;
     protected $maintainer_id;
     protected $package_id;
@@ -29,7 +26,7 @@ class OpenpearChangeset extends Dao
     
     protected function __after_create__(){
         // 美しくない
-        $path = preg_replace('@^file://@', '', def('svn_root'));
+        $path = preg_replace('@^file://@', '', module_const('svn_root'));
         $message = Subversion::look('log', array($path), array('revision' => $this->revision));
         $timeline = new OpenpearTimeline();
         $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">committed</span> to <a href="%s">%s</a>',

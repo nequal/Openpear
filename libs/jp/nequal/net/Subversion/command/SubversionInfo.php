@@ -1,8 +1,8 @@
 <?php
-import('jp.nequal.net.Subversion');
-import('jp.nequal.net.Subversion.exception.SubversionInfoException');
+module('command.SubversionCommand');
+module('exception.SubversionInfoException');
 
-class SubversionInfo extends Subversion
+class SubversionInfo extends SubversionCommand
 {
     protected $_command_ = 'info';
     

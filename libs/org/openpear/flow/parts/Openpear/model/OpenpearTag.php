@@ -3,9 +3,6 @@ import('org.rhaco.storage.db.Dao');
 
 class OpenpearTag extends Dao
 {
-    protected $_database_ = 'openpear';
-    protected $_table_ = 'tag';
-    
     protected $id;
     protected $name;
     protected $prime;
@@ -26,7 +23,7 @@ class OpenpearTag extends Dao
     protected function __str__(){
         return $this->name();
     }
-    protected function __get_package__s(){
+    protected function __get_packages__(){
         if(!empty($this->packages)) return $this->packages;
         $packages = array();
         try {

@@ -1,4 +1,5 @@
 <?php
+module('model.OpenpearMaintainer');
 
 class OpenpearAccountModule extends Object
 {
