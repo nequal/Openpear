@@ -18,6 +18,7 @@
 	</installation>
     <description>
         http://github.com/nequal/Openpear
+        http://groups.google.com/group/openpear-project
     </description>
 
     <handler error_template="error.html">
