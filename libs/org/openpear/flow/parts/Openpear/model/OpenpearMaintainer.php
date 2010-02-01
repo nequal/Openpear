@@ -92,7 +92,7 @@ class OpenpearMaintainer extends Dao
         $message->save();
     }
     
-    protected function __is_url__(){
+    protected function __verify_url__(){
         if(!empty($this->url) && !preg_match('/s?https?:\/\/[\-_\.!~*\'\(\)a-zA-Z0-9;\/\?:@&=\+$,%#]+/i', $this->url)){
             return false;
         }

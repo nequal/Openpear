@@ -241,8 +241,7 @@ class OpenpearPackage extends Dao
         }
         $this->primary_tag;
     }
-
-    protected function __is_name__(){
+    protected function __verify_name__(){
          if(!preg_match('@^[A-Za-z][A-Za-z0-9_]+$@', $this->name)){
              Exceptions::add(new OpenpearException('name is NOT valid. ### FIXME ###'), 'name');
          }

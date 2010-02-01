@@ -642,6 +642,9 @@ class Openpear extends Flow
     protected $allowed_ext = array('php', 'phps', 'html', 'css', 'pl', 'txt', 'js', 'htaccess');
     static protected $__allowed_ext__ = 'type=string[]';
     
+    /**
+     * @const string $svn_url リポジトリのURL
+     */
     public function source_browse($package_name, $path=''){
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $path = rtrim(ltrim($path, ' /.'), '/');
@@ -668,6 +671,9 @@ class Openpear extends Flow
         $this->vars('real_url', File::absolute(module_const('svn_url'), implode('/', array($package->name(), $root, $path))));
         $this->vars('externals', Subversion::cmd('propget', array('svn:externals', $info['url'])));
     }
+    /**
+     * @const string $svn_root　リポジトリのルートパス
+     */
     public function browse_tag($package_name, $tag, $path){
         $this->vars('tag', $tag);
         return $this->browse($package_name, $path);

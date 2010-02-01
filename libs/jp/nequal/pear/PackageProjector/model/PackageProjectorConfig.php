@@ -140,17 +140,17 @@ class PackageProjectorConfig extends Object
     protected function __get_version_api_stab__(){
         return empty($this->version_api_stab)? $this->version_release_stab(): $this->version_api_stab;
     }
-    protected function __is_version_release_ver__(){    
+    protected function __verify_version_release_ver__(){    
         if(!$this->is_version($this->version_release_ver)){
             Exceptions::add(new OpenpearException(), 'version_release_ver');
         }
     }
-    protected function __is_version_api_ver__(){
+    protected function __verify_version_api_ver__(){
         if(!empty($this->version_api_ver) && !$this->is_version($this->version_api_ver)){
             Exceptions::add(new OpenpearException(), 'version_api_ver');
         }
     }
-    protected function __is_package_baseinstalldir__(){
+    protected function __verify_package_baseinstalldir__(){
         if(!preg_match('@^[A-Za-z0-9\.\/\_\-]+$@', $this->package_baseinstalldir)){
             Exceptions::add(new OpenpearException(), 'package_baseinstalldir');
         }
