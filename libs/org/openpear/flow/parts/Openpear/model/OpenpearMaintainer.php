@@ -49,6 +49,10 @@ class OpenpearMaintainer extends Dao
             $this->svn_password = crypt($this->new_password());
         }
     }
+	/**
+	 * @see vendors/org/rhaco/storage/db/Dao/Dao#__after_save__()
+	 * @const string $svn_passwd_file リポジトリにアクセスするパスワード
+	 */
     protected function __after_save__(){
         $template = new Template();
         $template->vars('maintainers', C(OpenpearMaintainer)->find_all());

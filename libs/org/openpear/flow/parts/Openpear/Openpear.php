@@ -16,6 +16,9 @@ module('model.OpenpearTag');
 module('model.OpenpearPackage');
 module('model.OpenpearRelease');
 module('model.OpenpearReleaseQueue');
+module('model.OpenpearCharge');
+module('model.OpenpearTimeline');
+module('model.OpenpearFavorite');
 
 class Openpear extends Flow
 {
