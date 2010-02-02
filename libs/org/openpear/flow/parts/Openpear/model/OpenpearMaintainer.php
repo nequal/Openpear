@@ -1,11 +1,8 @@
 <?php
 import('org.rhaco.storage.db.Dao');
-
+module('model.OpenpearMessage');
 class OpenpearMaintainer extends Dao
 {
-    protected $_database_ = 'openpear';
-    protected $_table_ = 'maintainer';
-    
     protected $id;
     protected $name;
     protected $mail;
@@ -52,10 +49,14 @@ class OpenpearMaintainer extends Dao
             $this->svn_password = crypt($this->new_password());
         }
     }
+	/**
+	 * @see vendors/org/rhaco/storage/db/Dao/Dao#__after_save__()
+	 * @const string $svn_passwd_file リポジトリにアクセスするパスワード
+	 */
     protected function __after_save__(){
         $template = new Template();
         $template->vars('maintainers', C(OpenpearMaintainer)->find_all());
-        File::write(def('svn_passwd_file'), $template->read('files/passwd.txt'));
+        File::write(module_const('svn_passwd_file'), $template->read('files/passwd.txt'));
     }
     
     /**
@@ -78,6 +79,7 @@ class OpenpearMaintainer extends Dao
     protected function __after_create__(){
         $registered_message = new Template();
         $registered_message->vars('maintainer', $this);
+        
         $message = new OpenpearMessage();
         $message->maintainer_to_id($this->id());
         $message->subject('Welcome to Openpear!');
@@ -94,7 +96,7 @@ class OpenpearMaintainer extends Dao
         $message->save();
     }
     
-    protected function __is_url__(){
+    protected function __verify_url__(){
         if(!empty($this->url) && !preg_match('/s?https?:\/\/[\-_\.!~*\'\(\)a-zA-Z0-9;\/\?:@&=\+$,%#]+/i', $this->url)){
             return false;
         }

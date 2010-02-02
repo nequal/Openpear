@@ -1,11 +1,11 @@
 <?php
-import('jp.nequal.net.Subversion');
-import('jp.nequal.net.Subversion.exception.SubversionCopyException');
+module('command.SubversionCommand');
+module('exception.SubversionCopyException');
 
-class SubversionCopy extends Subversion
+class SubversionCopy extends SubversionCommand
 {
     protected $_command_ = 'copy';
-    protected $_lang_ = 'C';
+    static protected $_lang_ = 'C';
     
     protected function __exec__(){
         $ret = parent::__exec__();

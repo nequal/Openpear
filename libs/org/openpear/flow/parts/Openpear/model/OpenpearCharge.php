@@ -3,9 +3,6 @@ import('org.rhaco.storage.db.Dao');
 
 class OpenpearCharge extends Dao
 {
-    protected $_database_ = 'openpear';
-    protected $_table_ = 'charge';
-    
     protected $package_id;
     protected $maintainer_id;
     protected $role;
@@ -25,7 +22,7 @@ class OpenpearCharge extends Dao
         $template = new Template();
         $template->vars('maintainers', $maintainers);
         $template->vars('packages', $packages);
-        File::write(def('svn_access_file'), $template->read('files/access.txt'));
+        File::write(module_const('svn_access_file'), $template->read('files/access.txt'));
     }
     
     protected function __get_package__(){

@@ -1,8 +1,8 @@
 <?php
-import('jp.nequal.net.Subversion');
-import('jp.nequal.net.Subversion.exception.SubversionPropgetException');
+module('command.SubversionCommand');
+module('exception.SubversionPropgetException');
 
-class SubversionPropget extends Subversion
+class SubversionPropget extends SubversionCommand
 {
     protected $_command_ = 'propget';
 }

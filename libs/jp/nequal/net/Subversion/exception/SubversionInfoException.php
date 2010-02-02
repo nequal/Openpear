@@ -1,4 +1,4 @@
 <?php
-import('jp.nequal.net.Subversion.exception.SubversionException');
+module('exception.SubversionException');
 class SubversionInfoException extends SubversionException
 {}

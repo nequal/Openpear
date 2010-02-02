@@ -1,24 +1,30 @@
 <?php
+module('model.OpenpearMaintainer');
+
 class OpenpearTemplf
 {
-    final static public function isme(OpenpearMaintainer $maintainer){
-        $user = Request::login_user();
-        if($user instanceof OpenpearMaintainer && $user->id() == $maintainer->id()){
+	private $user;
+	
+	protected function __new__($user){
+		$this->user = $user;
+	}
+    final public function isme(OpenpearMaintainer $maintainer){
+        if($this->user instanceof OpenpearMaintainer && $this->user->id() == $maintainer->id()){
             return true;
         }
         return false;
     }
-    final static public function str($a){
+    final public function str($a){
         return str($a);
     }
-    final static public function gravatar($mail, $size=16){
+    final public function gravatar($mail, $size=16){
         return sprintf('http://www.gravatar.com/avatar/%s?s=%d', md5($mail), $size);
     }
-    final static public function svn_log_msg($revision){
-        $log = Subversion::cmd('log', array(def('svn_root')), array('revision' => $revision));
+    final public function svn_log_msg($revision){
+        $log = Subversion::cmd('log', array(module_const('svn_root')), array('revision' => $revision));
         return (string)$log[0]['msg'];
     }
-    final static public function date_ago($date, $from=null){
+    final public function date_ago($date, $from=null){
         $from = is_null($from)? time(): $from;
         $diff = intval($from - strtotime($date));
         if($diff < 0){
@@ -51,10 +57,10 @@ class OpenpearTemplf
             return $date;
         }
     }
-    final static public function strtotime($str){
+    final public function strtotime($str){
         return strtotime($str);
     }
-    final static public function srcpath_link(OpenpearPackage $package, $path){
+    final public function srcpath_link(OpenpearPackage $package, $path){
         $ret = '';
         $parent = '';
         foreach(explode('/', $path) as $p){
@@ -64,7 +70,7 @@ class OpenpearTemplf
         }
         return $ret;
     }
-    final static public function tlicon($type){
+    final public function tlicon($type){
         switch($type){
             case 'release':
                 return Template::base_media_url(). '/images/global-icon-star.png';
@@ -78,7 +84,7 @@ class OpenpearTemplf
                 return Template::base_media_url(). '/images/global-icon-star.png';
         }
     }
-    final static public function tlalt($type){
+    final public function tlalt($type){
         switch($type){
             case 'release':
                 return 'Release:';
@@ -93,14 +99,14 @@ class OpenpearTemplf
         }
     }
     
-    final static public function count(array $array){
+    final public function count(array $array){
         return count($array);
     }
-    final static public function hash($key='rand'){
+    final public function hash($key='rand'){
         $key = ($key === 'rand')? mt_rand(0, 99999): $key;
         return sha1(md5($key));
     }
-    final static public function d($v){
+    final public function d($v){
         Log::info('########## debug ##########');
         Log::d($v);
     }

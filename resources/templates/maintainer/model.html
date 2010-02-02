@@ -69,7 +69,7 @@
             <rt:if param="{$charge.package().public_level()}" value="0">
               <img src="./images/global-icon-protected.png" alt="this package is protected" class="fright" />
             </rt:if>
-            <rt:if param="{$charge.package().liked($t.login_user())}" value="true">
+            <rt:if param="{$charge.package().liked($t.user())}" value="true">
               <img src="./images/global-icon-star.png" class="fright" />
             <rt:else />
               <a href="{$t.url('package')}/{$charge.package().name()}/like/{$ot.hash('rand')}"><img src="./images/global-icon-star-add.png" class="fright" /></a>

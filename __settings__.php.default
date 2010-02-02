@@ -1,25 +1,14 @@
 <?php
-require_once("/core_path/jump.php");
-App::config_path(__FILE__,"http://localhost/openpear/","/path/work/");
-
-// Log Settings
-Log::config_level("debug");
-
 // DB Settings
-def("org.rhaco.storage.db.Dbc@openpear",
-    "type=org.rhaco.storage.db.module.DbcMysql,host=localhost,dbname=xxx,user=xxx,password=xxx,encode=utf8,prefix=openpear_,upper=false,lower=false");
+def("org.rhaco.storage.db.Dbc@org.openpear.openpear.model",
+    "type=org.rhaco.storage.db.module.DbcMysql,host=localhost,dbname=xxx,user=xxx,password=xxx,encode=utf8");
 
 // Messenger settings (gmail account)
-def('org.openpear.Message@account','notify@openpear.org:password');
+def('org.openpear.flow.parts.Openpear@gmail_account','notify@openpear.org','password');
 
 // SVN Settings
-import('jp.nequal.net.Subversion');
-def('svn_root', 'file:///path/to/repo');
-def('svn_url', 'http://svn.openpear.org');
-def('svn_access_file', '/path/to/openpear.access');
-def('svn_passwd_file', '/path/to/openpear.passwd');
-Subversion::config_path('/opt/local/bin/svn');
+def('org.openpear.flow.parts.Openpear@svn_root', 'file:///path/to/repo');
+def('org.openpear.flow.parts.Openpear@svn_url', 'http://svn.openpear.org');
+def('org.openpear.flow.parts.Openpear@svn_access_file', '/path/to/openpear.access');
+def('org.openpear.flow.parts.Openpear@svn_passwd_file', '/path/to/openpear.passwd');
 
-
-// For PEAR
-set_include_path(path('libs_pear'). PATH_SEPARATOR. get_include_path());
