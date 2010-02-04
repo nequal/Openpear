@@ -155,7 +155,7 @@ class Openpear extends Flow
             try {
                 $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid_user->identity()));
                 $this->user($openid_maintainer->maintainer());
-                if(parent::login()){
+                if($this->login()){
                     $this->success_redirect();
                 }
             } catch(Exception $e){
@@ -163,7 +163,7 @@ class Openpear extends Flow
                 $this->redirect_method('signup');
             }
         }
-        return $this->login();
+        return $this->account_login();
     }
     /**
      * ログアウトする
@@ -475,7 +475,7 @@ class Openpear extends Flow
 		        $this->redirect_method('package',$package->name());
             } catch(Exception $e){}
         }
-        return $this->create();
+        return $this->package_create();
     }
 
     public function package_manage($package_name){

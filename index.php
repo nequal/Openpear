@@ -33,7 +33,7 @@
             <map url="package/(.+)/doc\.(.+?)/(.+)" method="browse_tag" template="package/document.html" />
 
             <map url="account/login" method="account_login" template="account/login.html" success_redirect="/dashboard" />
-            <map url="account/login_openid" method="login_by_openid" success_redirect="/dashboard" />
+            <map url="account/login_openid" method="login_by_openid" template="account/login.html" success_redirect="/dashboard" />
             <map url="account/signup" method="signup" template="account/signup.html" />
             <map url="account/signup_do" method="signup_do" success_redirect="/dashboard" fail_redirect="/account/signup">
             	<arg name="welcome_mail_template" value="messages/registered.txt" />

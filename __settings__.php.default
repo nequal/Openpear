@@ -1,6 +1,6 @@
 <?php
 // DB Settings
-def("org.rhaco.storage.db.Dbc@org.openpear.openpear.model",
+def("org.rhaco.storage.db.Dbc@org.openpear.flow.parts.Openpear",
     "type=org.rhaco.storage.db.module.DbcMysql,host=localhost,dbname=xxx,user=xxx,password=xxx,encode=utf8");
 
 // Messenger settings (gmail account)
