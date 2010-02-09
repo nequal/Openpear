@@ -15,6 +15,9 @@
         php setup.php -write_htaccess /openpear
             
         その後、__settings__.php.defaultを参考に__settings__.phpに追記する
+        
+        # アカウントの作成時にgmailでメールを送信するのでアカウントの設定が必須
+         def('org.openpear.flow.parts.Openpear@gmail_account','*****@gmail.com','password');
 	</installation>
     <description>
         http://github.com/nequal/Openpear
@@ -83,6 +86,5 @@
         </maps>
     </handler>
     
-    <handler class="com.tokushimakazutaka.flow.parts.Docs" />
-    <handler class="org.rhaco.flow.parts.Crud" />
+    <handler class="com.tokushimakazutaka.flow.parts.Developper" url="dev" />
 </app>
