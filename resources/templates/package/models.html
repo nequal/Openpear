@@ -19,7 +19,7 @@
   <div class="frame-class" id="sub-title">
     <div class="container-class">
       <h2 class="inline fleft"><a href="{$t.url('packages')}">Packages</a></h2>
-      <form action="{$t.url('packages')}" id="sub-search-form" method="post">
+      <form action="{$t.url('packages')}" id="sub-search-form" method="post" rt:ref="true">
         <input name="q" type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
         <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
       </form>
