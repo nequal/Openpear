@@ -2,6 +2,12 @@
 
 This is a web system of openpear.org.
 
+# Community
+
+- Openpear Project (Google Groups)
+    - <http://groups.google.com/group/openpear-project>
+
+
 # New BSD License
 
     Copyright (c) 2009, nequal.
