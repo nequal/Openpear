@@ -25,7 +25,7 @@ class OpenpearChangeset extends Dao
     }
     
     protected function __after_create__(){
-        // 美しくない
+        // TODO 美しくない
         $path = preg_replace('@^file://@', '', module_const('svn_root'));
         $message = Subversion::look('log', array($path), array('revision' => $this->revision));
         $timeline = new OpenpearTimeline();

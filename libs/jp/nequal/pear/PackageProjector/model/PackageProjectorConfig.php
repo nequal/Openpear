@@ -70,7 +70,7 @@ class PackageProjectorConfig extends Object
     /**
      * リクエストから一括で登録するとかにつかう。結構決め打ち
      */
-    public function set_vars(array $vars){
+    protected function __cp__(array $vars){
         $access_vars = $this->get_access_vars();
         foreach($vars as $name => $value){
             if(in_array($name, array('maintainer', 'file', 'dep'))){

@@ -178,7 +178,7 @@ class Openpear extends Flow
         if($this->is_post()){
             $account = new OpenpearMaintainer();
             try {
-                $account->set_vars($this->vars());
+                $account->cp($this->vars());
                 $account->new_password($this->in_vars('new_password'));
                 $account->new_password_conf($this->in_vars('new_password_conf'));
                 $account->save();
@@ -272,7 +272,7 @@ class Openpear extends Flow
         try {
             if(!$this->is_post()) throw new OpenpearException('request method is unsupported');
             $maintainer = $this->user();
-            $maintainer->set_vars($this->vars());
+            $maintainer->cp($this->vars());
             $maintainer->save(true);
             Exceptions::validation();
         } catch(Exception $e){
@@ -343,7 +343,7 @@ class Openpear extends Flow
         if($this->is_post()){
             try {
                 $message = new OpenpearMessage();
-                $message->set_vars($this->vars());
+                $message->cp($this->vars());
                 $message->save();
                 return;
             } catch(Exception $e){}
@@ -358,7 +358,7 @@ class Openpear extends Flow
         $this->login_required();
         if($this->is_post()){
             $message = new OpenpearMessage();
-            $message->set_vars($this->vars());
+            $message->cp($this->vars());
             $message->save(true);
             $this->success_redirect();
         }
@@ -519,7 +519,7 @@ class Openpear extends Flow
         if($this->is_post()){
             try {
                 $package = new OpenpearPackage();
-                $package->set_vars($this->vars());
+                $package->cp($this->vars());
                 $package->author_id($user->id());
                 $package->save();
                 $package->add_maintainer($user);
@@ -586,7 +586,7 @@ class Openpear extends Flow
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
             $package->permission($this->user());
-            $package->set_vars($this->vars());
+            $package->cp($this->vars());
             $this->vars('packge', $package);
             return $this;
         } catch(Exception $e){}
@@ -604,7 +604,7 @@ class Openpear extends Flow
             $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('id')));
             $package->permission($this->user());
             $this->vars('name', $package->name());
-            $package->set_vars($this->vars());
+            $package->cp($this->vars());
             $package->save();
             C($package)->commit();
             // $this->success_redirect();
@@ -660,7 +660,7 @@ class Openpear extends Flow
                 $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
                 $charge = $package->permission($this->user());
                 $build_conf = new PackageProjectorConfig();
-                $build_conf->set_vars($this->vars());
+                $build_conf->cp($this->vars());
                 if($this->is_vars('extra_conf')) $build_conf->parse_ini_string($this->in_vars('extra_conf'));
                 foreach(C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge){
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
@@ -688,14 +688,14 @@ class Openpear extends Flow
                 $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
                 $package->permission($this->user());
                 $build_conf = new PackageProjectorConfig();
-                $build_conf->set_vars($this->vars());
+                $build_conf->cp($this->vars());
                 if($this->is_vars('extra_conf')) $build_conf->parse_ini_string($this->in_vars('extra_conf'));
                 foreach(C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge){
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
                 $release_queue = new OpenpearReleaseQueue();
-                $release_queue->set_vars($this->vars());
+                $release_queue->cp($this->vars());
                 $release_queue->package_id($package->id());
                 $release_queue->maintainer_id($this->user()->id());
                 $release_queue->build_conf($build_conf->get_ini());
