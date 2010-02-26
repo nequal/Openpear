@@ -40,7 +40,7 @@ class Openpear extends Flow
                 $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid_user->identity()));
                 $this->user($openid_maintainer->maintainer());
                 if($this->login()){
-                    $this->success_redirect();
+                	$this->redirect_by_map("success_redirect");
                 }
             } catch(Exception $e){
                 $this->sessions('openid_identity', $openid_user->identity());
@@ -197,9 +197,9 @@ class Openpear extends Flow
             }
             $this->user($account);
             parent::login();
-            $this->success_redirect();
+            $this->redirect_by_map("success_redirect");
         }
-        $this->fail_redirect();
+        $this->redirect_by_map("fail_redirect");
     }
     /**
      * パッケージの詳細
@@ -299,7 +299,7 @@ class Openpear extends Flow
                 return;
             }
         } catch(Exception $e){}
-        $this->fail_redirect();
+        $this->redirect_by_map("fail_redirect");
     }
     /**
      * 受信箱
@@ -360,9 +360,9 @@ class Openpear extends Flow
             $message = new OpenpearMessage();
             $message->cp($this->vars());
             $message->save(true);
-            $this->success_redirect();
+            $this->redirect_by_map("success_redirect");
         }
-        $this->fail_redirect();
+        $this->redirect_by_map("fail_redirect");
     }
 
     
@@ -607,7 +607,6 @@ class Openpear extends Flow
             $package->cp($this->vars());
             $package->save();
             C($package)->commit();
-            // $this->success_redirect();
             $this->redirect_method('package_manage',$package->name());
         } catch(Exception $e){}
         return $this->update($package_name);
