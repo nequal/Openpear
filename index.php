@@ -1,11 +1,6 @@
 <?php require dirname(__FILE__). '/__settings__.php'; app(); ?>
 <app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" unmatch_redirect="/">
 	<installation>
-        # HatenaSyntaxを利用しているのでinstallします
-        sudo pear upgrade
-        sudo pear channel-discover openpear.org
-        sudo pear install openpear/HatenaSyntax-beta
-        
         mysqlに resources/schema.sql に流し込んでテーブル作成
         # 基本設定
         php setup.php
@@ -24,9 +19,10 @@
 
     <handler error_template="error.html">
         <maps class="org.openpear.flow.parts.Openpear">
-            <map name="top" method="index" template="index.html" summary="サイトトップ" />
+            <map name="top" method="index" template="index.html" />
             <map url="search"  method="search" />
             <map url="dashboard" method="dashboard" template="dashboard.html" name="dashboard" />
+            
             <map url="dashboard/message/hide" method="dashboard_message_hide" />
 
             <map url="package/(.+)/doc" method="browse" template="package/document.html" />
@@ -34,7 +30,7 @@
             <map url="package/(.+)/doc\.(.+?)/(.+)" method="browse_tag" template="package/document.html" />
 
             <map url="account/login" method="do_login" template="account/login.html">
-                <arg name="success_redirect" value="dashboard" />
+                <arg name="login_redirect" value="dashboard" />
             </map>
             <map url="account/login_openid" method="login_by_openid" template="account/login.html">
                 <arg name="success_redirect" value="dashboard" />
@@ -46,7 +42,7 @@
             	<arg name="fail_redirect" value="signup" />
             </map>
             <map url="account/logout" method="do_logout">
-                <arg name="success_redirect" value="top" />
+                <arg name="logout_redirect" value="top" />
             </map>
             
 	        <map url="maintainer/(.+)" method="maintainer_profile" template="maintainer/model.html" />                    

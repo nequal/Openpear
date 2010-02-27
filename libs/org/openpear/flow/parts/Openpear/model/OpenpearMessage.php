@@ -1,7 +1,8 @@
 <?php
-require_once 'HatenaSyntax.php';
 import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.mail.Gmail');
+import('org.yabeken.service.Pea');
+Pea::import('openpear.org/HatenaSyntax');
 module('exception.OpenpearException');
 /**
  * 
@@ -38,6 +39,9 @@ class OpenpearMessage extends Dao
         $this->created = time();
         $this->unread = true;
         $this->type = 'normal';
+    }
+    protected function __fm_unread__(){
+    	return ($this->unread) ? "unread" : "";
     }
     protected function __save_verify__(){
         if(!($this->type() === 'system' || $this->type() === 'system_notice') && $this->is_maintainer_from_id()){

@@ -57,7 +57,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr class="{$loop_evenodd}<rt:if param="{$message.is_unread()}"> unread</rt:if>">
+          <tr class="even {$message.fm_unread()}">
             <td><img src="images/global-icon-mail.png" /> Openpear </td>
             <td><a href="">{$t.htmlencode($message.subject())}</a></td>
             <td class="message-list-date">{$message.fm_created()}</td>
