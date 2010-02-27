@@ -6,11 +6,11 @@
         php setup.php
         # .htaccessを作成してpathinfoをきれいに        
         php setup.php -write_htaccess /openpear
-            
-        その後、__settings__.php.defaultを参考に__settings__.phpに追記する
         
         # アカウントの作成時にgmailでメールを送信するのでアカウントの設定が必須
-         def('org.openpear.flow.parts.Openpear@gmail_account','*****@gmail.com','password');
+         def('org.openpear.flow.parts.Openpear@gmail_account','**@gmail.com**','**password**');
+        # DBの接続設定が必要
+         def("org.rhaco.storage.db.Dbc@org.openpear.flow.parts.Openpear","type=org.rhaco.storage.db.module.DbcMysql,dbname=**openpear**,user=**root**,password=**root**,encode=utf8");
 	</installation>
     <description>
         http://github.com/nequal/Openpear
