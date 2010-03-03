@@ -15,11 +15,14 @@ class OpenpearAccountModule extends Object
 		                    	,Q::b(Q::eq('mail', $request->in_vars('mail')))
 		                    )
 		                );
-	            if(is_object($user) && !$user->certify($request->in_vars('password'))){
-	                Exceptions::add(new Exception('password is incorrect'), 'password');
+	            if(is_object($user)){
+	            	if(!$user->certify($request->in_vars('password'))){
+		                Exceptions::add(new Exception('password is incorrect'), 'password');
+		            }else{
+			            $request->user($user);
+			            return true;
+		            }
 	            }
-	            $request->user($user);
-	            return true;
             } catch(Exception $e){
                 Exceptions::add($e, 'mail');
             }
