@@ -10,9 +10,11 @@ class OpenpearAccountModule extends Object
         if($request->is_post()){
             try{
                 $user = C(OpenpearMaintainer)->find_get(
-                    Q::eq('mail', $request->in_vars('mail')),
-                    Q::or_block(Q::eq('name', $request->in_vars('login')))
-                );
+		                    Q::ob(
+		                    	Q::b(Q::eq('name', $request->in_vars('login')))
+		                    	,Q::b(Q::eq('mail', $request->in_vars('mail')))
+		                    )
+		                );
 	            if(is_object($user) && !$user->certify($request->in_vars('password'))){
 	                Exceptions::add(new Exception('password is incorrect'), 'password');
 	            }
