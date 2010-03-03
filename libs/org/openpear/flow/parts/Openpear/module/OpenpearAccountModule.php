@@ -16,11 +16,11 @@ class OpenpearAccountModule extends Object
 		                    )
 		                );
 	            if(is_object($user)){
-	            	if(!$user->certify($request->in_vars('password'))){
-		                Exceptions::add(new Exception('password is incorrect'), 'password');
-		            }else{
+	            	if($user->certify($request->in_vars('password'))){
 			            $request->user($user);
 			            return true;
+		            }else{
+		                Exceptions::add(new Exception('password is incorrect'), 'password');
 		            }
 	            }
             } catch(Exception $e){
