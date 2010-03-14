@@ -89,5 +89,5 @@
         </maps>
     </handler>
     
-    <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" />
+    <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" release="false" />
 </app>

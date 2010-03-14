@@ -159,7 +159,7 @@ class PackageProjectorConfig extends Object
         return isset(self::$_keys_[$section]);
     }
     public function parse_ini_string($ini){
-        $config = parse_ini_string($ini, true);
+        $config = $this->func_parse_ini_string($ini, true);
         if(empty($config)) return ;
         $indexes = array('maintainer' => 0, 'file' => 0, 'dep' => 0);
         foreach($config as $k => $v){
@@ -200,5 +200,15 @@ class PackageProjectorConfig extends Object
                 $indexes[$parent_key]++;
             }
         }
+    }
+    private function func_parse_ini_string($ini, $process_sections=false){
+    	if(function_exists('parse_ini_string')) return parse_ini_string($ini,$process_sections);
+        $tmpfile = tempnam(sys_get_temp_dir(), 'INI');
+        if(file_put_contents($tmpfile, $ini) !== false){
+            $r = parse_ini_file($tmpfile, $process_sections);
+            unlink($tmpfile);
+            return $r;
+        }
+        return false;
     }
 }
