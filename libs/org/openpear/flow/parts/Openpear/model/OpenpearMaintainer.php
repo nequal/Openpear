@@ -56,7 +56,7 @@ class OpenpearMaintainer extends Dao
     protected function __after_save__(){
         $template = new Template();
         $template->vars('maintainers', C(OpenpearMaintainer)->find_all());
-        File::write(module_const('svn_passwd_file'), $template->read('files/passwd.txt'));
+        File::write(module_const('svn_passwd_file',work_path("openpear.passwd")), $template->read('files/passwd.txt'));
     }
     
     /**
