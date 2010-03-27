@@ -5,7 +5,7 @@
         # 基本設定
         php setup.php
         # .htaccessを作成してpathinfoをきれいに        
-        php setup.php -write_htaccess /openpear
+        php setup.php -htaccess /openpear
         
         # アカウントの作成時にgmailでメールを送信するのでアカウントの設定が必須
          def('org.openpear.flow.parts.Openpear@gmail_account','**@gmail.com**','**password**');
