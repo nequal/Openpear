@@ -14,7 +14,7 @@ class SubversionLog extends SubversionCommand
         }
         $this->options('xml');
         $result = array();
-        if(Tag::setof($tag, parent::__exec__(), 'log')){
+        if(Tag::setof($tag, parent::__exec__()->stdout(), 'log')){
             foreach($tag->in('logentry') as $logentry) $result[] = $logentry->hash();
             return $result;
         }

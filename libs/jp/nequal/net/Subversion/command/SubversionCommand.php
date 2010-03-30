@@ -41,10 +41,14 @@ class SubversionCommand extends Object
         $this->__before_exec__();
         $ret = $this->__exec__();
         $this->__after_exec__($ret);
-        return $ret;
+        return $ret->stdout();
     }
     protected function __before_exec__(){}
-    protected function __after_exec__(&$ret){}
+    protected function __after_exec__(&$ret){
+        if($ret instanceof Command && $ret->stderr()){
+            throw new SubversionException($ret->stderr());
+        }
+    }
     protected function __exec__(){
         $cmd = isset(self::$_lang_)? sprintf('env LANG=%s ', self::$_lang_): '';
         $cmd .= self::$__cmd_path__;
@@ -64,9 +68,6 @@ class SubversionCommand extends Object
         return self::__exec_cmd__($cmd);
     }
     static protected function __exec_cmd__($cmd){
-        Log::debug('called cmd: '. $cmd);
-        ob_start();
-        passthru($cmd);
-        return ob_get_clean();
+        return new Command($cmd);
     }
 }

@@ -253,7 +253,7 @@ class OpenpearPackage extends Dao
     protected function __verify_external_repository__(){
         if($this->is_external_repository_type()){
             if(empty($this->external_repository)){
-                Exceptions::add(new OpenpearException('External Repository is required'));
+                Exceptions::add(new OpenpearException('External Repository is required'), 'external_repository');
             }
         }
     }

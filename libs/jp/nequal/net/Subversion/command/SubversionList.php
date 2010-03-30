@@ -8,7 +8,7 @@ class SubversionList extends SubversionCommand
     
     protected function __exec__(){
         $this->options('xml');
-        if(Tag::setof($tag, parent::__exec__(), 'list')){
+        if(Tag::setof($tag, parent::__exec__()->stdout(), 'list')){
             $result = array();
             foreach($tag->in('entry') as $t) $result[] = $t->hash();
             return $result;

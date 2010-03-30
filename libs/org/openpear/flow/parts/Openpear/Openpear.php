@@ -528,6 +528,7 @@ class Openpear extends Flow
 		        $this->redirect_method('package',$package->name());
             } catch(Exception $e){}
         }
+        $this->save_current_vars();
         $this->redirect_method("package_create");
     }
 	/**

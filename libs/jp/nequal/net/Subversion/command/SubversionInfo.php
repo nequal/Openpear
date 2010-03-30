@@ -10,7 +10,7 @@ class SubversionInfo extends SubversionCommand
         $this->options('xml');
     }
     protected function __after_exec__(&$ret){
-        if(Tag::setof($tag, $ret, 'info')){
+        if(Tag::setof($tag, $ret->stdout(), 'info')){
             foreach($tag->in('entry') as $entry){
                 $ret = $entry->hash();
                 return;
