@@ -250,6 +250,13 @@ class OpenpearPackage extends Dao
          }
          return true;
     }
+    protected function __verify_external_repository__(){
+        if($this->is_external_repository_type()){
+            if(empty($this->external_repository)){
+                Exceptions::add(new OpenpearException('External Repository is required'));
+            }
+        }
+    }
 
     public function repoistory_type_cmd() {
         switch ($this->external_repository_type()) {
