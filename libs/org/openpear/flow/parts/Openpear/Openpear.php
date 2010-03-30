@@ -9,6 +9,7 @@ import('jp.nequal.net.Subversion');
 module('exception.OpenpearException');
 module('module.OpenpearAccountModule');
 module('module.OpenpearTemplf');
+module('model.OpenpearChangeset');
 module('model.OpenpearMaintainer');
 module('model.OpenpearOpenidMaintainer');
 module('model.OpenpearPackage');
