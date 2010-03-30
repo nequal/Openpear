@@ -11,6 +11,9 @@
          def('org.openpear.flow.parts.Openpear@gmail_account','**@gmail.com**','**password**');
         # DBの接続設定が必要
          def("org.rhaco.storage.db.Dbc@org.openpear.flow.parts.Openpear","type=org.rhaco.storage.db.module.DbcMysql,dbname=**openpear**,user=**root**,password=**root**,encode=utf8");
+         
+        Subversion の設定後，新規プロジェクト用のディレクトリ構成を生成する
+        php setup.php -generate_skelton
 	</installation>
     <description>
         http://github.com/nequal/Openpear
