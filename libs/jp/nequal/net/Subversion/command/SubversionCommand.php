@@ -41,7 +41,11 @@ class SubversionCommand extends Object
         $this->__before_exec__();
         $ret = $this->__exec__();
         $this->__after_exec__($ret);
-        return $ret->stdout();
+        if($ret instanceof Command){
+            return $ret->stdout();
+        } else {
+            return $ret;
+        }
     }
     protected function __before_exec__(){}
     protected function __after_exec__(&$ret){
