@@ -34,7 +34,7 @@ class SubversionCommand extends Object
             $cmd .= ' ';
             $cmd .= escapeshellarg($var);
         }
-        return self::__exec_cmd__($cmd);
+        return self::__exec_cmd__($cmd)->stdout();
     }
     
     public function exec(){
