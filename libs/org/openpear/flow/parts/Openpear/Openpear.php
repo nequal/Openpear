@@ -862,7 +862,24 @@ class Openpear extends Flow
             C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id'))
         )->output();
     }
-
+    
+    /**
+     * Subversion リポジトリの基本ディレクトリ構成を生成する
+     */
+    static public function __setup_generate_skelton__(Request $req){
+        $base_dir = $req->in_vars('path', module_const('svn_skelton', work_path('skelton')));
+        File::mkdir($base_dir);
+        File::mkdir(File::path($base_dir, 'doc'));
+        File::mkdir(File::path($base_dir, 'doc/ja'));
+        File::mkdir(File::path($base_dir, 'trunk'));
+        File::mkdir(File::path($base_dir, 'tags'));
+        File::mkdir(File::path($base_dir, 'branches'));
+        File::write(File::path($base_dir, 'doc/ja/README'), text('
+            * Documentation
+            このパッケージにはまだドキュメントが存在しません
+        '));
+    }
+    
     /***
 		C(OpenpearMaintainer)->find_all();
 		eq(true,true);
