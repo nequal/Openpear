@@ -11,9 +11,20 @@
          def('org.openpear.flow.parts.Openpear@gmail_account','**@gmail.com**','**password**');
         # DBの接続設定が必要
          def("org.rhaco.storage.db.Dbc@org.openpear.flow.parts.Openpear","type=org.rhaco.storage.db.module.DbcMysql,dbname=**openpear**,user=**root**,password=**root**,encode=utf8");
-         
-        Subversion の設定後，新規プロジェクト用のディレクトリ構成を生成する
+
+        # Subversion の設定
+        svnadmin で リポジトリ作成
+
+        # __settings__.php に以下の設定を自分の環境に合わせて適当に変更して記述
+        def('org.openpear.flow.parts.Openpear@svn_root', 'file:///Users/riaf/tmp/optest2');
+        def('org.openpear.flow.parts.Openpear@svn_url', 'http://svn.openpear.org');
+        def('org.openpear.flow.parts.Openpear@svn_access_file', '/Users/riaf/tmp/optest2/openpear.access');
+        def('org.openpear.flow.parts.Openpear@svn_passwd_file', '/Users/riaf/tmp/optest2/openpear.passwd');
+        def('jp.nequal.net.Subversion@cmd_path', '/opt/local/bin/svn');
+
+        # Subversion の設定後，新規プロジェクト用のディレクトリ構成を生成する
         php setup.php -generate_skeleton
+
 	</installation>
     <description>
         http://github.com/nequal/Openpear
