@@ -866,8 +866,8 @@ class Openpear extends Flow
     /**
      * Subversion リポジトリの基本ディレクトリ構成を生成する
      */
-    static public function __setup_generate_skelton__(Request $req){
-        $base_dir = $req->in_vars('path', module_const('svn_skelton', work_path('skelton')));
+    static public function __setup_generate_skeleton__(Request $req){
+        $base_dir = $req->in_vars('path', module_const('svn_skeleton', work_path('skeleton')));
         File::mkdir($base_dir);
         File::mkdir(File::path($base_dir, 'doc'));
         File::mkdir(File::path($base_dir, 'doc/ja'));

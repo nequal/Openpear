@@ -31,7 +31,7 @@ class OpenpearNewprojectQueue extends Dao
     public function create(){
         try {
             Subversion::cmd('import', array(
-                module_const('svn_skelton', work_path('skelton')),
+                module_const('svn_skeleton', work_path('skeleton')),
                 File::absolute(module_const('svn_root'), $this->package()->name()),
             ),array(
                 'message' => sprintf('[New Package] %s (@%s)',
