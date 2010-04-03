@@ -1,5 +1,6 @@
 .htaccess
 .project
+.*.sw*
 __repository__.xml
 __settings__.php
 vendors/
