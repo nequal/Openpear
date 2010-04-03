@@ -247,8 +247,15 @@ class Openpear extends Flow
         // TODO 仕様の確認
         try {
             $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
+        } catch(NotfoundDaoException $e){
+            echo "そんな Maintainer いません";
+            // 404 は送信したいけどexitしたくないからこのメソッドは使いたくないなあ
+            //$this->not_found();
+            return ;
         } catch(Exception $e){
-            return $this->not_found();
+            // FIXME: 共通エラーテンプレートってどう指定するのかわからん
+            echo "Error: ", $e->getMessage();
+            return ;
         }
         $this->vars('object', $maintainer);
         $this->vars('charges', C(OpenpearCharge)->find_all(Q::eq('maintainer_id', $maintainer->id())));
