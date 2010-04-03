@@ -24,12 +24,12 @@ module('model.OpenpearFavorite');
 
 class Openpear extends Flow
 {
-	/**
-	 * @context OpenpearTemplf $ot フィルタ
-	 */
+    /**
+     * @context OpenpearTemplf $ot フィルタ
+     */
     protected function __init__(){
-    	$this->add_module(new OpenpearAccountModule());
-    	$this->vars('ot',new OpenpearTemplf($this->user()));
+        $this->add_module(new OpenpearAccountModule());
+        $this->vars('ot',new OpenpearTemplf($this->user()));
     }
     /**
      * OpenID でログインする
@@ -42,7 +42,7 @@ class Openpear extends Flow
                 $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid_user->identity()));
                 $this->user($openid_maintainer->maintainer());
                 if($this->login()){
-                	$this->redirect_by_map("success_redirect");
+                    $this->redirect_by_map("success_redirect");
                 }
             } catch(Exception $e){
                 $this->sessions('openid_identity', $openid_user->identity());
@@ -63,14 +63,14 @@ class Openpear extends Flow
         $this->vars('primary_tags', OpenpearPackage::getActiveCategories(16));
         $this->vars('recent_releases', C(OpenpearRelease)->find_page(null, new Paginator(20, 1), '-id'));
     }
-	/**
-	 * 検索のマッピング
-	 * メンテナ検索かパッケージ検索へリダイレクト
-	 * @request string $search_for 検索対象
-	 * @request string $q 検索クエリ
-	 */
+    /**
+     * 検索のマッピング
+     * メンテナ検索かパッケージ検索へリダイレクト
+     * @request string $search_for 検索対象
+     * @request string $q 検索クエリ
+     */
     public function search(){
-    	// TODO いる？
+        // TODO いる？
         switch($this->in_vars('search_for', 'packages')){
             case 'maintainers': $this->redirect_method('maintainer_search',array('q'=>$this->in_vars('q')));
             case 'packages':
@@ -85,8 +85,8 @@ class Openpear extends Flow
      * @context $paginator Paginator
      */
     public function packages(){
-    	// TODO どこに分岐してる?
-    	// TODO テンプレをここで指定しない方がいい
+        // TODO どこに分岐してる?
+        // TODO テンプレをここで指定しない方がいい
         $paginator = new Paginator(10, $this->in_vars('page', 1));
         switch(strtolower($this->in_vars('sort', 'released'))){
             case 'updates':
@@ -114,7 +114,7 @@ class Openpear extends Flow
      * @context recent_releases  最新リリースオブジェクトの配列
      */
     public function package($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $this->vars('object', $package);
         $this->vars('package', $package);
@@ -163,7 +163,7 @@ class Openpear extends Flow
      * @context boolean $openid
      */
     public function signup(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         if($this->in_sessions('openid_identity')){
             $this->vars('openid', true);
             $this->vars('openid_identity', $this->in_sessions('openid_identity'));
@@ -176,7 +176,7 @@ class Openpear extends Flow
      * 新規登録を実行する
      */
     public function signup_do(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         if($this->is_post()){
             $account = new OpenpearMaintainer();
             try {
@@ -194,8 +194,8 @@ class Openpear extends Flow
                 }
                 C($account)->commit();
             } catch(Exception $e){
-            	$this->save_exception($e);
-				$this->redirect_method('signup');
+                $this->save_exception($e);
+                $this->redirect_method('signup');
             }
             $this->user($account);
             parent::login();
@@ -240,7 +240,7 @@ class Openpear extends Flow
      * @context OpenpearTimeline[] $timelines
      */
     public function maintainer_profile($maintainer_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         try {
             $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
         } catch(Exception $e){
@@ -267,7 +267,7 @@ class Openpear extends Flow
      * メンテナ情報を更新して結果をjsonで出力
      */
     public function maintainer_update_json(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         if(!$this->is_login()){
             return Text::ououtput_jsonp(array('status' => 'ng', 'error' => 'required sign-in'));
         }
@@ -321,7 +321,7 @@ class Openpear extends Flow
      * 送信したメッセージ
      */
     public function sentbox(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         $user = $this->user();
         $paginator = new Paginator(20, $this->in_vars('page', 1));
@@ -334,13 +334,13 @@ class Openpear extends Flow
      */
     public function compose(){
         $this->login_required();
-    	// TODO 実装
+        // TODO 実装
     }
     /**
      * 送信確認？
      */
     public function send_confirm(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         if($this->is_post()){
             try {
@@ -356,7 +356,7 @@ class Openpear extends Flow
      * 送信
      */
     public function send_do(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         if($this->is_post()){
             $message = new OpenpearMessage();
@@ -390,7 +390,7 @@ class Openpear extends Flow
      * @param string $package_name パッケージ名
      */
     public function package_remove_favorite($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         $user = $this->user();
         try {
@@ -429,7 +429,7 @@ class Openpear extends Flow
      * @request integer $maintainer_id メンテナID
      */
     public function package_remove_maintainer($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         if($this->is_post() && $this->is_vars('maintainer_id')){
             try {
@@ -449,7 +449,7 @@ class Openpear extends Flow
      * @request string $tag_name タグ名
      */
     public function package_add_tag($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         if($this->is_post() && $this->is_vars('tag_name')){
             $this->login_required('package/'. $package_name);
             $user = $this->user();
@@ -467,7 +467,7 @@ class Openpear extends Flow
      * @param string $package_name パッケージ名
      */
     public function package_remove_tag($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         if($this->is_post() && $this->is_vars('tag_id')){
             $user = $this->user();
@@ -485,7 +485,7 @@ class Openpear extends Flow
      * @param string $package_name パッケージ名
      */
     public function package_prime_tag($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         if($this->is_post() && $this->is_vars('tag_id')){
             $this->login_required('package/'. $package_name);
             $user = $this->user();
@@ -505,7 +505,7 @@ class Openpear extends Flow
      * パッケージ作成
      */
     public function package_create(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         if(!$this->is_post()){
             $this->cp(new OpenpearPackage());
@@ -515,7 +515,7 @@ class Openpear extends Flow
      * パッケージの作成
      */
     public function package_create_do(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         $user = $this->user();
         if($this->is_post()){
@@ -526,18 +526,18 @@ class Openpear extends Flow
                 $package->save();
                 $package->add_maintainer($user);
                 C($package)->commit();
-		        $this->redirect_method('package',$package->name());
+                $this->redirect_method('package',$package->name());
             } catch(Exception $e){}
         }
         $this->save_current_vars();
         $this->redirect_method("package_create");
     }
-	/**
-	 * パッケージ管理
-	 * @param string $package_name パッケージ名
-	 */
+    /**
+     * パッケージ管理
+     * @param string $package_name パッケージ名
+     */
     public function package_manage($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
@@ -547,7 +547,7 @@ class Openpear extends Flow
             $this->vars('maintainers', $package->maintainers());
             return;
         } catch(Exception $e){}
-		$this->redirect_method('package',$package_name);
+        $this->redirect_method('package',$package_name);
     }
 
     /**
@@ -556,7 +556,7 @@ class Openpear extends Flow
      */
     public function package_edit($package_name)
     {
-		// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
@@ -601,7 +601,7 @@ class Openpear extends Flow
      * @param string $package_name パッケージ名
      */
     public function package_edit_do($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('id')));
@@ -621,7 +621,7 @@ class Openpear extends Flow
      */
     public function package_downloads($package_name)
     {
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $this->vars('object', $package);
         $this->vars('package', $package);
@@ -630,14 +630,14 @@ class Openpear extends Flow
         $this->vars('recent_releases', empty($releases)?$releases:array_reverse($releases));
         // TODO  changes
     }
-	/**
-	 * パッケージのリリース
-	 * @param string $package_name パッケージ名
-	 * @context integer $package_id パッケージID
-	 * @context OpenpearPackage $package パッケージ
-	 */
+    /**
+     * パッケージのリリース
+     * @param string $package_name パッケージ名
+     * @context integer $package_id パッケージID
+     * @context OpenpearPackage $package パッケージ
+     */
     public function package_release($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $package->permission($this->user());
@@ -675,14 +675,14 @@ class Openpear extends Flow
                 return $this->package_release($package_name);
             }
         }
-		$this->redirect_method('package',$package_name);
+        $this->redirect_method('package',$package_name);
     }
     /**
      * パッケージのリリース
      * @param string $package_name パッケージ名
      */
     public function package_release_do($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $this->login_required();
         if($this->is_post() && $this->is_sessions('openpear_release_vars')){
             $this->cp($this->in_sessions('openpear_release_vars'));
@@ -708,7 +708,7 @@ class Openpear extends Flow
                 return $this->package_release($package_name);
             }
         }
-		$this->redirect_method('package',$package_name);
+        $this->redirect_method('package',$package_name);
     }
     
     /**
@@ -718,7 +718,7 @@ class Openpear extends Flow
      * @context OpenpearRelease[] $object_list 最新リリースオブジェクトの配列
      */
     public function download($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $this->vars('package', $package);
         $this->vars('object_list', C(OpenpearRelease)->find_all(Q::eq('package_id', $package->id())));
@@ -734,8 +734,8 @@ class Openpear extends Flow
      * @const string $svn_url リポジトリのURL
      */
     public function source_browse($package_name, $path=''){
-    	// TODO 仕様の確認
-    	// TODO SVNとの連携
+        // TODO 仕様の確認
+        // TODO SVNとの連携
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $path = rtrim(ltrim($path, ' /.'), '/');
         $root = $this->is_vars('tag')? sprintf('tags/%s', $this->in_vars('tag')): 'trunk';
@@ -753,7 +753,7 @@ class Openpear extends Flow
                 $this->vars('code', Subversion::cmd('cat', array($info['url'])));
             }
         } else {
-        	$this->redirect_method('package',$package_name);
+            $this->redirect_method('package',$package_name);
         }
         $this->vars('path', $path);
         $this->vars('info', self::format_info($info));
@@ -768,7 +768,7 @@ class Openpear extends Flow
      * @param string $path
      */
     public function browse_tag($package_name, $tag, $path){
-    	// TODO なにするもの？
+        // TODO なにするもの？
         $this->vars('tag', $tag);
         return $this->browse($package_name, $path);
     }
@@ -781,7 +781,7 @@ class Openpear extends Flow
      * @const string $svn_root　リポジトリのルートパス
      */
     public function changeset($package_name, $revision){
-    	// TODO SVNとの連携
+        // TODO SVNとの連携
         $revision = intval($revision);
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $changeset = C(OpenpearChangeset)->find_get(Q::eq('revision', $revision), Q::eq('package_id', $package->id()));
@@ -800,7 +800,7 @@ class Openpear extends Flow
      * @return array
      */
     static public function format_tree(array $tree){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         foreach($tree as &$f){
             try {
                 $f['maintainer'] = C(OpenpearMaintainer)->find_get(Q::eq('name', $f['commit']['author']));
@@ -817,8 +817,8 @@ class Openpear extends Flow
      * @return array
      */
     static public function format_info(array $info){
-    	// TODO 仕様の確認
-    	// TODO Subversion::cmdの実装
+        // TODO 仕様の確認
+        // TODO Subversion::cmdの実装
         $log = Subversion::cmd('log', array($info['url']), array('limit' => 1));
         $info['recent'] = array_shift($log);
         $info['recent']['maintainer'] = C(OpenpearMaintainer)->find_get(Q::eq('name', $info['recent']['author']));
@@ -829,7 +829,7 @@ class Openpear extends Flow
      * @param string $package_name パッケージ名
      */
     public function package_timeline($package_name){
-    	// TODO　仕様の確認
+        // TODO　仕様の確認
         Http::redirect(url('package/'. $package_name));
     }
     
@@ -837,7 +837,7 @@ class Openpear extends Flow
      * タイムラインをAtomフィードで出力
      */
     public function timeline_atom(){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         Atom::convert('Openpear Timelines', url('timelines.atom'),
             C(OpenpearTimeline)->find_all(new Paginator(20), Q::order('-id'))
         )->output();
@@ -847,7 +847,7 @@ class Openpear extends Flow
      * @param string $package_name パッケージ名
      */
     public function timeline_atom_package($package_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         Atom::convert('Openpear Package Timelines: '. $package->name(), url('timelines.atom'),
             C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('package_id', $package->id()), Q::order('-id'))
@@ -858,7 +858,7 @@ class Openpear extends Flow
      * @param string $maintainer_name メンテナのアカウント名
      */
     public function timeline_atom_maintainer($maintainer_name){
-    	// TODO 仕様の確認
+        // TODO 仕様の確認
         $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
         Atom::convert('Openpear Maintainer Timelines: '. $maintainer->name(), url('timelines.atom'),
             C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id'))
@@ -883,7 +883,7 @@ class Openpear extends Flow
     }
     
     /***
-		C(OpenpearMaintainer)->find_all();
-		eq(true,true);
+        C(OpenpearMaintainer)->find_all();
+        eq(true,true);
      */
 }
