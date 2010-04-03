@@ -34,16 +34,16 @@
         
         <div class="column2-left">
           <rt:invalid>
-            <p class="error">__('Login or Password is incorrect.')</p>
+            <p class="error">{$t.trans('Login or Password is incorrect.')}</p>
           </rt:invalid>
           
           <form action="{$t.url('account/login')}" method="post" id="login" rt:ref="true">
             <fieldset>
-              <legend>__('Login or E-mail:')</legend><br />
+              <legend>{$t.trans('Login or E-mail:')}</legend><br />
               <input type="text" name="mail" id="id" /><br />
             </fieldset>
             <fieldset>
-              <legend>__('Password:')</legend><br />
+              <legend>{$t.trans('Password:')}</legend><br />
               <input name="password" type="password" id="password" /><br />
             </fieldset>
             <fieldset>
@@ -55,7 +55,7 @@
         
         <div class="column2-right">
           
-          <h3>__('Login with OpenID')</h3>
+          <h3>{$t.trans('Login with OpenID')}</h3>
           
           <form action="{$t.url('account/login_openid')}" method="post" id="login-openid">
             <input type="text" name="openid_url" id="openid-url" />
@@ -74,11 +74,11 @@
             </div>
           </form>
           
-          <h3>__('Help')</h3>
+          <h3>{$t.trans('Help')}</h3>
           
           <ul class="list-standard">
-            <li><a href="{$t.url('account/signup')}">__('Create account')</a></li>
-            <li><a href="{$t.url('account/password_reminder')}">__('Forgot password')</a></li>
+            <li><a href="{$t.url('account/signup')}">{$t.trans('Create account')}</a></li>
+            <li><a href="{$t.url('account/password_reminder')}">{$t.trans('Forgot password')}</a></li>
           </ul>
         </div>
       </div>
