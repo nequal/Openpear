@@ -44,9 +44,13 @@ class Openpear extends Flow
                 if($this->login()){
                     $this->redirect_by_map("success_redirect");
                 }
-            } catch(Exception $e){
+            } catch(NotfoundDaoException $e){
                 $this->sessions('openid_identity', $openid_user->identity());
                 $this->redirect_method('signup');
+            } catch(Exception $e){
+                //FIXME
+                echo "Error: ", $e->getMessage();
+                exit;
             }
         }
         return $this->do_login();
@@ -526,8 +530,10 @@ class Openpear extends Flow
                 $package->save();
                 $package->add_maintainer($user);
                 C($package)->commit();
+                var_dump($package);
                 $this->redirect_method('package',$package->name());
-            } catch(Exception $e){}
+            } catch(Exception $e){
+            }
         }
         $this->save_current_vars();
         $this->redirect_method("package_create");
