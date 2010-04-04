@@ -85,7 +85,6 @@ class OpenpearChangeset extends Dao
         }
         return $result;
     }
-    
     protected function __get_package__(){
         if($this->package instanceof OpenpearPackage === false){
             try{

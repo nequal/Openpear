@@ -50,6 +50,7 @@ class OpenpearPackage extends Dao
     protected $latest_release;
     protected $package_tags;
     protected $primary_tag;
+    protected $repository_uri_select = 1;
     static protected $__author__ = 'type=OpenpearMaintainer,extra=true';
     static protected $__releases__ = 'type=OpenpearRelease[],extra=true';
     static protected $__maintainers__ = 'type=OpenpearMaintainer[],extra=true';
@@ -57,6 +58,7 @@ class OpenpearPackage extends Dao
     static protected $__latest_release__ = 'type=OpenpearRelease,extra=true';
     static protected $__package_tags__ = 'type=OpenpearPackageTag[],extra=true';
     static protected $__primary_tag__ = 'type=OpenpearTag,extra=true';
+    static protected $__repository_uri_select__ = 'type=number,extra=true';
     
     const NOTIFY_WANTED = 'This package is accepting maintainers for admission.';
     const NOTIFY_DEPRECATED = 'This package is not maintained.';
@@ -251,7 +253,7 @@ class OpenpearPackage extends Dao
          return true;
     }
     protected function __verify_external_repository__(){
-        if($this->is_external_repository_type()){
+        if($this->repository_uri_select() == 2){
             if(empty($this->external_repository)){
                 Exceptions::add(new OpenpearException('External Repository is required'), 'external_repository');
             }

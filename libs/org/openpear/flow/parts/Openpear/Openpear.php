@@ -537,7 +537,6 @@ class Openpear extends Flow
                 $package->save();
                 $package->add_maintainer($user);
                 C($package)->commit();
-                var_dump($package);
                 $this->redirect_method('package',$package->name());
             } catch(Exception $e){
             }
