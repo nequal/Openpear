@@ -1,7 +1,9 @@
 .htaccess
 .project
+.*.sw*
 __repository__.xml
 __settings__.php
 vendors/
 core/
 work/
+__common*__.php
