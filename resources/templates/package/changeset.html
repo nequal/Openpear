@@ -1,4 +1,4 @@
-<rt:extends href="../index.html" />
+<rt:extends href="base.html" />
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/1column.css" type="text/css" media="all" />
@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">1232 \ Changest \ Hoge \ Package \ Openpear</rt:block>
+<rt:block name="title">{$changeset.revision()} \ Changest \ {$package.name()} \ Package \ Openpear</rt:block>
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="./">Home</a> &raquo; <a href="packages.html">Package</a> &raquo; <a href="package_Hoge.html">Hoge</a> &raquo; Timeline &raquo; 1238
+    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> &raquo; Timeline &raquo; {$changeset.revision()}
   </div>
 </rt:block>
 
-<rt:block name="main">
+<rt:block name="package_main">
 <div class="changeset-nav">
 
   <a href="package_Hoge_changeset.html">&laquo; Previous Changes</a> | 
@@ -26,15 +26,14 @@
 
 <div class="column2-left">
 
-  <h3>Changeset 1234 <em class="changeset-time">-- 2009-09-24 22:22:22</em></h3>
+  <h3>Changeset {$changeset.revision()} <em class="changeset-time">-- {$changeset.fm_created()}</em></h3>
   
   <dl>
     <dt>Author</dt>
-    <dd><img src="images/profile_sample.gif" /><a href="">sotarok</a>
+    <dd><img src="{$ot.gravatar($changeset.maintainer().mail(), 16)}" /><a href="{$t.url('maintainer')}/{$changeset.maintainer().name()}">{$changeset.maintainer()}</a>
     </dd>
     <dt>Comment</dt>
-    <dd>Commit message hera:<br />
-    fixd hogehogeho hogehogeho bug.
+    <dd>{$log['msg']}
     </dd>
   </dl>
 
@@ -42,11 +41,9 @@
 <div class="column2-right">
   <h3>Files</h3>
   <ul class="changeset-files">
-    <li class="add"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge.php</a></li>
-    <li class="add"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge.php</a></li>
-    <li class="add"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge.php</a></li>
-    <li class="remove"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge/Piyo.php</a></li>
-    <li class="modified"><a href="package_Hoge_source.viewfile.html?rev=1234">src/Hoge/Fuga.php</a></li>
+    <rt:loop param="{$changeset.fm_changed()}" var="changed">
+      <li class="{$changed.status()}"><a href="#?rev={$changeset.revision()}">{$changed.path()}</li>
+    </rt:loop>
   </ul>
 
 </div>

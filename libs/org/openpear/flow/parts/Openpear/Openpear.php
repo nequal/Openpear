@@ -10,6 +10,7 @@ module('exception.OpenpearException');
 module('module.OpenpearAccountModule');
 module('module.OpenpearTemplf');
 module('model.OpenpearChangeset');
+module('model.OpenpearChangesetChanged');
 module('model.OpenpearMaintainer');
 module('model.OpenpearOpenidMaintainer');
 module('model.OpenpearPackage');
@@ -757,7 +758,8 @@ class Openpear extends Flow
      * @const string $svn_root　リポジトリのルートパス
      */
     public function changeset($package_name, $revision){
-        // TODO SVNとの連携
+        // TODO 前後のリビジョン
+        // TODO diff のパース
         $revision = intval($revision);
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $changeset = C(OpenpearChangeset)->find_get(Q::eq('revision', $revision), Q::eq('package_id', $package->id()));
@@ -766,7 +768,7 @@ class Openpear extends Flow
         $diff = Subversion::cmd('diff', array($path), array('revision' => sprintf('%d:%d', $revision-1, $revision)));
         $this->vars('package', $package);
         $this->vars('changeset', $changeset);
-        $this->vars('log', $log);
+        $this->vars('log', $log[0]);
         $this->vars('diff', $diff);
     }
     

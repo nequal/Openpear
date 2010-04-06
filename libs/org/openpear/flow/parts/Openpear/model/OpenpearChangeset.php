@@ -23,7 +23,16 @@ class OpenpearChangeset extends Dao
     protected function __init__(){
         $this->created = time();
     }
-    
+    protected function __fm_changed__(){
+        $objects = array();
+        $changed = unserialize($this->changed);
+        foreach($changed as $c){
+            $obj = new OpenpearChangesetChanged();
+            $obj->cp($c);
+            $objects[] = $obj;
+        }
+        return $objects;
+    }
     protected function __after_create__(){
         // TODO 美しくない
         $path = preg_replace('@^file://@', '', module_const('svn_root'));

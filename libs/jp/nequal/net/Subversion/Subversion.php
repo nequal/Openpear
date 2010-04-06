@@ -2,6 +2,7 @@
 module('command.SubversionCommand');
 module('command.SubversionCat');
 module('command.SubversionCopy');
+module('command.SubversionDiff');
 module('command.SubversionExport');
 module('command.SubversionImport');
 module('command.SubversionInfo');
