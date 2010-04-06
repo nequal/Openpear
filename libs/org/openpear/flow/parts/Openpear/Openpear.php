@@ -163,7 +163,7 @@ class Openpear extends Flow
         exit;
     }
     /**
-     * 新規登録フォーム
+     * 新規登録
      * @context boolean $openid
      */
     public function signup(){
@@ -171,19 +171,12 @@ class Openpear extends Flow
         if($this->in_sessions('openid_identity')){
             $this->vars('openid', true);
             $this->vars('openid_identity', $this->in_sessions('openid_identity'));
-        } else $this->vars('openid', false);
-        if(!$this->is_post()){
-            $this->cp(R(OpenpearMaintainer));
+        } else {
+            $this->vars('openid', false);
         }
-    }
-    /**
-     * 新規登録を実行する
-     */
-    public function signup_do(){
-        // TODO 仕様の確認
-        if($this->is_post()){
-            $account = new OpenpearMaintainer();
-            try {
+        $account = new OpenpearMaintainer();
+        try {
+            if($this->is_post()){
                 $account->cp($this->vars());
                 $account->new_password($this->in_vars('new_password'));
                 $account->new_password_conf($this->in_vars('new_password_conf'));
@@ -197,15 +190,12 @@ class Openpear extends Flow
                     $this->rm_sessions('openid_identity');
                 }
                 C($account)->commit();
-            } catch(Exception $e){
-                $this->save_exception($e);
-                $this->redirect_method('signup');
+                $this->user($account);
+                parent::login();
+                $this->redirect_by_map("success_redirect");
             }
-            $this->user($account);
-            parent::login();
-            $this->redirect_by_map("success_redirect");
-        }
-        $this->redirect_by_map("fail_redirect");
+        } catch(Exception $e){}
+        $this->cp($account);
     }
     /**
      * パッケージの詳細
@@ -341,43 +331,28 @@ class Openpear extends Flow
         ));
     }
     /**
-     * メッセージを送信？
+     * メッセージを送信
      */
     public function compose(){
         $this->login_required();
-        // TODO 実装
-    }
-    /**
-     * 送信確認？
-     */
-    public function send_confirm(){
-        // TODO 仕様の確認
-        $this->login_required();
         if($this->is_post()){
             try {
-                $message = new OpenpearMessage();
-                $message->cp($this->vars());
-                $message->save();
-                return;
+                switch($this->in_vars('action')){
+                    case 'confirm':
+                        $message = new OpenpearMessage();
+                        $message->cp($this->vars());
+                        $this->vars('confirm', $message);
+                        break;
+                    case 'do':
+                        $message = new OpenpearMessage();
+                        $message->cp($this->vars());
+                        $message->save(true);
+                        $this->redirect_by_map("success_redirect");
+                        break;
+                }
             } catch(Exception $e){}
         }
-        return $this->compose();
     }
-    /**
-     * 送信
-     */
-    public function send_do(){
-        // TODO 仕様の確認
-        $this->login_required();
-        if($this->is_post()){
-            $message = new OpenpearMessage();
-            $message->cp($this->vars());
-            $message->save(true);
-            $this->redirect_by_map("success_redirect");
-        }
-        $this->redirect_by_map("fail_redirect");
-    }
-
     
     /**
      * Fav 登録
@@ -518,20 +493,10 @@ class Openpear extends Flow
     public function package_create(){
         // TODO 仕様の確認
         $this->login_required();
-        if(!$this->is_post()){
-            $this->cp(new OpenpearPackage());
-        }
-    }
-    /**
-     * パッケージの作成
-     */
-    public function package_create_do(){
-        // TODO 仕様の確認
-        $this->login_required();
         $user = $this->user();
+        $package = new OpenpearPackage();
         if($this->is_post()){
             try {
-                $package = new OpenpearPackage();
                 $package->cp($this->vars());
                 $package->author_id($user->id());
                 $package->save();
@@ -541,8 +506,7 @@ class Openpear extends Flow
             } catch(Exception $e){
             }
         }
-        $this->save_current_vars();
-        $this->redirect_method("package_create");
+        $this->cp($package);
     }
     /**
      * パッケージ管理
@@ -884,6 +848,7 @@ class Openpear extends Flow
         $base_dir = $req->in_vars('path', module_const('svn_skeleton', work_path('skeleton')));
         File::mkdir($base_dir);
         File::mkdir(File::path($base_dir, 'doc'));
+        File::mkdir(File::path($base_dir, 'doc/en'));
         File::mkdir(File::path($base_dir, 'doc/ja'));
         File::mkdir(File::path($base_dir, 'trunk'));
         File::mkdir(File::path($base_dir, 'tags'));
@@ -891,6 +856,10 @@ class Openpear extends Flow
         File::write(File::path($base_dir, 'doc/ja/README'), text('
             * Documentation
             このパッケージにはまだドキュメントが存在しません
+        '));
+        File::write(File::path($base_dir, 'doc/en/README'), text('
+            * Documentation
+            This package does not have any documents.
         '));
     }
     

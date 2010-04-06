@@ -49,8 +49,7 @@
             <map url="account/login_openid" method="login_by_openid" template="account/login.html">
                 <arg name="success_redirect" value="dashboard" />
             </map>
-            <map url="account/signup" method="signup" template="account/signup.html" name="signup" />
-            <map url="account/signup_do" method="signup_do">
+            <map url="account/signup" method="signup" template="account/signup.html" name="signup">
             	<arg name="welcome_mail_template" value="messages/registered.txt" />
             	<arg name="success_redirect" value="dashboard" />
             	<arg name="fail_redirect" value="signup" />
@@ -73,8 +72,7 @@
             <map url="message/(\d+)" method="message" template="message/detail.html" fail_redirect="/message/inbox" />
             
             <map url="packages" method="packages" />
-            <map url="packages/create" method="package_create" template="package/create.html" />
-            <map url="packages/create_do" method="package_create_do">
+            <map url="packages/create" method="package_create" template="package/create.html">
                 <arg name="success_redirect" value="dashboard" />
             </map>
             <map url="package/([^/]+)" method="package" template="package/model.html" />
