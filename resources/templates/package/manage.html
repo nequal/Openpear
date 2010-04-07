@@ -37,7 +37,7 @@
         <li>
           <ul class="list-liner">
             <rt:loop param="maintainers" var="m">
-            <li><img src="{$ot.gravatar($m.mail(),16)}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a></li>
+            <li><img src="{$m.avatar()}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a></li>
             </rt:loop>
           </ul>
         </li>

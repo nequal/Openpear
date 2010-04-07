@@ -28,7 +28,7 @@
       Recent change
     </p>
     <p class="description">
-      <img src="{$ot.gravatar($info['recent']['maintainer'].mail())}" /> <a href="{$t.url('maintainer')}/{$info['recent']['maintainer'].name()}">{$info['recent']['maintainer'].name()}</a> <a href="{$t.url('package')}/{$package.name()}/changeset/{$info['recent']['revision']}">[{$info['recent']['revision']}]</a> <span class="italic darkgray"> -- {$t.df($ot.strtotime($info['recent']['date']))}</span><br />
+      <img src="{$info['recent']['maintainer'].avatar()}" /> <a href="{$t.url('maintainer')}/{$info['recent']['maintainer'].name()}">{$info['recent']['maintainer'].name()}</a> <a href="{$t.url('package')}/{$package.name()}/changeset/{$info['recent']['revision']}">[{$info['recent']['revision']}]</a> <span class="italic darkgray"> -- {$t.df($ot.strtotime($info['recent']['date']))}</span><br />
       {$t.html($info['recent']['msg'])}
     </p>
   </div>

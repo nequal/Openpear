@@ -82,7 +82,7 @@
       </p>
       <h3>Maintainers</h3>
       <ul class="list-liner" rt:param="{$maintainers}" rt:var="maintainer">
-        <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$ot.gravatar($maintainer.mail(), 16)}" /> {$maintainer.name()}</a></li>
+        <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$maintainer.avatar()}" /> {$maintainer.name()}</a></li>
       </ul>
       <br class="clear">
       <h3>Fans</h3>
@@ -90,7 +90,7 @@
         <img src="./images/global-icon-star.png" /> {$object.favored_count()}
       </p>
       <ul class="list-liner" rt:param="{$favored_maintainers}" rt:var="maintainer">
-        <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$ot.gravatar($maintainer.mail(), 16)}" /> {$maintainer.name()}</a></li>
+        <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$maintainer.avatar()}" /> {$maintainer.name()}</a></li>
       </ul>
       <br class="clear">
       
