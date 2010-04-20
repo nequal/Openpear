@@ -72,9 +72,9 @@
             <map url="message/(\d+)" method="message" template="message/detail.html" fail_redirect="/message/inbox" />
             
             <map url="packages" method="packages" template="package/models.html">
-                <arg name="updated" value="models_updates.html" />
-                <arg name="favored_count" value="models_favored.html" />
-                <arg name="released_at" value="models_released.html" />
+                <arg name="updated" value="package/models_updates.html" />
+                <arg name="favored_count" value="package/models_favored.html" />
+                <arg name="released_at" value="package/models_released.html" />
             </map>
             <map url="packages/create" method="package_create" template="package/create.html">
                 <arg name="success_redirect" value="dashboard" />
