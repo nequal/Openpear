@@ -110,7 +110,7 @@ class Openpear extends Flow
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $this->vars('object', $package);
         $this->vars('package', $package);
-        $this->vars('maintainers', $package->maintainers());)
+        $this->vars('maintainers', $package->maintainers());
         $releases = $package->releases();// TODO : sort
         $this->vars('recent_releases', empty($releases) ? $releases : array_reverse($releases));
         // TODO changes
