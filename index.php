@@ -1,5 +1,5 @@
 <?php require dirname(__FILE__). '/__settings__.php'; app(); ?>
-<app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" unmatch_redirect="/">
+<app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" nomatch_redirect="/">
 	<installation>
         mysqlに resources/schema.sql に流し込んでテーブル作成
         # 基本設定
@@ -105,5 +105,13 @@
         </maps>
     </handler>
     
-    <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" release="false" />
+    <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" hide="both" />
 </app>
+
+
+
+<!---
+ $bwr = test_browser();
+ $bwr->do_get(test_map_url("top"));
+ meq("夢のような話だ",$bwr->body()); 
+-->
