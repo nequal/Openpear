@@ -41,7 +41,7 @@
       Recent change
     </p>
     <p class="description">
-      <img src="{$ot.gravatar($info['recent']['maintainer'].mail())}" /> <a href="{$t.url('maintainer')}/{$info['recent']['maintainer'].name()}">{$info['recent']['maintainer'].name()}</a> <a href="{$t.url('package')}/{$package.name()}/changeset/{$info['recent']['revision']}">[{$info['recent']['revision']}]</a> <span class="italic darkgray"> -- {$t.df($ot.strtotime($info['recent']['date']))}</span><br />
+      <img src="{$info['recent']['maintainer'].avatar()}" /> <a href="{$t.url('maintainer')}/{$info['recent']['maintainer'].name()}">{$info['recent']['maintainer'].name()}</a> <a href="{$t.url('package')}/{$package.name()}/changeset/{$info['recent']['revision']}">[{$info['recent']['revision']}]</a> <span class="italic darkgray"> -- {$t.df($ot.strtotime($info['recent']['date']))}</span><br />
       {$t.html($info['recent']['msg'])}
     </p>
   </div>
@@ -67,19 +67,28 @@
     </thead>
     
     <tbody>
-      <tr class="odd">
-        <td class="icon">
-          <img src="images/source_browser/dir.png" alt="dir" />
-        </td>
-        <td class="name">
-          <a href="{$t.request_url()}/..">..</a>
-        </td>
-        <td class="age">
-        </td>
-        <td class="comment">
-          
-        </td>
-      </tr>
+      <rt:comment>
+      TODO:
+        - ルートのときは .. を表示ない
+        - パスをよしなに
+        - age に ** days ago を表示する ([4] とかの横)
+      </rt:comment>
+      <rt:if param="{$path}" value="">
+      <rt:else>
+        <tr class="odd">
+          <td class="icon">
+            <img src="images/source_browser/dir.png" alt="dir" />
+          </td>
+          <td class="name">
+              <a href="{$t.url('package')}/{$package.name()}/src/{$path}/../">..</a>
+          </td>
+          <td class="age">
+          </td>
+          <td class="comment">
+            
+          </td>
+        </tr>
+      </rt:if>
       <rt:loop param="tree" var="f">
       <tr class="{$loop_evenodd}">
         <td class="icon">
@@ -90,7 +99,7 @@
           </rt:if>
         </td>
         <td class="name">
-            <a href="{$t.request_url()}/{$f['name']}">{$f['name']}</a>
+          <a href="{$t.url('package')}/{$package.name()}/src/{$path}/{$f['name']}">{$f['name']}</a>
         </td>
         <td class="age">
           <a href="{$t.url('package')}/{$package.name()}/changeset/{$f['commit']['revision']}">[{$f['commit']['revision']}]</a> {$t.df($f['commit']['date'])}
@@ -98,7 +107,7 @@
         <td class="comment">
           
           {$t.html($f['log']['msg'])}
-          <img src="{$ot.gravatar($f['maintainer'].mail())}" /> <a href="{$t.url('maintainer')}/{$f['maintainer'].name()}">{$f['maintainer'].name()}</a>
+          <img src="{$f['maintainer'].avatar()}" /> <a href="{$t.url('maintainer')}/{$f['maintainer'].name()}">{$f['maintainer'].name()}</a>
           
         </td>
       </tr>

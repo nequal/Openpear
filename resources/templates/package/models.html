@@ -33,6 +33,7 @@
         <h3><rt:block name="subtitle">Recent Released Packages</rt:block></h3>
         <table class="packages-table" rt:param="object_list" rt:var="object">
           <thead>
+            <rt:block name="thead">
             <tr>
               <th>
                 Package
@@ -47,6 +48,7 @@
                 Description
               </th>
             </tr>
+            </rt:block>
           </thead>
           <tbody>
             <rt:block name="package_row" />

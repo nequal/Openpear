@@ -30,7 +30,7 @@
   
   <dl>
     <dt>Author</dt>
-    <dd><img src="{$ot.gravatar($changeset.maintainer().mail(), 16)}" /><a href="{$t.url('maintainer')}/{$changeset.maintainer().name()}">{$changeset.maintainer()}</a>
+    <dd><img src="{$changeset.maintainer().avatar()}" /><a href="{$t.url('maintainer')}/{$changeset.maintainer().name()}">{$changeset.maintainer()}</a>
     </dd>
     <dt>Comment</dt>
     <dd>{$log['msg']}

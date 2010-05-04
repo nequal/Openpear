@@ -94,24 +94,11 @@ class Openpear extends Flow
      * @context $paginator Paginator
      */
     public function packages(){
-        // TODO どこに分岐してる?
-        // TODO テンプレをここで指定しない方がいい
+        $sort = $this->in_vars('sort', '-released_at');
         $paginator = new Paginator(10, $this->in_vars('page', 1));
-        switch(strtolower($this->in_vars('sort', 'released'))){
-            case 'updates':
-                $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, '-updated'));
-                $this->template('package/models_updates.html');
-                break;            
-            case 'favored':
-                $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, '-favored_count'));
-                $this->template('package/models_favored.html');
-                break;
-            case 'released':
-            default:
-                $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, '-released_at'));
-                $this->template('package/models_released.html');
-        }
+        $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, $sort));
         $this->vars('paginator', $paginator->add(array('q' => $this->in_vars('q'))));
+        $this->put_block($this->map_arg($sort{0} == '-'? substr($sort, 1): $sort, 'models_released.html'));
     }    
     /**
      * パッケージ詳細

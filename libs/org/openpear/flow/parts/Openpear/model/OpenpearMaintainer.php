@@ -40,6 +40,9 @@ class OpenpearMaintainer extends Dao
     protected function __str__(){
         return empty($this->fullname)? $this->name(): $this->fullname();
     }
+    public function avatar($size=16){
+        return sprintf('http://www.gravatar.com/avatar/%s?s=%d', md5($this->mail()), $size);
+    }
     /**
      * 作成/更新前処理
      */

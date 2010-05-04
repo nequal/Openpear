@@ -1,5 +1,5 @@
 <?php require dirname(__FILE__). '/__settings__.php'; app(); ?>
-<app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" unmatch_redirect="/">
+<app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" nomatch_redirect="/">
 	<installation>
         mysqlに resources/schema.sql に流し込んでテーブル作成
         # 基本設定
@@ -73,7 +73,11 @@
             </map>
             <map url="message/(\d+)" method="message" template="message/detail.html" fail_redirect="/message/inbox" />
             
-            <map url="packages" method="packages" />
+            <map url="packages" method="packages" template="package/models.html">
+                <arg name="updated" value="package/models_updates.html" />
+                <arg name="favored_count" value="package/models_favored.html" />
+                <arg name="released_at" value="package/models_released.html" />
+            </map>
             <map url="packages/create" method="package_create" template="package/create.html">
                 <arg name="success_redirect" value="dashboard" />
             </map>
@@ -103,5 +107,13 @@
         </maps>
     </handler>
     
-    <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" release="false" />
+    <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" hide="both" />
 </app>
+
+
+
+<!---
+ $bwr = test_browser();
+ $bwr->do_get(test_map_url("top"));
+ meq("夢のような話だ",$bwr->body()); 
+-->

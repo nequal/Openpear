@@ -17,9 +17,6 @@ class OpenpearTemplf
     final public function str($a){
         return str($a);
     }
-    final public function gravatar($mail, $size=16){
-        return sprintf('http://www.gravatar.com/avatar/%s?s=%d', md5($mail), $size);
-    }
     final public function svn_log_msg($revision){
         $log = Subversion::cmd('log', array(module_const('svn_root')), array('revision' => $revision));
         return (string)$log[0]['msg'];
