@@ -25,6 +25,10 @@ module('model.OpenpearFavorite');
 
 class Openpear extends Flow
 {
+    // TODO Source
+    protected $allowed_ext = array('php', 'phps', 'html', 'css', 'pl', 'txt', 'js', 'htaccess');
+    static protected $__allowed_ext__ = 'type=string[]';
+    
     /**
      * @context OpenpearTemplf $ot フィルタ
      */
@@ -604,7 +608,7 @@ class Openpear extends Flow
         $this->vars('package', $package);
         $this->vars('maintainers', $package->maintainers());
         $releases = $package->releases();// TODO sort
-        $this->vars('recent_releases', empty($releases)?$releases:array_reverse($releases));
+        $this->vars('recent_releases', empty($releases)? $releases: array_reverse($releases));
         // TODO  changes
     }
     /**
@@ -620,6 +624,7 @@ class Openpear extends Flow
         $package->permission($this->user());
         if(!$this->is_post()){
             $this->vars('package_id', $package->id());
+            $this->vars('revision', $package->recent_changeset());
             $this->cp(new PackageProjectorConfig());
         }
         $this->vars('package', $package);
@@ -631,9 +636,7 @@ class Openpear extends Flow
      */
     public function package_release_confirm($package_name){
         $this->login_required();
-        // TODO テンプレを外で定義する
         // TODO 仕様の確認
-        $this->template('package/release_confirm.html');
         if($this->is_post()){
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
@@ -645,14 +648,14 @@ class Openpear extends Flow
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
-                $this->sessions('openpear_release_vars', $this->vars());
+                $this->save_current_vars();
                 $this->vars('package', $package);
                 return $this;
             } catch(Exception $e){
-                return $this->package_release($package_name);
+                throw $e;
             }
         }
-        $this->redirect_method('package',$package_name);
+        $this->redirect_method('package', $package_name);
     }
     /**
      * パッケージのリリース
@@ -661,8 +664,7 @@ class Openpear extends Flow
     public function package_release_do($package_name){
         // TODO 仕様の確認
         $this->login_required();
-        if($this->is_post() && $this->is_sessions('openpear_release_vars')){
-            $this->cp($this->in_sessions('openpear_release_vars'));
+        if($this->is_post()){
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
                 $package->permission($this->user());
@@ -680,12 +682,15 @@ class Openpear extends Flow
                 $release_queue->build_conf($build_conf->get_ini());
                 $release_queue->save();
                 C($release_queue)->commit();
-                Http::redirect(url('package/'. $package->name(). '/manage/release_queue_added'));
+                // Http::redirect(url('package/'. $package->name(). '/manage/release_queue_added'));
+                exit;
             } catch(Exception $e){
-                return $this->package_release($package_name);
+                Log::d($this->sessions());
+                Log::d($this->vars());
+                throw $e;
             }
         }
-        $this->redirect_method('package',$package_name);
+        $this->redirect_method('package', $package_name);
     }
     
     /**
@@ -700,11 +705,6 @@ class Openpear extends Flow
         $this->vars('package', $package);
         $this->vars('object_list', C(OpenpearRelease)->find_all(Q::eq('package_id', $package->id())));
     }
-    
-    
-    // TODO Source
-    protected $allowed_ext = array('php', 'phps', 'html', 'css', 'pl', 'txt', 'js', 'htaccess');
-    static protected $__allowed_ext__ = 'type=string[]';
     
     /**
      * ？？？？？

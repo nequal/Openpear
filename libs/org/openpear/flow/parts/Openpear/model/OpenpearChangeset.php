@@ -76,7 +76,10 @@ class OpenpearChangeset extends Dao
             if($maintainer instanceof OpenpearMaintainer) $changeset->maintainer_id($maintainer->id());
             $changeset->package_id($package->id());
             $changeset->changed(serialize($parsed_changed));
-            $changeset->save(true);
+            $changeset->save();
+            
+            $package->recent_changeset($changeset->revision());
+            $package->save(true);
         } catch(Exception $e){
             throw $e;
         }

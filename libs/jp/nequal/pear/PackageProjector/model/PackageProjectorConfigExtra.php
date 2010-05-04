@@ -5,7 +5,7 @@ class PackageProjectorConfigExtra extends Object
     
     protected function __hash__(){
         $ret = array();
-        foreach($this->get_access_vars() as $key => $val){
+        foreach($this->prop_values() as $key => $val){
             if(!$this->is_special_section($key) && !empty($val)) $ret[$key] = $val;
         }
         return $ret;

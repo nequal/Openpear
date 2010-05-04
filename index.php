@@ -25,6 +25,8 @@
         # Subversion の設定後，新規プロジェクト用のディレクトリ構成を生成する
         php setup.php -generate_skeleton
 
+        # PEAR がうんこなので編集
+        PHP/CodeSniffer.php L:234 削除
 	</installation>
     <description>
         http://github.com/nequal/Openpear
@@ -88,7 +90,7 @@
             <map url="package/(.+)/manage/edit_do" method="package_edit_do" />
             
             <map url="package/(.+)/manage/release" method="package_release" template="package/release.html" />
-            <map url="package/(.+)/manage/release_confirm" method="package_release_confirm" />
+            <map url="package/(.+)/manage/release_confirm" method="package_release_confirm" template="package/release_confirm.html" />
             <map url="package/(.+)/manage/release_do" method="package_release_do" />
             
             <map url="package/(.+)/changeset/(\d+)" method="changeset" template="package/changeset.html" />

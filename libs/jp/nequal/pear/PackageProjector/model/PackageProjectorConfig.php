@@ -71,7 +71,7 @@ class PackageProjectorConfig extends Object
      * リクエストから一括で登録するとかにつかう。結構決め打ち
      */
     protected function __cp__(array $vars){
-        $access_vars = $this->get_access_vars();
+        $props = $this->prop_values();
         foreach($vars as $name => $value){
             if(in_array($name, array('maintainer', 'file', 'dep'))){
                 $class = 'PackageProjectorConfig'. ucfirst($name);
@@ -82,8 +82,8 @@ class PackageProjectorConfig extends Object
                 }
             } else if($name === 'installer'){
                 // #pass むりぽw
-            } else {
-                if(array_key_exists($name, $access_vars)) $this->{$name}($value);
+            } else if(array_key_exists($name, $props)) {
+                $this->{$name}($value);
             }
         }
     }
@@ -110,7 +110,7 @@ class PackageProjectorConfig extends Object
     }
     protected function __hash__(){
         $ret = array();
-        $basic_vars = $this->get_access_vars();
+        $basic_vars = $this->prop_values();
         foreach($basic_vars as $key => $val){
             $keys = explode('_', $key, 2);
             if(count($keys) === 1 && is_array($val)){
