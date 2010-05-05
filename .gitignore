@@ -6,4 +6,4 @@ __settings__.php
 vendors/
 core/
 work/
-__common*__.php
+__common_*__.php
