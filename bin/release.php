@@ -8,12 +8,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 require_once 'PEAR/PackageProjector.php';
 require_once 'PEAR/Server2.php';
 
-$config = array(
-    'db_dsn' => 'mysql:host=localhost;dbname=openpear2',
-    'db_user' => 'root',
-    'db_pass' => 'root',
-    'svn_root' => 'file:///Users/riaf/tmp/optest2',
-);
+$config = include dirname(dirname(__FILE__)). '/__release_config__.php';
 
 $app_dir = dirname(dirname(__FILE__));
 $work_dir = $app_dir. '/work';
