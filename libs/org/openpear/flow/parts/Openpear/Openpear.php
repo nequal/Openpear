@@ -226,7 +226,6 @@ class Openpear extends Flow
      * @context OpenpearTimeline[] $timelines
      */
     public function maintainer_profile($maintainer_name){
-        // TODO 仕様の確認
         try {
             $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
         } catch(NotfoundDaoException $e){
@@ -235,9 +234,8 @@ class Openpear extends Flow
             //$this->not_found();
             return ;
         } catch(Exception $e){
-            // FIXME: 共通エラーテンプレートってどう指定するのかわからん
-            echo "Error: ", $e->getMessage();
-            return ;
+            // 共通エラーに飛ばす
+            throw $e;
         }
         $this->vars('object', $maintainer);
         $this->vars('charges', C(OpenpearCharge)->find_all(Q::eq('maintainer_id', $maintainer->id())));
@@ -635,10 +633,12 @@ class Openpear extends Flow
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
+                $build_conf->package_channel(module_const('pear_domain', 'openpear.org'));
                 $this->save_current_vars();
                 $this->vars('package', $package);
                 return $this;
             } catch(Exception $e){
+                // FIXME
                 throw $e;
             }
         }
@@ -662,6 +662,7 @@ class Openpear extends Flow
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
+                $build_conf->package_channel(module_const('pear_domain', 'openpear.org'));
                 $release_queue = new OpenpearReleaseQueue();
                 $release_queue->cp($this->vars());
                 $release_queue->package_id($package->id());
@@ -674,6 +675,7 @@ class Openpear extends Flow
             } catch(Exception $e){
                 Log::d($this->sessions());
                 Log::d($this->vars());
+                // FIXME
                 throw $e;
             }
         }
