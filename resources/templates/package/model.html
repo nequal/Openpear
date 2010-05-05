@@ -48,7 +48,7 @@
       <ul class="list-standard" rt:param="{$recent_releases}" rt:var="release">
         <li>- <a href="{$t.url('package')}/{$object.name()}/download#{$release.id()}">{$release.fm_version()}</a> <em>-- released on {$release.fm_created()}</em></li>
       </ul>
-      <pre>% pear install openpear/{$object.installName()}</pre>
+      <pre>% pear install {$pear_alias}/{$object.installName()}</pre>
       <p class="aright"><a href="./package_Hoge_downloads.html">View All Releases &gt;&gt;</a></p>
       
       <h3>Changes</h3>
@@ -69,7 +69,7 @@
     <rt:if param="{$object.external_repository()}">
       <pre> % {$object.repoistory_type_cmd()} {$object.external_repository()}</pre>
     <rt:else />
-      <pre> % svn co http://svn.openpear.org/{$object.name()}/trunk</pre>
+      <pre> % svn co {$svn_url}/{$object.name()}/trunk</pre>
     </rt:if>
 
     </rt:if>

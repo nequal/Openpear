@@ -34,7 +34,10 @@ class Openpear extends Flow
      */
     protected function __init__(){
         $this->add_module(new OpenpearAccountModule());
-        $this->vars('ot',new OpenpearTemplf($this->user()));
+        $this->vars('pear_domain', module_const('pear_domain', 'openpear.org'));
+        $this->vars('pear_alias', module_const('pear_alias', 'openpear'));
+        $this->vars('svn_url', module_const('svn_url', 'http://svn.openpear.org'));
+        $this->vars('ot', new OpenpearTemplf($this->user()));
     }
     /**
      * OpenID でログインする
