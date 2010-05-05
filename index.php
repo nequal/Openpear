@@ -4,7 +4,7 @@
         mysqlに resources/schema.sql に流し込んでテーブル作成
         # 基本設定
         php setup.php
-        # .htaccessを作成してpathinfoをきれいに        
+        # .htaccessを作成してpathinfoをきれいに
         php setup.php -htaccess /openpear
         
         # アカウントの作成時にgmailでメールを送信するのでアカウントの設定が必須
@@ -34,6 +34,7 @@
     </description>
 
     <handler error_template="error.html">
+        <module class="org.rhaco.flow.module.HtmlFilter" />
         <maps class="org.openpear.flow.parts.Openpear">
             <map name="top" method="index" template="index.html" />
             <map url="search"  method="search" />
