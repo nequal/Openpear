@@ -30,6 +30,11 @@ foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_
         $select->execute(array($row['package_id']));
         $package = $select->fetch(PDO::FETCH_ASSOC);
         
+        // メンテナ情報を取得
+        $select = $pdo->prepare('SELECT * FROM `openpear_maintainer` WHERE `id`=?');
+        $select->execute(array($row['maintainer_id']));
+        $maintainer = $select->fetch(PDO::FETCH_ASSOC);
+        
         // ディレクトリを準備
         $working_path = sprintf('%s/build/%s.%s', $work_dir, $package['name'], date('YmdHis'));
         $src_dir = $working_path. '/src';
@@ -77,8 +82,28 @@ foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_
         $delete->execute(array($row['id']));
         
         // リリースログ
+        $build_conf = parse_ini_file($conf_path, true);
+        $release = $pdo->prepare('INSERT INTO `openpear_release` (`package_id`, `maintainer_id`, `version`, `version_stab`, `notes`, `settings`, `created`) VALUES (:package_id, :maintainer_id, :version, :version_stab, :notes, :settings, NOW());');
+        $release->bindValue(':package_id', $row['package_id']);
+        $release->bindValue(':maintainer_id', $row['maintainer_id']);
+        $release->bindValue(':version', $build_conf['version']['release_ver']);
+        $release->bindValue(':version_stab', $build_conf['version']['release_stab']);
+        $release->bindValue(':notes', file_get_contents($working_path. '/notes.txt'));
+        $release->bindValue(':settings', $row['build_conf']);
+        $release->execute();
+        
         // svn tag
-        // メッセージを送る
+        cmd(sprintf('svn copy'
+            .' %s/%s/trunk/%s'
+            .' %s/%s/tags/%s-%s-%s'
+            .' -m "%s (%s-%s) (@%s)"'
+            .' --username openpear',
+            $config['svn_root'], $package['name'], $row['build_path'],
+            $config['svn_root'], $package['name'], $build_conf['version']['release_ver'], $build_conf['version']['release_stab'], date('YmdHis'),
+            'package released', $build_conf['version']['release_ver'], $build_conf['version']['release_stab'], $maintainer['name']
+        ));
+        
+        // TODO: メッセージキュー追加
     } catch (Exception $e) {
         echo $e->getMessage();
     }
