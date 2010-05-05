@@ -38,6 +38,7 @@ class OpenpearNewprojectQueue extends Dao
                     $this->package()->name(),
                     $this->maintainer()->name()
                 ),
+                'username' => module_const('system_user', 'openpear'),
             ));
             // $message = new OpenpearMessage();
             // $message->subject('New Package is ready for your commit!');

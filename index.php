@@ -97,6 +97,7 @@
             <map url="package/(.+)/manage/release" method="package_release" template="package/release.html" />
             <map url="package/(.+)/manage/release_confirm" method="package_release_confirm" template="package/release_confirm.html" />
             <map url="package/(.+)/manage/release_do" method="package_release_do" />
+            <map url="package/(.+)/manage/release_done" method="package_release_done" template="message.html" />
             
             <map url="package/(.+)/changeset/(\d+)" method="changeset" template="package/changeset.html" />
             <map url="package/(.+)/src(/?.+)?" method="source_browse" />

@@ -58,18 +58,21 @@ class OpenpearChangeset extends Dao
     static public function commit_hook($path, $revision, $message){
         Log::debug(sprintf('commit hook: %s %d "%s"', $path, $revision, $message));
         $changed = Subversion::look('changed', array($path), array('revision' => $revision));
-        $author = Subversion::look('author', array($path), array('revision' => $revision));
+        $author = trim(Subversion::look('author', array($path), array('revision' => $revision)));
         $parsed_changed = self::parse_svnlook_changed($changed);
         list($package_name) = explode('/', $parsed_changed[0]['path']);
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
             $maintainer = null;
             try {
-                if($author === 'openpear' && preg_match('/\(@(.*?)\)$/', $message, $match)){
+                if($author == module_const('system_user', 'openpear') && preg_match('/\(@(.*?)\)$/', trim($message), $match)){
                     $author = $match[1];
                 }
-                $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', trim($author)));
-            } catch(Exception $e){}
+                $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $author));
+            } catch(Exception $e){
+                Log::error($e);
+                throw $e;
+            }
             
             $changeset = new self();
             $changeset->revision($revision);
