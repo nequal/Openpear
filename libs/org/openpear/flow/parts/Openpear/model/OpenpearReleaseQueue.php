@@ -1,6 +1,6 @@
 <?php
 import('org.rhaco.storage.db.Dao');
-import('jp.nequal.pear.PackageProjector');
+import('org.openpear.pear.PackageProjector');
 import('jp.nequal.net.Subversion');
 
 class OpenpearReleaseQueue extends Dao

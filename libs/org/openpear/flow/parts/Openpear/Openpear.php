@@ -3,7 +3,7 @@ import('org.yabeken.service.Pea');
 Pea::import('openpear.org/HatenaSyntax');
 import('org.rhaco.service.OpenIDAuth');
 import('org.rhaco.net.xml.Atom');
-import('jp.nequal.pear.PackageProjector');
+import('org.openpear.pear.PackageProjector');
 import('jp.nequal.net.Subversion');
 
 module('exception.OpenpearException');
