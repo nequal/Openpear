@@ -229,10 +229,7 @@ class Openpear extends Flow
         try {
             $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
         } catch(NotfoundDaoException $e){
-            echo "そんな Maintainer いません";
-            // 404 は送信したいけどexitしたくないからこのメソッドは使いたくないなあ
-            //$this->not_found();
-            return ;
+            $this->not_found($e);
         } catch(Exception $e){
             // 共通エラーに飛ばす
             throw $e;
@@ -638,8 +635,8 @@ class Openpear extends Flow
                 $this->vars('package', $package);
                 return $this;
             } catch(Exception $e){
-                // FIXME
-                throw $e;
+                $this->save_current_vars();
+                $this->redirect_method('package_release', $package_name);
             }
         }
         $this->redirect_method('package', $package_name);
@@ -670,16 +667,28 @@ class Openpear extends Flow
                 $release_queue->build_conf($build_conf->get_ini());
                 $release_queue->save();
                 C($release_queue)->commit();
-                // Http::redirect(url('package/'. $package->name(). '/manage/release_queue_added'));
-                exit;
+                $this->redirect_method('package_release_done', $package_name);
             } catch(Exception $e){
-                Log::d($this->sessions());
-                Log::d($this->vars());
-                // FIXME
-                throw $e;
+                $this->save_current_vars();
+                $this->redirect_method('package_release', $package_name);
             }
         }
         $this->redirect_method('package', $package_name);
+    }
+    
+    /**
+     * リリースキュー追加完了通知
+     * 
+     * @context string $title ページタイトル
+     * @context string $message 本文
+     */
+    public function package_release_done($package_name) {
+        $this->vars('title', 'Your queue added!');
+        $this->vars('message', HatenaSyntax::render(text('
+            * Your queue added!
+            
+            Wait a mail.
+        ')));
     }
     
     /**
@@ -830,6 +839,14 @@ class Openpear extends Flow
         Atom::convert('Openpear Maintainer Timelines: '. $maintainer->name(), url('timelines.atom'),
             C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id'))
         )->output();
+    }
+    
+    /**
+	 * not found (http status 404)
+	 */
+    protected function not_found(Exception $e) {
+        Http::status_header(404);
+        throw $e;
     }
     
     /**
