@@ -7,10 +7,18 @@ chdir(dirname(__FILE__));
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 require_once 'PEAR/PackageProjector.php';
 require_once 'PEAR/Server2.php';
+
+$config = array(
+    'db_dsn' => 'mysql:host=localhost;dbname=openpear2',
+    'db_user' => 'root',
+    'db_pass' => 'root',
+    'svn_root' => 'file:///Users/riaf/tmp/optest2',
+);
+
 $app_dir = dirname(dirname(__FILE__));
 $work_dir = $app_dir. '/work';
 
-$pdo = new PDO('mysql:host=localhost;dbname=openpear2', 'root', 'root');
+$pdo = new PDO($config['db_dsn'], $config['db_user'], $config['db_pass']);
 foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_count < 5 ORDER BY orq.id;') as $row) {
     try {
         // キューの回数をカウントアップ
@@ -29,11 +37,14 @@ foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_
         $conf_path = $working_path. '/build.conf';
         init_dir($working_path);
         file_put_contents($conf_path, $row['build_conf']);
+        file_put_contents($working_path. '/desc.txt', $package['description']);
+        file_put_contents($working_path. '/notes.txt', $package['description']);
+        file_put_contents($working_path. '/summary.txt', $package['description']);
         
         // ソースコードをとってくる
         if (empty($package['external_repository'])) {
             // Openpear Repository
-            $repository_path = sprintf('file:///Users/riaf/tmp/optest2/%s/trunk/%s', $package['name'], $row['build_path']);
+            $repository_path = sprintf('%s/%s/trunk/%s', $config['svn_root'], $package['name'], $row['build_path']);
             list(, $out, $err) = cmd(sprintf('svn export %s %s', $repository_path, $src_dir));
         } else {
             throw new RuntimeException('まだです');
@@ -65,6 +76,8 @@ foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_
         $delete = $pdo->prepare('DELETE FROM `openpear_release_queue` WHERE id=?;');
         $delete->execute(array($row['id']));
         
+        // リリースログ
+        // svn tag
         // メッセージを送る
     } catch (Exception $e) {
         echo $e->getMessage();
@@ -93,16 +106,3 @@ function cmd($command) {
     $end_code = fclose($proc);
     return array($end_code, $stdout, $stderr);
 }
-
-/*
-try {
-    $queue = C(OpenpearReleaseQueue)->find_get(Q::lt('trial_count', 5), Q::order('id'));
-    $queue->build();
-} catch (NotfoundDaoException $e) {
-    # pass
-} catch (Exception $e) {
-    $msg = $e->getMessage();
-    Log::error($msg);
-    throw $e;
-}
-*/
