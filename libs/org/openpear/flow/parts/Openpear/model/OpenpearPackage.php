@@ -22,6 +22,7 @@ class OpenpearPackage extends Dao
     protected $license;
     protected $license_uri;
     protected $notify;
+    protected $package_type = 'pear';
     protected $created;
     protected $updated;
     
@@ -40,6 +41,7 @@ class OpenpearPackage extends Dao
     static protected $__license__ = 'type=string';
     static protected $__license_uri__ = 'type=string';
     static protected $__notify__ = 'type=string';
+    static protected $__package_type__ = 'type=choice(pear,pecl)';
     static protected $__created__ = 'type=timestamp';
     static protected $__updated__ = 'type=timestamp';
     
