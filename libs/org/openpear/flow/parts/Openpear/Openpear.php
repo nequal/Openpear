@@ -809,7 +809,7 @@ class Openpear extends Flow
                 }
             } catch(Exception $e){}
         }
-        // Log::d($tree);
+        Log::debug($tree);
         return $tree;
     }
     /**

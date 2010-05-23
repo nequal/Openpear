@@ -26,7 +26,7 @@
 
 <div class="column2-left">
 
-  <h3>Changeset {$changeset.revision()} <em class="changeset-time">-- {$changeset.fm_created()}</em></h3>
+  <h3>Changeset {$changeset.revision()} <em class="changeset-time">-- {$ot.date_ago($changeset.created())}</em></h3>
   
   <dl>
     <dt>Author</dt>
@@ -42,7 +42,7 @@
   <h3>Files</h3>
   <ul class="changeset-files">
     <rt:loop param="{$changeset.fm_changed()}" var="changed">
-      <li class="{$changed.status()}"><a href="#?rev={$changeset.revision()}">{$changed.path()}</a></li>
+      <li class="{$changed.status()}"><a href="{$svn_url}/{$changed.path()}?rev={$changeset.revision()}">{$changed.path()}</a></li>
     </rt:loop>
   </ul>
 

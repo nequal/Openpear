@@ -124,7 +124,7 @@
       <li class="{$loop_evenodd}">
         <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
         <div class="timeline-title">
-          {$timeline.subject()}. <em> -- {$t.df($timeline.created())}</em>
+          {$timeline.subject()}. <em> -- {$ot.date_ago($timeline.created())}</em>
         </div>
         <div class="timeline-description">
           {$timeline.description()}

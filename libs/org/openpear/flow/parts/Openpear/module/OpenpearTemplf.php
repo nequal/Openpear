@@ -78,7 +78,7 @@ class OpenpearTemplf
         } else if($days == 3){
             return ' 3 days ago';
         } else {
-            return $date;
+            return date('Y-m-d H:i:s', strtotime($date));
         }
     }
     final public function strtotime($str){

@@ -18,14 +18,14 @@
    </th>
    <td class="nowrap">
      <rt:if param="{$object.latest_release().id()}">
-      {$t.df($object.latest_release().created(), 'Y-m-d H:i')}
+      {$ot.date_ago($object.latest_release().created())}
      <rt:else />
       No release.
      </rt:if>
    </td>
    <td class="nowrap">
      <rt:if param="{$object.latest_release().id()}">
-       {$t.df($object.latest_release().created(), 'Y-m-d H:i')}
+       {$ot.date_ago($object.latest_release().created())}
       <rt:else />
        <a href="{$t.url('package')}/{$object.name()}/download">{$object.latest_release().fmVersion()}</a>
       </rt:if>

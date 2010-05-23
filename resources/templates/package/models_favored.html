@@ -34,7 +34,7 @@
       <rt:if param="{$object.primary_tag()}"><p class="inline">Category: <a href="{$t.url('packages')}?category={$t.htmlencode($object.primary_tag().name())}">{$t.htmlencode($object.primary_tag().name())}</a></p></rt:if>
    </th>
    <td class="nowrap">
-     {$object.fm_created()}
+     {$ot.date_ago($object.created())}
    </td>
    <td class="nowrap">
      {$object.favored_count()}
