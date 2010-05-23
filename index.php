@@ -42,10 +42,6 @@
             
             <map url="dashboard/message/hide" method="dashboard_message_hide" />
 
-            <map url="package/(.+)/doc" method="browse" template="package/document.html" />
-            <map url="package/(.+)/doc/(.+)" method="browse" template="package/document.html" />
-            <map url="package/(.+)/doc\.(.+?)/(.+)" method="browse_tag" template="package/document.html" />
-
             <map url="account/login" method="do_login" template="account/login.html">
                 <arg name="login_redirect" value="dashboard" />
             </map>
@@ -99,9 +95,20 @@
             <map url="package/(.+)/manage/release_do" method="package_release_do" />
             <map url="package/(.+)/manage/release_done" method="package_release_done" template="message.html" />
             
+            <map url="package/(.+)/doc(/.+)?" method="document_browse" template="package/document.html">
+                <arg name="mode" value="default" />
+            </map>
+            <map url="package/(.+)/doc\.(.+?)/(.+)?" method="document_browse_tag" template="package/document.html">
+                <arg name="mode" value="tag" />
+            </map>
+            
             <map url="package/(.+)/changeset/(\d+)" method="changeset" template="package/changeset.html" />
-            <map url="package/(.+)/src(/?.+)?" method="source_browse" />
-            <map url="package/(.+)/src\.(.+?)(/?.+)?" method="browse_tag" />
+            <map url="package/(.+)/src(/?.+)?" method="source_browse" template="package/source.html">
+                <arg name="mode" value="default" />
+            </map>
+            <map url="package/(.+)/src\.(.+?)(/?.+)?" method="source_browse" template="package/source.html">
+                <arg name="mode" value="tag" />
+            </map>
 
             <map url="timelines.atom" method="timeline_atom" />
             <map url="package/(.+)/timelines\.atom" method="timeline_atom_package" />

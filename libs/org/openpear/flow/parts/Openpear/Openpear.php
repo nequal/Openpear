@@ -193,34 +193,6 @@ class Openpear extends Flow
         $this->cp($account);
     }
     /**
-     * パッケージの詳細
-     * @param string $package_name パッケージ名
-     * @param string $path リポジトリのパス
-     * @request string $lang ロケール
-     * @request string $tag タグ
-     * @context OpenpearPackage $package パッケージ
-     * @context string $body 説明
-     */
-    public function browse($package_name, $path='README'){
-        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-        // TODO pathはなんだろう
-        $path = ltrim($path, ' /.');
-        $lang = $this->in_vars('lang', App::lang());
-        $root = $this->is_vars('tag')? sprintf('tags/doc/%s', $this->in_vars('tag')): 'doc';
-        $root = File::absolute(module_const('svn_root'), implode('/', array($package->name(), $root, $lang)));
-        $repo_path = File::absolute($root, $path);
-        $this->vars('package', $package);
-        $body = Subversion::cmd('cat', array($repo_path));
-        if(empty($body)){
-            Http::status_header(404);
-            $body = '* Not found.'. PHP_EOL;
-            $body .= 'Requested page is not found in our repositories.';
-        }
-        $this->vars('body', HatenaSyntax::render($body));
-        // TODO tree は何が入る？
-        $this->vars('tree', Subversion::cmd('list', array($root), array('recursive' => 'recursive')));
-    }
-    /**
      * メンテナのプロフィール
      * @param string $maintainer_name メンテナのアカウント名
      * @context OpenpearMaintainer $object メンテナ
@@ -708,10 +680,61 @@ class Openpear extends Flow
     }
     
     /**
+     * パッケージの詳細
+     * @param string $package_name パッケージ名
+     * @param string $path リポジトリのパス
+     * @request string $lang ロケール
+     * @request string $tag タグ
+     * @context OpenpearPackage $package パッケージ
+     * @context string $body 説明
+     */
+    public function document_browse($package_name, $path='README'){
+        if ($this->map_arg('mode') == 'tag') {
+            if (func_num_args() == 2) {
+                list($package_name, $tag) = func_get_args();
+                $path = 'README';
+            } else if(func_num_args() == 3) {
+                list($package_name, $tag, $path) = func_get_args();
+            } else {
+                throw new RuntimeException('tag...');
+            }
+            $this->vars('tag', $tag);
+        }
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        // TODO pathはなんだろう
+        $path = ltrim($path, ' /.');
+        $lang = $this->in_vars('lang', App::lang());
+        $root = $this->is_vars('tag')? sprintf('tags/doc/%s', $this->in_vars('tag')): 'doc';
+        $root = File::absolute(module_const('svn_root'), implode('/', array($package->name(), $root, $lang)));
+        $repo_path = File::absolute($root, $path);
+        $this->vars('package', $package);
+        $body = Subversion::cmd('cat', array($repo_path));
+        if(empty($body)){
+            Http::status_header(404);
+            $body = '* Not found.'. PHP_EOL;
+            $body .= 'Requested page is not found in our repositories.';
+        }
+        $this->vars('body', HatenaSyntax::render($body));
+        // TODO tree は何が入る？
+        $this->vars('tree', Subversion::cmd('list', array($root), array('recursive' => 'recursive')));
+    }
+    
+    /**
      * ？？？？？
      * @const string $svn_url リポジトリのURL
      */
     public function source_browse($package_name, $path=''){
+        if ($this->map_arg('mode') == 'tag') {
+            if (func_num_args() == 2) {
+                list($package_name, $tag) = func_get_args();
+                $path = '';
+            } else if(func_num_args() == 3) {
+                list($package_name, $tag, $path) = func_get_args();
+            } else {
+                throw new RuntimeException('tag...');
+            }
+            $this->vars('tag', $tag);
+        }
         // TODO 仕様の確認
         // TODO SVNとの連携
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
@@ -721,10 +744,9 @@ class Openpear extends Flow
         $repo_path = File::absolute($local_root, $path);
         $info = Subversion::cmd('info', array($repo_path));
         if($info['kind'] === 'dir'){
-            $this->template('package/source.html');
             $this->vars('tree', self::format_tree(Subversion::cmd('list', array($info['url']))));
         } else if($info['kind'] === 'file') {
-            $this->template('package/source_viewfile.html');
+            $this->put_block('package/source_viewfile.html');
             $p = explode('.', $info['path']);
             $ext = array_pop($p);
             if(in_array($ext, $this->allowed_ext)){
@@ -738,17 +760,6 @@ class Openpear extends Flow
         $this->vars('package', $package);
         $this->vars('real_url', File::absolute(module_const('svn_url'), implode('/', array($package->name(), $root, $path))));
         $this->vars('externals', Subversion::cmd('propget', array('svn:externals', $info['url'])));
-    }
-    /**
-     * ？？？？
-     * @param string $package_name
-     * @param string $tag
-     * @param string $path
-     */
-    public function browse_tag($package_name, $tag, $path){
-        // TODO なにするもの？
-        $this->vars('tag', $tag);
-        return $this->browse($package_name, $path);
     }
     /**
      * SVNチェンジセットの詳細
@@ -800,7 +811,11 @@ class Openpear extends Flow
         // TODO Subversion::cmdの実装
         $log = Subversion::cmd('log', array($info['url']), array('limit' => 1));
         $info['recent'] = array_shift($log);
-        $info['recent']['maintainer'] = C(OpenpearMaintainer)->find_get(Q::eq('name', $info['recent']['author']));
+        try {
+            $info['recent']['maintainer'] = C(OpenpearMaintainer)->find_get(Q::eq('name', $info['recent']['author']));
+        } catch (NotfoundDaoException $e) {
+            $info['recent']['maintainer'] = new OpenpearMaintainer();
+        }
         return $info;
     }
     /**
