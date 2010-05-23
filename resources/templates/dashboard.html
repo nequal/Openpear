@@ -52,11 +52,11 @@
   <li class="{$loop_evenodd}">
     <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
     <div class="timeline-title">
-      {$timeline.subject()}. <em> -- {$ot.date_ago($timeline.created())}</em>
+      {$t.noop($timeline.subject())}. <em> -- {$ot.date_ago($timeline.created())}</em>
     </div>
     <div class="timeline-description">
       <img src="{$timeline.maintainer().avatar(32)}" alt="{$timeline.maintainer().name()}" width="32" class="user-icon fleft" />
-      {$timeline.description()}
+      {$t.noop($timeline.description())}
     </div>
     <br class="clear">
   </li>
