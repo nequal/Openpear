@@ -42,7 +42,7 @@
   <h3>Files</h3>
   <ul class="changeset-files">
     <rt:loop param="{$changeset.fm_changed()}" var="changed">
-      <li class="{$changed.status()}"><a href="#?rev={$changeset.revision()}">{$changed.path()}</li>
+      <li class="{$changed.status()}"><a href="#?rev={$changeset.revision()}">{$changed.path()}</a></li>
     </rt:loop>
   </ul>
 
@@ -54,38 +54,7 @@
 <div class="column1 source-diff">
   <h3>Diffs</h3>
 
-  <h4>src/Hoge.php</h4>
-  <pre class="diff">
-<span class="meta">@@ -272,6 +272,27 @@</span>
-   padding: 0;
- }
-
-<span class="plus">+/* changeset</span>
-<span class="plus">+ */</span>
-<span class="plus">+.source-diff .diff</span>
-<span class="plus">+{</span>
-<span class="plus">+  font-family: "Courier New", monospace;</span>
-<span class="plus">+}</span>
-<span class="plus">+</span>
-<span class="plus">+.source-diff .plus</span>
-<span class="plus">+{</span>
-<span class="plus">+}</span>
-<span class="plus">+</span>
-<span class="plus">+.source-diff .minus</span>
-<span class="plus">+{</span>
-<span class="plus">+}</span>
-<span class="plus">+</span>
-<span class="minus">-.changeset-nav</span>
-<span class="minus">-{</span>
-<span class="minus">-  clear: both;</span>
-<span class="minus">-  text-align: right;</span>
-<span class="minus">-}</span>
-<span class="minus">-</span>
-
- /* wiki
-  */
-</pre>
-
+  {$t.noop($ot.svn_diff($diff))}
 
 </div> <!-- end of column2 -->
 

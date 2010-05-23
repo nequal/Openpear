@@ -17,6 +17,33 @@ class OpenpearTemplf
     final public function str($a){
         return str($a);
     }
+    final public function svn_diff($diff) {
+        $result = '';
+        foreach (array_map('trim', explode("\n", $diff)) as $line) {
+            $line = htmlspecialchars($line, ENT_QUOTES);
+            if (preg_match('/^Index: (.+?)$/', $line, $match)) {
+                if (!empty($result)) $result .= '</pre>'. "\n";
+                $result .= sprintf('<h4>%s</h4>', $match[1]);
+            } else if (preg_match('/^\=+/', $line)){
+                $result .= '<pre class="diff">';
+            } else if (preg_match('/^(\+{3}|\-{3}) /', $line)) {
+                # skip
+            } else if (preg_match('/^@@/', $line)) {
+                $result .= sprintf('<span class="meta">%s</span>', $line);
+                $result .= "\n";
+            } else if (preg_match('/^\+/', $line)) {
+                $result .= sprintf('<span class="plus">%s</span>', $line);
+                $result .= "\n";
+            } else if (preg_match('/^\-/', $line)) {
+                $result .= sprintf('<span class="minus">%s</span>', $line);
+                $result .= "\n";
+            } else {
+                $result .= $line;
+                if (!empty($line)) $result .= "\n";
+            }
+        }
+        return $result;
+    }
     final public function svn_log_msg($revision){
         $log = Subversion::cmd('log', array(module_const('svn_root')), array('revision' => $revision));
         return (string)$log[0]['msg'];

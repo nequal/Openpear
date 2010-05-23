@@ -767,6 +767,7 @@ class Openpear extends Flow
         $this->vars('package', $package);
         $this->vars('changeset', $changeset);
         $this->vars('log', $log[0]);
+        Log::debug($diff);
         $this->vars('diff', $diff);
     }
     
