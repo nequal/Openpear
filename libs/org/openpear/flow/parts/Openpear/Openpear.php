@@ -690,7 +690,7 @@ class Openpear extends Flow
      * @context string $body 説明
      */
     public function document_browse($package_name, $path=''){
-        $lang = $this->in_vars('lang', App::lang());
+        $lang = $this->in_vars('lang', Gettext::lang());
         if (empty($path)) {
             $this->redirect_method('document_browse', $package_name, '/'. $lang. '/README');
         }
