@@ -27,13 +27,16 @@
     <p class="aright">
       <ul class="list-toc" rt:param="tree" rt:var="f">
         <rt:if param="{$f['kind']}" value="file">
-          <li><a href="{$t.url('package')}/{$package.name()}/doc/{$f['name']}">{$f['name']}</a></li>
+          <li><a href="{$t.url('package')}/{$package.name()}/doc/{$lang}/{$f['name']}">{$f['name']}</a></li>
         </rt:if>
       </ul>
       
       <h3>Version Archive</h3>
-      <ul class="list-toc" rt:param="{$package.releases()}" rt:var="r">
-        <li><a href="{$t.url('package')}/{$package.name()}/doc.{$r.version()}-{$r.version_stab()}/README">{$r.fmVersion()}</a> <em class="small"> -- {$t.df($r.created(), 'Y-m-d')}</em>
+      <ul class="list-toc" rt:param="other_tree" rt:var="current" rt:key="other_path">
+        <rt:if param="other_path" var="trunk">
+        <rt:else />
+        <li><a href="{$t.url('package')}/{$package.name()}/doc/{$other_path}/README">{$other_path}</a></li>
+        </rt:if>
       </ul>
       
     </div>

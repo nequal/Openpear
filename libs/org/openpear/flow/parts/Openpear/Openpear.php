@@ -295,12 +295,13 @@ class Openpear extends Flow
     /**
      * メッセージを送信
      */
-    public function compose(){
+    public function message_compose(){
         $this->login_required();
         if($this->is_post()){
             try {
                 switch($this->in_vars('action')){
                     case 'confirm':
+                        // TODO: put_block
                         $message = new OpenpearMessage();
                         $message->cp($this->vars());
                         $this->vars('confirm', $message);
@@ -688,24 +689,15 @@ class Openpear extends Flow
      * @context OpenpearPackage $package パッケージ
      * @context string $body 説明
      */
-    public function document_browse($package_name, $path='README'){
-        if ($this->map_arg('mode') == 'tag') {
-            if (func_num_args() == 2) {
-                list($package_name, $tag) = func_get_args();
-                $path = 'README';
-            } else if(func_num_args() == 3) {
-                list($package_name, $tag, $path) = func_get_args();
-            } else {
-                throw new RuntimeException('tag...');
-            }
-            $this->vars('tag', $tag);
+    public function document_browse($package_name, $path=''){
+        $lang = $this->in_vars('lang', App::lang());
+        if (empty($path)) {
+            $this->redirect_method('document_browse', $package_name, '/'. $lang. '/README');
         }
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         // TODO pathはなんだろう
-        $path = ltrim($path, ' /.');
-        $lang = $this->in_vars('lang', App::lang());
-        $root = $this->is_vars('tag')? sprintf('tags/doc/%s', $this->in_vars('tag')): 'doc';
-        $root = File::absolute(module_const('svn_root'), implode('/', array($package->name(), $root, $lang)));
+        $path = rtrim(ltrim($path, ' /.'), '/');
+        $root = File::absolute(module_const('svn_root'), implode('/', array($package->name(), 'doc')));
         $repo_path = File::absolute($root, $path);
         $this->vars('package', $package);
         $body = Subversion::cmd('cat', array($repo_path));
@@ -714,9 +706,11 @@ class Openpear extends Flow
             $body = '* Not found.'. PHP_EOL;
             $body .= 'Requested page is not found in our repositories.';
         }
+        $this->vars('lang', $lang);
         $this->vars('body', HatenaSyntax::render($body));
         // TODO tree は何が入る？
-        $this->vars('tree', Subversion::cmd('list', array($root), array('recursive' => 'recursive')));
+        $this->vars('tree', Subversion::cmd('list', array($root. '/'. $lang), array('recursive' => 'recursive')));
+        $this->add_vars_other_tree($package_name, 'doc');
     }
     
     /**
@@ -724,23 +718,14 @@ class Openpear extends Flow
      * @const string $svn_url リポジトリのURL
      */
     public function source_browse($package_name, $path=''){
-        if ($this->map_arg('mode') == 'tag') {
-            if (func_num_args() == 2) {
-                list($package_name, $tag) = func_get_args();
-                $path = '';
-            } else if(func_num_args() == 3) {
-                list($package_name, $tag, $path) = func_get_args();
-            } else {
-                throw new RuntimeException('tag...');
-            }
-            $this->vars('tag', $tag);
+        if (empty($path)) {
+            $this->redirect_method('source_browse', $package_name, '/trunk');
         }
         // TODO 仕様の確認
         // TODO SVNとの連携
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $path = rtrim(ltrim($path, ' /.'), '/');
-        $root = $this->is_vars('tag')? sprintf('tags/%s', $this->in_vars('tag')): 'trunk';
-        $local_root = File::absolute(module_const('svn_root'), implode('/', array($package->name(), $root)));
+        $local_root = File::absolute(module_const('svn_root'), $package->name());
         $repo_path = File::absolute($local_root, $path);
         $info = Subversion::cmd('info', array($repo_path));
         if($info['kind'] === 'dir'){
@@ -758,8 +743,9 @@ class Openpear extends Flow
         $this->vars('path', $path);
         $this->vars('info', self::format_info($info));
         $this->vars('package', $package);
-        $this->vars('real_url', File::absolute(module_const('svn_url'), implode('/', array($package->name(), $root, $path))));
+        $this->vars('real_url', File::absolute(module_const('svn_url'), implode('/', array($package->name(), $path))));
         $this->vars('externals', Subversion::cmd('propget', array('svn:externals', $info['url'])));
+        $this->add_vars_other_tree($package_name);
     }
     /**
      * SVNチェンジセットの詳細
@@ -784,6 +770,25 @@ class Openpear extends Flow
         $this->vars('diff', $diff);
     }
     
+    private function add_vars_other_tree($package_name, $root='') {
+        $trees = array('trunk' => false);
+        foreach (array('branches', 'tags') as $path) {
+            $rep_path = trim(implode('/', array($root, $path)), '/');
+            $list = Subversion::cmd('list', array(implode('/', array(module_const('svn_root'), $package_name, $rep_path))));
+            if (is_array($list)) foreach($list as $file) {
+                if (isset($file['kind']) && $file['kind'] == 'dir') {
+                    $trees[implode('/', array($path, $file['name']))] = false;
+                }
+            }
+        }
+        foreach ($trees as $path => $current) {
+            if (strpos(Request::current_url(), $path) !== false) {
+                $trees[$path] = true;
+            }
+        }
+        $this->vars('other_tree', $trees);
+    }
+    
     /**
      * ？？？？
      * @param array $tree
@@ -793,9 +798,14 @@ class Openpear extends Flow
         // TODO 仕様の確認
         foreach($tree as &$f){
             try {
-                $f['maintainer'] = C(OpenpearMaintainer)->find_get(Q::eq('name', $f['commit']['author']));
                 $log = Subversion::cmd('log', array(module_const('svn_root')), array('revision' => $f['commit']['revision'], 'limit' => 1));
                 $f['log'] = array_shift($log);
+                try {
+                    $f['maintainer'] = C(OpenpearMaintainer)->find_get(Q::eq('name', $f['commit']['author']));
+                } catch (Exception $e) {
+                    // FIXME
+                    $f['maintainer'] = new OpenpearMaintainer();
+                }
             } catch(Exception $e){}
         }
         // Log::d($tree);
@@ -814,6 +824,7 @@ class Openpear extends Flow
         try {
             $info['recent']['maintainer'] = C(OpenpearMaintainer)->find_get(Q::eq('name', $info['recent']['author']));
         } catch (NotfoundDaoException $e) {
+            // FIXME
             $info['recent']['maintainer'] = new OpenpearMaintainer();
         }
         return $info;

@@ -63,9 +63,7 @@
             
             <map url="message/inbox" method="inbox" template="message/inbox.html" />
             <map url="message/sentbox" method="sentbox" template="message/sentbox.html" name="message_sentbox" />
-            <map url="message/compose" method="compose" template="message/compose.html" />
-            <map url="message/compose/confirm" method="send_confirm" template="message/confirm.html" />
-            <map url="message/compose/send" method="send_do" >
+            <map url="message/compose" method="message_compose" template="message/compose.html">
                 <arg name="success_redirect" value="message_sentbox" />
             </map>
             <map url="message/(\d+)" method="message" template="message/detail.html" fail_redirect="/message/inbox" />
@@ -95,20 +93,10 @@
             <map url="package/(.+)/manage/release_do" method="package_release_do" />
             <map url="package/(.+)/manage/release_done" method="package_release_done" template="message.html" />
             
-            <map url="package/(.+)/doc(/.+)?" method="document_browse" template="package/document.html">
-                <arg name="mode" value="default" />
-            </map>
-            <map url="package/(.+)/doc\.(.+?)/(.+)?" method="document_browse_tag" template="package/document.html">
-                <arg name="mode" value="tag" />
-            </map>
+            <map name="document_browse" url="package/(.+)/doc(/.+)?" method="document_browse" template="package/document.html" />
             
             <map url="package/(.+)/changeset/(\d+)" method="changeset" template="package/changeset.html" />
-            <map url="package/(.+)/src(/?.+)?" method="source_browse" template="package/source.html">
-                <arg name="mode" value="default" />
-            </map>
-            <map url="package/(.+)/src\.(.+?)(/?.+)?" method="source_browse" template="package/source.html">
-                <arg name="mode" value="tag" />
-            </map>
+            <map name="source_browse" url="package/(.+)/src(/?.+)?" method="source_browse" template="package/source.html" />
 
             <map url="timelines.atom" method="timeline_atom" />
             <map url="package/(.+)/timelines\.atom" method="timeline_atom_package" />
