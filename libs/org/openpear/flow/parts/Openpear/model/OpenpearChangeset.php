@@ -86,6 +86,12 @@ class OpenpearChangeset extends Dao
         } catch(Exception $e){
             throw $e;
         }
+        try {
+            chdir(module_const('working_copy'));
+            ob_start();
+            passthru('svn up');
+            ob_end_clean();
+        } catch(Exception $e){}
     }
     static public function parse_svnlook_changed($str){
         $result = array();
