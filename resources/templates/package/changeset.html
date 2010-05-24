@@ -42,7 +42,7 @@
   <h3>Files</h3>
   <ul class="changeset-files">
     <rt:loop param="{$changeset.fm_changed()}" var="changed">
-      <li class="{$changed.status()}"><a href="{$t.url('package')}/{$package.name()}/src/{$svn_url}/{$changed.fm_path()}?rev={$changeset.revision()}">{$changed.fm_path()}</a></li>
+      <li class="{$changed.status()}"><a href="{$t.url('package')}/{$package.name()}/src/{$changed.fm_path()}?rev={$changeset.revision()}">{$changed.fm_path()}</a></li>
     </rt:loop>
   </ul>
 
