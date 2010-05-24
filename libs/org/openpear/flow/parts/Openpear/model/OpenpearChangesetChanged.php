@@ -23,7 +23,7 @@ class OpenpearChangesetChanged extends Object
                 $this->status = $status;
         }
     }
-    protected function fm_path() {
+    protected function __fm_path__() {
         list(,, $path) = explode('/', $this->path, 3);
         return $path;
     }
