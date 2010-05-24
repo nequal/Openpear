@@ -50,7 +50,8 @@ class OpenpearTemplf
     }
     final public function date_ago($date, $from=null){
         $from = is_null($from)? time(): $from;
-        $diff = intval($from - strtotime($date));
+        $date_time = is_numeric($date)? $date: strtotime($date);
+        $diff = intval($from - $date_time);
         if($diff < 0){
             // future is not yet
             // $future = true;
