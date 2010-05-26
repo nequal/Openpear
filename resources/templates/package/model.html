@@ -22,9 +22,9 @@
     <ul class="list-liner" id="package-categories">
       <rt:loop param="{$package.package_tags()}" var="package_tag">
         <rt:if param="{$package_tag.prime()}" value="true">
-          <li class="bold"><a href="{$t.url('packages')}?category={$t.htmlencode($package_tag.tag().name())}">{$t.htmlencode($package_tag.tag().name())} (primary)</a></li>
+          <li class="bold"><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()} (primary)</a></li>
         <rt:else />
-          <li><a href="{$t.url('packages')}?category={$t.htmlencode($package_tag.tag().name())}">{$t.htmlencode($package_tag.tag().name())}</a></li>
+          <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()}</a></li>
         </rt:if>
       </rt:loop>
       <li><input type="button" id="js-category-add-button" value="+Add" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>

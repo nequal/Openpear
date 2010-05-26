@@ -8,30 +8,30 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">Manage \ {$t.htmlencode($package.name())} \ Package \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('Manage')} \ {$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path_path">
-<a href="{$t.url('pacakge')}/{$t.htmlencode($package.name())}">{$t.htmlencode($package.name())}</a> &raquo; Manage Package
+<a href="{$t.url('pacakge')}/{$package.name()}">{$package.name()}</a> &raquo; {$t.trans('Manage Package')}
 </rt:block>
 
 <rt:block name="package_main">
 <div id="sub-package-description">
   <div class="column2">
     <div class="column2-left">
-      <h3>Manage Package</h3>
-      <h4>Settings</h4>
+      <h3>{$t.trans('Manage Package')}</h3>
+      <h4>{$t.trans('Settings')}</h4>
       <ul class="list-standard">
-        <li><a href="{$t.url('package')}/{$package.name()}/manage/edit">Package settings</a></li>
+        <li><a href="{$t.url('package')}/{$package.name()}/manage/edit">{$t.trans('Package settings')}</a></li>
       </ul>
       
-      <h4>Release </h4>
+      <h4>{$t.trans('Release')} </h4>
       
       <ul class="list-standard">
-        <li><a href="{$t.url('package')}/{$package.name()}/manage/release">Release package</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/manage/release/setting">Release setting</a></li>
+        <li><a href="{$t.url('package')}/{$package.name()}/manage/release">{$t.trans('Release package')}</a></li>
+        <li><a href="{$t.url('package')}/{$package.name()}/manage/release/setting">{$t.trans('Release setting')}</a></li>
       </ul>
       
-      <h4>Maintainers</h4>
+      <h4>{$t.trans('Maintainers')}</h4>
       
       <ul class="list-standard">
         <li>
@@ -41,11 +41,11 @@
             </rt:loop>
           </ul>
         </li>
-        <li class="clear"><a href="javascript:;" onclick="$('#add-maintainer').show();">Add maintainer</a>
+        <li class="clear"><a href="javascript:;" onclick="$('#add-maintainer').show();">{$t.trans('Add maintainer')}</a>
           <form id="add-maintainer" class="dnone"><input type="text" size="30" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
         </ul>
         
-        <h4>Tags</h4>
+        <h4>{$t.trans('Tags')}</h4>
         <ul class="list-standard" rt:param="{$package.package_tags()}" rt:var="package_tag">
           <rt:if param="{$package_tag.prime()}" value="true">
             <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}" class="bold">{$package_tag.tag().name()} (Primary)</a></li>
@@ -60,7 +60,7 @@
           </rt:if>
         </ul>
         
-        <h4>Maintainance</h4>
+        <h4>{$t.trans('Maintainance')}</h4>
         <ul class="list-standard">
           <li><a href="">Solicit maintainer</a></li>
           <li><a href="">Set to "Not Maintained"</a></li>

@@ -31,7 +31,7 @@
     <th class="">
       <h4><a href="{$t.url('package')}/{$object.name()}">{$object.name()}</a></h4>
       <p class="inline">{$t.trans('Author')}: <img src="{$object.author().avatar()}" /> <a href="{$t.url('maintainer')}/{$object.author().name()}">{$ot.str($object.author())}</a></p> 
-      <rt:if param="{$object.primary_tag()}"><p class="inline">{$t.trans('Category')}: <a href="{$t.url('packages')}?category={$t.htmlencode($object.primary_tag().name())}">{$t.htmlencode($object.primary_tag().name())}</a></p></rt:if>
+      <rt:if param="{$object.primary_tag()}"><p class="inline">{$t.trans('Category')}: <a href="{$t.url('packages')}?category={$object.primary_tag().name()}">{$object.primary_tag().name()}</a></p></rt:if>
    </th>
    <td class="nowrap">
      {$ot.date_ago($object.created())}
@@ -40,7 +40,7 @@
      {$object.favored_count()}
    </td>
    <td class="description">
-    {$t.htmlencode($object.description())}
+    {$object.description()}
    </td>
   </tr>
 </rt:block>

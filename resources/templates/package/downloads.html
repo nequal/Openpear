@@ -7,7 +7,7 @@
 <rt:block name="title">{$t.trans('Downloads')} \ {$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path_path">
-<a href="{$t.url('pacakge')}/{$t.htmlencode($package.name())}">{$t.htmlencode($package.name())}</a> &raquo; {$t.trans('Downloads')}
+<a href="{$t.url('pacakge')}/{$package.name()}">{$package.name()}</a> &raquo; {$t.trans('Downloads')}
 </rt:block>
 
 <rt:block name="package_navi_current_download"> class="current"</rt:block>
