@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">$object.name()} \ {$t.trans('Maintainer')} \  Openpear</rt:block>
+<rt:block name="title">{$object.name()} \ {$t.trans('Maintainer')} \  Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
@@ -27,7 +27,7 @@
     <div class="column2-l">
       <div class="column2-left">
         <img src="{$object.avatar(64)}" width="64" id="maintainer-image" />
-        <h3 id="maintainer-name">$object.name()}</h3><br />
+        <h3 id="maintainer-name">{$object.name()}</h3><br />
         <h3 id="maintainer-fullname">{$ot.str($object)}</h3>
         <div id="maintainer-description">
           <a href="#maintainer-package">{$t.trans('Packages')}: {$ot.count($charges)}</a>, <a href="#maintainer-favs">{$t.trans('Favorites')} {$ot.count($favorites)}</a>
@@ -37,7 +37,7 @@
         <table id="maintainer-profile">
           <tr><th>{$t.trans('Profile')}: </th><td>{$object.profile()}</td></tr>
           <tr><th>{$t.trans('URL')}: </th><td>{$object.url()}</td></tr>
-          <tr><th>{$t.trans('Location')}: </th><td>{$object.location())}</td></tr>
+          <tr><th>{$t.trans('Location')}: </th><td>{$object.location()}</td></tr>
           <tr><th>{$t.trans('Members Since')}: </th><td>{$t.df($object.created(), 'M d, Y')}</td></tr>
         </table>
       </div>
