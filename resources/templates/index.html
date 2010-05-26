@@ -41,23 +41,23 @@
         <div id="header-navi">
           <ul id="header-navi-sub">
           <rt:if param="{$t.logined()}" value="true">
-            <li><a href="{$t.url()}">Home</a> &nbsp; | </li>
+            <li><a href="{$t.url()}">{$t.trans('Home')}</a> &nbsp; | </li>
             <li><img src="{$t.user().avatar()}" /></li>
-            <li><a href="{$t.url('dashboard')}">Dashboard</a></li>
-            <li><a href="{$t.url('message/inbox')}">Inbox</a></li>
-            <li><a href="{$t.url('maintainer')}/{$t.user().name()}">Profile</a></li>
-            <li><a href="{$t.url('account/logout')}">Log out</a></li>
+            <li><a href="{$t.url('dashboard')}">{$t.trans('Dashboard')}</a></li>
+            <li><a href="{$t.url('message/inbox')}">{$t.trans('Inbox')}</a></li>
+            <li><a href="{$t.url('maintainer')}/{$t.user().name()}">{$t.trans('Profile')}</a></li>
+            <li><a href="{$t.url('account/logout')}">{$t.trans('Log out')}</a></li>
           <rt:else />
-            <li><a href="{$t.url()}">Home</a></li>
-            <li><a href="{$t.url('account/login')}">Login</a></li>
+            <li><a href="{$t.url()}">{$t.trans('Home')}</a></li>
+            <li><a href="{$t.url('account/login')}">{$t.trans('Login')}</a></li>
           </rt:if>
           </ul>
 
           <ul id="header-navi-global">
-            <li><a href="">Timeline</a></li>
-            <li><a href="">Packages</a></li>
-            <li><a href="">Maintainers</a></li>
-            <li><a href="">Tickets</a></li>
+            <li><a href="">{$t.trans('Timeline')}</a></li>
+            <li><a href="">{$t.trans('Packages')}</a></li>
+            <li><a href="">{$t.trans('Maintainers')}</a></li>
+            <li><a href="">{$t.trans('Tickets')}</a></li>
           </ul>
         </div>
       </div>
@@ -82,7 +82,7 @@
         </div>
 
         <form action="{$t.url('search')}" id="main-search-form" class="clear">
-          Search: <label><input type="radio" name="search_for" value="packages" checked /> Packages</label> <label><input type="radio" name="search_for" value="maintainers" />Maintainers</label> <br />
+          {$t.trans('Search:')} <label><input type="radio" name="search_for" value="packages" checked /> {$t.trans('Packages')}</label> <label><input type="radio" name="search_for" value="maintainers" />{$t.trans('Maintainers')}</label> <br />
           <input type="text" class="radius-2" name="q" id="main-search-q">
           <input type="submit" class="radius-2 bold" value="Search" id="main-search-submit" />
         </form>
@@ -90,31 +90,31 @@
         <div id="main-column">
 
           <div id="main-column-right">
-            <h2><a href="{$t.url('packages')}/releases">Recent Releases</a> <a href="{$t.url('packages/releases.atom')}"><img src="images/global-icon-feed.gif" alt="Feed: Recent Releases" /></a></h2>
+            <h2><a href="{$t.url('packages')}/releases">{$t.trans('Recent Releases')}</a> <a href="{$t.url('packages/releases.atom')}"><img src="images/global-icon-feed.gif" alt="{$t.trans('Feed: Recent Releases')}" /></a></h2>
             <ul id="main-recent" rt:param="recent_releases" rt:var="release">
               <li><a href="{$t.url('package')}/{$release.package().name()}">{$release.package().name()}</a> <em>-- {$t.df($release.created(), 'Y/m/d')}</em></li>
             </ul>
           </div>
 
           <div id="main-column-center">
-            <h2><a href="{$t.url('packages')}/ranking">Most Downloaded</a></h2>
+            <h2><a href="{$t.url('packages')}/ranking">{$t.trans('Most Downloaded')}</a></h2>
             <rt:comment>
             <ul id="main-cat-list" rt:param="primary_tags" rt:var="tag">
               <li><a href="{$t.url('packages')}?category={$t.htmlencode($tag->name())}">{$t.htmlencode($tag->name())}</a></li>
             </ul>
             <div id="main-cat-more">
-              <a href="{$t.url('packages')}/ranking">more &raquo;</a>
+              <a href="{$t.url('packages')}/ranking">{$t.trans('more')} &raquo;</a>
             </div>
             </rt:comment>
           </div>
 
           <div id="main-column-left">
-            <h2><a href="{$t.url('packages')}/tags">Active Categories</a></h2>
+            <h2><a href="{$t.url('packages')}/tags">{$t.trans('Active Categories')}</a></h2>
             <ul id="main-cat-list" rt:param="primary_tags" rt:var="tag">
               <li><a href="{$t.url('packages')}?category={$t.htmlencode($tag->name())}">{$t.htmlencode($tag->name())}</a></li>
             </ul>
             <div id="main-cat-more">
-              <a href="{$t.url('packages')}/tags">more &raquo;</a>
+              <a href="{$t.url('packages')}/tags">{$t.trans('more')} &raquo;</a>
             </div>
           </div>
         </div>
@@ -167,14 +167,14 @@
     <div class="frame-class footer-wrap">
       <div id="footer">
         <ul id="footer-menu">
-          <li><a href="{$t.url('about')}">About</a> | </li>
-          <li><a href="http://openpear.blogspot.com/" target="_blank">Blog</a> | </li>
+          <li><a href="{$t.url('about')}">{$t.trans('About')}</a> | </li>
+          <li><a href="http://openpear.blogspot.com/" target="_blank">{$t.trans('Blog')}</a> | </li>
           <!--
           <li><a href="">Logos</a> | </li>
           -->
-          <li><a href="http://groups.google.com/group/openpear" target="_blank">Google Group</a> | </li>
-          <li><a href="{$t.url('help')}">Help</a> | </li>
-          <li><a href="">Donate</a></li>
+          <li><a href="http://groups.google.com/group/openpear" target="_blank">{$t.trans('Google Group')}</a> | </li>
+          <li><a href="{$t.url('help')}">{$t.trans('Help')}</a> | </li>
+          <li><a href="">{$t.trans('Donate')}</a></li>
           <!--
           <li><a href="">Contact</a></li>
           -->
@@ -192,5 +192,4 @@
   </div><!-- end of #frame -->
 </body>
 </html>
-
 

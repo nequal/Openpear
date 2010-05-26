@@ -1,0 +1,464 @@
+# SOME DESCRIPTIVE TITLE.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-26 18:44+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <team@exsample.com>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+
+#: /resources/templates/package/create.html:40
+msgid "(You can not change this later.)"
+msgstr "(登録後に変更することもできます)"
+
+#: /resources/templates/package/create.html:59
+msgid "* The description should be a short (maximum 250 characters)."
+msgstr "※ 短い紹介文です(250文字以内)"
+
+#: /resources/templates/package/create.html:39
+msgid "* This name should be {Category}[_{Sub Category}]_{Package Name}"
+msgstr ""
+
+#: /resources/templates/index.html:170
+msgid "About"
+msgstr ""
+
+#: /resources/templates/index.html:112
+msgid "Active Categories"
+msgstr ""
+
+#: /resources/templates/package/create.html:107
+msgid "Anyone"
+msgstr "誰でもコミットできる"
+
+#: /resources/templates/package/create.html:418
+msgid "Before create a pacakge, search packages and look for if there are similar packages."
+msgstr "新しくパッケージを登録する前に，似たようなパッケージが無いか確認しましょう"
+
+#: /resources/templates/index.html:171
+msgid "Blog"
+msgstr "開発者ブログ"
+
+#: /resources/templates/dashboard.html:72
+#: /resources/templates/package/create.html:410
+msgid "Create Package"
+msgstr "新規パッケージ"
+
+#: /resources/templates/account/login.html:80
+msgid "Create account"
+msgstr "新規アカウント"
+
+#: /resources/templates/dashboard.html:9
+#: /resources/templates/dashboard.html:13
+#: /resources/templates/dashboard.html:20
+#: /resources/templates/index.html:46
+msgid "Dashboard"
+msgstr ""
+
+#: /resources/templates/dashboard.html:47
+msgid "Dashboard Timeline"
+msgstr ""
+
+#: /resources/templates/package/create.html:54
+msgid "Description"
+msgstr "紹介文"
+
+#: /resources/templates/index.html:177
+msgid "Donate"
+msgstr "寄付"
+
+#: /resources/templates/package/create.html:68
+msgid "External"
+msgstr "外部"
+
+#: /resources/templates/dashboard.html:81
+msgid "Favorite Packages"
+msgstr ""
+
+#: /resources/templates/index.html:93
+msgid "Feed: Recent Releases"
+msgstr ""
+
+#: /resources/templates/package/create.html:42
+msgid "For example:"
+msgstr "例: "
+
+#: /resources/templates/account/login.html:81
+msgid "Forgot password"
+msgstr "パスワードを忘れた方はこちら"
+
+#: /resources/templates/index.html:175
+msgid "Google Group"
+msgstr "Google グループ"
+
+#: /resources/templates/index.html:176
+#: /resources/templates/account/login.html:77
+msgid "Help"
+msgstr "ヘルプ"
+
+#: /resources/templates/dashboard.html:13
+#: /resources/templates/index.html:44
+#: /resources/templates/index.html:51
+#: /resources/templates/package/create.html:12
+msgid "Home"
+msgstr "ホーム"
+
+#: /resources/templates/index.html:47
+msgid "Inbox"
+msgstr "受信箱"
+
+#: /resources/templates/package/create.html:111
+msgid "License"
+msgstr "ライセンス"
+
+#: /resources/templates/index.html:49
+msgid "Log out"
+msgstr "ログアウト"
+
+#: /resources/templates/index.html:52
+msgid "Login"
+msgstr "ログイン"
+
+#: /resources/templates/account/login.html:42
+msgid "Login or E-mail:"
+msgstr "ログインIDまたはメールアドレス"
+
+#: /resources/templates/account/login.html:37
+msgid "Login or Password is incorrect."
+msgstr "ログインIDまたはパスワードが間違っています"
+
+#: /resources/templates/account/login.html:58
+msgid "Login with OpenID"
+msgstr "OpenIDでログイン"
+
+#: /resources/templates/index.html:59
+#: /resources/templates/index.html:85
+msgid "Maintainers"
+msgstr "メンテナ"
+
+#: /resources/templates/index.html:100
+msgid "Most Downloaded"
+msgstr ""
+
+#: /resources/templates/dashboard.html:70
+msgid "My Packages"
+msgstr "自分のパッケージ"
+
+#: /resources/templates/package/create.html:8
+#: /resources/templates/package/create.html:12
+#: /resources/templates/package/create.html:20
+msgid "New Package"
+msgstr "新しいパッケージ"
+
+#: /resources/templates/dashboard.html:87
+msgid "No favs."
+msgstr ""
+
+#: /resources/templates/package/create.html:415
+msgid "Notice"
+msgstr "注意"
+
+#: /resources/templates/package/create.html:108
+msgid "Only maintainers (You can edit maintainers in a package setting)"
+msgstr "メンテナを選択する(パッケージ設定より変更することができます)"
+
+#: /resources/templates/package/create.html:37
+msgid "Package name"
+msgstr "パッケージ名"
+
+#: /resources/templates/index.html:58
+#: /resources/templates/index.html:85
+msgid "Packages"
+msgstr "パッケージ"
+
+#: /resources/templates/account/login.html:46
+msgid "Password:"
+msgstr "パスワード: "
+
+#: /resources/templates/index.html:48
+msgid "Profile"
+msgstr "プロフィール"
+
+#: /resources/templates/index.html:93
+msgid "Recent Releases"
+msgstr ""
+
+#: /resources/templates/package/create.html:62
+msgid "Repository"
+msgstr "リポジトリ"
+
+#: /resources/templates/index.html:85
+msgid "Search:"
+msgstr "検索: "
+
+#: /resources/templates/package/create.html:67
+msgid "Subversion repository on Openpear (will be generated)"
+msgstr "Openpear 上のリポジトリを使用する"
+
+#: /resources/templates/index.html:60
+msgid "Tickets"
+msgstr "チケット"
+
+#: /resources/templates/index.html:57
+msgid "Timeline"
+msgstr "タイムライン"
+
+#: /resources/templates/package/create.html:101
+msgid "Who one commit this package ?"
+msgstr "コミット権限の設定"
+
+#: /resources/templates/package/create.html:419
+msgid "You should name the package with recognizable name."
+msgstr ""
+
+#: com.tokushimakazutaka.net.Growl
+msgid "address"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+msgid "allowed_ext"
+msgstr ""
+
+#: com.tokushimakazutaka.net.Growl
+msgid "app_name"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+#: com.tokushimakazutaka.flow.parts.Developer
+msgid "args"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "author"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:866
+msgid "connection fail `{1}`"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:879
+msgid "connection fail {1}"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:2206
+msgid "create save is not permitted"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:2114
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:2157
+msgid "delete is not permitted"
+msgstr ""
+
+#: spl/Flow.php:307
+#: /core/spl/Flow.php:307
+msgid "direct link not permitted"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "entry"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "entry_modules"
+msgstr ""
+
+#: /resources/templates/package/create.html:43
+msgid "ex1. ) Category and name, separated by underscores."
+msgstr ""
+
+#: /resources/templates/package/create.html:46
+msgid "ex2. ) Noun with more than one."
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "extra"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+#: com.tokushimakazutaka.flow.parts.Developer
+msgid "files"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "generator"
+msgstr ""
+
+#: com.tokushimakazutaka.io.log.LogGrowl
+msgid "growl"
+msgstr ""
+
+#: spl/Gettext.php:301
+#: spl/Templf.php:496
+#: /core/spl/Gettext.php:301
+#: /core/spl/Templf.php:496
+msgid "hoge"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "id"
+msgstr ""
+
+#: org.rhaco.service.OpenIDAuth
+msgid "immediate"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "link"
+msgstr ""
+
+#: /resources/templates/index.html:106
+#: /resources/templates/index.html:117
+msgid "more"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+#: com.tokushimakazutaka.flow.parts.Developer
+msgid "name"
+msgstr ""
+
+#: org.rhaco.service.OpenIDAuth
+msgid "namespace"
+msgstr ""
+
+#: spl/Template.php:1097
+#: /core/spl/Template.php:1097
+msgid "next"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:2287
+msgid "not synchronize"
+msgstr ""
+
+#: com.tokushimakazutaka.net.Growl
+msgid "password"
+msgstr ""
+
+#: com.tokushimakazutaka.io.log.LogGrowl
+msgid "path"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+#: com.tokushimakazutaka.flow.parts.Developer
+msgid "pattern"
+msgstr ""
+
+#: com.tokushimakazutaka.net.Growl
+msgid "port"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:942
+msgid "prepare fail: {1}"
+msgstr ""
+
+#: spl/Template.php:1085
+#: /core/spl/Template.php:1085
+msgid "prev"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:971
+msgid "primary unique"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:2193
+msgid "save is not permitted"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+#: com.tokushimakazutaka.flow.parts.Developer
+msgid "secure_map"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+#: com.tokushimakazutaka.flow.parts.Developer
+msgid "sessions"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "subtitle"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "title"
+msgstr ""
+
+#: com.tokushimakazutaka.net.Growl
+msgid "type"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:2413
+msgid "undef format {1}"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1217
+msgid "undef group_name"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:2426
+msgid "undef master"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1216
+msgid "undef target_name"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:741
+msgid "undef var {1}"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:641
+msgid "undef {1} annotation 'cond'"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:2224
+msgid "update save is not permitted"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "updated"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+#: com.tokushimakazutaka.flow.parts.Developer
+msgid "vars"
+msgstr ""
+
+#: org.rhaco.net.xml.Atom
+msgid "xmlns"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1038
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1044
+msgid "{1} exceeds maximum"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1037
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1043
+msgid "{1} less than minimum"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1906
+msgid "{1} not found"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1032
+msgid "{1} not found master"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1009
+msgid "{1} required"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1027
+msgid "{1} unique"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:1050
+msgid "{1} verify fail"
+msgstr ""
+
+#: /vendors/org/rhaco/storage/db/Dao/Dao.php:704
+msgid "{1}[{2}] is illegal condition"
+msgstr ""

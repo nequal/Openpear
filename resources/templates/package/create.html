@@ -5,11 +5,11 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">New Package \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('New Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; New Package
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('New Package')}
   </div>
 </rt:block>
 
@@ -17,7 +17,7 @@
   <div class="frame-class" id="sub-title">
     
     <div class="container-class">
-      <h2 class="inline fleft">New Package</h2>
+      <h2 class="inline fleft">{$t.trans('New Package')}</h2>
       
       <form action="{$t.url('packages')}" id="sub-search-form" method="post">
         <input name="q" type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
@@ -34,16 +34,16 @@
           <form action="{$t.url('packages/create')}" method="post" id="new-package" rt:ref="true">
             <input type="hidden" name="action" value="do" />
             <dl>
-              <dt>Package name <span class="red">*</span>: </dt>
+              <dt>{$t.trans('Package name')} <span class="red">*</span>: </dt>
               <dd>
-                <p class="caption">* This name should be {Category}[_{Sub Category}]_{Package Name}<br />
-                  <span class="red">(You can not change this later.)</span>
+                <p class="caption">{$t.trans('* This name should be {Category}[_{Sub Category}]_{Package Name}')}<br />
+                  <span class="red">{$t.trans('(You can not change this later.)')}</span>
                 </p>
-                <p class="caption">For example: <br />
-                  ex1. ) Category and name, separated by underscores.<br />
+                <p class="caption">{$t.trans('For example:')} <br />
+                  {$t.trans('ex1. ) Category and name, separated by underscores.')}<br />
                   - Net_Socket<br />
                   - Net_Socket_Error<br />
-                  ex2. ) Noun with more than one.<br />
+                  {$t.trans('ex2. ) Noun with more than one.')}<br />
                   - Net_TokyoTyrant<br />
                 </p>
                 <rt:invalid param="name" messages="errors"><rt:loop param="errors" var="error" limit="1">
@@ -51,21 +51,21 @@
                 </rt:loop></rt:invalid>
                 <input type="text" name="name" id="package-name" class="small" />
               </dd>
-              <dt>Description <span class="red">*</span>: </dt>
+              <dt>{$t.trans('Description')} <span class="red">*</span>: </dt>
               <dd>
                 <rt:invalid param="description" messages="errors"><rt:loop param="errors" var="error" limit="1">
                 <p class="error">{$error}</p>
                 </rt:loop></rt:invalid>
-                <p class="caption">* The description should be a short (maximum 250 characters).</p>
+                <p class="caption">{$t.trans('* The description should be a short (maximum 250 characters).')}</p>
                 <textarea name="description" class="middle"></textarea>
               </dd>
-              <dt>Repository: </dt>
+              <dt>{$t.trans('Repository')}: </dt>
               <dd>
                 <rt:invalid param="external_repository" messages="errors"><rt:loop param="errors" var="error" limit="1">
                 <p class="error">{$error}</p>
                 </rt:loop></rt:invalid>
-                <label><input type="radio" name="repository_uri_select" value="1">Subversion repository on Openpear (will be generated)</label><br/>
-                <label><input type="radio" name="repository_uri_select" id="repository-uri-select-2" value="2">External</label>
+                <label><input type="radio" name="repository_uri_select" value="1">{$t.trans('Subversion repository on Openpear (will be generated)')}</label><br/>
+                <label><input type="radio" name="repository_uri_select" id="repository-uri-select-2" value="2">{$t.trans('External')}</label>
                 <p style="display: none" id="repository-uri-option">
                 <select name="external_repository_type" id="external-repository-type">
                   <option value="Subversion">Subversion</option>
@@ -98,17 +98,17 @@
                 </rt:loop></rt:invalid>
                 <input type="text" name="url" id="package-url" class="small" />
               </dd>
-              <dt>Who one commit this package ?: </dt>
+              <dt>{$t.trans('Who one commit this package ?')}: </dt>
               <dd>
                 <rt:invalid param="public_level" messages="errors"><rt:loop param="errors" var="error" limit="1">
                 <p class="error">{$error}</p>
                 </rt:loop></rt:invalid>
                 <select name="public_level">
-                  <option value="1">Anyone</option>
-                  <option value="0">Only maintainers (You can edit maintainers in a package setting)</option>
+                  <option value="1">{$t.trans('Anyone')}</option>
+                  <option value="0">{$t.trans('Only maintainers (You can edit maintainers in a package setting)')}</option>
                 </select>
               </dd>
-              <dt>License: </dt>
+              <dt>{$t.trans('License')}: </dt>
               <dd>
                 <rt:invalid param="license" messages="errors"><rt:loop param="errors" var="error" limit="1">
                 <p class="error">{$error}</p>
@@ -407,16 +407,16 @@
                 </select>
               </dd>
             </dl>
-            <input type="submit" value="Create Package" class="small" />
+            <input type="submit" value="{$t.trans('Create Package')}" class="small" />
           </form>
         </div>
         
         <div class="column2-right">
-          <h3>Notice:</h3>
+          <h3>{$t.trans('Notice')}:</h3>
           
           <ul class="list-standard2">
-            <li>Before create a pacakge, search packages and look for if there are similar packages.</li>
-            <li>You should name the package with recognizable name.</li>
+            <li>{$t.trans('Before create a pacakge, search packages and look for if there are similar packages.')}</li>
+            <li>{$t.trans('You should name the package with recognizable name.')}</li>
           </ul>
         </div>
         

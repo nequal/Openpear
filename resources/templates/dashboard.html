@@ -6,18 +6,18 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">Dashboard \  Openpear</rt:block>
+<rt:block name="title">{$t.trans('Dashboard')} \  Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; Dashboard
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Dashboard')}
   </div>
 </rt:block>
 
 <rt:block name="contents">
   <div class="frame-class" id="sub-title">
     <div class="container-class">
-      <h2 class="inline fleft"><a href="{$t.url('maintainer')}/{$maintainer.name()}">Dashboard</a></h2>
+      <h2 class="inline fleft"><a href="{$t.url('maintainer')}/{$maintainer.name()}">{$t.trans('Dashboard')}</a></h2>
       <br class="clear" />
     </div> <!-- #container-s -->
   </div> <!-- .frame-class -->
@@ -37,14 +37,14 @@
             }
           );
           " class="fright">[x]</a>
-      {$notice.fm_description()}
+      {$t.noop($notice.fm_description())}
       </div>
     </rt:loop>
 
 <div class="column2">
 <div class="column2-left">
 
-<h3>Dashboard Timeline</h3>
+<h3>{$t.trans('Dashboard Timeline')}</h3>
 
 <div class="timeline timeline-dashboard">
 
@@ -67,9 +67,9 @@
 </div> <!-- / column2-left -->
 <div class="column2-right">
 
-  <h3>My Packages</h3>
+  <h3>{$t.trans('My Packages')}</h3>
 
-  &raquo; <a href="{$t.url('packages/create')}">Create Package</a>
+  &raquo; <a href="{$t.url('packages/create')}">{$t.trans('Create Package')}</a>
   
   <rt:loop param="my_package_charges" var="charge">
     <div class="dashboard-packages">
@@ -78,13 +78,13 @@
     </div>
   </rt:loop>
 
-  <h3>Favorite Packages</h3>
+  <h3>{$t.trans('Favorite Packages')}</h3>
   <rt:loop param="my_favorites" var="favorite">
     <div class="dashboard-packages">
       <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a><rt:if param="{$favorite.package().latest_release().id()}"> <a href="{$t.url('package')}/{$favorite.package().name()}/download">{$favorite.package().latest_release().fm_version()}</a> </rt:if>
     </div>
     <rt:else />
-    No favs.
+    {$t.trans('No favs.')}
   </rt:loop>
 </div>
 
