@@ -1,27 +1,27 @@
 <rt:block name="sub_package_navi">
 <div id="sub-package-navi">
  <ul>
-  <li><a href="{$t.url('packages')}?sort=-released_at">Recent Releases</a></li>
-  <li><a href="{$t.url('packages')}?sort=-updated">Updates</a></li>
-  <li class="current"><a href="{$t.url('packages')}?sort=-favored_count">Fans</a></li>
+  <li><a href="{$t.url('packages')}?sort=-released_at">{$t.trans('Recent Releases')}</a></li>
+  <li><a href="{$t.url('packages')}?sort=-updated">{$t.trans('Updates')}</a></li>
+  <li class="current"><a href="{$t.url('packages')}?sort=-favored_count">{$t.trans('Fans')}</a></li>
  </ul>
 </div>
 </rt:block>
-<rt:block name="subtitle">Favoered Packages</rt:block>
+<rt:block name="subtitle">{$t.trans('Favoered Packages')}</rt:block>
 
 <rt:block name="thead">
 <tr>
  <th>
- Package
+ {$t.trans('Package')}
  </th>
  <th>
- Date
+ {$t.trans('Date')}
  </th>
  <th>
- Favs
+ {$t.trans('Favs')}
  </th>
  <th>
- Description
+ {$t.trans('Description')}
  </th>
 </tr>
 </rt:block>
@@ -30,8 +30,8 @@
   <tr class="{$evenodd}">
     <th class="">
       <h4><a href="{$t.url('package')}/{$object.name()}">{$object.name()}</a></h4>
-      <p class="inline">Author: <img src="{$object.author().avatar()}" /> <a href="{$t.url('maintainer')}/{$object.author().name()}">{$ot.str($object.author())}</a></p> 
-      <rt:if param="{$object.primary_tag()}"><p class="inline">Category: <a href="{$t.url('packages')}?category={$t.htmlencode($object.primary_tag().name())}">{$t.htmlencode($object.primary_tag().name())}</a></p></rt:if>
+      <p class="inline">{$t.trans('Author')}: <img src="{$object.author().avatar()}" /> <a href="{$t.url('maintainer')}/{$object.author().name()}">{$ot.str($object.author())}</a></p> 
+      <rt:if param="{$object.primary_tag()}"><p class="inline">{$t.trans('Category')}: <a href="{$t.url('packages')}?category={$t.htmlencode($object.primary_tag().name())}">{$t.htmlencode($object.primary_tag().name())}</a></p></rt:if>
    </th>
    <td class="nowrap">
      {$ot.date_ago($object.created())}

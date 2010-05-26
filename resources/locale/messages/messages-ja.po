@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-26 18:44+0900\n"
+"POT-Creation-Date: 2010-05-26 23:50+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <team@exsample.com>\n"
@@ -15,6 +15,7 @@ msgid "(You can not change this later.)"
 msgstr "(登録後に変更することもできます)"
 
 #: /resources/templates/package/create.html:59
+#: /resources/templates/package/edit.html:19
 msgid "* The description should be a short (maximum 250 characters)."
 msgstr "※ 短い紹介文です(250文字以内)"
 
@@ -24,15 +25,28 @@ msgstr ""
 
 #: /resources/templates/index.html:170
 msgid "About"
-msgstr ""
+msgstr "Openpear について"
 
 #: /resources/templates/index.html:112
 msgid "Active Categories"
 msgstr ""
 
+#: /resources/templates/package/release.html:219
+#: /resources/templates/package/release_confirm.html:59
+msgid "Additional Files"
+msgstr ""
+
 #: /resources/templates/package/create.html:107
+#: /resources/templates/package/edit.html:64
 msgid "Anyone"
 msgstr "誰でもコミットできる"
+
+#: /resources/templates/package/changeset.html:32
+#: /resources/templates/package/models_favored.html:33
+#: /resources/templates/package/models_released.html:16
+#: /resources/templates/package/models_updates.html:34
+msgid "Author"
+msgstr "編集者"
 
 #: /resources/templates/package/create.html:418
 msgid "Before create a pacakge, search packages and look for if there are similar packages."
@@ -41,6 +55,58 @@ msgstr "新しくパッケージを登録する前に，似たようなパッケ
 #: /resources/templates/index.html:171
 msgid "Blog"
 msgstr "開発者ブログ"
+
+#: /resources/templates/message/inbox.html:29
+msgid "Boxes"
+msgstr ""
+
+#: /resources/templates/package/base.html:67
+#: /resources/templates/package/model.html:21
+msgid "Categories"
+msgstr "カテゴリ"
+
+#: /resources/templates/maintainer/model.html:79
+#: /resources/templates/package/models_favored.html:34
+#: /resources/templates/package/models_released.html:17
+#: /resources/templates/package/models_updates.html:35
+msgid "Category"
+msgstr "カテゴリ"
+
+#: /resources/templates/package/base.html:93
+#: /resources/templates/package/model.html:54
+msgid "Changes"
+msgstr "変更履歴"
+
+#: /resources/templates/package/changeset.html:29
+#: /resources/templates/package/models_updates.html:21
+msgid "Changeset"
+msgstr "チェンジセット"
+
+#: /resources/templates/package/changeset.html:10
+msgid "Changest"
+msgstr "チェンジセット"
+
+#: /resources/templates/package/changeset.html:35
+msgid "Comment"
+msgstr "コメント"
+
+#: /resources/templates/package/models_updates.html:24
+msgid "Commit Message"
+msgstr "コミットメッセージ"
+
+#: /resources/templates/package/release.html:227
+#: /resources/templates/package/release_confirm.html:9
+#: /resources/templates/package/release_confirm.html:12
+msgid "Confirm"
+msgstr "確認"
+
+#: /resources/templates/account/signup.html:52
+msgid "Confirm password"
+msgstr "パスワード(確認)"
+
+#: /resources/templates/messages/created.txt:1
+msgid "Congratulations"
+msgstr "おめでとうございます"
 
 #: /resources/templates/dashboard.html:72
 #: /resources/templates/package/create.html:410
@@ -56,68 +122,181 @@ msgstr "新規アカウント"
 #: /resources/templates/dashboard.html:20
 #: /resources/templates/index.html:46
 msgid "Dashboard"
-msgstr ""
+msgstr "ダッシュボード"
 
 #: /resources/templates/dashboard.html:47
 msgid "Dashboard Timeline"
-msgstr ""
+msgstr "ダッシュボードタイムライン"
 
+#: /resources/templates/message/inbox.html:47
+#: /resources/templates/package/models.html:42
+#: /resources/templates/package/models_favored.html:18
+#: /resources/templates/package/models_updates.html:18
+msgid "Date"
+msgstr "日付"
+
+#: /resources/templates/package/base.html:135
+#: /resources/templates/package/model.html:107
+#: /resources/templates/package/release.html:211
+#: /resources/templates/package/release_confirm.html:50
+msgid "Dependencies"
+msgstr "依存"
+
+#: /resources/templates/package/base.html:60
 #: /resources/templates/package/create.html:54
+#: /resources/templates/package/edit.html:17
+#: /resources/templates/package/model.html:14
+#: /resources/templates/package/models.html:48
+#: /resources/templates/package/models_favored.html:24
 msgid "Description"
 msgstr "紹介文"
+
+#: /resources/templates/package/changeset.html:55
+msgid "Diffs"
+msgstr ""
+
+#: /resources/templates/package/base.html:46
+#: /resources/templates/package/document.html:10
+#: /resources/templates/package/document.html:13
+msgid "Documentation"
+msgstr "ドキュメント"
 
 #: /resources/templates/index.html:177
 msgid "Donate"
 msgstr "寄付"
 
+#: /resources/templates/package/downloads.html:20
+msgid "Download"
+msgstr "ダウンロード"
+
+#: /resources/templates/package/base.html:45
+#: /resources/templates/package/downloads.html:7
+#: /resources/templates/package/downloads.html:10
+msgid "Downloads"
+msgstr "ダウンロード"
+
+#: /resources/templates/account/signup.html:61
+msgid "E-mail"
+msgstr "メールアドレス"
+
 #: /resources/templates/package/create.html:68
 msgid "External"
 msgstr "外部"
 
+#: /resources/templates/package/base.html:116
+#: /resources/templates/package/model.html:88
+#: /resources/templates/package/models_favored.html:6
+#: /resources/templates/package/models_released.html:6
+#: /resources/templates/package/models_updates.html:6
+msgid "Fans"
+msgstr ""
+
+#: /resources/templates/package/models_favored.html:10
+msgid "Favoered Packages"
+msgstr "人気のパッケージ"
+
 #: /resources/templates/dashboard.html:81
 msgid "Favorite Packages"
+msgstr "お気に入りのパッケージ"
+
+#: /resources/templates/maintainer/model.html:33
+#: /resources/templates/maintainer/model.html:86
+msgid "Favorites"
+msgstr "お気に入り"
+
+#: /resources/templates/package/models_favored.html:21
+msgid "Favs"
 msgstr ""
 
 #: /resources/templates/index.html:93
 msgid "Feed: Recent Releases"
 msgstr ""
 
+#: /resources/templates/package/changeset.html:42
+msgid "Files"
+msgstr "ファイル"
+
 #: /resources/templates/package/create.html:42
-msgid "For example:"
-msgstr "例: "
+msgid "For example"
+msgstr "例"
 
 #: /resources/templates/account/login.html:81
 msgid "Forgot password"
 msgstr "パスワードを忘れた方はこちら"
 
+#: /resources/templates/message/inbox.html:45
+msgid "From"
+msgstr "送信元"
+
 #: /resources/templates/index.html:175
 msgid "Google Group"
 msgstr "Google グループ"
 
-#: /resources/templates/index.html:176
 #: /resources/templates/account/login.html:77
+#: /resources/templates/index.html:176
+#: /resources/templates/messages/created.txt:18
 msgid "Help"
 msgstr "ヘルプ"
 
+#: /resources/templates/account/login.html:12
+#: /resources/templates/account/signup.html:11
 #: /resources/templates/dashboard.html:13
 #: /resources/templates/index.html:44
 #: /resources/templates/index.html:51
+#: /resources/templates/maintainer/model.html:13
+#: /resources/templates/package/base.html:13
+#: /resources/templates/package/changeset.html:13
 #: /resources/templates/package/create.html:12
+#: /resources/templates/package/models.html:14
+#: /resources/templates/package/release.html:14
+#: /resources/templates/package/release_confirm.html:12
+#: /resources/templates/package/source.html:13
 msgid "Home"
 msgstr "ホーム"
 
+#: /resources/templates/package/release.html:221
+msgid "If you want to add source of script or data files etc., fill following forms"
+msgstr ""
+
 #: /resources/templates/index.html:47
+#: /resources/templates/message/inbox.html:9
+#: /resources/templates/message/inbox.html:13
+#: /resources/templates/message/inbox.html:20
 msgid "Inbox"
 msgstr "受信箱"
 
+#: /resources/templates/package/downloads.html:21
+msgid "Information"
+msgstr "情報"
+
+#: /resources/templates/package/release.html:193
+#: /resources/templates/package/release_confirm.html:40
+msgid "Install target"
+msgstr "インストール先"
+
+#: /resources/templates/package/changeset.html:22
+msgid "Latest"
+msgstr ""
+
+#: /resources/templates/package/base.html:107
 #: /resources/templates/package/create.html:111
+#: /resources/templates/package/edit.html:75
+#: /resources/templates/package/model.html:79
 msgid "License"
 msgstr "ライセンス"
+
+#: /resources/templates/account/signup.html:94
+#: /resources/templates/maintainer/model.html:40
+msgid "Location"
+msgstr "場所"
 
 #: /resources/templates/index.html:49
 msgid "Log out"
 msgstr "ログアウト"
 
+#: /resources/templates/account/login.html:8
+#: /resources/templates/account/login.html:12
+#: /resources/templates/account/login.html:20
 #: /resources/templates/index.html:52
 msgid "Login"
 msgstr "ログイン"
@@ -134,10 +313,35 @@ msgstr "ログインIDまたはパスワードが間違っています"
 msgid "Login with OpenID"
 msgstr "OpenIDでログイン"
 
+#: /resources/templates/maintainer/model.html:9
+#: /resources/templates/maintainer/model.html:13
+#: /resources/templates/maintainer/model.html:20
+msgid "Maintainer"
+msgstr "メンテナ"
+
 #: /resources/templates/index.html:59
 #: /resources/templates/index.html:85
+#: /resources/templates/package/base.html:111
+#: /resources/templates/package/model.html:83
 msgid "Maintainers"
 msgstr "メンテナ"
+
+#: /resources/templates/package/base.html:50
+#: /resources/templates/package/edit.html:2
+#: /resources/templates/package/release.html:10
+#: /resources/templates/package/release_confirm.html:9
+msgid "Manage"
+msgstr "管理"
+
+#: /resources/templates/package/edit.html:5
+#: /resources/templates/package/release.html:14
+#: /resources/templates/package/release_confirm.html:12
+msgid "Manage Package"
+msgstr "パッケージ管理"
+
+#: /resources/templates/maintainer/model.html:41
+msgid "Members Since"
+msgstr "登録日"
 
 #: /resources/templates/index.html:100
 msgid "Most Downloaded"
@@ -153,8 +357,26 @@ msgstr "自分のパッケージ"
 msgid "New Package"
 msgstr "新しいパッケージ"
 
+#: /resources/templates/account/signup.html:117
+msgid "New register"
+msgstr "新規登録"
+
+#: /resources/templates/package/changeset.html:21
+msgid "Next Changes"
+msgstr ""
+
 #: /resources/templates/dashboard.html:87
 msgid "No favs."
+msgstr ""
+
+#: /resources/templates/package/base.html:102
+#: /resources/templates/package/models_released.html:23
+msgid "No release."
+msgstr "リリース無し"
+
+#: /resources/templates/package/release.html:203
+#: /resources/templates/package/release_confirm.html:42
+msgid "Notes"
 msgstr ""
 
 #: /resources/templates/package/create.html:415
@@ -165,12 +387,68 @@ msgstr "注意"
 msgid "Only maintainers (You can edit maintainers in a package setting)"
 msgstr "メンテナを選択する(パッケージ設定より変更することができます)"
 
+#: /resources/templates/package/edit.html:65
+msgid "Only maintainers (You can edit this in a package setting)"
+msgstr "メンテナを選択する(パッケージ設定より変更することができます)"
+
+#: /resources/templates/account/signup.html:111
+msgid "OpenID Identity"
+msgstr "OpenID"
+
+#: /resources/templates/message/inbox.html:48
+msgid "Operations"
+msgstr "管理"
+
+#: /resources/templates/package/release.html:72
+msgid "Optional"
+msgstr ""
+
+#: /resources/templates/package/release.html:207
+#: /resources/templates/package/release_confirm.html:46
+msgid "PHP min version / PEAR min version."
+msgstr ""
+
+#: /resources/templates/package/base.html:9
+#: /resources/templates/package/base.html:13
+#: /resources/templates/package/base.html:23
+#: /resources/templates/package/changeset.html:10
+#: /resources/templates/package/document.html:10
+#: /resources/templates/package/downloads.html:7
+#: /resources/templates/package/edit.html:2
+#: /resources/templates/package/model.html:2
+#: /resources/templates/package/models.html:39
+#: /resources/templates/package/models_favored.html:15
+#: /resources/templates/package/models_updates.html:15
+#: /resources/templates/package/release.html:10
+#: /resources/templates/package/release.html:14
+#: /resources/templates/package/release_confirm.html:9
+#: /resources/templates/package/release_confirm.html:12
+#: /resources/templates/package/source.html:9
+msgid "Package"
+msgstr "パッケージ"
+
 #: /resources/templates/package/create.html:37
-msgid "Package name"
+#: /resources/templates/package/edit.html:15
+msgid "Package Name"
 msgstr "パッケージ名"
+
+#: /resources/templates/package/edit.html:5
+#: /resources/templates/package/edit.html:11
+msgid "Package Setting"
+msgstr "パッケージ設定"
+
+#: /resources/templates/package/release.html:213
+msgid "Package, Channel is required. Min/Max version is optional."
+msgstr ""
 
 #: /resources/templates/index.html:58
 #: /resources/templates/index.html:85
+#: /resources/templates/maintainer/model.html:33
+#: /resources/templates/maintainer/model.html:65
+#: /resources/templates/package/models.html:10
+#: /resources/templates/package/models.html:14
+#: /resources/templates/package/models.html:21
+#: /resources/templates/package/source.html:13
 msgid "Packages"
 msgstr "パッケージ"
 
@@ -178,44 +456,226 @@ msgstr "パッケージ"
 msgid "Password:"
 msgstr "パスワード: "
 
+#: /resources/templates/package/changeset.html:20
+msgid "Previous Changes"
+msgstr ""
+
+#: /resources/templates/account/signup.html:77
 #: /resources/templates/index.html:48
+#: /resources/templates/maintainer/model.html:38
 msgid "Profile"
 msgstr "プロフィール"
 
+#: /resources/templates/package/base.html:85
+#: /resources/templates/package/model.html:46
+msgid "Recent Release"
+msgstr "最近のリリース"
+
+#: /resources/templates/package/models.html:33
+#: /resources/templates/package/models_released.html:10
+msgid "Recent Released Packages"
+msgstr "最近リリースされたパッケージ"
+
 #: /resources/templates/index.html:93
+#: /resources/templates/package/models_favored.html:4
+#: /resources/templates/package/models_released.html:4
+#: /resources/templates/package/models_updates.html:4
 msgid "Recent Releases"
 msgstr ""
 
+#: /resources/templates/package/models_updates.html:10
+msgid "Recent Update Packages"
+msgstr ""
+
+#: /resources/templates/package/source.html:38
+#: /resources/templates/package/source_viewfile.html:23
+msgid "Recent change"
+msgstr ""
+
+#: /resources/templates/account/signup.html:7
+#: /resources/templates/account/signup.html:11
+#: /resources/templates/account/signup.html:19
+msgid "Register"
+msgstr "登録"
+
+#: /resources/templates/package/release.html:10
+#: /resources/templates/package/release.html:14
+#: /resources/templates/package/release_confirm.html:9
+#: /resources/templates/package/release_confirm.html:12
+msgid "Release"
+msgstr "リリース"
+
+#: /resources/templates/package/downloads.html:19
+msgid "Release Date"
+msgstr "リリース日"
+
+#: /resources/templates/package/release.html:167
+msgid "Release Package"
+msgstr "パッケージリリース"
+
+#: /resources/templates/package/release_confirm.html:21
+msgid "Release Package Confirm"
+msgstr "パッケージリリース確認"
+
+#: /resources/templates/package/release.html:168
+msgid "Release by upload."
+msgstr "アップロードしてリリース"
+
 #: /resources/templates/package/create.html:62
+#: /resources/templates/package/edit.html:26
+#: /resources/templates/package/release.html:190
+#: /resources/templates/package/release_confirm.html:38
 msgid "Repository"
 msgstr "リポジトリ"
+
+#: /resources/templates/package/release.html:71
+#: /resources/templates/package/release_confirm.html:54
+msgid "Required"
+msgstr "必須"
 
 #: /resources/templates/index.html:85
 msgid "Search:"
 msgstr "検索: "
 
+#: /resources/templates/message/inbox.html:33
+msgid "Sent"
+msgstr "送信箱"
+
+#: /resources/templates/package/base.html:47
+#: /resources/templates/package/source.html:9
+#: /resources/templates/package/source.html:13
+msgid "Source"
+msgstr "ソース"
+
+#: /resources/templates/package/source.html:33
+#: /resources/templates/package/source_viewfile.html:18
+msgid "Subversion URL"
+msgstr ""
+
+#: /resources/templates/account/signup.html:35
+msgid "Subversion account name"
+msgstr "Subversion アカウント名"
+
+#: /resources/templates/package/source.html:48
+msgid "Subversion externals"
+msgstr ""
+
+#: /resources/templates/account/signup.html:43
+msgid "Subversion password"
+msgstr "Subversion パスワード"
+
 #: /resources/templates/package/create.html:67
 msgid "Subversion repository on Openpear (will be generated)"
 msgstr "Openpear 上のリポジトリを使用する"
+
+#: /resources/templates/message/inbox.html:32
+msgid "System messages"
+msgstr "システムメッセージ"
+
+#: /resources/templates/package/document.html:26
+msgid "Table of Contents"
+msgstr "目次"
+
+#: /resources/templates/package/release.html:187
+#: /resources/templates/package/release_confirm.html:35
+msgid "Target directory"
+msgstr "リリース元ディレクトリ"
+
+#: /resources/templates/package/release.html:173
+#: /resources/templates/package/release_confirm.html:27
+msgid "Target revision"
+msgstr "リリース元リビジョン"
+
+#: /resources/templates/account/signup.html:119
+msgid "Thank you for registration."
+msgstr "ご登録ありがとうございます。"
+
+#: /resources/templates/package/model.html:63
+msgid "There are no releases for this package."
+msgstr "このパッケージにはリリースがありません"
 
 #: /resources/templates/index.html:60
 msgid "Tickets"
 msgstr "チケット"
 
 #: /resources/templates/index.html:57
+#: /resources/templates/maintainer/model.html:49
+#: /resources/templates/package/base.html:149
+#: /resources/templates/package/changeset.html:13
+#: /resources/templates/package/model.html:121
 msgid "Timeline"
 msgstr "タイムライン"
 
+#: /resources/templates/message/inbox.html:46
+msgid "Title"
+msgstr "タイトル"
+
+#: /resources/templates/messages/created.txt:4
+msgid "To release package ..."
+msgstr "パッケージをリリースするには"
+
+#: /resources/templates/package/base.html:44
+msgid "Top"
+msgstr "トップ"
+
+#: /resources/templates/account/signup.html:86
+#: /resources/templates/maintainer/model.html:39
+#: /resources/templates/package/edit.html:68
+msgid "URL"
+msgstr ""
+
+#: /resources/templates/package/models_favored.html:5
+#: /resources/templates/package/models_released.html:5
+#: /resources/templates/package/models_updates.html:5
+msgid "Updates"
+msgstr "更新"
+
+#: /resources/templates/account/signup.html:69
+msgid "Username"
+msgstr "ユーザー名"
+
+#: /resources/templates/package/downloads.html:18
+#: /resources/templates/package/models.html:45
+#: /resources/templates/package/release.html:177
+#: /resources/templates/package/release_confirm.html:31
+msgid "Version"
+msgstr "バージョン"
+
+#: /resources/templates/package/document.html:34
+msgid "Version Archive"
+msgstr ""
+
+#: /resources/templates/package/model.html:52
+msgid "View All Releases"
+msgstr "すべてのリリースを見る"
+
 #: /resources/templates/package/create.html:101
+#: /resources/templates/package/edit.html:58
 msgid "Who one commit this package ?"
 msgstr "コミット権限の設定"
+
+#: /resources/templates/account/signup.html:113
+msgid "You are identified by"
+msgstr ""
+
+#: /resources/templates/package/model.html:66
+msgid "You can use this package only the version in repository."
+msgstr ""
 
 #: /resources/templates/package/create.html:419
 msgid "You should name the package with recognizable name."
 msgstr ""
 
+#: /resources/templates/messages/created.txt:2
+msgid "Your package is now created."
+msgstr "パッケージが作成されました"
+
 #: com.tokushimakazutaka.net.Growl
 msgid "address"
+msgstr ""
+
+#: /resources/templates/package/source.html:61
+msgid "age"
 msgstr ""
 
 #: org.openpear.flow.parts.Openpear
@@ -231,9 +691,25 @@ msgstr ""
 msgid "args"
 msgstr ""
 
+#: org.rhaco.net.mail.Mail
+msgid "attach"
+msgstr ""
+
 #: org.rhaco.net.xml.Atom
 msgid "author"
 msgstr ""
+
+#: org.rhaco.net.mail.Mail
+msgid "bcc"
+msgstr ""
+
+#: org.rhaco.net.mail.Mail
+msgid "cc"
+msgstr ""
+
+#: /resources/templates/package/source.html:62
+msgid "comment"
+msgstr "コメント"
 
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:866
 msgid "connection fail `{1}`"
@@ -255,6 +731,14 @@ msgstr ""
 #: spl/Flow.php:307
 #: /core/spl/Flow.php:307
 msgid "direct link not permitted"
+msgstr ""
+
+#: /resources/templates/messages/created.txt:10
+msgid "edit some flies and commit."
+msgstr ""
+
+#: org.rhaco.net.mail.Mail
+msgid "encode"
 msgstr ""
 
 #: org.rhaco.net.xml.Atom
@@ -280,6 +764,14 @@ msgstr ""
 #: org.openpear.flow.parts.Openpear
 #: com.tokushimakazutaka.flow.parts.Developer
 msgid "files"
+msgstr "ファイル"
+
+#: /resources/templates/messages/created.txt:6
+msgid "first, checkout trunk from subversion repository."
+msgstr "はじめに，Subversion リポジトリより trunk をチェックアウトします。"
+
+#: org.rhaco.net.mail.Mail
+msgid "from"
 msgstr ""
 
 #: org.rhaco.net.xml.Atom
@@ -297,8 +789,20 @@ msgstr ""
 msgid "hoge"
 msgstr ""
 
+#: org.rhaco.net.mail.Mail
+msgid "html"
+msgstr ""
+
 #: org.rhaco.net.xml.Atom
 msgid "id"
+msgstr ""
+
+#: /resources/templates/package/release.html:168
+msgid "if you want to release a package by uploading your tarball, click here."
+msgstr ""
+
+#: org.rhaco.net.mail.Mail
+msgid "image"
 msgstr ""
 
 #: org.rhaco.service.OpenIDAuth
@@ -309,13 +813,19 @@ msgstr ""
 msgid "link"
 msgstr ""
 
+#: org.rhaco.net.mail.Mail
+msgid "message"
+msgstr ""
+
 #: /resources/templates/index.html:106
 #: /resources/templates/index.html:117
 msgid "more"
 msgstr ""
 
+#: /resources/templates/package/source.html:60
 #: org.openpear.flow.parts.Openpear
 #: com.tokushimakazutaka.flow.parts.Developer
+#: org.rhaco.net.mail.Mail
 msgid "name"
 msgstr ""
 
@@ -332,11 +842,17 @@ msgstr ""
 msgid "not synchronize"
 msgstr ""
 
+#: /resources/templates/package/source.html:23
+#: /resources/templates/package/source_viewfile.html:8
+msgid "other tree"
+msgstr ""
+
 #: com.tokushimakazutaka.net.Growl
 msgid "password"
 msgstr ""
 
 #: com.tokushimakazutaka.io.log.LogGrowl
+#: org.rhaco.io.log.LogFile
 msgid "path"
 msgstr ""
 
@@ -362,6 +878,10 @@ msgstr ""
 msgid "primary unique"
 msgstr ""
 
+#: org.rhaco.net.mail.Mail
+msgid "return_path"
+msgstr ""
+
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:2193
 msgid "save is not permitted"
 msgstr ""
@@ -376,12 +896,20 @@ msgstr ""
 msgid "sessions"
 msgstr ""
 
+#: org.rhaco.net.mail.Mail
+msgid "subject"
+msgstr ""
+
 #: org.rhaco.net.xml.Atom
 msgid "subtitle"
 msgstr ""
 
 #: org.rhaco.net.xml.Atom
 msgid "title"
+msgstr ""
+
+#: org.rhaco.net.mail.Mail
+msgid "to"
 msgstr ""
 
 #: com.tokushimakazutaka.net.Growl
@@ -429,19 +957,23 @@ msgstr ""
 msgid "xmlns"
 msgstr ""
 
+#: /resources/templates/maintainer/model.html:83
+msgid "{1} doesn't have any public package yet."
+msgstr ""
+
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1038
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1044
 msgid "{1} exceeds maximum"
-msgstr ""
+msgstr "{1} が大きすぎます"
 
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1037
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1043
 msgid "{1} less than minimum"
-msgstr ""
+msgstr "{1} が小さすぎます"
 
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1906
 msgid "{1} not found"
-msgstr ""
+msgstr "{1} が見つかりません"
 
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1032
 msgid "{1} not found master"
@@ -449,11 +981,11 @@ msgstr ""
 
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1009
 msgid "{1} required"
-msgstr ""
+msgstr "{1} は必須です"
 
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1027
 msgid "{1} unique"
-msgstr ""
+msgstr "{1} が重複しています"
 
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1050
 msgid "{1} verify fail"

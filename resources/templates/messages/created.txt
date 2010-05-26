@@ -1,13 +1,13 @@
-** Congratulations
-Your package is now created.
+** {$t.trans('Congratulations')}
+{$t.trans('Your package is now created.')}
 
-** To release package ...
+** {$t.trans('To release package ...')}
 
-- first, checkout trunk from subversion repository.
+- {$t.trans('first, checkout trunk from subversion repository.')}
 >||
 % svn co http://svn.openpear.org/{$package.name()}/trunk
 ||<
-- edit some flies and commit.
+- {$t.trans('edit some flies and commit.')}
 >||
 % touch {$package.name()}.php
 % svn add {$package.name()}.php
@@ -15,6 +15,6 @@ Your package is now created.
 ||<
 - to release the package, access to [http://openpear.org/package/{$package.name()}/manage:title=manage page] and release it.
 
-** Help
+** {$t.trans('Help')}
 
 - See help: [http://openpear.org/help]

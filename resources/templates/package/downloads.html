@@ -4,10 +4,10 @@
   <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
-<rt:block name="title">Downloads \ {$package.name()} \ Package \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('Downloads')} \ {$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path_path">
-<a href="{$t.url('pacakge')}/{$t.htmlencode($package.name())}">{$t.htmlencode($package.name())}</a> &raquo; Downloads
+<a href="{$t.url('pacakge')}/{$t.htmlencode($package.name())}">{$t.htmlencode($package.name())}</a> &raquo; {$t.trans('Downloads')}
 </rt:block>
 
 <rt:block name="package_navi_current_download"> class="current"</rt:block>
@@ -15,10 +15,10 @@
 <table id="sub-package-downloads">
   <thead>
     <tr>
-      <th>Version</th>
-      <th>Release Date</th>
-      <th>Download</th>
-      <th class="w500px">Information</th>
+      <th>{$t.trans('Version')}</th>
+      <th>{$t.trans('Release Date')}</th>
+      <th>{$t.trans('Download')}</th>
+      <th class="w500px">{$t.trans('Information')}</th>
     </tr>
   </thead>
   

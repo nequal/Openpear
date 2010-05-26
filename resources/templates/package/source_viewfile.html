@@ -5,7 +5,7 @@
   </h3>
   
     <ul class="source-tree">
-      <li id="source-tree">other tree <img src="images/global-icon-tree.png" class="vmiddle" />
+      <li id="source-tree">{$t.trans('other tree')} <img src="images/global-icon-tree.png" class="vmiddle" />
         <ul id="source-subtree">
           <rt:loop param="other_tree" key="other_path" var="current">
           <li><a href="{$t.url('package')}/{$package.name()}/src/{$other_path}"><rt:if param="{$current}"><img src="images/global-icon-checked.png" alt="checked" class="vmiddle" /> </rt:if>{$other_path}</a></li>
@@ -15,12 +15,12 @@
     </ul>
   
   <p class="clear mt0">
-    Subversion URL: <a href="{$real_url}">{$real_url}</a>
+    {$t.trans('Subversion URL')}: <a href="{$real_url}">{$real_url}</a>
   </p>
   
   <div class="sub-package-description">
     <p class="title">
-      Recent change
+      {$t.trans('Recent change')}
     </p>
     <p class="description">
       <img src="{$info['recent']['maintainer'].avatar()}" /> <a href="{$t.url('maintainer')}/{$info['recent']['maintainer'].name()}">{$info['recent']['maintainer'].name()}</a> <a href="{$t.url('package')}/{$package.name()}/changeset/{$info['recent']['revision']}">[{$info['recent']['revision']}]</a> <span class="italic darkgray"> -- {$ot.date_ago($info['recent']['date'])}</span><br />

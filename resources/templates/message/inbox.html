@@ -6,18 +6,18 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">Inbox \  Openpear</rt:block>
+<rt:block name="title">{$t.trans('Inbox')} \  Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; Inbox
+    <a href="{$t.url()}">Home</a> &raquo; {$t.trans('Inbox')}
   </div>
 </rt:block>
 
 <rt:block name="contents">
   <div class="frame-class" id="sub-title">
     <div class="container-class">
-      <h2 class="inline fleft">Inbox</h2>
+      <h2 class="inline fleft">{$t.trans('Inbox')}</h2>
       <br class="clear" />
     </div> <!-- #container-s -->
   </div> <!-- .frame-class -->
@@ -26,11 +26,11 @@
 <div class="container-class">
   <div class="column2-lt">
     <div class="column2-left" id="message-left">
-      <h3>Boxes</h3>
+      <h3>{$t.trans('Boxes')}</h3>
 
       <ul id="message-box-list">
-        <li class="current"><a href="">System messages</a></li>
-        <li><a href="">Sent</a></li>
+        <li class="current"><a href="">{$t.trans('System messages')}</a></li>
+        <li><a href="">{$t.trans('Sent')}</a></li>
       </ul>
 
 
@@ -42,10 +42,10 @@
       <table id="message-list" rt:param="object_list" rt:var="message">
         <thead>
           <tr>
-            <th class="mesasge-list-from">From</th>
-            <th class="message-list-title">Title</th>
-            <th class="mesasge-list-date">Date</th>
-            <th class="message-list-op">Operations</th>
+            <th class="mesasge-list-from">{$t.trans('From')}</th>
+            <th class="message-list-title">{$t.trans('Title')}</th>
+            <th class="mesasge-list-date">{$t.trans('Date')}</th>
+            <th class="message-list-op">{$t.trans('Operations')}</th>
           </tr>
         </thead>
         <tfoot>

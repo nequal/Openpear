@@ -5,11 +5,11 @@
   <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
-<rt:block name="title">Login \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('Login')} \ Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="./">Home</a> &raquo; Login
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Login')}
   </div>
 </rt:block>
 
@@ -17,7 +17,7 @@
   <div class="frame-class" id="sub-title">
     
     <div class="container-class">
-      <h2 class="inline fleft"><a href="{$t.url('account/login')}">Login</a></h2>
+      <h2 class="inline fleft"><a href="{$t.url('account/login')}">{$t.trans('Login')}</a></h2>
       
       <form action="{$t.url('packages')}" id="sub-search-form" method="post">
         <input type="text" name="q" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />

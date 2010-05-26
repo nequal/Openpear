@@ -1,5 +1,5 @@
 <rt:extends href="base.html" />
-<rt:block name="title">{$object.name()} \ Package \ Openpear</rt:block>
+<rt:block name="title">{$object.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path_path">
  {$object.name()}
@@ -11,14 +11,14 @@
 <div id="sub-package-description">
   <div class="sub-package-description">
     <p class="title">
-      Description
+      {$t.trans('Description')}
     </p>
     <p class="description">
       {$object.description()}
     </p>
   </div>
   <div id="sub-package-description-category">
-    <h3 class="inline fleft">Categories: </h3>
+    <h3 class="inline fleft">{$t.trans('Categories')}: </h3>
     <ul class="list-liner" id="package-categories">
       <rt:loop param="{$package.package_tags()}" var="package_tag">
         <rt:if param="{$package_tag.prime()}" value="true">
@@ -43,15 +43,15 @@
     
     <div class="column2-left">
     
-      <h3>Recent Release</h3>
+      <h3>{$t.trans('Recent Release')}</h3>
     <rt:if param="{$recent_releases}">
       <ul class="list-standard" rt:param="{$recent_releases}" rt:var="release">
         <li>- <a href="{$t.url('package')}/{$object.name()}/download#{$release.id()}">{$release.fm_version()}</a> <em>-- released on {$release.fm_created()}</em></li>
       </ul>
       <pre>% pear install {$pear_alias}/{$object.installName()}</pre>
-      <p class="aright"><a href="./package_Hoge_downloads.html">View All Releases &gt;&gt;</a></p>
+      <p class="aright"><a href="./package_Hoge_downloads.html">{$t.trans('View All Releases')} &gt;&gt;</a></p>
       
-      <h3>Changes</h3>
+      <h3>{$t.trans('Changes')}</h3>
       <pre>* 2009-01-27 - Store old and new values for updates, and store all attributes on destroy.
          Refactored revisioning methods to work as expected
 * 2008-10-10 - changed to make it work in development mode
@@ -60,10 +60,10 @@
 * 2008-04-18 - Fix NoMethodError when trying to access the :previous revision</pre>
 
     <rt:else />
-    <p class="info">There are no releases for this package.<br />
+    <p class="info">{$t.trans('There are no releases for this package.')}<br />
     </p>
     <p>
-    You can use this package only the version in repository.
+    {$t.trans('You can use this package only the version in repository.')}
     </p>
 
     <rt:if param="{$object.external_repository()}">
@@ -76,16 +76,16 @@
     </div>
 
     <div class="column2-right">
-      <h3>License</h3>
+      <h3>{$t.trans('License')}</h3>
       <p class="tiny-margin">
         {$object.license()}
       </p>
-      <h3>Maintainers</h3>
+      <h3>{$t.trans('Maintainers')}</h3>
       <ul class="list-liner" rt:param="{$maintainers}" rt:var="maintainer">
         <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$maintainer.avatar()}" /> {$maintainer.name()}</a></li>
       </ul>
       <br class="clear">
-      <h3>Fans</h3>
+      <h3>{$t.trans('Fans')}</h3>
       <p>
         <img src="./images/global-icon-star.png" /> {$object.favored_count()}
       </p>
@@ -104,7 +104,7 @@
       </rt:if>
       
       <rt:comment>
-      <h3>Dependencies</h3>
+      <h3>{$t.trans('Dependencies')}</h3>
       <ul class="list-standard">
         <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
         <li>- <a href="">pear/DB (>= 1.0.0)</a></li>
@@ -118,7 +118,7 @@
   <div class="package-changes">
   </div>
   
-  <h3>Timeline <a href="{$t.url('package')}/{$object.name()}/timelines.atom"><img src="./images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
+  <h3>{$t.trans('Timeline')} <a href="{$t.url('package')}/{$object.name()}/timelines.atom"><img src="./images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
   <div class="timeline timeline-user">
     <ul rt:param="timelines" rt:var="timeline">
       <li class="{$loop_evenodd}">
