@@ -230,20 +230,17 @@ class Openpear extends Flow
      * メンテナ情報を更新して結果をjsonで出力
      */
     public function maintainer_update_json(){
-        // TODO 仕様の確認
-        if(!$this->is_login()){
-            return Text::ououtput_jsonp(array('status' => 'ng', 'error' => 'required sign-in'));
-        }
         try {
+            $this->login_required();
             if(!$this->is_post()) throw new OpenpearException('request method is unsupported');
-            $maintainer = $this->user();
+            $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->user()->id()));
             $maintainer->cp($this->vars());
-            $maintainer->save(true);
-            Exceptions::validation();
-        } catch(Exception $e){
-            return Text::ououtput_jsonp(array('status' => 'ng', 'error' => $e->getMessage()));
+            $maintainer->save();
+            C($maintainer)->commit();
+            return Text::output_jsonp(array('status' => 'ok', 'maintainer' => $maintainer));
+        } catch (Exception $e) {
+            return Text::output_jsonp(array('status' => 'ng', 'error' => $e->getMessage()));
         }
-        return Text::ououtput_jsonp(array('status' => 'ok'));
     }
     /**
      * メッセージ詳細

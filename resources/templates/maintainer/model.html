@@ -8,6 +8,38 @@
 
 <rt:block name="title">{$object.name()} \ {$t.trans('Maintainer')} \  Openpear</rt:block>
 
+<rt:block name="extra_header">
+<rt:if param="{$ot.isme($object)}">
+    <script type="text/javascript">
+        $(function(){
+            $('.editable_field').dblclick(function(){
+                var tmp_val = $(this).text();
+                var name = $(this).attr('id');
+                $(this).empty().append(
+                    $('<form><input type="text" name="' + name + '" size="30" placeholder="' + tmp_val + '" /></form>').change(function(){
+                        console.log($(this).serialize());
+                        $.ajax({
+                            url: '{$t.url('maintainers/update.json')}',
+                            type: 'post',
+                            data: $(this).serialize(),
+                            dataType: 'json',
+                            success: function (data, dataType) {
+                                $('#' + name).text(data.maintainer.profile);
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                $('#' + name).text(tmp_val);
+                            }
+                        });
+                    }).submit(function(){
+                        return false;
+                    })
+                );
+            });
+        });
+    </script>
+</rt:if>
+</rt:block>
+
 <rt:block name="topic_path">
   <div id="topic-path">
     <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Maintainer')} \ {$object.name()}
@@ -35,10 +67,22 @@
       </div> <!-- / column2-right -->
       <div class="column2-right">
         <table id="maintainer-profile">
-          <tr><th>{$t.trans('Profile')}: </th><td>{$object.profile()}</td></tr>
-          <tr><th>{$t.trans('URL')}: </th><td>{$object.url()}</td></tr>
-          <tr><th>{$t.trans('Location')}: </th><td>{$object.location()}</td></tr>
-          <tr><th>{$t.trans('Members Since')}: </th><td>{$t.df($object.created(), 'M d, Y')}</td></tr>
+          <tr>
+            <th>{$t.trans('Profile')}: </th>
+            <td><span id="profile" class="editable_field">{$object.profile()}</span></td>
+          </tr>
+          <tr>
+            <th>{$t.trans('URL')}: </th>
+            <td><span id="url" class="editable_field">{$object.url()}</span></td>
+          </tr>
+          <tr>
+            <th>{$t.trans('Location')}: </th>
+            <td><span id="location" class="editable_field">{$object.location()}</span></td>
+          </tr>
+          <tr>
+            <th>{$t.trans('Members Since')}: </th>
+            <td>{$t.df($object.created(), 'M d, Y')}</td>
+          </tr>
         </table>
       </div>
       <br class="clear">
