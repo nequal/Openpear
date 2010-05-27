@@ -729,13 +729,13 @@ class Openpear extends Flow
         $repo_path = File::absolute($local_root, $path);
         $info = Subversion::cmd('info', array($repo_path));
         if($info['kind'] === 'dir'){
-            $this->vars('tree', self::format_tree(Subversion::cmd('list', array($info['url']))));
+            $this->vars('tree', self::format_tree(Subversion::cmd('list', array($info['url']), array('revision' => $this->in_vars('rev', 'HEAD')))));
         } else if($info['kind'] === 'file') {
             $this->put_block('package/source_viewfile.html');
             $p = explode('.', $info['path']);
             $ext = array_pop($p);
             if(in_array($ext, $this->allowed_ext)){
-                $this->vars('code', Subversion::cmd('cat', array($info['url'])));
+                $this->vars('code', Subversion::cmd('cat', array($info['url']), array('revision' => $this->in_vars('rev', 'HEAD'))));
             }
         } else {
             $this->redirect_method('package',$package_name);
