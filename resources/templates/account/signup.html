@@ -4,11 +4,11 @@
   <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
-<rt:block name="title">Register \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('Register')} \ Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="./">Home</a> &raquo; Register
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Register')}
   </div>
 </rt:block>
 
@@ -16,7 +16,7 @@
   <div class="frame-class" id="sub-title">
     
     <div class="container-class">
-      <h2 class="inline fleft">Register</h2>
+      <h2 class="inline fleft">{$t.trans('Register')}</h2>
       
       <form action="{$t.url('packages')}" id="sub-search-form" method="post">
         <input name="q" type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
@@ -32,7 +32,7 @@
         <div class="column2-left">
           <form action="{$t.url('account/signup')}" method="post" id="register" rt:ref="true">
             <dl>
-              <dt>Subversion account name <span class="red">*</span>:</dt>
+              <dt>{$t.trans('Subversion account name')} <span class="red">*</span>:</dt>
               <dd>
                 <rt:invalid param="name" messages="errors">
                   <rt:loop param="errors" var="error" limit="1">
@@ -40,7 +40,7 @@
                   </rt:loop>
                 </rt:invalid>
                 <input name="name" type="text" id="svn-name" class="small" /></dd>
-              <dt>Subversion password <span class="red">*</span>:</dt>
+              <dt>{$t.trans('Subversion password')} <span class="red">*</span>:</dt>
               <dd>
                 <rt:invalid param="new_password" messages="errors">
                   <rt:loop param="errors" var="error" limit="1">
@@ -49,7 +49,7 @@
                 </rt:invalid>
                 <input name="new_password" type="password" id="svn-pass" class="tiny" />
               </dd>
-              <dt>Confirm password <span class="red">*</span>:</dt>
+              <dt>{$t.trans('Confirm password')} <span class="red">*</span>:</dt>
               <dd>
                 <rt:invalid param="new_password_conf" messages="errors">
                   <rt:loop param="errors" var="error" limit="1">
@@ -58,7 +58,7 @@
                 </rt:invalid>
                 <input name="new_password_conf" type="password" id="svn-pass-conf" class="tiny" />
               </dd>
-              <dt>E-mail <span class="red">*</span>: </dt>
+              <dt>{$t.trans('E-mail')} <span class="red">*</span>: </dt>
               <dd>
                 <rt:invalid param="mail" messages="errors">
                   <rt:loop param="errors" var="error" limit="1">
@@ -66,7 +66,7 @@
                   </rt:loop>
                 </rt:invalid>
                 <input name="mail" type="text" id="email" class="small" /></dd>
-              <dt>Username: </dt>
+              <dt>{$t.trans('Username')}: </dt>
               <dd>
                 <rt:invalid param="fullname" messages="errors">
                   <rt:loop param="errors" var="error" limit="1">
@@ -74,7 +74,7 @@
                   </rt:loop>
                 </rt:invalid>
                 <input name="fullname" type="text" id="name" class="small" /></dd>
-              <dt>Profile: </dt>
+              <dt>{$t.trans('Profile')}: </dt>
               <dd>
                 <rt:invalid param="profile" messages="errors">
                   <rt:loop param="errors" var="error" limit="1">
@@ -83,7 +83,7 @@
                 </rt:invalid>
                 <textarea name="profile" id="profile"></textarea>
               </dd>
-              <dt>URL : </dt>
+              <dt>{$t.trans('URL')} : </dt>
               <dd>
                 <rt:invalid param="url" messages="errors">
                   <rt:loop param="errors" var="error" limit="1">
@@ -91,7 +91,7 @@
                   </rt:loop>
                 </rt:invalid>
                 <input name="url" type="text" id="url" class="small" /></dd>
-              <dt>Location : </dt>
+              <dt>{$t.trans('Location')} : </dt>
               <dd>
                 <rt:invalid param="location" messages="errors">
                   <rt:loop param="errors" var="error" limit="1">
@@ -108,15 +108,15 @@
         
         <div class="column2-right">
         <rt:if param="{$openid}">
-          <h3>OpenID Identity</h3>
+          <h3>{$t.trans('OpenID Identity')}</h3>
           <p>
-            You are identified by:<br />
+            {$t.trans('You are identified by')}:<br />
             {$openid_identity}
           </p>
         <rt:else />
-          <h3>New register</h3>
+          <h3>{$t.trans('New register')}</h3>
           <p>
-            Thank you for registration.
+            {$t.trans('Thank you for registration.')}
           </p>
         </rt:if>
         </div>

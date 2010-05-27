@@ -6,18 +6,18 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">{$t.htmlencode($object.name())} \ Maintainer \  Openpear</rt:block>
+<rt:block name="title">{$object.name()} \ {$t.trans('Maintainer')} \  Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; Maintainer \ {$t.htmlencode($object.name())}
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Maintainer')} \ {$object.name()}
   </div>
 </rt:block>
 
 <rt:block name="contents">
 <div class="frame-class" id="sub-title">
   <div class="container-class">
-    <h2 class="inline fleft"><a href="{$t.url('maintainer')}/{$t.htmlencode($object.name())}">Maintainer \ {$t.htmlencode($object.name())}</a></h2>
+    <h2 class="inline fleft"><a href="{$t.url('maintainer')}/$object.name()}">{$t.trans('Maintainer')} \ {$object.name()}</a></h2>
     <br class="clear" />
   </div> <!-- #container-s -->
 </div> <!-- .frame-class -->
@@ -27,18 +27,18 @@
     <div class="column2-l">
       <div class="column2-left">
         <img src="{$object.avatar(64)}" width="64" id="maintainer-image" />
-        <h3 id="maintainer-name">{$t.htmlencode($object.name())}</h3><br />
+        <h3 id="maintainer-name">{$object.name()}</h3><br />
         <h3 id="maintainer-fullname">{$ot.str($object)}</h3>
         <div id="maintainer-description">
-          <a href="#maintainer-package">Packages: {$ot.count($charges)}</a>, <a href="#maintainer-favs">Favorites {$ot.count($favorites)}</a>
+          <a href="#maintainer-package">{$t.trans('Packages')}: {$ot.count($charges)}</a>, <a href="#maintainer-favs">{$t.trans('Favorites')} {$ot.count($favorites)}</a>
         </div>
       </div> <!-- / column2-right -->
       <div class="column2-right">
         <table id="maintainer-profile">
-          <tr><th>Profile: </th><td>{$t.htmlencode($object.profile())}</td></tr>
-          <tr><th>URL: </th><td>{$t.htmlencode($object.url())}</td></tr>
-          <tr><th>Location: </th><td>{$t.htmlencode($object.location())}</td></tr>
-          <tr><th>Members Since: </th><td>{$t.df($object.created(), 'M d, Y')}</td></tr>
+          <tr><th>{$t.trans('Profile')}: </th><td>{$object.profile()}</td></tr>
+          <tr><th>{$t.trans('URL')}: </th><td>{$object.url()}</td></tr>
+          <tr><th>{$t.trans('Location')}: </th><td>{$object.location()}</td></tr>
+          <tr><th>{$t.trans('Members Since')}: </th><td>{$t.df($object.created(), 'M d, Y')}</td></tr>
         </table>
       </div>
       <br class="clear">
@@ -46,23 +46,23 @@
     
     <div class="column2-c">
       <div class="column2-left">
-        <h3>Timeline <a href="{$t.url('maintainer')}/{$object.name()}/timelines.atom"><img src="images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
+        <h3>{$t.trans('Timeline')} <a href="{$t.url('maintainer')}/{$object.name()}/timelines.atom"><img src="images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
         <div class="timeline timeline-user">
           <ul rt:param="timelines" rt:var="timeline">
             <li class="{$loop_evenodd}">
               <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
               <div class="timeline-title">
-                {$timeline.subject()}. <em> -- {$ot.date_ago($timeline.fm_created())}</em>
+                {$t.noop($timeline.subject())}. <em> -- {$ot.date_ago($timeline.created())}</em>
               </div>
               <div class="timeline-description">
-                {$timeline.description()}
+                {$t.noop($timeline.description())}
               </div>
             </li>
           </ul>
         </div>
       </div> <!-- / column2-right -->
       <div class="column2-right">
-        <h3 id="maintainer-package">Packages</h3>
+        <h3 id="maintainer-package">{$t.trans('Packages')}</h3>
         
         <rt:loop param="{$charges}" var="charge">
           <div class="maintainer-package">
@@ -76,14 +76,14 @@
             </rt:if>
             <h4><a href="{$t.url('package')}/{$charge.package().name()}">{$charge.package().name()}</a> (<a href="{$t.url('package')}/{$charge.package().name()}/download">{$charge.package().latest_release().fm_version()}</a>) <span>({$charge.role()})</span></h4>
             <p>{$charge.package().description()}</p>
-            <p><rt:if param="{$charge.package().primary_tag()}">Category: <a href="{$t.url('packages')}?category={$t.htmlencode($charge.package().primary_tag())}">{$t.htmlencode($charge.package().primary_tag())}</a> </rt:if><em>Last Update: {$t.df($charge.package().updated(), 'Y-m-d')}</em>
+            <p><rt:if param="{$charge.package().primary_tag()}">{$t.trans('Category')}: <a href="{$t.url('packages')}?category=$charge.package().primary_tag()}">{$charge.package().primary_tag()}</a> </rt:if><em>Last Update: {$t.df($charge.package().updated(), 'Y-m-d')}</em>
             </p>
           </div>
           <rt:else />
-          <p class="info">{$t.htmlencode($object.name())} dosn't have any public package yet.</p>
+          <p class="info">{$t.trans("{1} doesn't have any public package yet.", $object.name())}</p>
         </rt:loop>
         
-        <h3 id="maintainer-favs">Favorites</h3>
+        <h3 id="maintainer-favs">{$t.trans('Favorites')}</h3>
         
         <ul class="list-liner" rt:param="favorites" rt:var="favorite">
           <li>&raquo; <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a></li>

@@ -6,11 +6,11 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">{$package.name()} \ Package \ Openpear</rt:block>
+<rt:block name="title">{$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('packages')}">Package</a> &raquo;
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; <a href="{$t.url('packages')}">{$t.trans('Package')}</a> &raquo;
     <rt:block name="topic_path_path">
     {$package.name()}
     </rt:block>
@@ -20,7 +20,7 @@
 <rt:block name="contents">
   <div class="frame-class" id="sub-title">
     <div class="container-class">
-      <h2 class="inline fleft"><a href="{$t.url('package')}/{$package.name()}">Package \ {$package.name()}</a></h2>
+      <h2 class="inline fleft"><a href="{$t.url('package')}/{$package.name()}">{$t.trans('Package')} \ {$package.name()}</a></h2>
       <div id="sub-package-button-navi" class="fright">
         <rt:if param="{$t.logined()}" value="true">
           <rt:if param="{$package.liked($t.user())}" value="false">
@@ -41,13 +41,13 @@
       
       <div id="sub-package-navi">
         <ul>
-          <li<rt:block name="package_navi_current_top"></rt:block>><a href="{$t.url('package')}/{$package.name()}">Top</a></li>
-          <li<rt:block name="package_navi_current_download"></rt:block>><a href="{$t.url('package')}/{$package.name()}/downloads">Downloads</a></li>
-          <li<rt:block name="package_navi_current_doc"></rt:block>><a href="{$t.url('package')}/{$package.name()}/doc">Documentation</a></li>
-          <li<rt:block name="package_navi_current_src"></rt:block>><a href="{$t.url('package')}/{$package.name()}/src">Source</a></li>
+          <li<rt:block name="package_navi_current_top"></rt:block>><a href="{$t.url('package')}/{$package.name()}">{$t.trans('Top')}</a></li>
+          <li<rt:block name="package_navi_current_download"></rt:block>><a href="{$t.url('package')}/{$package.name()}/downloads">{$t.trans('Downloads')}</a></li>
+          <li<rt:block name="package_navi_current_doc"></rt:block>><a href="{$t.url('package')}/{$package.name()}/doc">{$t.trans('Documentation')}</a></li>
+          <li<rt:block name="package_navi_current_src"></rt:block>><a href="{$t.url('package')}/{$package.name()}/src">{$t.trans('Source')}</a></li>
           <rt:if param="{$t.logined()}" value="true">
             <rt:if param="{$package.permission($t.user(),false)}">
-              <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">Manage</a></li>
+              <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">{$t.trans('Manage')}</a></li>
             </rt:if>
           </rt:if>
         </ul>
@@ -57,20 +57,20 @@
       <div id="sub-package-description">
         <div class="sub-package-description">
           <p class="title">
-            Description
+            {$t.trans('Description')}
           </p>
           <p class="description">
             {$package.description()}
           </p>
         </div>
         <div id="sub-package-description-category">
-          <h3 class="inline fleft">Categories: </h3>
+          <h3 class="inline fleft">{$t.trans('Categories')}: </h3>
           <ul class="list-liner" id="package-categories">
             <rt:loop param="{$package.package_tags()}" var="package_tag">
               <rt:if param="{$package_tag.prime()}" value="true">
-                <li class="bold"><a href="{$t.url('packages')}?category={$t.htmlencode($package_tag.tag().name())}">{$t.htmlencode($package_tag.tag().name())} (primary)</a></li>
+                <li class="bold"><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()} (primary)</a></li>
               <rt:else />
-                <li><a href="{$t.url('packages')}?category={$t.htmlencode($package_tag.tag().name())}">{$t.htmlencode($package_tag.tag().name())}</a></li>
+                <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()}</a></li>
               </rt:if>
             </rt:loop>
             <li><input type="button" id="js-category-add-button" value="+Add" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
@@ -82,7 +82,7 @@
           
           <div class="column2-left">
           
-            <h3>Recent Release</h3>
+            <h3>{$t.trans('Recent Release')}</h3>
           <rt:if param="{$recent_releases}">
             <ul class="list-standard" rt:param="{$recent_releases}" rt:var="release">
               <li>- <a href="{$t.url('package')}/{$package.name()}/download#{$release.id()}">{$release.fm_version()}</a> <em>-- released on {$release.fm_created()}</em></li>
@@ -90,7 +90,7 @@
             <pre>% pear install openpear/{$package.installName()}</pre>
             <p class="aright"><a href="./package_Hoge_downloads.html">View All Releases &gt;&gt;</a></p>
             
-            <h3>Changes</h3>
+            <h3>{$t.trans('Changes')}</h3>
             <pre>* 2009-01-27 - Store old and new values for updates, and store all attributes on destroy.
                Refactored revisioning methods to work as expected
 * 2008-10-10 - changed to make it work in development mode
@@ -99,21 +99,21 @@
 * 2008-04-18 - Fix NoMethodError when trying to access the :previous revision</pre>
 
           <rt:else />
-            <p>No release.</p>
+            <p>{$t.trans('No release.')}</p>
           </rt:if>
           </div>
           
           <div class="column2-right">
-            <h3>License</h3>
+            <h3>{$t.trans('License')}</h3>
             <p class="tiny-margin">
               {$package.license()}
             </p>
-            <h3>Maintainers</h3>
+            <h3>{$t.trans('Maintainers')}</h3>
             <ul class="list-liner" rt:param="{$maintainers}" rt:var="maintainer">
               <li><a href="{$t.url('maintainer')}/{$maintainer.name()}"><img src="{$maintainer.avatar()}" /> {$maintainer.name()}</a></li>
             </ul>
             <br class="clear">
-            <h3>Fans</h3>
+            <h3>{$t.trans('Fans')}</h3>
             <p>
               <img src="./images/global-icon-star.png" /> {$package.favored_count()}
             </p>
@@ -132,7 +132,7 @@
             </rt:if>
             
             <rt:comment>
-            <h3>Dependencies</h3>
+            <h3>{$t.trans('Dependencies')}</h3>
             <ul class="list-standard">
               <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
               <li>- <a href="">pear/DB (>= 1.0.0)</a></li>
@@ -146,16 +146,16 @@
         <div class="package-changes">
         </div>
         
-        <h3>Timeline <a href="{$t.url('package')}/{$package.name()}/timelines.atom"><img src="./images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
+        <h3>{$t.trans('Timeline')} <a href="{$t.url('package')}/{$package.name()}/timelines.atom"><img src="./images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
         <div class="timeline timeline-user">
           <ul rt:param="timelines" rt:var="timeline">
             <li class="{$loop_evenodd}">
               <div class="timeline-type"><img src="{$ot.tlicon($timeline.type())}" alt="{$ot.tlalt($timeline.type())}" /></div>
               <div class="timeline-title">
-                {$timeline.subject()}. <em> -- {$t.df($timeline.created())}</em>
+                {$t.noop($timeline.subject())}. <em> -- {$ot.date_ago($timeline.created())}</em>
               </div>
               <div class="timeline-description">
-                {$timeline.description()}
+                {$t.noop($timeline.description())}
               </div>
             </li>
           </ul>

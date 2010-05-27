@@ -6,11 +6,11 @@
   <link rel="stylesheet" href="js/prettify/prettify.css" type="text/css" media="all" />
 </rt:block>
 <rt:block name="extra_header"><script type="text/javascript" src="js/prettify/prettify.js"></script></rt:block>
-<rt:block name="title">Source \ {$package.name()} \ Package \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('Source')} \ {$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 <rt:block name="package_navi_current_src"> class="current"</rt:block>
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('packages')}">Packages</a> &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> &raquo; Source
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; <a href="{$t.url('packages')}">{$t.trans('Packages')}</a> &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> &raquo; {$t.trans('Source')}
   </div>
 </rt:block>
 
@@ -20,7 +20,7 @@
   </h3>
   
   <ul class="source-tree">
-    <li id="source-tree">other tree <img src="images/global-icon-tree.png" class="vmiddle" />
+    <li id="source-tree">{$t.trans('other tree')} <img src="images/global-icon-tree.png" class="vmiddle" />
       <ul id="source-subtree">
         <rt:loop param="other_tree" key="other_path" var="current">
         <li><a href="{$t.url('package')}/{$package.name()}/src/{$other_path}"><rt:if param="{$current}"><img src="images/global-icon-checked.png" alt="checked" class="vmiddle" /> </rt:if>{$other_path}</a></li>
@@ -30,12 +30,12 @@
   </ul>
 
   <p class="clear mt0">
-    Subversion URL: <a href="{$real_url}">{$real_url}</a>
+    {$t.trans('Subversion URL')}: <a href="{$real_url}">{$real_url}</a>
   </p>
   
   <div class="sub-package-description">
     <p class="title">
-      Recent change
+      {$t.trans('Recent change')}
     </p>
     <p class="description">
       <img src="{$info['recent']['maintainer'].avatar()}" /> <a href="{$t.url('maintainer')}/{$info['recent']['maintainer'].name()}">{$info['recent']['maintainer'].name()}</a> <a href="{$t.url('package')}/{$package.name()}/changeset/{$info['recent']['revision']}">[{$info['recent']['revision']}]</a> <span class="italic darkgray"> -- {$ot.date_ago($info['recent']['date'])}</span><br />
@@ -45,10 +45,10 @@
   <rt:if param="{$externals}">
   <div class="sub-package-description">
     <p class="title">
-      Subversion externals
+      {$t.trans('Subversion externals')}
     </p>
     <p class="description">
-      svn:externals {$t.htmlencode($externals)}
+      svn:externals {$externals}
     </p>
   </div>
   </rt:if>
@@ -57,9 +57,9 @@
     <thead>
       <tr>
         <th></th>
-        <th>name</th>
-        <th>age</th>
-        <th class="w500px">comment</th>
+        <th>{$t.trans('name')}</th>
+        <th>{$t.trans('age')}</th>
+        <th class="w500px">{$t.trans('comment')}</th>
       </tr>
     </thead>
     

@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">Release \ Manage \ {$package.name()} \ Package \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('Release')} \ {$t.trans('Manage')} \ {$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">Home</a> &raquo; <a href="{$t.url('packages')}">Package</a> &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> &raquo; <a href="{$t.url('package')}/{$package.name()}/manage">Manage Package</a> &raquo; Release
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; <a href="{$t.url('packages')}">{$t.trans('Package')}</a> &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> &raquo; <a href="{$t.url('package')}/{$package.name()}/manage">{$t.trans('Manage Package')}</a> &raquo; {$t.trans('Release')}
   </div>
 </rt:block>
 
@@ -68,8 +68,8 @@
            + '          <img src="images/global-icon-notice.png" alt="[x]" />'
            + '        </a>'
            + '        <select name="dep[%id%][optional]" id="release-dep-optional-%id%">'
-           + '          <option value="1">Required</option>'
-           + '          <option value="2">Optional</option>'
+           + '          <option value="1">{$t.trans('Required')}</option>'
+           + '          <option value="2">{$t.trans('Optional')}</option>'
            + '        </select>'
            + '        Package: <input type="text" name="dep[%id%][package_name]" class="small" value="%name%" />'
            + ''
@@ -164,17 +164,17 @@
 <p><a href="{$t.url('package')}/{$package.name()}/manage">&laquo; back</a></p>
 
 <div class="column2-left">
-<h3>Release Package</h3>
-<a href="{$t.url('package')}/{$package.name()}/manage/release/upload">&raquo; Release by upload.</a> <span class="caption"> -- if you want to release a package by uploading your tarball, click here.</span>
+<h3>{$t.trans('Release Package')}</h3>
+<a href="{$t.url('package')}/{$package.name()}/manage/release/upload">&raquo; {$t.trans('Release by upload.')}</a> <span class="caption"> -- {$t.trans('if you want to release a package by uploading your tarball, click here.')}</span>
 
 <form action="{$t.url('package')}/{$package.name()}/manage/release_confirm" method="post" id="release-package" rt:ref="true">
   <input type="hidden" name="package_id" value="" />
   <dl>
-    <dt>Target revision <span class="red">*</span>: </dt>
+    <dt>{$t.trans('Target revision')} <span class="red">*</span>: </dt>
     <dd>
     <input name="revision" type="text" id="release-revision" class="tiny" value="1288" />
     </dd>
-    <dt>Version <span class="red">*</span>: </dt>
+    <dt>{$t.trans('Version')} <span class="red">*</span>: </dt>
     <dd>
     <input name="version_release_ver" type="text" id="release-version" class="tiny" value="1.0.0" />
     <select name="version_release_stab">
@@ -184,13 +184,13 @@
     </select>
     (Current: {$package.latest_release().fm_version()})
     </dd>
-    <dt>Target directory : </dt>
+    <dt>{$t.trans('Target directory')} : </dt>
     <p class="caption"></p>
     <dd>
-    Repository: /Package_Hoge/trunk/<input type="text" name="build_path" id="release-target" class="middle" value="" />
+    {$t.trans('Repository')}: /Package_Hoge/trunk/<input type="text" name="build_path" id="release-target" class="middle" value="" />
     <span id="release-target-check"></span>
     <br />
-    Install target: PEAR_DIR/<input type="text" name="package_baseinstalldir" id="release-install-target" class="middle" value="" />
+    {$t.trans('Install target')}: PEAR_DIR/<input type="text" name="package_baseinstalldir" id="release-install-target" class="middle" value="" />
     <p class="ml10">
     Example). If the install server's pear-dir is <span class="inline-pre">/usr/share/pear</span> then the package will be installed following path:
     </p>
@@ -200,31 +200,31 @@
     -->
 
     </dd>
-    <dt>Notes: </dt>
+    <dt>{$t.trans('Notes')}: </dt>
     <dd>
     <textarea name="package_notes" class="large">ここにはCHANGESファイルから自動生成した文字列が最初からはいっている</textarea>
     </dd>
-    <dt>PHP min version / PEAR min version.</dt>
+    <dt>{$t.trans('PHP min version / PEAR min version.')}</dt>
     <dd>
     PHP &gt;= <input type="text" name="version_php_min" id="release-phpmin" class="tiny" value="5.2.0" /> / PEAR &gt;= <input type="text" id="release-revision" name="version_pear_min" class="tiny" value="1.8.2" />
     </dd>
-    <dt>Dependencies</dt>
+    <dt>{$t.trans('Dependencies')}</dt>
     <dd>
-      <p class="caption">Package, Channel is required. Min/Max version is optional.</p>
+      <p class="caption">{$t.trans('Package, Channel is required. Min/Max version is optional.')}</p>
       <ul id="release-dep-list">
 
       </ul>
       <input type="button" id="release-dep-add" value="Add dependent package" />
     </dd>
-    <dt>Additional Files</dt>
+    <dt>{$t.trans('Additional Files')}</dt>
     <dd>
-      <p class="caption">If you want to add source of script or data files etc., fill following forms:</p>
+      <p class="caption">{$t.trans('If you want to add source of script or data files etc., fill following forms')}:</p>
       <span style="display:none;" id="release-add-list"><textarea name="extra_conf" class="huge"></textarea><br /></span>
       <input type="button" id="release-dep-add" value="Add additional role files" onclick="$('#release-add-list').show();" />
     </dd>
   </dl>
 
-  <input type="submit" value="Confirm" class="small" />
+  <input type="submit" value="{$t.trans('Confirm')}" class="small" />
 </form>
 
 

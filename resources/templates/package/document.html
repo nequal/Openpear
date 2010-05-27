@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="js/prettify/prettify.css" type="text/css" media="all" />
 </rt:block>
 <rt:block name="extra_header"><script type="text/javascript" src="js/prettify/prettify.js"></script></rt:block>
-<rt:block name="title">Documentation \ {$package.name()} \ Package \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('Documentation')} \ {$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path_path">
-<a href="{$t.url('pacakge')}/{$t.htmlencode($package.name())}">{$t.htmlencode($package.name())}</a> &raquo; Documentation
+<a href="{$t.url('pacakge')}/{$package.name()}">{$package.name()}</a> &raquo; {$t.trans('Documentation')}
 </rt:block>
 
 <rt:block name="package_navi_current_doc"> class="current"</rt:block>
@@ -23,7 +23,7 @@
   </div>
   
   <div class="w200px column2-right">
-    <h3>Table of Contents</h3>
+    <h3>{$t.trans('Table of Contents')}</h3>
     <p class="aright">
       <ul class="list-toc" rt:param="tree" rt:var="f">
         <rt:if param="{$f['kind']}" value="file">
@@ -31,7 +31,7 @@
         </rt:if>
       </ul>
       
-      <h3>Version Archive</h3>
+      <h3>{$t.trans('Version Archive')}</h3>
       <ul class="list-toc" rt:param="other_tree" rt:var="current" rt:key="other_path">
         <rt:if param="other_path" var="trunk">
         <rt:else />

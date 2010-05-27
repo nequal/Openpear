@@ -1,29 +1,29 @@
 <rt:extends href="base.html" />
-<rt:block name="title">Manage \ {$package.name()} \ Package \ Openpear</rt:block>
+<rt:block name="title">{$t.trans('Manage')} \ {$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
 
 <rt:block name="topic_path_path">
-    <a href="{$t.url('packages')}/{$package.name()}/manage">Manage Package</a> &raquo; Package Setting
+    <a href="{$t.url('packages')}/{$package.name()}/manage">{$t.trans('Manage Package')}</a> &raquo; {$t.trans('Package Setting')}
 </rt:block>
 
 <rt:block name="package_main">
       <div class="column1 clear">
         <p><a href="{$t.url('package')}/{$package.name()}/manage">&laquo; back</a></p>
-        <h3>Package Setting</h3>
+        <h3>{$t.trans('Package Setting')}</h3>
         <form action="{$t.url('package')}/{$package.name()}/manage/edit_do" method="post" id="new-package" rt:ref="true">
           <input type="hidden" name="id" value="{$package.id()}" />
           <dl>
-            <dt>Package name: </dt>
+            <dt>{$t.trans('Package Name')}: </dt>
             <dd>{$package.name()}</dd>
-            <dt>Description: </dt>
+            <dt>{$t.trans('Description')}: </dt>
             <dd>
-              <p class="caption">* The description should be a short (maximum 250 characters).</p>
+              <p class="caption">{$t.trans('* The description should be a short (maximum 250 characters).')}</p>
               <rt:invalid param="description" messages="errors"><rt:loop param="errors" var="error" limit="1">
               <p class="error">{$error}</p>
               </rt:loop></rt:invalid>
               <textarea name="description" class="middle"></textarea>
             </dd>
 
-            <dt>Repository: </dt>
+            <dt>{$t.trans('Repository')}: </dt>
             <dd>
               <rt:invalid param="external_repository" messages="errors"><rt:loop param="errors" var="error" limit="1">
               <p class="error">{$error}</p>
@@ -55,24 +55,24 @@
                 repository_state_change();
               </script>
             </dd>
-            <dt>Who one commit this package ?: </dt>
+            <dt>{$t.trans('Who one commit this package ?')}: </dt>
             <dd>
               <rt:invalid param="public_level" messages="errors"><rt:loop param="errors" var="error" limit="1">
               <p class="error">{$error}</p>
               </rt:loop></rt:invalid>
               <select name="public_level">
-                <option value="1">Anyone</option>
-                <option value="0">Only maintainers (You can edit this in a package setting)</option>
+                <option value="1">{$t.trans('Anyone')}</option>
+                <option value="0">{$t.trans('Only maintainers (You can edit this in a package setting)')}</option>
               </select>
             </dd>
-            <dt>URL: </dt>
+            <dt>{$t.trans('URL')}: </dt>
             <dd>
               <rt:invalid param="url" messages="errors"><rt:loop param="errors" var="error" limit="1">
               <p class="error">{$error}</p>
               </rt:loop></rt:invalid>
               <input name="url" type="text" id="package-url" class="small" /></dd>
             </dd>
-            <dt>License: </dt>
+            <dt>{$t.trans('License')}: </dt>
             <dd>
               <rt:invalid param="license" messages="errors"><rt:loop param="errors" var="error" limit="1">
               <p class="error">{$error}</p>

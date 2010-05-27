@@ -34,12 +34,12 @@
           <form action="{$t.url('packages/create')}" method="post" id="new-package" rt:ref="true">
             <input type="hidden" name="action" value="do" />
             <dl>
-              <dt>{$t.trans('Package name')} <span class="red">*</span>: </dt>
+              <dt>{$t.trans('Package Name')} <span class="red">*</span>: </dt>
               <dd>
                 <p class="caption">{$t.trans('* This name should be {Category}[_{Sub Category}]_{Package Name}')}<br />
                   <span class="red">{$t.trans('(You can not change this later.)')}</span>
                 </p>
-                <p class="caption">{$t.trans('For example:')} <br />
+                <p class="caption">{$t.trans('For example')}: <br />
                   {$t.trans('ex1. ) Category and name, separated by underscores.')}<br />
                   - Net_Socket<br />
                   - Net_Socket_Error<br />
