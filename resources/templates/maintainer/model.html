@@ -24,7 +24,7 @@
                             data: $(this).serialize(),
                             dataType: 'json',
                             success: function (data, dataType) {
-                                $('#' + name).text(data.maintainer.profile);
+                                $('#' + name).text(data.maintainer[name]);
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 $('#' + name).text(tmp_val);
