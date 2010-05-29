@@ -18,9 +18,15 @@ class OpenpearChangeset extends Dao
     private $package;
     private $maintainer;
     
+    /**
+     * 初期化
+     */
     protected function __init__(){
         $this->created = time();
     }
+    /**
+     * changed を unserialize してオブジェクトの配列を返す
+     */
     protected function __fm_changed__(){
         $objects = array();
         $changed = unserialize($this->changed);
@@ -31,6 +37,9 @@ class OpenpearChangeset extends Dao
         }
         return $objects;
     }
+    /**
+     * 作成後処理
+     */
     protected function __after_create__(){
         // TODO 美しくない
         $path = preg_replace('@^file://@', '', module_const('svn_root'));

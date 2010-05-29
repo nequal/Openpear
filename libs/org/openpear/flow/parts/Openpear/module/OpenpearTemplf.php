@@ -113,15 +113,15 @@ class OpenpearTemplf
     final public function tlalt($type){
         switch($type){
             case 'release':
-                return 'Release:';
+                return Gettext::trans('Release:');
             case 'changeset':
-                return 'Changeset:';
+                return Gettext::trans('Changeset:');
             case 'user_activities':
-                return 'Setting:';
+                return Gettext::trans('Setting:');
             case 'package_setting':
-                return 'Setting:';
+                return Gettext::trans('Setting:');
             case 'favorite':
-                return 'Fav:';
+                return Gettext::trans('Fav:');
         }
     }
     

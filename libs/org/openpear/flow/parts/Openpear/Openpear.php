@@ -879,8 +879,8 @@ class Openpear extends Flow
     }
     
     /**
-	 * not found (http status 404)
-	 */
+     * not found (http status 404)
+     */
     protected function not_found(Exception $e) {
         Http::status_header(404);
         throw $e;
