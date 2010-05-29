@@ -69,9 +69,27 @@ class Openpear extends Flow
      * @context $recent_releases 最新 OpenpearRelease モデルの配列
      */
     public function index(){
-        $this->vars('package_count', C(OpenpearPackage)->find_count());
-        $this->vars('primary_tags', OpenpearPackage::getActiveCategories(16));
-        $this->vars('recent_releases', C(OpenpearRelease)->find_page(null, new Paginator(20, 1), '-id'));
+        if (Store::has('index/package_count', 3600)) {
+            $package_count = Store::get('index/package_count');
+        } else {
+            $package_count = C(OpenpearPackage)->find_count();
+            Store::set('index/package_count', $package_count, 3600);
+        }
+        if (Store::has('index/primary_tags', 3600)) {
+            $primary_tags = Store::get('index/primary_tags');
+        } else {
+            $primary_tags = OpenpearPackage::getActiveCategories(16);
+            Store::set('index/primary_tags', $primary_tags, 3600);
+        }
+        if (Store::has('index/recent_releases', 3600)) {
+            $recent_releases = Store::get('index/recent_releases');
+        } else {
+            $recent_releases = C(OpenpearPackage)->find_all(new Paginator(5), Q::neq('latest_release_id', null), Q::order('-released_at'));
+            Store::set('index/recent_releases', $recent_releases, 3600);
+        }
+        $this->vars('package_count', $package_count);
+        $this->vars('primary_tags', $primary_tags);
+        $this->vars('recent_releases', $recent_releases);
     }
     /**
      * 検索のマッピング

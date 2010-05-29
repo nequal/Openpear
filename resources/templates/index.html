@@ -91,8 +91,8 @@
 
           <div id="main-column-right">
             <h2><a href="{$t.url('packages')}/releases">{$t.trans('Recent Releases')}</a> <a href="{$t.url('packages/releases.atom')}"><img src="images/global-icon-feed.gif" alt="{$t.trans('Feed: Recent Releases')}" /></a></h2>
-            <ul id="main-recent" rt:param="recent_releases" rt:var="release">
-              <li><a href="{$t.url('package')}/{$release.package().name()}">{$release.package().name()}</a> <em>-- {$t.df($release.created(), 'Y/m/d')}</em></li>
+            <ul id="main-recent" rt:param="recent_releases" rt:var="package">
+              <li><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> <em>-- {$ot.date_ago($package.released_at())}</em></li>
             </ul>
           </div>
 
