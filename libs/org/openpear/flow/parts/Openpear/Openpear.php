@@ -95,7 +95,7 @@ class Openpear extends Flow
      * @context $primary_tags
      * @context $tags
      */
-    public function tags(){
+    public function packages_tags(){
         $this->vars('primary_tags', C(OpenpearTag)->find_all(Q::eq('prime', true)));
         $this->vars('tags', C(OpenpearTag)->find_all(Q::eq('prime', false)));
     }

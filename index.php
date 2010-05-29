@@ -76,6 +76,8 @@
             <map url="packages/create" method="package_create" template="package/create.html">
                 <arg name="success_redirect" value="dashboard" />
             </map>
+            <map url="packages/tags" method="packages_tags" template="package/tags.html" />
+            
             <map url="package/([^/]+)" method="package" template="package/model.html" />
             <map url="package/(.+)/timeline" method="package_timeline" template="package/timeline.html" />
             <map url="package/(.+)/downloads" method="package_downloads" template="package/downloads.html" />
