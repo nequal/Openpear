@@ -91,6 +91,15 @@ class Openpear extends Flow
         $this->redirect_method('index');
     }
     /**
+     * タグ一覧
+     * @context $primary_tags
+     * @context $tags
+     */
+    public function tags(){
+        $this->vars('primary_tags', C(OpenpearTag)->find_all(Q::eq('prime', true)));
+        $this->vars('tags', C(OpenpearTag)->find_all(Q::eq('prime', false)));
+    }
+    /**
      * パッケージ一覧
      * 
      * @context $object_list パッケージオブジェクトの配列
