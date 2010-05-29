@@ -33,7 +33,7 @@
         http://groups.google.com/group/openpear-project
     </description>
 
-    <handler error_template="error.html">
+    <handler error_template="error/global.html">
         <module class="org.rhaco.flow.module.HtmlFilter" />
         <maps class="org.openpear.flow.parts.Openpear">
             <map name="top" method="index" template="index.html" />

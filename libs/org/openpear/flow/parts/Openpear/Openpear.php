@@ -146,7 +146,11 @@ class Openpear extends Flow
      */
     public function package($package_name){
         // TODO 仕様の確認
-        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        try {
+            $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        } catch (NotfoundDaoException $e) {
+            $this->not_found($e);
+        }
         $this->vars('object', $package);
         $this->vars('package', $package);
         $this->vars('maintainers', $package->maintainers());
@@ -912,6 +916,7 @@ class Openpear extends Flow
      * not found (http status 404)
      */
     protected function not_found(Exception $e) {
+        Log::debug('404');
         Http::status_header(404);
         throw $e;
     }
