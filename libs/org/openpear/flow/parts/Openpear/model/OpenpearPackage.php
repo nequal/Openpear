@@ -45,22 +45,17 @@ class OpenpearPackage extends Dao
     static protected $__created__ = 'type=timestamp';
     static protected $__updated__ = 'type=timestamp';
     
-    protected $author;
-    protected $releases;
-    protected $maintainers;
-    protected $favored_maintainers;
-    protected $latest_release;
-    protected $package_tags;
-    protected $primary_tag;
     protected $repository_uri_select = 1;
-    static protected $__author__ = 'type=OpenpearMaintainer,extra=true';
-    static protected $__releases__ = 'type=OpenpearRelease[],extra=true';
-    static protected $__maintainers__ = 'type=OpenpearMaintainer[],extra=true';
-    static protected $__favored_maintainers__ = 'type=OpenpearMaintainer[],extra=true';
-    static protected $__latest_release__ = 'type=OpenpearRelease,extra=true';
-    static protected $__package_tags__ = 'type=OpenpearPackageTag[],extra=true';
-    static protected $__primary_tag__ = 'type=OpenpearTag,extra=true';
     static protected $__repository_uri_select__ = 'type=number,extra=true';
+    
+    private $author;
+    private $releases = array();
+    private $maintainers = array();
+    private $favored_maintainers = array();
+    private $latest_release;
+    private $package_tags = array();
+    private $primary_tag;
+    private $liked = array();
     
     const NOTIFY_WANTED = 'This package is accepting maintainers for admission.';
     const NOTIFY_DEPRECATED = 'This package is not maintained.';
@@ -118,11 +113,16 @@ class OpenpearPackage extends Dao
         return $charge;
     }
     public function liked(OpenpearMaintainer $maintainer){
+        if (isset($this->liked[$maintainer->id()])) {
+            return $this->liked[$maintainer->id()];
+        }
         try {
             C(OpenpearFavorite)->find_get(Q::eq('package_id', $this->id()), Q::eq('maintainer_id', $maintainer->id()));
-            return true;
-        } catch(Exception $e){}
-        return false;
+            $this->liked[$maintainer->id()] = true;
+        } catch(Exception $e){
+            $this->liked[$maintainer->id()] = false;
+        }
+        return $this->liked[$maintainer->id()];
     }
     public function add_maintainer(OpenpearMaintainer $maintainer, $role='lead'){
         try {
@@ -167,7 +167,7 @@ class OpenpearPackage extends Dao
         return sprintf('%s-%s', $this->name(), $this->latest_release()->version_stab());
     }
     
-    protected function __get_author__(){
+    public function author(){
         // setting author
         if($this->author instanceof OpenpearMaintainer === false){
             try {
@@ -176,7 +176,7 @@ class OpenpearPackage extends Dao
         }
         return $this->author;
     }
-    protected function __get_releases__(){
+    public function releases(){
         // setting releases[]
         if(empty($this->releases)){
             try{
@@ -185,7 +185,7 @@ class OpenpearPackage extends Dao
         }
         return $this->releases;
     }
-    protected function __get_maintainers__(){
+    public function maintainers(){
         // setting maintainers[]
         if(empty($this->maintainers)){
             try{
@@ -199,7 +199,7 @@ class OpenpearPackage extends Dao
         }
         return $this->maintainers;
     }
-    protected function __get_favored_maintainers__(){
+    public function favored_maintainers(){
         // setting favored maintainers
         if(empty($this->favored_maintainers)){
             try{
@@ -213,7 +213,7 @@ class OpenpearPackage extends Dao
         }
         return $this->favored_maintainers;
     }
-    protected function __get_latest_release__(){
+    public function latest_release(){
         // setting latest release
         if($this->latest_release instanceof OpenpearRelease === false){
             try{
@@ -225,7 +225,7 @@ class OpenpearPackage extends Dao
         }
         return $this->latest_release;
     }
-    protected function __get_package_tags__(){
+    public function package_tags(){
         // setting package tags
         if(empty($this->package_tags)){
             try {
@@ -234,7 +234,7 @@ class OpenpearPackage extends Dao
         }
         return $this->package_tags;
     }
-    protected function __get_primary_tag__(){
+    public function primary_tag(){
         // setting primary tag
         if($this->primary_tag instanceof OpenpearTag === false){
             try {
@@ -246,7 +246,7 @@ class OpenpearPackage extends Dao
                 }
             } catch(Exception $e){}
         }
-        $this->primary_tag;
+        return $this->primary_tag;
     }
     protected function __verify_name__(){
          if(!preg_match('@^[A-Za-z][A-Za-z0-9_]+$@', $this->name)){

@@ -56,9 +56,7 @@ class Openpear extends Flow
                 $this->sessions('openid_identity', $openid_user->identity());
                 $this->redirect_method('signup');
             } catch(Exception $e){
-                //FIXME
-                echo "Error: ", $e->getMessage();
-                exit;
+                throw $e;
             }
         }
         return $this->do_login();
@@ -340,7 +338,8 @@ class Openpear extends Flow
             $fav->save();
             C($fav)->commit();
         } catch(Exception $e){}
-        $this->redirect_method('package',$package_name);
+        exit;
+        $this->redirect_method('package', $package_name);
     }
     /**
      * Fav 削除
@@ -357,7 +356,7 @@ class Openpear extends Flow
             $fav->recount_favorites();
             C(OpenpearFavorite)->commit();
         } catch(Exception $e){}
-        Http::redirect(url('package/'. $package_name));
+        $this->redirect_method('package', $package_name);
     }
     /**
      * パッケージにメンテナを追加する

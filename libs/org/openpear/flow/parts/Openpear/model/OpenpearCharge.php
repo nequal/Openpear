@@ -13,10 +13,8 @@ class OpenpearCharge extends Dao
     static protected $__maintainer_id__ = 'type=number,require=true,primary=true';
     static protected $__role__ = 'type=choice(lead,developer,contributor,helper),require=true';
     
-    protected $package;
-    protected $maintainer;
-    static protected $__package__ = 'type=OpenpearPacakge,extra=true';
-    static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
+    private $package;
+    private $maintainer;
     
     static public function packages(OpenpearMaintainer $maintainer){
         $store_key = array('charges_maintainer', $maintainer->id());
@@ -46,7 +44,7 @@ class OpenpearCharge extends Dao
         File::write(module_const('svn_access_file'), $template->read('files/access.txt'));
     }
     
-    protected function __get_package__(){
+    public function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
@@ -54,7 +52,7 @@ class OpenpearCharge extends Dao
         }
         return $this->package;
     }
-    protected function __get_maintainer__(){
+    public function maintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));

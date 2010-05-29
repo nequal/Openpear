@@ -13,10 +13,8 @@ class OpenpearPackageTag extends Dao
     static protected $__tag_id__ = 'type=number,require=true,primary=true';
     static protected $__prime__ = 'type=boolean';
     
-    protected $package;
-    protected $tag;
-    static protected $__package__ = 'type=OpenpearPackage,extra=true';
-    static protected $__tag__ = 'type=OpenpearTag,extra=true';
+    private $package;
+    private $tag;
     
     protected function __init__(){
         $this->prime = false;
@@ -79,7 +77,7 @@ class OpenpearPackageTag extends Dao
         } catch(Exception $e){}
     }
     
-    protected function __get_package__(){
+    public function package(){
         if($this->package instanceof OpenpearPackage){
             return $this->package;
         }
@@ -88,7 +86,7 @@ class OpenpearPackageTag extends Dao
         }catch(Exception $e){}
         return $this->package;
     }
-    protected function __get_tag__(){
+    public function tag(){
         if($this->tag instanceof OpenpearTag){
             return $this->tag;
         }
