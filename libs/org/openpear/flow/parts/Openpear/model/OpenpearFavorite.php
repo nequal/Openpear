@@ -29,11 +29,11 @@ class OpenpearFavorite extends Dao
         return $this->maintainer;
     }
     protected function __after_save__(){
-        $this->recount_favorites();
+        self::recount_favorites($this->package_id());
         $timeline = new OpenpearTimeline();
         $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">liked</span> <a href="%s">%s</a>',
             url('maintainer/'. $this->maintainer()->name()),
-            C(Templf)->htmlencode(str($this->maintainer())),
+            R(Templf)->htmlencode(str($this->maintainer())),
             url('package/'. $this->package()->name()),
             $this->package()->name()
         ));
@@ -48,10 +48,10 @@ class OpenpearFavorite extends Dao
         $timeline->maintainer_id($this->maintainer_id());
         $timeline->save();
     }
-    public function recount_favorites(){
+    static public function recount_favorites($package_id){
         try {
-            $fav_count = C(OpenpearFavorite)->find_count(Q::eq('package_id', $this->package_id()));
-            $package = $this->package();
+            $fav_count = C(OpenpearFavorite)->find_count(Q::eq('package_id', $package_id));
+            $package = C(OpenpearPackage)->find_get(Q::eq('id', $package_id));
             $package->favored_count($fav_count);
             $package->save();
         } catch(Exception $e){}

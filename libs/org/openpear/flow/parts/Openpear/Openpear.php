@@ -47,7 +47,9 @@ class Openpear extends Flow
         if($this->is_login()) $this->redirect_method('dashboard');
         if(OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))){
             try {
-                $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid_user->identity()));
+                $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(
+                    Q::eq('url', $openid_user->identity())
+                );
                 $this->user($openid_maintainer->maintainer());
                 if($this->login()){
                     $this->redirect_by_map("success_redirect");
@@ -84,7 +86,11 @@ class Openpear extends Flow
         if (Store::has('index/recent_releases', 3600)) {
             $recent_releases = Store::get('index/recent_releases');
         } else {
-            $recent_releases = C(OpenpearPackage)->find_all(new Paginator(5), Q::neq('latest_release_id', null), Q::order('-released_at'));
+            $recent_releases = C(OpenpearPackage)->find_all(
+                new Paginator(5),
+                Q::neq('latest_release_id', null),
+                Q::order('-released_at')
+            );
             Store::set('index/recent_releases', $recent_releases, 3600);
         }
         $this->vars('package_count', $package_count);
@@ -147,7 +153,11 @@ class Openpear extends Flow
         $releases = $package->releases();// TODO : sort
         $this->vars('recent_releases', empty($releases) ? $releases : array_reverse($releases));
         // TODO changes
-        $this->vars('timelines', C(OpenpearTimeline)->find_all(new Paginator(10), Q::eq('package_id', $package->id()), Q::order('-id')));
+        $this->vars('timelines', C(OpenpearTimeline)->find_all(
+            new Paginator(10),
+            Q::eq('package_id', $package->id()),
+            Q::order('-id')
+        ));
         $this->vars('favored_maintainers', $package->favored_maintainers());
     }
     /**
@@ -355,8 +365,9 @@ class Openpear extends Flow
             $fav->package_id($package->id());
             $fav->save();
             C($fav)->commit();
-        } catch(Exception $e){}
-        exit;
+        } catch(Exception $e) {
+            Log::debug($e);
+        }
         $this->redirect_method('package', $package_name);
     }
     /**
@@ -369,11 +380,12 @@ class Openpear extends Flow
         $user = $this->user();
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-            $fav = C(OpenpearFavorite)->find_get(Q::eq('maintainer_id', $user->id()), Q::eq('package_id', $package->id()));
-            $fav->find_delete(Q::eq('maintainer_id', $user->id()), Q::eq('package_id', $package->id()));
-            $fav->recount_favorites();
+            C(OpenpearFavorite)->find_delete(Q::eq('maintainer_id', $user->id()), Q::eq('package_id', $package->id()));
+            OpenpearFavorite::recount_favorites($package->id());
             C(OpenpearFavorite)->commit();
-        } catch(Exception $e){}
+        } catch(Exception $e) {
+            Log::debug($e);
+        }
         $this->redirect_method('package', $package_name);
     }
     /**
