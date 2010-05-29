@@ -86,7 +86,7 @@ class Openpear extends Flow
         switch($this->in_vars('search_for', 'packages')){
             case 'maintainers': $this->redirect_method('maintainers',array('q'=>$this->in_vars('q')));
             case 'packages':
-            default: $this->redirect_method('packages',array('q'=>$this->in_vars('q')));
+            default: $this->redirect_method('packages', array('q' => $this->in_vars('q')));
         }
         $this->redirect_method('index');
     }
@@ -100,7 +100,8 @@ class Openpear extends Flow
         $sort = $this->in_vars('sort', '-released_at');
         $paginator = new Paginator(10, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, $sort));
-        $this->vars('paginator', $paginator->add(array('q' => $this->in_vars('q'))));
+        $paginator->vars('q', $this->in_vars('q'));
+        $this->vars('paginator', $paginator);
         $this->put_block($this->map_arg($sort{0} == '-'? substr($sort, 1): $sort, 'models_released.html'));
     }    
     /**
@@ -224,7 +225,8 @@ class Openpear extends Flow
     public function maintainers(){
         $paginator = new Paginator(20, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator, 'name'));
-        $this->vars('paginator', $paginator->add(array('q' => $this->in_vars('q'))));
+        $paginator->vars('q', $this->in_vars('q'));
+        $this->vars('paginator', $paginator);
     }
     /**
      * メンテナ情報を更新して結果をjsonで出力
