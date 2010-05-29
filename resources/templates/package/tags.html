@@ -1,0 +1,48 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">{$t.trans('Tags')} \  Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Tags')}
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+<div class="frame-class" id="sub-title">
+
+    <div class="container-class">
+        <h2 class="inline fleft"><a href="{$t.url('packages/tags')}">{$t.trans('Tags')}</a></h2>
+        <br class="clear" />
+    </div> <!-- #container-s -->
+</div> <!-- .frame-class -->
+
+<div class="frame-class">
+    <div class="container-class" id="sub-main">
+        <div class="column1">
+            <h3>{$t.trans('Primary Tags (Category)')}</h3>
+
+            <ul class="list-liner tags-primary" rt:param="primary_tags" rt:var="tag">
+                <li><a href="{$t.url('packages')}?category={$tag.name()}">{$tag.name()} ({$tag.package_count()})</a></li>
+            </ul>
+
+            <br class="clear" />
+
+            <h3>All Tags</h3>
+
+            <ul class="list-liner tags-all" rt:param="tags" rt:var="tag">
+                <li><a href="{$t.url('packages')}?category={$tag.name()}">{$tag.name()} ({$tag.package_count()})</a></li>
+            </ul>
+            <br class="clear" />
+        </div> <!-- / column1 -->
+    </div> <!-- / #sub-main -->
+</div>
+
+</rt:block>
+
