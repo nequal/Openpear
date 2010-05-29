@@ -96,7 +96,7 @@
           </rt:if>
         </td>
         <td class="name">
-          <a href="{$t.url('package')}/{$package.name()}/src/{$path}/{$f['name']}">{$f['name']}</a>
+          <a href="{$t.url('package')}/{$package.name()}/src/{$path}/{$f['name']}">{$f['name']}<rt:if param="{$f['kind']}" value="dir">/</rt:if></a>
         </td>
         <td class="age">
           <a href="{$t.url('package')}/{$package.name()}/changeset/{$f['commit']['revision']}">[{$f['commit']['revision']}]</a> {$ot.date_ago($f['commit']['date'])}
