@@ -1,0 +1,100 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">{$t.trans('Maintainer')} \  Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Maintainer')}
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+<div class="frame-class" id="sub-title">
+    <div class="container-class">
+        <h2 class="inline fleft"><a href="{$t.url('maintainers')}">{$t.trans('Maintainers Search')}</a></h2>
+        <form action="" id="sub-search-form" method="post">
+            <input type="text" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
+            <input type="submit" class="radius-2" id="sub-search-submit" value="{$t.trans('Search')}" />
+        </form>
+        <br class="clear" />
+    </div> <!-- #container-s -->
+</div> <!-- .frame-class -->
+
+<div class="frame-class">
+    <div class="container-class" id="sub-main">
+        <div class="column1">
+            <rt:if param="{$q}">
+                <h3>{$t.trans('Search Result ({1})', $paginator->total())}</h3>
+            </rt:if>
+
+            <table class="packages-table" rt:param="{$object_list}" rt:var="object">
+                <thead>
+                    <tr>
+                        <th>
+                            {$t.trans('Name')}
+                        </th>
+                        <th>
+                            {$t.trans('Last activity')}
+                        </th>
+                        <th>
+                            {$t.trans('Contribute packages')}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="{$loop_evenodd}">
+                        <th class="">
+                            <h4>
+                                <a href="{$t.url('maintainer')}/{$object.name()}">
+                                    <img src="{$object.avatar()}" width="32" style="vertical-align:middle" />
+                                    {$object.name()}
+                                </a>
+                                 - {$ot.str($object)}
+                            </h4>
+                            <rt:comment>
+                            <p class="inline">
+                                Followers: 11, Packages: 4
+                            </p>
+                            </rt:comment>
+                        </th>
+                        <td class="nowrap">
+                            {$ot.date_ago($object.last_activity())}
+                        </td>
+                        <td class="description">
+                            <rt:loop param="{$object.packages()}" var="package">
+                            &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a>
+                            </rt:loop>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <rt:if param="{$paginator}">
+            <div class="pager">
+              <ul>
+                <rt:if param="{$paginator.is_first()}"><li> <a href="?{$paginator.query($paginator.first())}">&laquo; First</a> </li></rt:if>
+                <?php
+                  $counter = 50;
+                  for($counter=$paginator->wh_first($counter);$counter<=$paginator->wh_last($counter);$counter++):
+                ?>
+                <rt:if param="{$paginator.current()}" value="{$counter}">
+                <li class="current"> {$counter} </li>
+                <rt:else />
+                <li> <a href="?{$paginator.query($counter)}">{$counter}</a> </li>
+                </rt:if>
+                <?php endfor; ?>
+                <rt:if param="{$paginator.is_last()}"><li> <a href="?{$paginator.query($paginator.last())}">Last &raquo;</a> </li></rt:if>
+              </ul>
+            </div>
+            </rt:if>
+
+        </div>
+    </div>
+</div>
+</rt:block>

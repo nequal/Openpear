@@ -84,7 +84,7 @@ class Openpear extends Flow
     public function search(){
         // TODO いる？
         switch($this->in_vars('search_for', 'packages')){
-            case 'maintainers': $this->redirect_method('maintainer_search',array('q'=>$this->in_vars('q')));
+            case 'maintainers': $this->redirect_method('maintainers',array('q'=>$this->in_vars('q')));
             case 'packages':
             default: $this->redirect_method('packages',array('q'=>$this->in_vars('q')));
         }
@@ -215,15 +215,15 @@ class Openpear extends Flow
         $this->vars('timelines', C(OpenpearTimeline)->find_all(new Paginator(10), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id')));
     }
     /**
-     * メンテナ検索
+     * メンテナ一覧
      * @request integer $page ページ番号
      * @request string $q 検索クエリ
      * @context OpenpearMaintainer[] $object_list メンテナ一覧
      * @context Paginator $paginator ページネータ
      */
-    public function maintainer_search(){
+    public function maintainers(){
         $paginator = new Paginator(20, $this->in_vars('page', 1));
-        $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator), 'name');
+        $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator, 'name'));
         $this->vars('paginator', $paginator->add(array('q' => $this->in_vars('q'))));
     }
     /**

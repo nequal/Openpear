@@ -58,7 +58,7 @@
             </map>
             
 	        <map url="maintainer/(.+)" method="maintainer_profile" template="maintainer/model.html" />                    
-            <map url="maintainers" method="maintainer_search" template="maintainer/models.html" />
+            <map url="maintainers" method="maintainers" template="maintainer/models.html" />
             <map url="maintainers/update\.json" method="maintainer_update_json" />
             
             <map url="message/inbox" method="inbox" template="message/inbox.html" />
