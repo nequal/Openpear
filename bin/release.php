@@ -87,6 +87,11 @@ foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_
         $release->bindValue(':settings', $row['build_conf']);
         $release->execute();
         
+        // latest_release_id と released_at を設定
+        $last_insert_id = $pdo->lastInsertId();
+        $package = $pdo->prepate('UPDATE `openpear_package` SET latest_release_id=?, released_at=NOW() WHERE id=?');
+        $package->execute(array($last_insert_id, $row['package_id']));
+        
         // svn tag
         cmd(sprintf('svn copy'
             .' %s/%s/trunk/%s'
