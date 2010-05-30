@@ -918,7 +918,8 @@ class Openpear extends Flow
     protected function not_found(Exception $e) {
         Log::debug('404');
         Http::status_header(404);
-        throw $e;
+        $this->output('error/not_found.html');
+        exit;
     }
     
     /**

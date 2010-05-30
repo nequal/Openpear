@@ -39,24 +39,12 @@
     </div> <!-- end of #container -->
 
     <!-- main contents -->
-    <?php
-        $type = null;
-        foreach(Exceptions::gets() as $e){
-            if ($e instanceof NotfoundDaoException) {
-                $type = 404;
-            }
-        }
-    ?>
-    <rt:if param="{$type}" value="404">
-        <div class="frame-class">
-            <p><img src="images/404.png" />
-        </div>
-    <rt:else />
+    <rt:block name="contents">
         <div class="frame-class">
             <h3>Something Happened!</h3>
             <p><rt:invalid /></p>
         </div>
-    </rt:if>
+    </rt:block>
     <!--/main contents -->
 
     <!-- footer -->
