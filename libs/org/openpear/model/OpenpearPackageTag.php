@@ -1,7 +1,5 @@
 <?php
 import('org.rhaco.storage.db.Dao');
-module('model.OpenpearPackage');
-module('model.OpenpearTag');
 
 class OpenpearPackageTag extends Dao
 {

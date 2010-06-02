@@ -8,9 +8,9 @@
         php setup.php -htaccess /openpear
         
         # アカウントの作成時にgmailでメールを送信するのでアカウントの設定が必須
-         def('org.openpear.flow.parts.Openpear@gmail_account','**@gmail.com**','**password**');
+        def('org.openpear.flow.parts.Openpear@gmail_account','**@gmail.com**','**password**');
         # DBの接続設定が必要
-         def("org.rhaco.storage.db.Dbc@org.openpear.flow.parts.Openpear","type=org.rhaco.storage.db.module.DbcMysql,dbname=**openpear**,user=**root**,password=**root**,encode=utf8");
+        def("org.rhaco.storage.db.Dbc@org.openpear.model","type=org.rhaco.storage.db.module.DbcMysql,dbname=**openpear**,user=**root**,password=**root**,encode=utf8");
 
         # Subversion の設定
         svnadmin で リポジトリ作成
@@ -24,9 +24,6 @@
 
         # Subversion の設定後，新規プロジェクト用のディレクトリ構成を生成する
         php setup.php -generate_skeleton
-
-        # PEAR がうんこなので編集
-        PHP/CodeSniffer.php L:234 削除
 	</installation>
     <description>
         http://github.com/nequal/Openpear
@@ -35,13 +32,10 @@
 
     <handler error_template="error/global.html">
         <module class="org.rhaco.flow.module.HtmlFilter" />
-        <maps class="org.openpear.flow.parts.Openpear">
+        <maps class="org.openpear.flow.parts.OpenpearNoLogin">
             <map name="top" method="index" template="index.html" />
             <map url="search"  method="search" />
-            <map url="dashboard" method="dashboard" template="dashboard.html" name="dashboard" />
             
-            <map url="dashboard/message/hide" method="dashboard_message_hide" />
-
             <map url="account/login" method="do_login" template="account/login.html">
                 <arg name="login_redirect" value="dashboard" />
             </map>
@@ -53,12 +47,38 @@
             	<arg name="success_redirect" value="dashboard" />
             	<arg name="fail_redirect" value="signup" />
             </map>
+            
+	        <map url="maintainer/(.+)" method="maintainer_profile" template="maintainer/model.html" />                    
+            <map url="maintainers" method="maintainers" template="maintainer/models.html" />
+            
+            <map url="packages" method="packages" template="package/models.html">
+                <arg name="updated" value="package/models_updates.html" />
+                <arg name="favored_count" value="package/models_favored.html" />
+                <arg name="released_at" value="package/models_released.html" />
+            </map>
+            <map url="packages/tags" method="packages_tags" template="package/tags.html" />
+            
+            <map url="package/([^/]+)" method="package" template="package/model.html" />
+            <map url="package/(.+)/timeline" method="package_timeline" template="package/timeline.html" />
+            <map url="package/(.+)/downloads" method="package_downloads" template="package/downloads.html" />
+            
+            <map name="document_browse" url="package/(.+)/doc(/.+)?" method="document_browse" template="package/document.html" />
+            
+            <map url="package/(.+)/changeset/(\d+)" method="changeset" template="package/changeset.html" />
+            <map name="source_browse" url="package/(.+)/src(/?.+)?" method="source_browse" template="package/source.html" />
+
+            <map url="timelines.atom" method="timeline_atom" />
+            <map url="package/(.+)/timelines\.atom" method="timeline_atom_package" />
+            <map url="maintainer/(.+)/timelines\.atom" method="timeline_atom_maintainer" />
+        </maps>
+        <maps class="org.openpear.flow.parts.OpenpearLogin">
+            <map url="dashboard" method="dashboard" template="dashboard.html" name="dashboard" />
+            <map url="dashboard/message/hide" method="dashboard_message_hide" />
+
             <map url="account/logout" method="do_logout">
                 <arg name="logout_redirect" value="top" />
             </map>
             
-	        <map url="maintainer/(.+)" method="maintainer_profile" template="maintainer/model.html" />                    
-            <map url="maintainers" method="maintainers" template="maintainer/models.html" />
             <map url="maintainers/update\.json" method="maintainer_update_json" />
             
             <map url="message/inbox" method="inbox" template="message/inbox.html" />
@@ -68,19 +88,9 @@
             </map>
             <map url="message/(\d+)" method="message" template="message/detail.html" fail_redirect="/message/inbox" />
             
-            <map url="packages" method="packages" template="package/models.html">
-                <arg name="updated" value="package/models_updates.html" />
-                <arg name="favored_count" value="package/models_favored.html" />
-                <arg name="released_at" value="package/models_released.html" />
-            </map>
             <map url="packages/create" method="package_create" template="package/create.html">
                 <arg name="success_redirect" value="dashboard" />
             </map>
-            <map url="packages/tags" method="packages_tags" template="package/tags.html" />
-            
-            <map url="package/([^/]+)" method="package" template="package/model.html" />
-            <map url="package/(.+)/timeline" method="package_timeline" template="package/timeline.html" />
-            <map url="package/(.+)/downloads" method="package_downloads" template="package/downloads.html" />
             <map url="package/(.+)/like/(.+)" method="package_add_favorite" />
             <map url="package/(.+)/unlike/(.+)" method="package_remove_favorite" />
             <map url="package/(.+)/category/add" method="package_add_tag" />
@@ -94,22 +104,11 @@
             <map url="package/(.+)/manage/release_confirm" method="package_release_confirm" template="package/release_confirm.html" />
             <map url="package/(.+)/manage/release_do" method="package_release_do" />
             <map url="package/(.+)/manage/release_done" method="package_release_done" template="message.html" />
-            
-            <map name="document_browse" url="package/(.+)/doc(/.+)?" method="document_browse" template="package/document.html" />
-            
-            <map url="package/(.+)/changeset/(\d+)" method="changeset" template="package/changeset.html" />
-            <map name="source_browse" url="package/(.+)/src(/?.+)?" method="source_browse" template="package/source.html" />
-
-            <map url="timelines.atom" method="timeline_atom" />
-            <map url="package/(.+)/timelines\.atom" method="timeline_atom_package" />
-            <map url="maintainer/(.+)/timelines\.atom" method="timeline_atom_maintainer" />
         </maps>
     </handler>
     
     <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" hide="both" />
 </app>
-
-
 
 <!---
  $bwr = test_browser();

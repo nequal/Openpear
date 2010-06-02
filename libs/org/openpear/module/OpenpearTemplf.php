@@ -1,6 +1,4 @@
 <?php
-module('model.OpenpearMaintainer');
-
 class OpenpearTemplf
 {
 	private $user;

@@ -1,5 +1,5 @@
 <?php
-module('model.OpenpearMaintainer');
+import('org.openpear.model.OpenpearMaintainer');
 
 class OpenpearAccountModule extends Object
 {

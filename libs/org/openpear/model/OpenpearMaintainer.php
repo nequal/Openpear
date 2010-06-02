@@ -1,6 +1,7 @@
 <?php
 import('org.rhaco.storage.db.Dao');
-module('model.OpenpearMessage');
+import('org.openpear.model.OpenpearMessage');
+
 class OpenpearMaintainer extends Dao
 {
     protected $id;

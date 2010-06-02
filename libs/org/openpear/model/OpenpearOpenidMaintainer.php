@@ -1,6 +1,5 @@
 <?php
 import('org.rhaco.storage.db.Dao');
-module('model.OpenpearMaintainer');
 
 class OpenpearOpenidMaintainer extends Dao
 {
