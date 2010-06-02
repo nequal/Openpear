@@ -33,7 +33,7 @@
         http://groups.google.com/group/openpear-project
     </description>
 
-    <handler error_template="error.html">
+    <handler error_template="error/global.html">
         <module class="org.rhaco.flow.module.HtmlFilter" />
         <maps class="org.openpear.flow.parts.Openpear">
             <map name="top" method="index" template="index.html" />
@@ -58,7 +58,7 @@
             </map>
             
 	        <map url="maintainer/(.+)" method="maintainer_profile" template="maintainer/model.html" />                    
-            <map url="maintainers" method="maintainer_search" template="maintainer/models.html" />
+            <map url="maintainers" method="maintainers" template="maintainer/models.html" />
             <map url="maintainers/update\.json" method="maintainer_update_json" />
             
             <map url="message/inbox" method="inbox" template="message/inbox.html" />
@@ -76,6 +76,8 @@
             <map url="packages/create" method="package_create" template="package/create.html">
                 <arg name="success_redirect" value="dashboard" />
             </map>
+            <map url="packages/tags" method="packages_tags" template="package/tags.html" />
+            
             <map url="package/([^/]+)" method="package" template="package/model.html" />
             <map url="package/(.+)/timeline" method="package_timeline" template="package/timeline.html" />
             <map url="package/(.+)/downloads" method="package_downloads" template="package/downloads.html" />

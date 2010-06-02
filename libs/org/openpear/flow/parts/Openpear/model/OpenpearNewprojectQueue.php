@@ -19,10 +19,8 @@ class OpenpearNewprojectQueue extends Dao
     static protected $__trial_count__ = 'type=number';
     static protected $__created__ = 'type=timestamp';
     
-    protected $package;
-    protected $maintainer;
-    static protected $__package__ = 'type=OpenpearPackage,extra=true';
-    static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
+    private $package;
+    private $maintainer;
     
     protected function __init__(){
         $this->trial_count = 0;
@@ -51,7 +49,7 @@ class OpenpearNewprojectQueue extends Dao
             C($this)->commit();
         }
     }
-    protected function __get_package__(){
+    public function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
@@ -59,7 +57,7 @@ class OpenpearNewprojectQueue extends Dao
         }
         return $this->package;
     }
-    protected function __get_maintainer__(){
+    public function maintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));

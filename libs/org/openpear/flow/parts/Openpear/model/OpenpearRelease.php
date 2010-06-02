@@ -23,23 +23,33 @@ class OpenpearRelease extends Dao implements AtomInterface
     static protected $__settings__ = 'type=text';
     static protected $__created__ = 'type=timestamp';
     
-    protected $package;
-    protected $maintainer;
-    static protected $__package__ = 'type=OpenpearPackage,extra=true';
-    static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
+    private $package;
+    private $maintainer;
+    private $fm_settings;
     
     protected function __init__(){
         $this->version = '1.0.0';
         $this->version_stab = 'stable';
         $this->created = time();
     }
-    
     protected function __fm_version__(){
         if(is_null($this->id)) return 'No Release';
         if($this->version_stab === 'stable') return $this->version();
         return sprintf('%s (%s)', $this->version, $this->version_stab);
     }
-    protected function __get_package__(){
+    protected function __fm_settings__(){
+        if (is_null($this->fm_settings)) {
+            $this->fm_settings = parse_ini_string($this->settings, true);
+        }
+        return $this->fm_settings;
+    }
+    // DBにつながないというエコ
+    public function package_name() {
+        $fm_settings = $this->fm_settings();
+        return isset($fm_settings['package']['package_name'])?
+            $fm_settings['package']['package_name']: $this->package()->name();
+    }
+    public function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
@@ -47,7 +57,7 @@ class OpenpearRelease extends Dao implements AtomInterface
         }
         return $this->package;
     }
-    protected function __get_maintainer__(){
+    public function maintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
@@ -65,7 +75,7 @@ class OpenpearRelease extends Dao implements AtomInterface
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_title()
      */
     public function atom_title(){
-        return $this->package()->name();
+        return $this->package_name();
     }
     /**
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_published()
@@ -89,14 +99,13 @@ class OpenpearRelease extends Dao implements AtomInterface
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_content()
      */
     public function atom_content(){
-    	// TODO **
-        return sprintf('%s is released!', $this->package()->name());
+    	return Gettext::trans('{1} released new version.', $this->package_name());
     }
     /**
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_summary()
      */
     public function atom_summary(){
-        return sprintf('%s is released!', $this->package()->name());
+        return Gettext::trans('{1} released new version.', $this->package_name());
     }
     /**
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_author()
@@ -108,6 +117,6 @@ class OpenpearRelease extends Dao implements AtomInterface
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_href()
      */
     public function atom_href(){
-        
+        return url('package/'). $this->package_name();
     }
 }

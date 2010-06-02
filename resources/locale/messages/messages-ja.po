@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-26 23:50+0900\n"
+"POT-Creation-Date: 2010-05-30 01:41+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <team@exsample.com>\n"
@@ -30,6 +30,10 @@ msgstr "Openpear について"
 #: /resources/templates/index.html:112
 msgid "Active Categories"
 msgstr ""
+
+#: /resources/templates/package/manage.html:44
+msgid "Add maintainer"
+msgstr "メンテナを追加する"
 
 #: /resources/templates/package/release.html:219
 #: /resources/templates/package/release_confirm.html:59
@@ -65,7 +69,7 @@ msgstr ""
 msgid "Categories"
 msgstr "カテゴリ"
 
-#: /resources/templates/maintainer/model.html:79
+#: /resources/templates/maintainer/model.html:123
 #: /resources/templates/package/models_favored.html:34
 #: /resources/templates/package/models_released.html:17
 #: /resources/templates/package/models_updates.html:35
@@ -107,6 +111,10 @@ msgstr "パスワード(確認)"
 #: /resources/templates/messages/created.txt:1
 msgid "Congratulations"
 msgstr "おめでとうございます"
+
+#: /resources/templates/maintainer/models.html:46
+msgid "Contribute packages"
+msgstr ""
 
 #: /resources/templates/dashboard.html:72
 #: /resources/templates/package/create.html:410
@@ -153,7 +161,7 @@ msgstr "紹介文"
 
 #: /resources/templates/package/changeset.html:55
 msgid "Diffs"
-msgstr ""
+msgstr "差分"
 
 #: /resources/templates/package/base.html:46
 #: /resources/templates/package/document.html:10
@@ -189,7 +197,7 @@ msgstr "外部"
 #: /resources/templates/package/models_released.html:6
 #: /resources/templates/package/models_updates.html:6
 msgid "Fans"
-msgstr ""
+msgstr "お気に入り"
 
 #: /resources/templates/package/models_favored.html:10
 msgid "Favoered Packages"
@@ -199,14 +207,14 @@ msgstr "人気のパッケージ"
 msgid "Favorite Packages"
 msgstr "お気に入りのパッケージ"
 
-#: /resources/templates/maintainer/model.html:33
-#: /resources/templates/maintainer/model.html:86
+#: /resources/templates/maintainer/model.html:65
+#: /resources/templates/maintainer/model.html:130
 msgid "Favorites"
 msgstr "お気に入り"
 
 #: /resources/templates/package/models_favored.html:21
 msgid "Favs"
-msgstr ""
+msgstr "お気に入り"
 
 #: /resources/templates/index.html:93
 msgid "Feed: Recent Releases"
@@ -243,7 +251,8 @@ msgstr "ヘルプ"
 #: /resources/templates/dashboard.html:13
 #: /resources/templates/index.html:44
 #: /resources/templates/index.html:51
-#: /resources/templates/maintainer/model.html:13
+#: /resources/templates/maintainer/model.html:45
+#: /resources/templates/maintainer/models.html:13
 #: /resources/templates/package/base.html:13
 #: /resources/templates/package/changeset.html:13
 #: /resources/templates/package/create.html:12
@@ -251,6 +260,7 @@ msgstr "ヘルプ"
 #: /resources/templates/package/release.html:14
 #: /resources/templates/package/release_confirm.html:12
 #: /resources/templates/package/source.html:13
+#: /resources/templates/package/tags.html:13
 msgid "Home"
 msgstr "ホーム"
 
@@ -274,9 +284,13 @@ msgstr "情報"
 msgid "Install target"
 msgstr "インストール先"
 
+#: /resources/templates/maintainer/models.html:43
+msgid "Last activity"
+msgstr "最近の活動"
+
 #: /resources/templates/package/changeset.html:22
 msgid "Latest"
-msgstr ""
+msgstr "最新"
 
 #: /resources/templates/package/base.html:107
 #: /resources/templates/package/create.html:111
@@ -286,7 +300,7 @@ msgid "License"
 msgstr "ライセンス"
 
 #: /resources/templates/account/signup.html:94
-#: /resources/templates/maintainer/model.html:40
+#: /resources/templates/maintainer/model.html:79
 msgid "Location"
 msgstr "場所"
 
@@ -297,6 +311,7 @@ msgstr "ログアウト"
 #: /resources/templates/account/login.html:8
 #: /resources/templates/account/login.html:12
 #: /resources/templates/account/login.html:20
+#: /resources/templates/account/login.html:62
 #: /resources/templates/index.html:52
 msgid "Login"
 msgstr "ログイン"
@@ -313,33 +328,47 @@ msgstr "ログインIDまたはパスワードが間違っています"
 msgid "Login with OpenID"
 msgstr "OpenIDでログイン"
 
+#: /resources/templates/package/manage.html:63
+msgid "Maintainance"
+msgstr "メンテナンス"
+
 #: /resources/templates/maintainer/model.html:9
-#: /resources/templates/maintainer/model.html:13
-#: /resources/templates/maintainer/model.html:20
+#: /resources/templates/maintainer/model.html:45
+#: /resources/templates/maintainer/model.html:52
+#: /resources/templates/maintainer/models.html:9
+#: /resources/templates/maintainer/models.html:13
 msgid "Maintainer"
 msgstr "メンテナ"
 
 #: /resources/templates/index.html:59
 #: /resources/templates/index.html:85
 #: /resources/templates/package/base.html:111
+#: /resources/templates/package/manage.html:34
 #: /resources/templates/package/model.html:83
 msgid "Maintainers"
 msgstr "メンテナ"
 
+#: /resources/templates/maintainer/models.html:20
+msgid "Maintainers Search"
+msgstr "メンテナ検索"
+
 #: /resources/templates/package/base.html:50
 #: /resources/templates/package/edit.html:2
+#: /resources/templates/package/manage.html:11
 #: /resources/templates/package/release.html:10
 #: /resources/templates/package/release_confirm.html:9
 msgid "Manage"
 msgstr "管理"
 
 #: /resources/templates/package/edit.html:5
+#: /resources/templates/package/manage.html:14
+#: /resources/templates/package/manage.html:21
 #: /resources/templates/package/release.html:14
 #: /resources/templates/package/release_confirm.html:12
 msgid "Manage Package"
 msgstr "パッケージ管理"
 
-#: /resources/templates/maintainer/model.html:41
+#: /resources/templates/maintainer/model.html:83
 msgid "Members Since"
 msgstr "登録日"
 
@@ -350,6 +379,10 @@ msgstr ""
 #: /resources/templates/dashboard.html:70
 msgid "My Packages"
 msgstr "自分のパッケージ"
+
+#: /resources/templates/maintainer/models.html:40
+msgid "Name"
+msgstr "名前"
 
 #: /resources/templates/package/create.html:8
 #: /resources/templates/package/create.html:12
@@ -363,7 +396,7 @@ msgstr "新規登録"
 
 #: /resources/templates/package/changeset.html:21
 msgid "Next Changes"
-msgstr ""
+msgstr "次のチェンジセット"
 
 #: /resources/templates/dashboard.html:87
 msgid "No favs."
@@ -415,6 +448,7 @@ msgstr ""
 #: /resources/templates/package/document.html:10
 #: /resources/templates/package/downloads.html:7
 #: /resources/templates/package/edit.html:2
+#: /resources/templates/package/manage.html:11
 #: /resources/templates/package/model.html:2
 #: /resources/templates/package/models.html:39
 #: /resources/templates/package/models_favored.html:15
@@ -437,14 +471,18 @@ msgstr "パッケージ名"
 msgid "Package Setting"
 msgstr "パッケージ設定"
 
+#: /resources/templates/package/manage.html:24
+msgid "Package settings"
+msgstr "パッケージ設定"
+
 #: /resources/templates/package/release.html:213
 msgid "Package, Channel is required. Min/Max version is optional."
 msgstr ""
 
 #: /resources/templates/index.html:58
 #: /resources/templates/index.html:85
-#: /resources/templates/maintainer/model.html:33
 #: /resources/templates/maintainer/model.html:65
+#: /resources/templates/maintainer/model.html:109
 #: /resources/templates/package/models.html:10
 #: /resources/templates/package/models.html:14
 #: /resources/templates/package/models.html:21
@@ -458,11 +496,15 @@ msgstr "パスワード: "
 
 #: /resources/templates/package/changeset.html:20
 msgid "Previous Changes"
-msgstr ""
+msgstr "前のチェンジセット"
+
+#: /resources/templates/package/tags.html:29
+msgid "Primary Tags (Category)"
+msgstr "カテゴリ"
 
 #: /resources/templates/account/signup.html:77
 #: /resources/templates/index.html:48
-#: /resources/templates/maintainer/model.html:38
+#: /resources/templates/maintainer/model.html:71
 msgid "Profile"
 msgstr "プロフィール"
 
@@ -485,12 +527,12 @@ msgstr ""
 
 #: /resources/templates/package/models_updates.html:10
 msgid "Recent Update Packages"
-msgstr ""
+msgstr "最近更新されたパッケージ"
 
 #: /resources/templates/package/source.html:38
 #: /resources/templates/package/source_viewfile.html:23
 msgid "Recent change"
-msgstr ""
+msgstr "最近の変更"
 
 #: /resources/templates/account/signup.html:7
 #: /resources/templates/account/signup.html:11
@@ -498,6 +540,7 @@ msgstr ""
 msgid "Register"
 msgstr "登録"
 
+#: /resources/templates/package/manage.html:27
 #: /resources/templates/package/release.html:10
 #: /resources/templates/package/release.html:14
 #: /resources/templates/package/release_confirm.html:9
@@ -521,6 +564,14 @@ msgstr "パッケージリリース確認"
 msgid "Release by upload."
 msgstr "アップロードしてリリース"
 
+#: /resources/templates/package/manage.html:30
+msgid "Release package"
+msgstr "パッケージをリリースする"
+
+#: /resources/templates/package/manage.html:31
+msgid "Release setting"
+msgstr "リリースの設定"
+
 #: /resources/templates/package/create.html:62
 #: /resources/templates/package/edit.html:26
 #: /resources/templates/package/release.html:190
@@ -533,6 +584,14 @@ msgstr "リポジトリ"
 msgid "Required"
 msgstr "必須"
 
+#: /resources/templates/maintainer/models.html:23
+msgid "Search"
+msgstr "検索"
+
+#: /resources/templates/maintainer/models.html:33
+msgid "Search Result ({1})"
+msgstr "{1} 件の検索結果"
+
 #: /resources/templates/index.html:85
 msgid "Search:"
 msgstr "検索: "
@@ -540,6 +599,10 @@ msgstr "検索: "
 #: /resources/templates/message/inbox.html:33
 msgid "Sent"
 msgstr "送信箱"
+
+#: /resources/templates/package/manage.html:22
+msgid "Settings"
+msgstr "設定"
 
 #: /resources/templates/package/base.html:47
 #: /resources/templates/package/source.html:9
@@ -576,6 +639,13 @@ msgstr "システムメッセージ"
 msgid "Table of Contents"
 msgstr "目次"
 
+#: /resources/templates/package/manage.html:48
+#: /resources/templates/package/tags.html:9
+#: /resources/templates/package/tags.html:13
+#: /resources/templates/package/tags.html:21
+msgid "Tags"
+msgstr "タグ"
+
 #: /resources/templates/package/release.html:187
 #: /resources/templates/package/release_confirm.html:35
 msgid "Target directory"
@@ -599,7 +669,7 @@ msgid "Tickets"
 msgstr "チケット"
 
 #: /resources/templates/index.html:57
-#: /resources/templates/maintainer/model.html:49
+#: /resources/templates/maintainer/model.html:93
 #: /resources/templates/package/base.html:149
 #: /resources/templates/package/changeset.html:13
 #: /resources/templates/package/model.html:121
@@ -619,7 +689,7 @@ msgid "Top"
 msgstr "トップ"
 
 #: /resources/templates/account/signup.html:86
-#: /resources/templates/maintainer/model.html:39
+#: /resources/templates/maintainer/model.html:75
 #: /resources/templates/package/edit.html:68
 msgid "URL"
 msgstr ""
@@ -728,8 +798,8 @@ msgstr ""
 msgid "delete is not permitted"
 msgstr ""
 
-#: spl/Flow.php:307
-#: /core/spl/Flow.php:307
+#: spl/Flow.php:306
+#: /core/spl/Flow.php:306
 msgid "direct link not permitted"
 msgstr ""
 
@@ -950,6 +1020,11 @@ msgstr ""
 
 #: org.openpear.flow.parts.Openpear
 #: com.tokushimakazutaka.flow.parts.Developer
+msgid "user"
+msgstr ""
+
+#: org.openpear.flow.parts.Openpear
+#: com.tokushimakazutaka.flow.parts.Developer
 msgid "vars"
 msgstr ""
 
@@ -957,9 +1032,9 @@ msgstr ""
 msgid "xmlns"
 msgstr ""
 
-#: /resources/templates/maintainer/model.html:83
+#: /resources/templates/maintainer/model.html:127
 msgid "{1} doesn't have any public package yet."
-msgstr ""
+msgstr "{1}　はまだどのパッケージにも参加していません"
 
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1038
 #: /vendors/org/rhaco/storage/db/Dao/Dao.php:1044

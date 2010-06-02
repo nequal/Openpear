@@ -10,10 +10,9 @@ class OpenpearOpenidMaintainer extends Dao
     static protected $__maintainer_id__ = 'type=number,require=true,primary=true';
     static protected $__url__ = 'type=string,require=true,primary=true';
     
-    protected $maintainer;
-    static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
+    private $maintainer;
     
-    protected function __get_maintainer__(){
+    public function maintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));

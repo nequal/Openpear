@@ -47,7 +47,9 @@ class Openpear extends Flow
         if($this->is_login()) $this->redirect_method('dashboard');
         if(OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))){
             try {
-                $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid_user->identity()));
+                $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(
+                    Q::eq('url', $openid_user->identity())
+                );
                 $this->user($openid_maintainer->maintainer());
                 if($this->login()){
                     $this->redirect_by_map("success_redirect");
@@ -56,9 +58,7 @@ class Openpear extends Flow
                 $this->sessions('openid_identity', $openid_user->identity());
                 $this->redirect_method('signup');
             } catch(Exception $e){
-                //FIXME
-                echo "Error: ", $e->getMessage();
-                exit;
+                throw $e;
             }
         }
         return $this->do_login();
@@ -71,9 +71,31 @@ class Openpear extends Flow
      * @context $recent_releases 最新 OpenpearRelease モデルの配列
      */
     public function index(){
-        $this->vars('package_count', C(OpenpearPackage)->find_count());
-        $this->vars('primary_tags', OpenpearPackage::getActiveCategories(16));
-        $this->vars('recent_releases', C(OpenpearRelease)->find_page(null, new Paginator(20, 1), '-id'));
+        if (Store::has('index/package_count', 3600)) {
+            $package_count = Store::get('index/package_count');
+        } else {
+            $package_count = C(OpenpearPackage)->find_count();
+            Store::set('index/package_count', $package_count, 3600);
+        }
+        if (Store::has('index/primary_tags', 3600)) {
+            $primary_tags = Store::get('index/primary_tags');
+        } else {
+            $primary_tags = OpenpearPackage::getActiveCategories(16);
+            Store::set('index/primary_tags', $primary_tags, 3600);
+        }
+        if (Store::has('index/recent_releases', 3600)) {
+            $recent_releases = Store::get('index/recent_releases');
+        } else {
+            $recent_releases = C(OpenpearPackage)->find_all(
+                new Paginator(5),
+                Q::neq('latest_release_id', null),
+                Q::order('-released_at')
+            );
+            Store::set('index/recent_releases', $recent_releases, 3600);
+        }
+        $this->vars('package_count', $package_count);
+        $this->vars('primary_tags', $primary_tags);
+        $this->vars('recent_releases', $recent_releases);
     }
     /**
      * 検索のマッピング
@@ -84,11 +106,20 @@ class Openpear extends Flow
     public function search(){
         // TODO いる？
         switch($this->in_vars('search_for', 'packages')){
-            case 'maintainers': $this->redirect_method('maintainer_search',array('q'=>$this->in_vars('q')));
+            case 'maintainers': $this->redirect_method('maintainers',array('q'=>$this->in_vars('q')));
             case 'packages':
-            default: $this->redirect_method('packages',array('q'=>$this->in_vars('q')));
+            default: $this->redirect_method('packages', array('q' => $this->in_vars('q')));
         }
         $this->redirect_method('index');
+    }
+    /**
+     * タグ一覧
+     * @context $primary_tags
+     * @context $tags
+     */
+    public function packages_tags(){
+        $this->vars('primary_tags', C(OpenpearTag)->find_all(Q::eq('prime', true)));
+        $this->vars('tags', C(OpenpearTag)->find_all(Q::eq('prime', false)));
     }
     /**
      * パッケージ一覧
@@ -100,7 +131,8 @@ class Openpear extends Flow
         $sort = $this->in_vars('sort', '-released_at');
         $paginator = new Paginator(10, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, $sort));
-        $this->vars('paginator', $paginator->add(array('q' => $this->in_vars('q'))));
+        $paginator->vars('q', $this->in_vars('q'));
+        $this->vars('paginator', $paginator);
         $this->put_block($this->map_arg($sort{0} == '-'? substr($sort, 1): $sort, 'models_released.html'));
     }    
     /**
@@ -114,14 +146,22 @@ class Openpear extends Flow
      */
     public function package($package_name){
         // TODO 仕様の確認
-        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        try {
+            $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        } catch (NotfoundDaoException $e) {
+            $this->not_found($e);
+        }
         $this->vars('object', $package);
         $this->vars('package', $package);
         $this->vars('maintainers', $package->maintainers());
         $releases = $package->releases();// TODO : sort
         $this->vars('recent_releases', empty($releases) ? $releases : array_reverse($releases));
         // TODO changes
-        $this->vars('timelines', C(OpenpearTimeline)->find_all(new Paginator(10), Q::eq('package_id', $package->id()), Q::order('-id')));
+        $this->vars('timelines', C(OpenpearTimeline)->find_all(
+            new Paginator(10),
+            Q::eq('package_id', $package->id()),
+            Q::order('-id')
+        ));
         $this->vars('favored_maintainers', $package->favored_maintainers());
     }
     /**
@@ -215,16 +255,17 @@ class Openpear extends Flow
         $this->vars('timelines', C(OpenpearTimeline)->find_all(new Paginator(10), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id')));
     }
     /**
-     * メンテナ検索
+     * メンテナ一覧
      * @request integer $page ページ番号
      * @request string $q 検索クエリ
      * @context OpenpearMaintainer[] $object_list メンテナ一覧
      * @context Paginator $paginator ページネータ
      */
-    public function maintainer_search(){
+    public function maintainers(){
         $paginator = new Paginator(20, $this->in_vars('page', 1));
-        $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator), 'name');
-        $this->vars('paginator', $paginator->add(array('q' => $this->in_vars('q'))));
+        $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator, 'name'));
+        $paginator->vars('q', $this->in_vars('q'));
+        $this->vars('paginator', $paginator);
     }
     /**
      * メンテナ情報を更新して結果をjsonで出力
@@ -328,8 +369,10 @@ class Openpear extends Flow
             $fav->package_id($package->id());
             $fav->save();
             C($fav)->commit();
-        } catch(Exception $e){}
-        $this->redirect_method('package',$package_name);
+        } catch(Exception $e) {
+            Log::debug($e);
+        }
+        $this->redirect_method('package', $package_name);
     }
     /**
      * Fav 削除
@@ -341,12 +384,13 @@ class Openpear extends Flow
         $user = $this->user();
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-            $fav = C(OpenpearFavorite)->find_get(Q::eq('maintainer_id', $user->id()), Q::eq('package_id', $package->id()));
-            $fav->find_delete(Q::eq('maintainer_id', $user->id()), Q::eq('package_id', $package->id()));
-            $fav->recount_favorites();
+            C(OpenpearFavorite)->find_delete(Q::eq('maintainer_id', $user->id()), Q::eq('package_id', $package->id()));
+            OpenpearFavorite::recount_favorites($package->id());
             C(OpenpearFavorite)->commit();
-        } catch(Exception $e){}
-        Http::redirect(url('package/'. $package_name));
+        } catch(Exception $e) {
+            Log::debug($e);
+        }
+        $this->redirect_method('package', $package_name);
     }
     /**
      * パッケージにメンテナを追加する
@@ -869,11 +913,13 @@ class Openpear extends Flow
     }
     
     /**
-	 * not found (http status 404)
-	 */
+     * not found (http status 404)
+     */
     protected function not_found(Exception $e) {
+        Log::debug('404');
         Http::status_header(404);
-        throw $e;
+        $this->output('error/not_found.html');
+        exit;
     }
     
     /**

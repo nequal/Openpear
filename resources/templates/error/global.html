@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <meta name="robots" content="INDEX,FOLLOW" />
+  
+  <!-- $Id$ -->
+  
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/1column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/openpear.js"></script>
+
+  <title><rt:block name="title">Openpear :: Open PEAR Repository Channel</rt:block></title>
+</head>
+<body>
+  <div id="nequal-pre-header"><a href="http://nequal.jp/" target="_blank">powered by nequal</a></div>
+
+  <!-- id:frame start -->
+  <div id="frame">
+    <div id="container" class="container-class">
+
+      <div id="header" class="main-class">
+        <h1><a href="{$t.url()}"><img src="images/header_logo.gif" alt="Openpear :: Open PEAR Repository Channel" /></a></h1>
+      </div>
+
+      <rt:block name="topic_path" />
+
+    </div> <!-- end of #container -->
+
+    <!-- main contents -->
+    <rt:block name="contents">
+        <div class="frame-class">
+            <h3>Something Happened!</h3>
+            <p><rt:invalid /></p>
+        </div>
+    </rt:block>
+    <!--/main contents -->
+
+    <!-- footer -->
+    <div class="frame-class footer-wrap">
+      <div id="footer">
+        <ul id="footer-menu">
+          <li><a href="{$t.url('about')}">{$t.trans('About')}</a> | </li>
+          <li><a href="http://openpear.blogspot.com/" target="_blank">{$t.trans('Blog')}</a> | </li>
+          <!--
+          <li><a href="">Logos</a> | </li>
+          -->
+          <li><a href="http://groups.google.com/group/openpear" target="_blank">{$t.trans('Google Group')}</a> | </li>
+          <li><a href="{$t.url('help')}">{$t.trans('Help')}</a> | </li>
+          <li><a href="">{$t.trans('Donate')}</a></li>
+          <!--
+          <li><a href="">Contact</a></li>
+          -->
+        </ul>
+        <p>Copyright &copy; 2009 <a href="http://openpear.org/">Openpear</a>.  All Rights Reserved.</p>
+        <!--
+        <p><a href="{$t.url()}">Terms of Service</a> | <a href="{$t.url('policy')}">Privacy Policy</a></p>
+          -->
+        <p>powered by <a href="http://nequal.jp/" target="_blank">nequal</a></p>
+        <p>hosted by <a href="http://www.dino.co.jp/" target="_blank">Dino Co.,Ltd.</a></p>
+      </div>
+    </div>
+    <!-- /footer -->
+
+  </div><!-- end of #frame -->
+</body>
+</html>
+

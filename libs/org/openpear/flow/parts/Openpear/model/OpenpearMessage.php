@@ -29,11 +29,9 @@ class OpenpearMessage extends Dao
     static protected $__created__ = 'type=timestamp';
     
     protected $mail = true;
-    protected $maintainer_to;
-    protected $maintainer_from;
+    private $maintainer_to;
+    private $maintainer_from;
     static protected $__mail__ = 'type=boolean,extra=true';
-    static protected $__maintainer_to__ = 'type=OpenpearMaintainer,extra=true';
-    static protected $__maintainer_from__ = 'type=OpenpearMaintainer,extra=true';
     
     protected function __init__(){
         $this->created = time();
@@ -68,7 +66,7 @@ class OpenpearMessage extends Dao
         return false;
     }
     
-    protected function __get_maintainer_to__(){
+    public function maintainer_to(){
         if($this->maintainer_to instanceof OpenpearMaintainer === false){
             try{
             	// TODO Maintainer
@@ -77,7 +75,7 @@ class OpenpearMessage extends Dao
         }
         return $this->maintainer_to;
     }
-    protected function __get_maintainer_from__(){
+    public function maintainer_from(){
         if($this->maintainer_from instanceof OpenpearMaintainer === false){
             try{
             	// TODO Maintainer

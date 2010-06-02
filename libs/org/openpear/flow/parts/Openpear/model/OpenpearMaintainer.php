@@ -43,6 +43,16 @@ class OpenpearMaintainer extends Dao
     public function avatar($size=16){
         return sprintf('http://www.gravatar.com/avatar/%s?s=%d', md5($this->mail()), $size);
     }
+    public function packages(){
+        return OpenpearCharge::packages($this);
+    }
+    public function last_activity(){
+        try {
+            return C(OpenpearTimeline)->find_get(Q::eq('maintainer_id', $this->id()), Q::order('-created'))->created();
+        } catch(Exception $e) {
+            return $this->created();
+        }
+    }
     /**
      * 作成/更新前処理
      */

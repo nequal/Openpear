@@ -47,7 +47,7 @@
               <input name="password" type="password" id="password" /><br />
             </fieldset>
             <fieldset>
-              <input type="submit" value="Login" id="login" />
+              <input type="submit" value="{$t.trans('Login')}" id="login" />
             </fieldset>
           </form>
           
@@ -59,7 +59,7 @@
           
           <form action="{$t.url('account/login_openid')}" method="post" id="login-openid">
             <input type="text" name="openid_url" id="openid-url" />
-            <input type="submit" value="Login" id="openid-login" />
+            <input type="submit" value="{$t.trans('Login')}" id="openid-login" />
           </form>
           
           <form method="post" id="login-openid-major">

@@ -15,14 +15,18 @@ class OpenpearChangeset extends Dao
     static protected $__changed__ = 'type=text';
     static protected $__created__ = 'type=timestamp';
     
-    protected $package;
-    protected $maintainer;
-    static protected $__package__ = 'type=OpenpearPackage,extra=true';
-    static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
+    private $package;
+    private $maintainer;
     
+    /**
+     * 初期化
+     */
     protected function __init__(){
         $this->created = time();
     }
+    /**
+     * changed を unserialize してオブジェクトの配列を返す
+     */
     protected function __fm_changed__(){
         $objects = array();
         $changed = unserialize($this->changed);
@@ -33,6 +37,9 @@ class OpenpearChangeset extends Dao
         }
         return $objects;
     }
+    /**
+     * 作成後処理
+     */
     protected function __after_create__(){
         // TODO 美しくない
         $path = preg_replace('@^file://@', '', module_const('svn_root'));
@@ -106,7 +113,7 @@ class OpenpearChangeset extends Dao
         }
         return $result;
     }
-    protected function __get_package__(){
+    public function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
@@ -114,7 +121,7 @@ class OpenpearChangeset extends Dao
         }
         return $this->package;
     }
-    protected function __get_maintainer__(){
+    public function maintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));

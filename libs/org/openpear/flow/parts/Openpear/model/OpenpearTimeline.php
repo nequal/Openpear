@@ -19,10 +19,8 @@ class OpenpearTimeline extends Dao implements AtomInterface
     static protected $__maintainer_id__ = 'type=number';
     static protected $__created__ = 'type=timestamp';
     
-    protected $package;
-    protected $maintainer;
-    static protected $__package__ = 'type=OpenpearPackage,extra=true';
-    static protected $__maintainer__ = 'type=OpenpearMaintainer,extra=true';
+    private $package;
+    private $maintainer;
     
     protected function __init__(){
         $this->created = time();
@@ -40,7 +38,7 @@ class OpenpearTimeline extends Dao implements AtomInterface
         }
     }
     
-    protected function __get_package__(){
+    protected function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{
                 $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
@@ -48,7 +46,7 @@ class OpenpearTimeline extends Dao implements AtomInterface
         }
         return $this->package;
     }
-    protected function __get_maintainer__(){
+    protected function maintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
                 $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
