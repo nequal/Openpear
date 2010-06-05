@@ -14,6 +14,7 @@ import('org.openpear.model.OpenpearChangesetChanged');
 import('org.openpear.model.OpenpearMaintainer');
 import('org.openpear.model.OpenpearOpenidMaintainer');
 import('org.openpear.model.OpenpearPackage');
+import('org.openpear.model.OpenpearPackageTag');
 import('org.openpear.model.OpenpearRelease');
 import('org.openpear.model.OpenpearTag');
 import('org.openpear.model.OpenpearPackage');
@@ -132,7 +133,16 @@ class OpenpearNoLogin extends Flow
     public function packages(){
         $sort = $this->in_vars('sort', '-released_at');
         $paginator = new Paginator(10, $this->in_vars('page', 1));
-        $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, $sort));
+        if ($this->is_vars('category') && $this->in_vars('category') != '') {
+            $tag = C(OpenpearTag)->find_get(Q::eq('name', $this->in_vars('category')));
+            $this->vars('object_list', C(OpenpearPackage)->find_all(
+                $paginator,
+                Q::in('id', Dao::daq('SELECT package_id FROM `'. R(OpenpearPackageTag)->table(). '` WHERE tag_id=?', array($tag->id()))),
+                Q::order($sort)
+            ));
+        } else {
+            $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, $sort));
+        }
         $paginator->vars('q', $this->in_vars('q'));
         $this->vars('paginator', $paginator);
         $this->put_block($this->map_arg($sort{0} == '-'? substr($sort, 1): $sort, 'models_released.html'));
