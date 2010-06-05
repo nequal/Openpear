@@ -288,6 +288,13 @@ class OpenpearPackage extends Dao
                     }
                 }
             }
+            if ($limit > count($categories)) {
+                $sub = $limit - count($categories);
+                $q = new Q();
+                foreach (array_keys($categories) as $c) $q->add(Q::neq('name', $c));
+                $add_categories = C(OpenpearTag)->find_all(new Paginator($sub, 1), $q);
+                $categories = array_merge($categories, $add_categories);
+            }
         } catch(Exception $e){
             $categories = C(OpenpearTag)->find_all(new Paginator($limit, 1), Q::order('name'));
         }

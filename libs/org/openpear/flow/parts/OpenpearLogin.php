@@ -14,6 +14,7 @@ import('org.openpear.model.OpenpearChangesetChanged');
 import('org.openpear.model.OpenpearMaintainer');
 import('org.openpear.model.OpenpearOpenidMaintainer');
 import('org.openpear.model.OpenpearPackage');
+import('org.openpear.model.OpenpearPackageTag');
 import('org.openpear.model.OpenpearRelease');
 import('org.openpear.model.OpenpearTag');
 import('org.openpear.model.OpenpearPackage');
@@ -246,7 +247,7 @@ class OpenpearLogin extends Flow
                 C($package)->commit();
             } catch(Exception $e){}
         }
-        $this->redirect_method('package',$package_name);
+        $this->redirect_by_map('success_redirect', $package_name);
     }
     /**
      * パッケージからタグの削除
@@ -263,7 +264,7 @@ class OpenpearLogin extends Flow
                 C($package)->commit();
             } catch(Exception $e){}
         }
-        $this->redirect_method('package_manage',$package_name);
+        $this->redirect_by_map('success_redirect', $package_name);
     }
     /**
      * ？？？
@@ -282,7 +283,7 @@ class OpenpearLogin extends Flow
                 C($package_tag)->commit();
             } catch(Exception $e){}
         }
-        $this->redirect_method('package_manage',$package_name);
+        $this->redirect_method('success_redirect', $package_name);
     }
     
     /**

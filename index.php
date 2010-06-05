@@ -58,7 +58,7 @@
             </map>
             <map url="packages/tags" method="packages_tags" template="package/tags.html" />
             
-            <map url="package/([^/]+)" method="package" template="package/model.html" />
+            <map name="package_detail" url="package/([^/]+)" method="package" template="package/model.html" />
             <map url="package/(.+)/timeline" method="package_timeline" template="package/timeline.html" />
             <map url="package/(.+)/downloads" method="package_downloads" template="package/downloads.html" />
             
@@ -93,9 +93,15 @@
             </map>
             <map url="package/(.+)/like/(.+)" method="package_add_favorite" />
             <map url="package/(.+)/unlike/(.+)" method="package_remove_favorite" />
-            <map url="package/(.+)/category/add" method="package_add_tag" />
-            <map url="package/(.+)/category/remove" method="package_remove_tag" />
-            <map url="package/(.+)/category/prime" method="package_prime_tag" />
+            <map url="package/(.+)/category/add" method="package_add_tag">
+                <arg name="success_redirect" value="package_detail" />
+            </map>
+            <map url="package/(.+)/category/remove" method="package_remove_tag">
+                <arg name="success_redirect" value="package_detail" />
+            </map>
+            <map url="package/(.+)/category/prime" method="package_prime_tag">
+                <arg name="success_redirect" value="package_detail" />
+            </map>
             <map url="package/(.+)/manage" method="package_manage" template="package/manage.html" />
             <map url="package/(.+)/manage/edit" method="package_edit" template="package/edit.html" />
             <map url="package/(.+)/manage/edit_do" method="package_edit_do" />
