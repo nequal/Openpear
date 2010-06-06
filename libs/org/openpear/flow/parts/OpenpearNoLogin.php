@@ -6,14 +6,17 @@ import('org.rhaco.net.xml.Atom');
 import('org.openpear.pear.PackageProjector');
 import('jp.nequal.net.Subversion');
 
+import('org.openpear.config.OpenpearConfig');
 import('org.openpear.exception.OpenpearException');
 import('org.openpear.module.OpenpearAccountModule');
 import('org.openpear.module.OpenpearTemplf');
 import('org.openpear.model.OpenpearChangeset');
 import('org.openpear.model.OpenpearChangesetChanged');
 import('org.openpear.model.OpenpearMaintainer');
+import('org.openpear.model.OpenpearNewprojectQueue');
 import('org.openpear.model.OpenpearOpenidMaintainer');
 import('org.openpear.model.OpenpearPackage');
+import('org.openpear.model.OpenpearPackageMessage');
 import('org.openpear.model.OpenpearPackageTag');
 import('org.openpear.model.OpenpearRelease');
 import('org.openpear.model.OpenpearTag');
@@ -37,9 +40,9 @@ class OpenpearNoLogin extends Flow
      */
     protected function __init__(){
         $this->add_module(new OpenpearAccountModule());
-        $this->vars('pear_domain', module_const('pear_domain', 'openpear.org'));
-        $this->vars('pear_alias', module_const('pear_alias', 'openpear'));
-        $this->vars('svn_url', module_const('svn_url', 'http://svn.openpear.org'));
+        $this->vars('pear_domain', OpenpearConfig::pear_domain('openpear.org'));
+        $this->vars('pear_alias', OpenpearConfig::pear_alias('openpear'));
+        $this->vars('svn_url', OpenpearConfig::svn_url('http://svn.openpear.org'));
         $this->vars('ot', new OpenpearTemplf($this->user()));
     }
     /**
@@ -291,7 +294,7 @@ class OpenpearNoLogin extends Flow
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         // TODO pathはなんだろう
         $path = rtrim(ltrim($path, ' /.'), '/');
-        $root = File::absolute(module_const('svn_root'), implode('/', array($package->name(), 'doc')));
+        $root = File::absolute(OpenpearConfig::svn_root(), implode('/', array($package->name(), 'doc')));
         $repo_path = File::absolute($root, $path);
         $this->vars('package', $package);
         $body = Subversion::cmd('cat', array($repo_path));
@@ -319,7 +322,7 @@ class OpenpearNoLogin extends Flow
         // TODO SVNとの連携
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $path = rtrim(ltrim($path, ' /.'), '/');
-        $local_root = File::absolute(module_const('svn_root'), $package->name());
+        $local_root = File::absolute(OpenpearConfig::svn_root(), $package->name());
         $repo_path = File::absolute($local_root, $path);
         $info = Subversion::cmd('info', array($repo_path));
         if($info['kind'] === 'dir'){
@@ -337,7 +340,7 @@ class OpenpearNoLogin extends Flow
         $this->vars('path', $path);
         $this->vars('info', self::format_info($info));
         $this->vars('package', $package);
-        $this->vars('real_url', File::absolute(module_const('svn_url'), implode('/', array($package->name(), $path))));
+        $this->vars('real_url', File::absolute(OpenpearConfig::svn_url(), implode('/', array($package->name(), $path))));
         $this->vars('externals', Subversion::cmd('propget', array('svn:externals', $info['url'])));
         $this->add_vars_other_tree($package_name);
     }
@@ -355,7 +358,7 @@ class OpenpearNoLogin extends Flow
         $revision = intval($revision);
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $changeset = C(OpenpearChangeset)->find_get(Q::eq('revision', $revision), Q::eq('package_id', $package->id()));
-        $path = File::absolute(module_const('svn_root'), $package->name());
+        $path = File::absolute(OpenpearConfig::svn_root(), $package->name());
         $log = Subversion::cmd('log', array($path), array('revision' => $revision, 'limit' => 1));
         $diff = Subversion::cmd('diff', array($path), array('revision' => sprintf('%d:%d', $revision-1, $revision)));
         $this->vars('package', $package);
@@ -369,7 +372,7 @@ class OpenpearNoLogin extends Flow
         $trees = array('trunk' => false);
         foreach (array('branches', 'tags') as $path) {
             $rep_path = trim(implode('/', array($root, $path)), '/');
-            $list = Subversion::cmd('list', array(implode('/', array(module_const('svn_root'), $package_name, $rep_path))));
+            $list = Subversion::cmd('list', array(implode('/', array(OpenpearConfig::svn_root(), $package_name, $rep_path))));
             if (is_array($list)) foreach($list as $file) {
                 if (isset($file['kind']) && $file['kind'] == 'dir') {
                     $trees[implode('/', array($path, $file['name']))] = false;
@@ -393,7 +396,7 @@ class OpenpearNoLogin extends Flow
         // TODO 仕様の確認
         foreach($tree as &$f){
             try {
-                $log = Subversion::cmd('log', array(module_const('svn_root')), array('revision' => $f['commit']['revision'], 'limit' => 1));
+                $log = Subversion::cmd('log', array(OpenpearConfig::svn_root()), array('revision' => $f['commit']['revision'], 'limit' => 1));
                 $f['log'] = array_shift($log);
                 try {
                     $f['maintainer'] = C(OpenpearMaintainer)->find_get(Q::eq('name', $f['commit']['author']));
@@ -479,7 +482,7 @@ class OpenpearNoLogin extends Flow
      * Subversion リポジトリの基本ディレクトリ構成を生成する
      */
     static public function __setup_generate_skeleton__(Request $req){
-        $base_dir = $req->in_vars('path', module_const('svn_skeleton', work_path('skeleton')));
+        $base_dir = $req->in_vars('path', OpenpearConfig::svn_skeleton(work_path('skeleton')));
         File::mkdir($base_dir);
         File::mkdir(File::path($base_dir, 'doc'));
         File::mkdir(File::path($base_dir, 'doc/en'));

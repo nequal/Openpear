@@ -34,6 +34,7 @@ foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_
         $working_path = sprintf('%s/build/%s.%s', $work_dir, $package['name'], date('YmdHis'));
         $src_dir = $working_path. '/src';
         $release_dir = $working_path. '/release';
+        $tmp_dir = $working_path. '/tmp';
         $conf_path = $working_path. '/build.conf';
         init_dir($working_path);
         file_put_contents($conf_path, $row['build_conf']);
@@ -44,15 +45,35 @@ foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_
         // ソースコードをとってくる
         if (empty($package['external_repository'])) {
             // Openpear Repository
+            $revision = (is_numeric($row['revision']) && $row['revision'] > 0)? $row['revision']: 'HEAD';
             $repository_path = sprintf('%s/%s/trunk/%s', $config['svn_root'], $package['name'], $row['build_path']);
-            list(, $out, $err) = cmd(sprintf('svn export %s %s', $repository_path, $src_dir));
+            list(, $out, $err) = cmd(sprintf('svn export -r %s %s %s', $revision, $repository_path, $src_dir));
         } else {
-            throw new RuntimeException('まだです');
             switch ($package['external_repository_type']) {
                 case 'Git':
+                    $cmd = 'git clone';
+                    break;
                 case 'Mercurial':
+                    $cmd = 'hg clone';
+                    break;
                 case 'Subversion':
+                    $cmd = 'svn export';
+                    break;
+                default:
+                    throw new RuntimeException('unknown repository type');
             }
+            list(, $out, $err) = cmd(sprintf('%s %s %s', $cmd, escapeshellarg($package['external_repository']), escapeshellarg($tmp_dir)));
+            if (!empty($err)) {
+                throw new RuntimeException($err);
+            }
+            $build_path = implode('/', array($tmp_dir, $row['build_path']));
+            if (!file_exists($build_path)) {
+                throw new RuntimeException(sprintf('build path is not found: %s', $build_path));
+            }
+            $ret = cmd(sprintf('mv %s %s', $build_path, $src_dir));
+        }
+        if (!is_dir($src_dir)) {
+            throw new RuntimeException('src dir is not found');
         }
         
         // ビルドする
@@ -89,7 +110,7 @@ foreach($pdo->query('SELECT * FROM `openpear_release_queue` orq WHERE orq.trial_
         
         // latest_release_id と released_at を設定
         $last_insert_id = $pdo->lastInsertId();
-        $package = $pdo->prepate('UPDATE `openpear_package` SET latest_release_id=?, released_at=NOW() WHERE id=?');
+        $package = $pdo->prepare('UPDATE `openpear_package` SET latest_release_id=?, released_at=NOW() WHERE id=?');
         $package->execute(array($last_insert_id, $row['package_id']));
         
         // svn tag
@@ -128,6 +149,6 @@ function cmd($command) {
         while (!feof($resource[2])) $stderr .= fgets($resource[2]);
         fclose($resource[2]);
     }
-    $end_code = fclose($proc);
+    $end_code = proc_close($proc);
     return array($end_code, $stdout, $stderr);
 }

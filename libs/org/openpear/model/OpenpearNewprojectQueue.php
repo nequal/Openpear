@@ -29,14 +29,14 @@ class OpenpearNewprojectQueue extends Dao
     public function create(){
         try {
             Subversion::cmd('import', array(
-                module_const('svn_skeleton', work_path('skeleton')),
-                File::absolute(module_const('svn_root'), $this->package()->name()),
+                OpenpearConfig::svn_skeleton(work_path('skeleton')),
+                File::absolute(OpenpearConfig::svn_root(), $this->package()->name()),
             ),array(
                 'message' => sprintf('[New Package] %s (@%s)',
                     $this->package()->name(),
                     $this->maintainer()->name()
                 ),
-                'username' => module_const('system_user', 'openpear'),
+                'username' => OpenpearConfig::system_user('openpear'),
             ));
             // $message = new OpenpearMessage();
             // $message->subject('New Package is ready for your commit!');

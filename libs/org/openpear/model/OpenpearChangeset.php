@@ -42,7 +42,7 @@ class OpenpearChangeset extends Dao
      */
     protected function __after_create__(){
         // TODO 美しくない
-        $path = preg_replace('@^file://@', '', module_const('svn_root'));
+        $path = preg_replace('@^file://@', '', OpenpearConfig::svn_root());
         $message = Subversion::look('log', array($path), array('revision' => $this->revision));
         $timeline = new OpenpearTimeline();
         $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">committed</span> to <a href="%s">%s</a>',
@@ -72,7 +72,7 @@ class OpenpearChangeset extends Dao
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
             $maintainer = null;
             try {
-                if($author == module_const('system_user', 'openpear') && preg_match('/\(@(.*?)\)$/', trim($message), $match)){
+                if($author == OpenpearConfig::system_user('openpear') && preg_match('/\(@(.*?)\)$/', trim($message), $match)){
                     $author = $match[1];
                 }
                 $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $author));
@@ -94,7 +94,7 @@ class OpenpearChangeset extends Dao
             throw $e;
         }
         try {
-            chdir(module_const('working_copy'));
+            chdir(OpenpearConfig::working_copy());
             ob_start();
             passthru('svn up');
             ob_end_clean();

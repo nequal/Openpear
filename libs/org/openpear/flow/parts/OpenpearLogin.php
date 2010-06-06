@@ -6,18 +6,21 @@ import('org.rhaco.net.xml.Atom');
 import('org.openpear.pear.PackageProjector');
 import('jp.nequal.net.Subversion');
 
+import('org.openpear.config.OpenpearConfig');
 import('org.openpear.exception.OpenpearException');
 import('org.openpear.module.OpenpearAccountModule');
 import('org.openpear.module.OpenpearTemplf');
 import('org.openpear.model.OpenpearChangeset');
 import('org.openpear.model.OpenpearChangesetChanged');
 import('org.openpear.model.OpenpearMaintainer');
+import('org.openpear.model.OpenpearNewprojectQueue');
 import('org.openpear.model.OpenpearOpenidMaintainer');
 import('org.openpear.model.OpenpearPackage');
 import('org.openpear.model.OpenpearPackageTag');
 import('org.openpear.model.OpenpearRelease');
 import('org.openpear.model.OpenpearTag');
 import('org.openpear.model.OpenpearPackage');
+import('org.openpear.model.OpenpearPackageMessage');
 import('org.openpear.model.OpenpearRelease');
 import('org.openpear.model.OpenpearReleaseQueue');
 import('org.openpear.model.OpenpearCharge');
@@ -37,9 +40,9 @@ class OpenpearLogin extends Flow
      */
     protected function __init__(){
         $this->add_module(new OpenpearAccountModule());
-        $this->vars('pear_domain', module_const('pear_domain', 'openpear.org'));
-        $this->vars('pear_alias', module_const('pear_alias', 'openpear'));
-        $this->vars('svn_url', module_const('svn_url', 'http://svn.openpear.org'));
+        $this->vars('pear_domain', OpenpearConfig::pear_domain('openpear.org'));
+        $this->vars('pear_alias', OpenpearConfig::pear_alias('openpear'));
+        $this->vars('svn_url', OpenpearConfig::svn_url('http://svn.openpear.org'));
         $this->vars('ot', new OpenpearTemplf($this->user()));
     }
     /**
@@ -283,7 +286,7 @@ class OpenpearLogin extends Flow
                 C($package_tag)->commit();
             } catch(Exception $e){}
         }
-        $this->redirect_method('success_redirect', $package_name);
+        $this->redirect_by_map('success_redirect', $package_name);
     }
     
     /**
@@ -300,7 +303,7 @@ class OpenpearLogin extends Flow
                 $package->save();
                 $package->add_maintainer($user);
                 C($package)->commit();
-                $this->redirect_method('package',$package->name());
+                $this->redirect_by_map('package_detail', $package->name());
             } catch(Exception $e){
             }
         }
@@ -419,7 +422,7 @@ class OpenpearLogin extends Flow
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
-                $build_conf->package_channel(module_const('pear_domain', 'openpear.org'));
+                $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
                 $this->save_current_vars();
                 $this->vars('package', $package);
                 return $this;
@@ -447,7 +450,7 @@ class OpenpearLogin extends Flow
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
-                $build_conf->package_channel(module_const('pear_domain', 'openpear.org'));
+                $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
                 $release_queue = new OpenpearReleaseQueue();
                 $release_queue->cp($this->vars());
                 $release_queue->package_id($package->id());

@@ -19,7 +19,7 @@ class OpenpearReleaseQueue extends Dao
     static protected $__id__ = 'type=serial';
     static protected $__package_id__ = 'type=number,require=true';
     static protected $__maintainer_id__ = 'type=number,require=true';
-    static protected $__revision__ = 'type=number,require=true';
+    static protected $__revision__ = 'type=number';
     static protected $__build_path__ = 'type=string';
     static protected $__build_conf__ = 'type=text,require=true';
     static protected $__description__ = 'type=text';

@@ -41,7 +41,7 @@ class OpenpearCharge extends Dao
         $template = new Template();
         $template->vars('maintainers', $maintainers);
         $template->vars('packages', $packages);
-        File::write(module_const('svn_access_file'), $template->read('files/access.txt'));
+        File::write(OpenpearConfig::svn_access_file(), $template->read('files/access.txt'));
     }
     
     public function package(){

@@ -44,7 +44,7 @@ class OpenpearTemplf
         return $result;
     }
     final public function svn_log_msg($revision){
-        $log = Subversion::cmd('log', array(module_const('svn_root')), array('revision' => $revision));
+        $log = Subversion::cmd('log', array(OpenpearConfig::svn_root()), array('revision' => $revision));
         return (string)$log[0]['msg'];
     }
     final public function date_ago($date, $from=null){
