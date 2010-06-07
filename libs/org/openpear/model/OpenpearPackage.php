@@ -59,7 +59,7 @@ class OpenpearPackage extends Dao
     const NOTIFY_DEPRECATED = 'This package is not maintained.';
     
     /**
-     * $B%j%]%8%H%j<oN`JL$N%3%^%s%I$r<hF@(B
+     * リポジトリ種類別のコマンドを取得
      * @return string $command
      **/
     public function repoistory_type_cmd() {
@@ -80,7 +80,7 @@ class OpenpearPackage extends Dao
     }
 
     /**
-     * $B3hH/$J%+%F%4%j$r<hF@$9$k(B
+     * 活発なカテゴリを取得する
      * @param int $limit
      * @return array OpenpearTag[]
      **/
@@ -112,7 +112,7 @@ class OpenpearPackage extends Dao
     }
 
     /**
-     * $B%Q%C%1!<%8>pJs$r<hF@$9$k(B
+     * パッケージ情報を取得する
      * @param int $id
      * @param bool $cache
      * @return OpenpearPackage
@@ -139,7 +139,7 @@ class OpenpearPackage extends Dao
     }
 
     /**
-     * $BC/$G$b;22C2DG=$+(B
+     * 誰でも参加可能か
      * @return bool
      **/
     public function is_public(){
@@ -147,9 +147,9 @@ class OpenpearPackage extends Dao
     }
 
     /**
-     * $B%a%s%F%J$K8"8B$,$"$k$+(B
+     * メンテナに権限があるか
      * @param OpenpearMaintainer $maintainer
-     * @param bool $exception $BNc30$r=PNO$9$k$+$I$&$+(B
+     * @param bool $exception 例外を出力するかどうか
      * @return bool
      **/
     public function permission(OpenpearMaintainer $maintainer, $exception=true){
@@ -165,7 +165,7 @@ class OpenpearPackage extends Dao
     }
 
     /**
-     * $B%a%s%F%J$N$*5$$KF~$j$+$I$&$+(B
+     * メンテナのお気に入りかどうか
      * @param OpenpearMaintainer $maintainer
      * @return bool
      **/
@@ -183,7 +183,7 @@ class OpenpearPackage extends Dao
     }
 
     /**
-     * $B%a%s%F%J$rDI2C$9$k(B
+     * メンテナを追加する
      * @param OpenpearMaintainer $maintainer
      * @param string $role
      * @return void
@@ -201,7 +201,7 @@ class OpenpearPackage extends Dao
     }
 
     /**
-     * $B%+%F%4%j$rDI2C$9$k(B
+     * カテゴリを追加する
      * @param string $tag_name
      * @param bool $prime
      * @return void
@@ -223,7 +223,7 @@ class OpenpearPackage extends Dao
     }
 
     /**
-     * $B%+%F%4%j$r:o=|$9$k(B
+     * カテゴリを削除する
      * @param int $tag_id
      * @return void
      **/
@@ -238,7 +238,7 @@ class OpenpearPackage extends Dao
     }
     
     /**
-     * PEAR $B%3%^%s%I$G%$%s%9%H!<%k;~$K;H$&L>A0$r<hF@(B
+     * PEAR コマンドでインストール時に使う名前を取得
      * @return string $package_name
      **/
     public function installName(){
