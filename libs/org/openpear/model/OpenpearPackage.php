@@ -376,6 +376,10 @@ class OpenpearPackage extends Dao
         $timeline->save();
     }
 
+    protected function __after_save__() {
+        Store::delete(self::cache_key($this->id));
+    }
+
     protected function __verify_name__(){
          if(!preg_match('@^[A-Za-z][A-Za-z0-9_]+$@', $this->name)){
              Exceptions::add(new OpenpearException('name is NOT valid. ### FIXME ###'), 'name');

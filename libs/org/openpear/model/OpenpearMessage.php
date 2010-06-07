@@ -68,8 +68,7 @@ class OpenpearMessage extends Dao
     public function maintainer_to(){
         if($this->maintainer_to instanceof OpenpearMaintainer === false){
             try{
-            	// TODO Maintainer
-                $this->maintainer_to = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_to_id()));
+                $this->maintainer_to = OpenpearMaintainer::get_maintainer($this->maintainer_to_id());
             }catch(Exception $e){}
         }
         return $this->maintainer_to;
@@ -77,8 +76,7 @@ class OpenpearMessage extends Dao
     public function maintainer_from(){
         if($this->maintainer_from instanceof OpenpearMaintainer === false){
             try{
-            	// TODO Maintainer
-                $this->maintainer_from = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_from_id()));
+                $this->maintainer_from = OpenpearMaintainer::get_maintainer($this->maintainer_from_id());
             }catch(Exception $e){}
         }
         return $this->maintainer_from;
