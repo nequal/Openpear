@@ -74,7 +74,9 @@ class OpenpearLogin extends Flow
                 $message->save(true);
                 echo 'ok';
             }
-        } catch(Exception $e){}
+        } catch(Exception $e){
+            Log::debug($e);
+        }
         exit;
     }
     /**
@@ -109,7 +111,9 @@ class OpenpearLogin extends Flow
                 $this->vars('object', $message);
                 return;
             }
-        } catch(Exception $e){}
+        } catch(Exception $e){
+            Log::debug($e);
+        }
         $this->redirect_by_map("fail_redirect");
     }
     /**
@@ -156,7 +160,9 @@ class OpenpearLogin extends Flow
                         $this->redirect_by_map("success_redirect");
                         break;
                 }
-            } catch(Exception $e){}
+            } catch(Exception $e){
+                Log::debug($e);
+            }
         }
     }
     
@@ -211,7 +217,9 @@ class OpenpearLogin extends Flow
                 $charge->package_id($package->id());
                 $charge->save();
                 C($charge)->commit();
-            } catch(Exception $e){}
+            } catch(Exception $e) {
+                Log::debug($e);
+            }
         }
         $this->redirect_method('package_manage',$package_name);
     }
@@ -229,7 +237,9 @@ class OpenpearLogin extends Flow
                 $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $package->id()), Q::eq('maintainer_id', $maintainer->id()));
                 $charge->delete();
                 C($charge)->commit();
-            } catch(Exception $e){}
+            } catch(Exception $e) {
+                Log::debug($e);
+            }
         }
         $this->redirect_method('package_manage',$package_name);
     }
@@ -248,7 +258,9 @@ class OpenpearLogin extends Flow
                 // $package->permission($this->user());
                 $package->add_tag($this->in_vars('tag_name'), $this->in_vars('prime', false));
                 C($package)->commit();
-            } catch(Exception $e){}
+            } catch(Exception $e){
+                Log::debug($e);
+            }
         }
         $this->redirect_by_map('success_redirect', $package_name);
     }
@@ -265,7 +277,9 @@ class OpenpearLogin extends Flow
                 $package->permission($this->user());
                 $package->remove_tag($this->in_vars('tag_id'));
                 C($package)->commit();
-            } catch(Exception $e){}
+            } catch(Exception $e){
+                Log::debug($e);
+            }
         }
         $this->redirect_by_map('success_redirect', $package_name);
     }
@@ -284,7 +298,9 @@ class OpenpearLogin extends Flow
                 $package_tag->prime(true);
                 $package_tag->save();
                 C($package_tag)->commit();
-            } catch(Exception $e){}
+            } catch(Exception $e){
+                Log::debug($e);
+            }
         }
         $this->redirect_by_map('success_redirect', $package_name);
     }
@@ -303,8 +319,9 @@ class OpenpearLogin extends Flow
                 $package->save();
                 $package->add_maintainer($user);
                 C($package)->commit();
-                $this->redirect_by_map('package_detail', $package->name());
+                $this->redirect_by_map('success_redirect');
             } catch(Exception $e){
+                Log::debug($e);
             }
         }
         $this->cp($package);
@@ -322,7 +339,9 @@ class OpenpearLogin extends Flow
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
             return;
-        } catch(Exception $e){}
+        } catch(Exception $e){
+            Log::debug($e);
+        }
         $this->redirect_method('package',$package_name);
     }
 
@@ -354,7 +373,9 @@ class OpenpearLogin extends Flow
                 }
             }
             return;
-        } catch(Exception $e){}
+        } catch(Exception $e) {
+            Log::debug($e);
+        }
         $this->redirect_method('package',$package_name);
     }
 
@@ -366,7 +387,9 @@ class OpenpearLogin extends Flow
             $package->cp($this->vars());
             $this->vars('packge', $package);
             return $this;
-        } catch(Exception $e){}
+        } catch(Exception $e) {
+            Log::debug($e);
+        }
         Http::redirect(url());
     }
     */
@@ -384,7 +407,9 @@ class OpenpearLogin extends Flow
             $package->save();
             C($package)->commit();
             $this->redirect_method('package_manage',$package->name());
-        } catch(Exception $e){}
+        } catch(Exception $e) {
+            Log::debug($e);
+        }
         return $this->update($package_name);
     }
     /**

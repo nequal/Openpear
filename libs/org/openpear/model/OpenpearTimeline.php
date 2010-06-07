@@ -41,7 +41,7 @@ class OpenpearTimeline extends Dao implements AtomInterface
     public function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{
-                $this->package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id()));
+                $this->package = OpenpearPackage::get_package($this->package_id());
             }catch(Exception $e){}
         }
         return $this->package;
@@ -49,7 +49,7 @@ class OpenpearTimeline extends Dao implements AtomInterface
     public function maintainer(){
         if($this->maintainer instanceof OpenpearMaintainer === false){
             try{
-                $this->maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id()));
+                $this->maintainer = OpenpearMaintainer::get_maintainer($this->maintainer_id);
             }catch(Exception $e){}
         }
         return $this->maintainer;

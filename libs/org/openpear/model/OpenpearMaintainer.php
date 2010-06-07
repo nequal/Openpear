@@ -30,20 +30,26 @@ class OpenpearMaintainer extends Dao
     protected $new_password_conf;
     static protected $__new_password__ = 'extra=true';
     static protected $__new_password_conf__ = 'extra=true';
+
+    static private $cached_maintainers = array();
     
     protected function __init__(){
         $this->created = time();
     }
     
     /**
-     * 文字列表現
-     */
-    protected function __str__(){
-        return empty($this->fullname)? $this->name(): $this->fullname();
-    }
+     * アバターを取得
+     * @param int $size
+     * @return string $gravater_url
+     **/
     public function avatar($size=16){
         return sprintf('http://www.gravatar.com/avatar/%s?s=%d', md5($this->mail()), $size);
     }
+
+    /**
+     * 参加しているパッケージリストを取得
+     * @return array OpenpearPackage[]
+     **/
     public function packages(){
         return OpenpearCharge::packages($this);
     }
@@ -54,6 +60,60 @@ class OpenpearMaintainer extends Dao
             return $this->created();
         }
     }
+
+    /**
+     * メンテナ情報を取得する
+     * @param int $id
+     * @param bool $cache
+     * @return OpenpearMaintainar
+     **/
+    static public function get_maintainer($id, $cache=true) {
+        $cache_key = self::cache_key($id);
+        if ($cache) {
+            Log::debug('cache on');
+            if (isset(self::$cached_maintainers[$id])) {
+                return self::$cached_maintainers[$id]; 
+            } else if (Store::has($cache_key)) {
+                $maintainer = Store::get($cache_key);
+                self::$cached_maintainers[$id] = $maintainer;
+                return $maintainer;
+            }
+        }
+        $maintainer = C(__CLASS__)->find_get(Q::eq('id', $id));
+        Store::set($cache_key, $maintainer, OpenpearConfig::object_cache_timeout(3600));
+        return $maintainer;
+    }
+    
+    /**
+     * 正しいパスワードか認証する
+     * 過去のパスワードはひどいので適宜修正
+     */
+    public function certify($password){
+        if($this->is_password()){
+            if($this->password() === sha1($password)) return true;
+            return false;
+        }
+        $org_password = $this->svn_password();
+        $salt = substr($org_password, 0, 2);
+        if($org_password === crypt($password, $salt)){
+            $this->password = sha1($password);
+            $this->save(true);
+            return true;
+        }
+        return false;
+    }
+
+    static private function cache_key($id) {
+        return array(__CLASS__, $id);
+    }
+
+    /**
+     * 文字列表現
+     */
+    protected function __str__(){
+        return empty($this->fullname)? $this->name(): $this->fullname();
+    }
+
     /**
      * 作成/更新前処理
      */
@@ -71,6 +131,7 @@ class OpenpearMaintainer extends Dao
         $template = new Template();
         $template->vars('maintainers', C(OpenpearMaintainer)->find_all());
         File::write(OpenpearConfig::svn_passwd_file(work_path('openpear.passwd')), $template->read('files/passwd.txt'));
+        Store::delete(self::cache_key($this->id));
     }
     
     /**
@@ -115,24 +176,5 @@ class OpenpearMaintainer extends Dao
             return false;
         }
         return true;
-    }
-    
-    /**
-     * 正しいパスワードか認証する
-     * 過去のパスワードはひどいので適宜修正
-     */
-    public function certify($password){
-        if($this->is_password()){
-            if($this->password() === sha1($password)) return true;
-            return false;
-        }
-        $org_password = $this->svn_password();
-        $salt = substr($org_password, 0, 2);
-        if($org_password === crypt($password, $salt)){
-            $this->password = sha1($password);
-            $this->save(true);
-            return true;
-        }
-        return false;
     }
 }

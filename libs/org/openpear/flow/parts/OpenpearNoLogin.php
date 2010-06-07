@@ -211,7 +211,9 @@ class OpenpearNoLogin extends Flow
                 parent::login();
                 $this->redirect_by_map("success_redirect");
             }
-        } catch(Exception $e){}
+        } catch(Exception $e) {
+            Log::debug($e);
+        }
         $this->cp($account);
     }
     /**
@@ -404,7 +406,9 @@ class OpenpearNoLogin extends Flow
                     // FIXME
                     $f['maintainer'] = new OpenpearMaintainer();
                 }
-            } catch(Exception $e){}
+            } catch(Exception $e) {
+                Log::debug($e);
+            }
         }
         Log::debug($tree);
         return $tree;
