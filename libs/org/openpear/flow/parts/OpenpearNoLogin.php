@@ -253,30 +253,14 @@ class OpenpearNoLogin extends Flow
     }
     /**
      * Downloads
-     * @param string $package_name パッケージ名
-     */
-    public function package_downloads($package_name)
-    {
-        // TODO 仕様の確認
-        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-        $this->vars('object', $package);
-        $this->vars('package', $package);
-        $this->vars('maintainers', $package->maintainers());
-        $releases = $package->releases();// TODO sort
-        $this->vars('recent_releases', empty($releases)? $releases: array_reverse($releases));
-        // TODO  changes
-    }
-    /**
-     * Downloads
      * 
      * @context OpenpearPackage $package パッケージオブジェクト
      * @context OpenpearRelease[] $object_list 最新リリースオブジェクトの配列
      */
-    public function download($package_name){
-        // TODO 仕様の確認
+    public function package_downloads($package_name){
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $this->vars('package', $package);
-        $this->vars('object_list', C(OpenpearRelease)->find_all(Q::eq('package_id', $package->id())));
+        $this->vars('object_list', C(OpenpearRelease)->find_all(Q::eq('package_id', $package->id()), Q::order('-id')));
     }
     
     /**
