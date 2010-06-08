@@ -38,7 +38,7 @@ class OpenpearNoLogin extends Flow
     /**
      * @context OpenpearTemplf $ot フィルタ
      */
-    protected function __init__(){
+    protected function __init__() {
         $this->add_module(new OpenpearAccountModule());
         $this->vars('pear_domain', OpenpearConfig::pear_domain('openpear.org'));
         $this->vars('pear_alias', OpenpearConfig::pear_alias('openpear'));
@@ -49,21 +49,21 @@ class OpenpearNoLogin extends Flow
      * OpenID でログインする
      * @request string $openid_url openid認証サーバのURL
      */
-    public function login_by_openid(){
-        if($this->is_login()) $this->redirect_method('dashboard');
-        if(OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))){
+    public function login_by_openid() {
+        if ($this->is_login()) $this->redirect_method('dashboard');
+        if ($this->in_vars('openid_url') != "" && OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))) {
             try {
                 $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(
                     Q::eq('url', $openid_user->identity())
                 );
                 $this->user($openid_maintainer->maintainer());
-                if($this->login()){
+                if ($this->login()) {
                     $this->redirect_by_map("success_redirect");
                 }
-            } catch(NotfoundDaoException $e){
+            } catch (NotfoundDaoException $e) {
                 $this->sessions('openid_identity', $openid_user->identity());
                 $this->redirect_method('signup');
-            } catch(Exception $e){
+            } catch (Exception $e) {
                 throw $e;
             }
         }
@@ -76,7 +76,7 @@ class OpenpearNoLogin extends Flow
      * @context $primary_tags primary がセットされているタグリスト(上限付き)
      * @context $recent_releases 最新 OpenpearRelease モデルの配列
      */
-    public function index(){
+    public function index() {
         if (Store::has('index/package_count', 3600)) {
             $package_count = Store::get('index/package_count');
         } else {
@@ -109,9 +109,9 @@ class OpenpearNoLogin extends Flow
      * @request string $search_for 検索対象
      * @request string $q 検索クエリ
      */
-    public function search(){
+    public function search() {
         // TODO いる？
-        switch($this->in_vars('search_for', 'packages')){
+        switch ($this->in_vars('search_for', 'packages')) {
             case 'maintainers': $this->redirect_method('maintainers',array('q'=>$this->in_vars('q')));
             case 'packages':
             default: $this->redirect_method('packages', array('q' => $this->in_vars('q')));
@@ -123,7 +123,7 @@ class OpenpearNoLogin extends Flow
      * @context $primary_tags
      * @context $tags
      */
-    public function packages_tags(){
+    public function packages_tags() {
         $this->vars('primary_tags', C(OpenpearTag)->find_all(Q::eq('prime', true)));
         $this->vars('tags', C(OpenpearTag)->find_all(Q::eq('prime', false)));
     }
@@ -133,7 +133,7 @@ class OpenpearNoLogin extends Flow
      * @context $object_list パッケージオブジェクトの配列
      * @context $paginator Paginator
      */
-    public function packages(){
+    public function packages() {
         $sort = $this->in_vars('sort', '-released_at');
         $paginator = new Paginator(10, $this->in_vars('page', 1));
         if ($this->is_vars('category') && $this->in_vars('category') != '') {
@@ -159,7 +159,7 @@ class OpenpearNoLogin extends Flow
      * @context OpenpearMaintainer[] $maintainers メンテナオブジェクトの配列
      * @context recent_releases  最新リリースオブジェクトの配列
      */
-    public function package($package_name){
+    public function package($package_name) {
         // TODO 仕様の確認
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
@@ -183,9 +183,9 @@ class OpenpearNoLogin extends Flow
      * 新規登録
      * @context boolean $openid
      */
-    public function signup(){
+    public function signup() {
         // TODO 仕様の確認
-        if($this->in_sessions('openid_identity')){
+        if ($this->in_sessions('openid_identity')) {
             $this->vars('openid', true);
             $this->vars('openid_identity', $this->in_sessions('openid_identity'));
         } else {
@@ -193,13 +193,13 @@ class OpenpearNoLogin extends Flow
         }
         $account = new OpenpearMaintainer();
         try {
-            if($this->is_post()){
+            if ($this->is_post()) {
                 $account->cp($this->vars());
                 $account->new_password($this->in_vars('new_password'));
                 $account->new_password_conf($this->in_vars('new_password_conf'));
                 $account->save();
 
-                if($this->is_sessions('openid_identity')){
+                if ($this->is_sessions('openid_identity')) {
                     $openid_maintainer = new OpenpearOpenidMaintainer();
                     $openid_maintainer->maintainer_id($account->id());
                     $openid_maintainer->url($this->in_sessions('openid_identity'));
@@ -211,7 +211,7 @@ class OpenpearNoLogin extends Flow
                 parent::login();
                 $this->redirect_by_map("success_redirect");
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             Log::debug($e);
         }
         $this->cp($account);
@@ -224,12 +224,12 @@ class OpenpearNoLogin extends Flow
      * @context OpenpearFavorite[] $favorites
      * @context OpenpearTimeline[] $timelines
      */
-    public function maintainer_profile($maintainer_name){
+    public function maintainer_profile($maintainer_name) {
         try {
             $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
-        } catch(NotfoundDaoException $e){
+        } catch (NotfoundDaoException $e) {
             $this->not_found($e);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             // 共通エラーに飛ばす
             throw $e;
         }
@@ -245,7 +245,7 @@ class OpenpearNoLogin extends Flow
      * @context OpenpearMaintainer[] $object_list メンテナ一覧
      * @context Paginator $paginator ページネータ
      */
-    public function maintainers(){
+    public function maintainers() {
         $paginator = new Paginator(20, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator, 'name'));
         $paginator->vars('q', $this->in_vars('q'));
@@ -257,7 +257,7 @@ class OpenpearNoLogin extends Flow
      * @context OpenpearPackage $package パッケージオブジェクト
      * @context OpenpearRelease[] $object_list 最新リリースオブジェクトの配列
      */
-    public function package_downloads($package_name){
+    public function package_downloads($package_name) {
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $this->vars('package', $package);
         $this->vars('object_list', C(OpenpearRelease)->find_all(Q::eq('package_id', $package->id()), Q::order('-id')));
@@ -272,7 +272,7 @@ class OpenpearNoLogin extends Flow
      * @context OpenpearPackage $package パッケージ
      * @context string $body 説明
      */
-    public function document_browse($package_name, $path=''){
+    public function document_browse($package_name, $path='') {
         $lang = $this->in_vars('lang', Gettext::lang());
         if (empty($path)) {
             $this->redirect_method('document_browse', $package_name, '/'. $lang. '/README');
@@ -284,7 +284,7 @@ class OpenpearNoLogin extends Flow
         $repo_path = File::absolute($root, $path);
         $this->vars('package', $package);
         $body = Subversion::cmd('cat', array($repo_path));
-        if(empty($body)){
+        if (empty($body)) {
             Http::status_header(404);
             $body = '* Not found.'. PHP_EOL;
             $body .= 'Requested page is not found in our repositories.';
@@ -300,7 +300,7 @@ class OpenpearNoLogin extends Flow
      * ？？？？？
      * @const string $svn_url リポジトリのURL
      */
-    public function source_browse($package_name, $path=''){
+    public function source_browse($package_name, $path='') {
         if (empty($path)) {
             $this->redirect_method('source_browse', $package_name, '/trunk');
         }
@@ -311,13 +311,13 @@ class OpenpearNoLogin extends Flow
         $local_root = File::absolute(OpenpearConfig::svn_root(), $package->name());
         $repo_path = File::absolute($local_root, $path);
         $info = Subversion::cmd('info', array($repo_path));
-        if($info['kind'] === 'dir'){
+        if ($info['kind'] === 'dir') {
             $this->vars('tree', self::format_tree(Subversion::cmd('list', array($info['url']), array('revision' => $this->in_vars('rev', 'HEAD')))));
-        } else if($info['kind'] === 'file') {
+        } else if ($info['kind'] === 'file') {
             $this->put_block('package/source_viewfile.html');
             $p = explode('.', $info['path']);
             $ext = array_pop($p);
-            if(in_array($ext, $this->allowed_ext)){
+            if (in_array($ext, $this->allowed_ext)) {
                 $this->vars('code', Subversion::cmd('cat', array($info['url']), array('revision' => $this->in_vars('rev', 'HEAD'))));
             }
         } else {
@@ -338,7 +338,7 @@ class OpenpearNoLogin extends Flow
      * @context OpenpearChangeset $changeset チェンジセット
      * @const string $svn_root　リポジトリのルートパス
      */
-    public function changeset($package_name, $revision){
+    public function changeset($package_name, $revision) {
         // TODO 前後のリビジョン
         // TODO diff のパース
         $revision = intval($revision);
@@ -359,7 +359,7 @@ class OpenpearNoLogin extends Flow
         foreach (array('branches', 'tags') as $path) {
             $rep_path = trim(implode('/', array($root, $path)), '/');
             $list = Subversion::cmd('list', array(implode('/', array(OpenpearConfig::svn_root(), $package_name, $rep_path))));
-            if (is_array($list)) foreach($list as $file) {
+            if (is_array($list)) foreach ($list as $file) {
                 if (isset($file['kind']) && $file['kind'] == 'dir') {
                     $trees[implode('/', array($path, $file['name']))] = false;
                 }
@@ -378,9 +378,9 @@ class OpenpearNoLogin extends Flow
      * @param array $tree
      * @return array
      */
-    static public function format_tree(array $tree){
+    static public function format_tree(array $tree) {
         // TODO 仕様の確認
-        foreach($tree as &$f){
+        foreach ($tree as &$f) {
             try {
                 $log = Subversion::cmd('log', array(OpenpearConfig::svn_root()), array('revision' => $f['commit']['revision'], 'limit' => 1));
                 $f['log'] = array_shift($log);
@@ -390,7 +390,7 @@ class OpenpearNoLogin extends Flow
                     // FIXME
                     $f['maintainer'] = new OpenpearMaintainer();
                 }
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 Log::debug($e);
             }
         }
@@ -402,7 +402,7 @@ class OpenpearNoLogin extends Flow
      * @param array $info
      * @return array
      */
-    static public function format_info(array $info){
+    static public function format_info(array $info) {
         // TODO 仕様の確認
         // TODO Subversion::cmdの実装
         $log = Subversion::cmd('log', array($info['url']), array('limit' => 1));
@@ -419,7 +419,7 @@ class OpenpearNoLogin extends Flow
      * パッケージのタイムライン？
      * @param string $package_name パッケージ名
      */
-    public function package_timeline($package_name){
+    public function package_timeline($package_name) {
         // TODO　仕様の確認
         Http::redirect(url('package/'. $package_name));
     }
@@ -427,7 +427,7 @@ class OpenpearNoLogin extends Flow
     /**
      * タイムラインをAtomフィードで出力
      */
-    public function timeline_atom(){
+    public function timeline_atom() {
         // TODO 仕様の確認
         Atom::convert('Openpear Timelines', url('timelines.atom'),
             C(OpenpearTimeline)->find_all(new Paginator(20), Q::order('-id'))
@@ -437,7 +437,7 @@ class OpenpearNoLogin extends Flow
      * ？？？？
      * @param string $package_name パッケージ名
      */
-    public function timeline_atom_package($package_name){
+    public function timeline_atom_package($package_name) {
         // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         Atom::convert('Openpear Package Timelines: '. $package->name(), url('timelines.atom'),
@@ -448,7 +448,7 @@ class OpenpearNoLogin extends Flow
      * メンテナのタイムラインをAtomフィードで出力
      * @param string $maintainer_name メンテナのアカウント名
      */
-    public function timeline_atom_maintainer($maintainer_name){
+    public function timeline_atom_maintainer($maintainer_name) {
         // TODO 仕様の確認
         $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
         Atom::convert('Openpear Maintainer Timelines: '. $maintainer->name(), url('timelines.atom'),
@@ -469,7 +469,7 @@ class OpenpearNoLogin extends Flow
     /**
      * Subversion リポジトリの基本ディレクトリ構成を生成する
      */
-    static public function __setup_generate_skeleton__(Request $req){
+    static public function __setup_generate_skeleton__(Request $req) {
         $base_dir = $req->in_vars('path', OpenpearConfig::svn_skeleton(work_path('skeleton')));
         File::mkdir($base_dir);
         File::mkdir(File::path($base_dir, 'doc'));

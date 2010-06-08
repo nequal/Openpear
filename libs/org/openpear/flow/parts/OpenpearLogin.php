@@ -38,7 +38,7 @@ class OpenpearLogin extends Flow
     /**
      * @context OpenpearTemplf $ot フィルタ
      */
-    protected function __init__(){
+    protected function __init__() {
         $this->add_module(new OpenpearAccountModule());
         $this->vars('pear_domain', OpenpearConfig::pear_domain('openpear.org'));
         $this->vars('pear_alias', OpenpearConfig::pear_alias('openpear'));
@@ -53,7 +53,7 @@ class OpenpearLogin extends Flow
      * @context OpenpearFavorite[] $my_favorites
      * @context OpenpearMessage[] $notices
      */
-    public function dashboard(){
+    public function dashboard() {
         $this->vars('maintainer', $this->user());
         $this->vars('my_package_charges', C(OpenpearCharge)->find_all(Q::eq('maintainer_id', $this->user()->id())));
         $this->vars('timelines', OpenpearTimeline::get_by_maintainer($this->user()));
@@ -64,17 +64,17 @@ class OpenpearLogin extends Flow
      * メッセージを閉じる？ ajaxで使う？
      * @request integer $message_id メッセージID
      */
-    public function dashboard_message_hide(){
+    public function dashboard_message_hide() {
         $this->login_required();
         // TODO 仕様の確認
         try {
-            if($this->is_post() && $this->is_vars('message_id')){
+            if ($this->is_post() && $this->is_vars('message_id')) {
                 $message = C(OpenpearMessage)->find_get(Q::eq('id', $this->in_vars('message_id')), Q::eq('maintainer_to_id', $this->user()->id()));
                 $message->unread(false);
                 $message->save(true);
                 echo 'ok';
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             Log::debug($e);
         }
         exit;
@@ -82,9 +82,9 @@ class OpenpearLogin extends Flow
     /**
      * メンテナ情報を更新して結果をjsonで出力
      */
-    public function maintainer_update_json(){
+    public function maintainer_update_json() {
         try {
-            if(!$this->is_post()) throw new OpenpearException('request method is unsupported');
+            if (!$this->is_post()) throw new OpenpearException('request method is unsupported');
             $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->user()->id()));
             $maintainer->cp($this->vars());
             $maintainer->save();
@@ -99,19 +99,19 @@ class OpenpearLogin extends Flow
      * @param integer $id メッセージID
      * @context OpenpearMessage $object メッセージ
      */
-    public function message($id){
+    public function message($id) {
         $user = $this->user();
         try {
             $message = C(OpenpearMessage)->find_get(Q::eq('id', $id));
-            if($massage->permission($user)){
-                if($message->maintainer_to_id() === $user->id()){
+            if ($massage->permission($user)) {
+                if ($message->maintainer_to_id() === $user->id()) {
                     $message->unread(false);
                     $message->save(true);
                 }
                 $this->vars('object', $message);
                 return;
             }
-        } catch(Exception $e){
+        } catch (Exception $e) {
             Log::debug($e);
         }
         $this->redirect_by_map("fail_redirect");
@@ -122,7 +122,7 @@ class OpenpearLogin extends Flow
      * @context OpenpearMessage[] $object_list メッセージ一覧
      * @context Paginator $paginator ページネータ
      */
-    public function inbox(){
+    public function inbox() {
         $paginator = new Paginator(20, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearMessage)->find_all(
             $paginator, Q::eq('maintainer_to_id', $this->user()->id()), Q::order('-id')
@@ -132,7 +132,7 @@ class OpenpearLogin extends Flow
     /**
      * 送信したメッセージ
      */
-    public function sentbox(){
+    public function sentbox() {
         // TODO 仕様の確認
         $user = $this->user();
         $paginator = new Paginator(20, $this->in_vars('page', 1));
@@ -143,10 +143,10 @@ class OpenpearLogin extends Flow
     /**
      * メッセージを送信
      */
-    public function message_compose(){
-        if($this->is_post()){
+    public function message_compose() {
+        if ($this->is_post()) {
             try {
-                switch($this->in_vars('action')){
+                switch ($this->in_vars('action')) {
                     case 'confirm':
                         // TODO: put_block
                         $message = new OpenpearMessage();
@@ -160,7 +160,7 @@ class OpenpearLogin extends Flow
                         $this->redirect_by_map("success_redirect");
                         break;
                 }
-            } catch(Exception $e){
+            } catch (Exception $e) {
                 Log::debug($e);
             }
         }
@@ -170,7 +170,7 @@ class OpenpearLogin extends Flow
      * Fav 登録
      * @param string $package_name パッケージ名
      */
-    public function package_add_favorite($package_name){
+    public function package_add_favorite($package_name) {
         $user = $this->user();
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
@@ -179,7 +179,7 @@ class OpenpearLogin extends Flow
             $fav->package_id($package->id());
             $fav->save();
             C($fav)->commit();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             Log::debug($e);
         }
         $this->redirect_method('package', $package_name);
@@ -188,7 +188,7 @@ class OpenpearLogin extends Flow
      * Fav 削除
      * @param string $package_name パッケージ名
      */
-    public function package_remove_favorite($package_name){
+    public function package_remove_favorite($package_name) {
         // TODO 仕様の確認
         $user = $this->user();
         try {
@@ -196,7 +196,7 @@ class OpenpearLogin extends Flow
             C(OpenpearFavorite)->find_delete(Q::eq('maintainer_id', $user->id()), Q::eq('package_id', $package->id()));
             OpenpearFavorite::recount_favorites($package->id());
             C(OpenpearFavorite)->commit();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             Log::debug($e);
         }
         $this->redirect_method('package', $package_name);
@@ -206,8 +206,8 @@ class OpenpearLogin extends Flow
      * @param string $package_name 追加するパッケージ名
      * @request string $maintainer_name メンテナ名
      */
-    public function package_add_maintainer($package_name){
-        if($this->is_post() && $this->is_vars('maintainer_name')){
+    public function package_add_maintainer($package_name) {
+        if ($this->is_post() && $this->is_vars('maintainer_name')) {
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
                 $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $this->in_vars('maintainer_name')));
@@ -217,7 +217,7 @@ class OpenpearLogin extends Flow
                 $charge->package_id($package->id());
                 $charge->save();
                 C($charge)->commit();
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 Log::debug($e);
             }
         }
@@ -228,16 +228,16 @@ class OpenpearLogin extends Flow
      * @param string $package_name パッケージ名
      * @request integer $maintainer_id メンテナID
      */
-    public function package_remove_maintainer($package_name){
+    public function package_remove_maintainer($package_name) {
         // TODO 仕様の確認
-        if($this->is_post() && $this->is_vars('maintainer_id')){
+        if ($this->is_post() && $this->is_vars('maintainer_id')) {
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
                 $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->in_vars('maintainer_id')));
                 $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $package->id()), Q::eq('maintainer_id', $maintainer->id()));
                 $charge->delete();
                 C($charge)->commit();
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 Log::debug($e);
             }
         }
@@ -249,16 +249,16 @@ class OpenpearLogin extends Flow
      * @param string $package_name パッケージ名
      * @request string $tag_name タグ名
      */
-    public function package_add_tag($package_name){
+    public function package_add_tag($package_name) {
         // TODO 仕様の確認
-        if($this->is_post() && $this->is_vars('tag_name')){
+        if ($this->is_post() && $this->is_vars('tag_name')) {
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
                 // $package->permission($this->user());
                 $package->add_tag($this->in_vars('tag_name'), $this->in_vars('prime', false));
                 C($package)->commit();
-            } catch(Exception $e){
+            } catch (Exception $e) {
                 Log::debug($e);
             }
         }
@@ -268,16 +268,16 @@ class OpenpearLogin extends Flow
      * パッケージからタグの削除
      * @param string $package_name パッケージ名
      */
-    public function package_remove_tag($package_name){
+    public function package_remove_tag($package_name) {
         // TODO 仕様の確認
-        if($this->is_post() && $this->is_vars('tag_id')){
+        if ($this->is_post() && $this->is_vars('tag_id')) {
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
                 $package->permission($this->user());
                 $package->remove_tag($this->in_vars('tag_id'));
                 C($package)->commit();
-            } catch(Exception $e){
+            } catch (Exception $e) {
                 Log::debug($e);
             }
         }
@@ -287,9 +287,9 @@ class OpenpearLogin extends Flow
      * ？？？
      * @param string $package_name パッケージ名
      */
-    public function package_prime_tag($package_name){
+    public function package_prime_tag($package_name) {
         // TODO 仕様の確認
-        if($this->is_post() && $this->is_vars('tag_id')){
+        if ($this->is_post() && $this->is_vars('tag_id')) {
             $user = $this->user();
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
@@ -298,7 +298,7 @@ class OpenpearLogin extends Flow
                 $package_tag->prime(true);
                 $package_tag->save();
                 C($package_tag)->commit();
-            } catch(Exception $e){
+            } catch (Exception $e) {
                 Log::debug($e);
             }
         }
@@ -308,11 +308,11 @@ class OpenpearLogin extends Flow
     /**
      * パッケージ作成
      */
-    public function package_create(){
+    public function package_create() {
         // TODO 仕様の確認
         $user = $this->user();
         $package = new OpenpearPackage();
-        if($this->is_post()){
+        if ($this->is_post()) {
             try {
                 $package->cp($this->vars());
                 $package->author_id($user->id());
@@ -320,7 +320,7 @@ class OpenpearLogin extends Flow
                 $package->add_maintainer($user);
                 C($package)->commit();
                 $this->redirect_by_map('success_redirect');
-            } catch(Exception $e){
+            } catch (Exception $e) {
                 Log::debug($e);
             }
         }
@@ -330,7 +330,7 @@ class OpenpearLogin extends Flow
      * パッケージ管理
      * @param string $package_name パッケージ名
      */
-    public function package_manage($package_name){
+    public function package_manage($package_name) {
         // TODO 仕様の確認
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
@@ -339,7 +339,7 @@ class OpenpearLogin extends Flow
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
             return;
-        } catch(Exception $e){
+        } catch (Exception $e) {
             Log::debug($e);
         }
         $this->redirect_method('package',$package_name);
@@ -358,8 +358,8 @@ class OpenpearLogin extends Flow
             $this->vars('object', $package);
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
-            if(!$this->is_post()){
-                foreach(array('id', 'name', 'description', 'url', 'public_level', 'external_repository', 'external_repository_type', 'license') as $k){
+            if (!$this->is_post()) {
+                foreach (array('id', 'name', 'description', 'url', 'public_level', 'external_repository', 'external_repository_type', 'license') as $k) {
                     if ($k == 'external_repository') {
                         $p = $package->{$k}();
                         if (!empty($p)) {
@@ -373,21 +373,21 @@ class OpenpearLogin extends Flow
                 }
             }
             return;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             Log::debug($e);
         }
         $this->redirect_method('package',$package_name);
     }
 
     /*
-    public function update_confirm(){
+    public function update_confirm() {
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
             $package->permission($this->user());
             $package->cp($this->vars());
             $this->vars('packge', $package);
             return $this;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             Log::debug($e);
         }
         Http::redirect(url());
@@ -397,7 +397,7 @@ class OpenpearLogin extends Flow
      * パッケージ情報更新
      * @param string $package_name パッケージ名
      */
-    public function package_edit_do($package_name){
+    public function package_edit_do($package_name) {
         // TODO 仕様の確認
         try {
             $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('id')));
@@ -407,7 +407,7 @@ class OpenpearLogin extends Flow
             $package->save();
             C($package)->commit();
             $this->redirect_method('package_manage',$package->name());
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             Log::debug($e);
         }
         return $this->update($package_name);
@@ -418,11 +418,11 @@ class OpenpearLogin extends Flow
      * @context integer $package_id パッケージID
      * @context OpenpearPackage $package パッケージ
      */
-    public function package_release($package_name){
+    public function package_release($package_name) {
         // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $package->permission($this->user());
-        if(!$this->is_post()){
+        if (!$this->is_post()) {
             $this->vars('package_id', $package->id());
             $this->vars('revision', $package->recent_changeset());
             $this->cp(new PackageProjectorConfig());
@@ -434,16 +434,16 @@ class OpenpearLogin extends Flow
      * パッケージのリリースの確認？
      * @param string $package_name パッケージ名
      */
-    public function package_release_confirm($package_name){
+    public function package_release_confirm($package_name) {
         // TODO 仕様の確認
-        if($this->is_post()){
+        if ($this->is_post()) {
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
                 $charge = $package->permission($this->user());
                 $build_conf = new PackageProjectorConfig();
                 $build_conf->cp($this->vars());
-                if($this->is_vars('extra_conf')) $build_conf->parse_ini_string($this->in_vars('extra_conf'));
-                foreach(C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge){
+                if ($this->is_vars('extra_conf')) $build_conf->parse_ini_string($this->in_vars('extra_conf'));
+                foreach (C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge) {
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
@@ -451,7 +451,7 @@ class OpenpearLogin extends Flow
                 $this->save_current_vars();
                 $this->vars('package', $package);
                 return $this;
-            } catch(Exception $e){
+            } catch (Exception $e) {
                 $this->save_current_vars();
                 $this->redirect_method('package_release', $package_name);
             }
@@ -462,16 +462,16 @@ class OpenpearLogin extends Flow
      * パッケージのリリース
      * @param string $package_name パッケージ名
      */
-    public function package_release_do($package_name){
+    public function package_release_do($package_name) {
         // TODO 仕様の確認
-        if($this->is_post()){
+        if ($this->is_post()) {
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
                 $package->permission($this->user());
                 $build_conf = new PackageProjectorConfig();
                 $build_conf->cp($this->vars());
-                if($this->is_vars('extra_conf')) $build_conf->parse_ini_string($this->in_vars('extra_conf'));
-                foreach(C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge){
+                if ($this->is_vars('extra_conf')) $build_conf->parse_ini_string($this->in_vars('extra_conf'));
+                foreach (C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge) {
                     $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
                 }
                 $build_conf->package_package_name($package->name());
@@ -484,7 +484,7 @@ class OpenpearLogin extends Flow
                 $release_queue->save();
                 C($release_queue)->commit();
                 $this->redirect_method('package_release_done', $package_name);
-            } catch(Exception $e){
+            } catch (Exception $e) {
                 $this->save_current_vars();
                 $this->redirect_method('package_release', $package_name);
             }
