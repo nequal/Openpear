@@ -50,15 +50,18 @@ class OpenpearNoLogin extends Flow
      * @request string $openid_url openid認証サーバのURL
      */
     public function login_by_openid() {
-        if ($this->is_login()) $this->redirect_method('dashboard');
-        if ($this->in_vars('openid_url') != "" && OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))) {
+        if ($this->is_login()) $this->redirect_method('index');
+        if ((($this->in_vars('openid_url') != "") || $this->in_vars('openid_verify')) && OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))) {
             try {
                 $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(
                     Q::eq('url', $openid_user->identity())
                 );
                 $this->user($openid_maintainer->maintainer());
                 if ($this->login()) {
-                    $this->redirect_by_map("success_redirect");
+                    $redirect_to = $this->in_sessions('logined_redirect_to');
+                    $this->rm_sessions('logined_redirect_to');
+                    if(!empty($redirect_to)) $this->redirect($redirect_to);
+                    $this->redirect_by_map("login_redirect");
                 }
             } catch (NotfoundDaoException $e) {
                 $this->sessions('openid_identity', $openid_user->identity());
@@ -67,7 +70,7 @@ class OpenpearNoLogin extends Flow
                 throw $e;
             }
         }
-        return $this->do_login();
+        $this->do_login();
     }
     /**
      * トップページ
