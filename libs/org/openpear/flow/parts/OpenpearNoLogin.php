@@ -140,7 +140,7 @@ class OpenpearNoLogin extends Flow
             $tag = C(OpenpearTag)->find_get(Q::eq('name', $this->in_vars('category')));
             $this->vars('object_list', C(OpenpearPackage)->find_all(
                 $paginator,
-                Q::in('id', Dao::daq('SELECT package_id FROM `'. R(OpenpearPackageTag)->table(). '` WHERE tag_id=?', array($tag->id()))),
+                Q::in('id', C(OpenpearPackageTag)->find_sub('package_id', Q::eq('tag_id', $tag->id()))),
                 Q::order($sort)
             ));
         } else {
