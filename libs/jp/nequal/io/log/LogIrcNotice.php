@@ -17,12 +17,16 @@ class LogIrcNotice extends Object
                     $vars[$name] = $value;
                 }
                 $vars['level'] = $log->fm_level();
+                $value = $log->value();
+                if (is_array($value)) {
+                    $value = array_shift($value);
+                }
                 switch ($log->fm_level()) {
                     case 'error':
                     case 'warn':
                     case 'info':
                         $vars['priv'] = 1;
-                        $vars['message'] = sprintf("%s:%s %s", pathinfo($log->file(), PATHINFO_FILENAME), $log->line(), str_replace("\n", "", $log->value()));
+                        $vars['message'] = sprintf("%s:%s %s", pathinfo($log->file(), PATHINFO_FILENAME), $log->line(), str($value));
                         break;
                 }
                 if (isset($vars['message'])) {
