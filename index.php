@@ -34,13 +34,13 @@
         <module class="org.rhaco.flow.module.HtmlFilter" />
         <maps class="org.openpear.flow.parts.OpenpearNoLogin">
             <map name="top" method="index" template="index.html" />
-            <map url="search"  method="search" />
+            <map method="search" url="search"  method="search" />
             
             <map url="account/login" method="do_login" template="account/login.html">
                 <arg name="login_redirect" value="dashboard" />
             </map>
             <map url="account/login_openid" method="login_by_openid" template="account/login.html">
-                <arg name="success_redirect" value="dashboard" />
+                <arg name="login_redirect" value="dashboard" />
             </map>
             <map url="account/signup" method="signup" template="account/signup.html" name="signup">
             	<arg name="welcome_mail_template" value="messages/registered.txt" />
@@ -51,7 +51,7 @@
 	        <map url="maintainer/(.+)" method="maintainer_profile" template="maintainer/model.html" />                    
             <map url="maintainers" method="maintainers" template="maintainer/models.html" />
             
-            <map url="packages" method="packages" template="package/models.html">
+            <map name="packages" url="packages" method="packages" template="package/models.html">
                 <arg name="updated" value="package/models_updates.html" />
                 <arg name="favored_count" value="package/models_favored.html" />
                 <arg name="released_at" value="package/models_released.html" />
@@ -75,6 +75,9 @@
             <map url="dashboard" method="dashboard" template="dashboard.html" name="dashboard" />
             <map url="dashboard/message/hide" method="dashboard_message_hide" />
 
+            <map url="account/login" method="do_login" template="account/login.html">
+                <arg name="login_redirect" value="dashboard" />
+            </map>
             <map url="account/logout" method="do_logout">
                 <arg name="logout_redirect" value="top" />
             </map>
@@ -88,21 +91,13 @@
             </map>
             <map url="message/(\d+)" method="message" template="message/detail.html" fail_redirect="/message/inbox" />
             
-            <map url="packages/create" method="package_create" template="package/create.html">
-                <arg name="success_redirect" value="dashboard" />
-            </map>
+            <map name="package_create" url="packages/create" method="package_create" template="package/create.html" />
             <map url="package/(.+)/like/(.+)" method="package_add_favorite" />
             <map url="package/(.+)/unlike/(.+)" method="package_remove_favorite" />
-            <map url="package/(.+)/category/add" method="package_add_tag">
-                <arg name="success_redirect" value="package_detail" />
-            </map>
-            <map url="package/(.+)/category/remove" method="package_remove_tag">
-                <arg name="success_redirect" value="package_detail" />
-            </map>
-            <map url="package/(.+)/category/prime" method="package_prime_tag">
-                <arg name="success_redirect" value="package_detail" />
-            </map>
-            <map url="package/(.+)/manage" method="package_manage" template="package/manage.html" />
+            <map url="package/(.+)/category/add" method="package_add_tag" />
+            <map url="package/(.+)/category/remove" method="package_remove_tag" />
+            <map url="package/(.+)/category/prime" method="package_prime_tag" />
+            <map name="package_manage" url="package/(.+)/manage" method="package_manage" template="package/manage.html" />
             <map url="package/(.+)/manage/edit" method="package_edit" template="package/edit.html" />
             <map url="package/(.+)/manage/edit_do" method="package_edit_do" />
             
