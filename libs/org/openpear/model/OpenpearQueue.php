@@ -17,7 +17,7 @@ class OpenpearQueue extends Dao
     static protected $__updated__ = 'type=timestamp';
 
     /**
-     * $B%?%9%/$N<B9T3+;O(B
+     * タスクの実行開始
      * @param int $lock
      * @return void
      **/
