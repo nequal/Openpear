@@ -26,6 +26,7 @@ import('org.openpear.model.OpenpearReleaseQueue');
 import('org.openpear.model.OpenpearCharge');
 import('org.openpear.model.OpenpearTimeline');
 import('org.openpear.model.OpenpearFavorite');
+import('org.openpear.model.OpenpearQueue');
 
 class OpenpearLogin extends Flow
 {
@@ -114,7 +115,7 @@ class OpenpearLogin extends Flow
         } catch (Exception $e) {
             Log::debug($e);
         }
-        $this->redirect_by_map("fail_redirect");
+        $this->redirect_by_map('fail_redirect');
     }
     /**
      * 受信箱
@@ -182,7 +183,7 @@ class OpenpearLogin extends Flow
         } catch (Exception $e) {
             Log::debug($e);
         }
-        $this->redirect_method('package', $package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
     /**
      * Fav 削除
@@ -199,7 +200,7 @@ class OpenpearLogin extends Flow
         } catch (Exception $e) {
             Log::debug($e);
         }
-        $this->redirect_method('package', $package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
     /**
      * パッケージにメンテナを追加する
@@ -262,7 +263,7 @@ class OpenpearLogin extends Flow
                 Log::debug($e);
             }
         }
-        $this->redirect_by_map('success_redirect', $package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
     /**
      * パッケージからタグの削除
@@ -281,7 +282,7 @@ class OpenpearLogin extends Flow
                 Log::debug($e);
             }
         }
-        $this->redirect_by_map('success_redirect', $package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
     /**
      * ？？？
@@ -302,7 +303,7 @@ class OpenpearLogin extends Flow
                 Log::debug($e);
             }
         }
-        $this->redirect_by_map('success_redirect', $package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
     
     /**
@@ -342,7 +343,7 @@ class OpenpearLogin extends Flow
         } catch (Exception $e) {
             Log::debug($e);
         }
-        $this->redirect_method('package',$package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
 
     /**
@@ -376,7 +377,7 @@ class OpenpearLogin extends Flow
         } catch (Exception $e) {
             Log::debug($e);
         }
-        $this->redirect_method('package',$package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
 
     /*
@@ -456,7 +457,7 @@ class OpenpearLogin extends Flow
                 $this->redirect_method('package_release', $package_name);
             }
         }
-        $this->redirect_method('package', $package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
     /**
      * パッケージのリリース
@@ -476,20 +477,25 @@ class OpenpearLogin extends Flow
                 }
                 $build_conf->package_package_name($package->name());
                 $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
+
                 $release_queue = new OpenpearReleaseQueue();
                 $release_queue->cp($this->vars());
                 $release_queue->package_id($package->id());
                 $release_queue->maintainer_id($this->user()->id());
                 $release_queue->build_conf($build_conf->get_ini());
-                $release_queue->save();
-                C($release_queue)->commit();
+
+                $queue = new OpenpearQueue();
+                $queue->type('build');
+                $queue->data(serialize($release_queue));
+                $queue->save();
+                C($queue)->commit();
                 $this->redirect_method('package_release_done', $package_name);
             } catch (Exception $e) {
                 $this->save_current_vars();
                 $this->redirect_method('package_release', $package_name);
             }
         }
-        $this->redirect_method('package', $package_name);
+        $this->redirect_by_map('package_detail', $package_name);
     }
     
     /**
