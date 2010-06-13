@@ -1,31 +1,5 @@
 <?php
-import('org.yabeken.service.Pea');
-Pea::import('openpear.org/HatenaSyntax');
-import('org.rhaco.service.OpenIDAuth');
-import('org.rhaco.net.xml.Atom');
-import('org.openpear.pear.PackageProjector');
-import('jp.nequal.net.Subversion');
-
-import('org.openpear.config.OpenpearConfig');
-import('org.openpear.exception.OpenpearException');
-import('org.openpear.module.OpenpearAccountModule');
-import('org.openpear.module.OpenpearTemplf');
-import('org.openpear.model.OpenpearChangeset');
-import('org.openpear.model.OpenpearChangesetChanged');
-import('org.openpear.model.OpenpearMaintainer');
-import('org.openpear.model.OpenpearNewprojectQueue');
-import('org.openpear.model.OpenpearOpenidMaintainer');
-import('org.openpear.model.OpenpearPackage');
-import('org.openpear.model.OpenpearPackageMessage');
-import('org.openpear.model.OpenpearPackageTag');
-import('org.openpear.model.OpenpearRelease');
-import('org.openpear.model.OpenpearTag');
-import('org.openpear.model.OpenpearPackage');
-import('org.openpear.model.OpenpearRelease');
-import('org.openpear.model.OpenpearReleaseQueue');
-import('org.openpear.model.OpenpearCharge');
-import('org.openpear.model.OpenpearTimeline');
-import('org.openpear.model.OpenpearFavorite');
+require_once __DIR__. '/__init__.php';
 
 class OpenpearNoLogin extends Flow
 {

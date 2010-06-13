@@ -1,6 +1,6 @@
 <?php
-require_once dirname(__FILE__). '/__init__.php';
-chdir(dirname(__FILE__));
+require_once __DIR__. '/__init__.php';
+chdir(__DIR__);
 
 // import pear
 require_once 'PEAR/PackageProjector.php';
@@ -19,14 +19,15 @@ import('org.openpear.model.OpenpearReleaseQueue');
 
 foreach (C(OpenpearQueue)->find_all(new Paginator(5), Q::lt('locked', time()), Q::eq('type', 'build'), Q::order('updated')) as $queue) {
     try {
-        $queue->start();
+        $queue->start(1);
         $release_queue = $queue->fm_data();
         if ($release_queue instanceof OpenpearReleaseQueue === false) {
             throw new RuntimeException('queue data is broken');
         }
         $release_queue->build();
-        $queue->delete();
+        $queue->delete(true);
     } catch (Exception $e) {
+        echo 'what!?';
         Log::error($e);
     }
 }

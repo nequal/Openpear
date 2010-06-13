@@ -2,7 +2,6 @@
 import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.mail.Gmail');
 import('org.yabeken.service.Pea');
-Pea::import('openpear.org/HatenaSyntax');
 /**
  * 
  * @const account gmailアカウント,パスワード

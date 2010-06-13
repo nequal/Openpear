@@ -186,8 +186,12 @@ class PackageProjectorConfig extends Object
                 $this->{$parent_key}($obj);
             } else {
                 foreach((array)$v as $key => $val){
-                    if($parent_key === 'role') $this->role($key, $val);
-                    else $this->{$parent_key. '_'. $key}($val);
+                    try {
+                        if($parent_key === 'role') $this->role($key, $val);
+                        else $this->{$parent_key. '_'. $key}($val);
+                    } catch (Exception $e) {
+                        // Log::debug($e);
+                    }
                 }
             }
             if(isset($indexes[$parent_key])){

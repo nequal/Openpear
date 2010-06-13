@@ -19,6 +19,7 @@
    <script type="text/javascript">
       $(function()
       {
+        <rt:if param="{$package.is_external_repository()}" value="false">
         $('#release-target').change(function()
         {
           $('#release-target-check').html(
@@ -27,8 +28,8 @@
             );
           //$('#release-dir-repo').html('/' + $(this).val());
           $.get(
-            'checkrepo.php',
-            {package: "Package_Hoge", dir: $(this).val()},
+            '{$t.url('api/check_repo_exists')}',
+            {package_id: "{$package.id()}", dir: $(this).val()},
             function(data)
             {
               if (data.match(/^ng/)) {
@@ -49,6 +50,7 @@
             }
           );
         });
+        </rt:if>
         $('#release-install-target').keyup(function()
         {
           $('#release-dir-server').html('/' + $(this).val());
@@ -170,10 +172,12 @@
 <form action="{$t.url('package')}/{$package.name()}/manage/release_confirm" method="post" id="release-package" rt:ref="true">
   <input type="hidden" name="package_id" value="" />
   <dl>
+    <rt:if param="{$package.is_external_repository()}" value="false">
     <dt>{$t.trans('Target revision')} <span class="red">*</span>: </dt>
     <dd>
     <input name="revision" type="text" id="release-revision" class="tiny" value="1288" />
     </dd>
+    </rt:if>
     <dt>{$t.trans('Version')} <span class="red">*</span>: </dt>
     <dd>
     <input name="version_release_ver" type="text" id="release-version" class="tiny" value="1.0.0" />
@@ -187,7 +191,7 @@
     <dt>{$t.trans('Target directory')} : </dt>
     <p class="caption"></p>
     <dd>
-    {$t.trans('Repository')}: /Package_Hoge/trunk/<input type="text" name="build_path" id="release-target" class="middle" value="" />
+    {$t.trans('Repository')}: <rt:if param="{$package.is_external_repository()}">{$package.external_repository()} <rt:else />/{$package.name()}/trunk</rt:if>/<input type="text" name="build_path" id="release-target" class="middle" value="" />
     <span id="release-target-check"></span>
     <br />
     {$t.trans('Install target')}: PEAR_DIR/<input type="text" name="package_baseinstalldir" id="release-install-target" class="middle" value="" />

@@ -106,6 +106,9 @@
             <map url="package/(.+)/manage/release_do" method="package_release_do" />
             <map url="package/(.+)/manage/release_done" method="package_release_done" template="message.html" />
         </maps>
+        <maps class="org.openpear.flow.parts.OpenpearAPI" url="api">
+            <map url="check_repo_exists" method="check_repo_exists" />
+        </maps>
     </handler>
     
     <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" hide="both" />

@@ -27,6 +27,10 @@ class OpenpearRelease extends Dao implements AtomInterface
     private $maintainer;
     private $fm_settings;
     
+    public function filename() {
+        return $this->package_name(). '-'. $this->version(). '.tgz';
+    }
+    
     protected function __init__(){
         $this->version = '1.0.0';
         $this->version_stab = 'stable';
@@ -39,15 +43,17 @@ class OpenpearRelease extends Dao implements AtomInterface
     }
     protected function __fm_settings__(){
         if (is_null($this->fm_settings)) {
-            $this->fm_settings = parse_ini_string($this->settings, true);
+            $settings = new PackageProjectorConfig();
+            $settings->parse_ini_string($this->settings);
+            $this->fm_settings = $settings;
         }
         return $this->fm_settings;
     }
     // DBにつながないというエコ
     public function package_name() {
         $fm_settings = $this->fm_settings();
-        return isset($fm_settings['package']['package_name'])?
-            $fm_settings['package']['package_name']: $this->package()->name();
+        return $fm_settings->is_package_package_name()?
+            $fm_settings->package_package_name(): $this->package()->name();
     }
     public function package(){
         if($this->package instanceof OpenpearPackage === false){

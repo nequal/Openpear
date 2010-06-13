@@ -98,29 +98,9 @@ class OpenpearPackage extends Dao
      * @return array OpenpearTag[]
      **/
     static public function getActiveCategories($limit=10){
-        $categories = array();
-        try {
-            $packages = C(__CLASS__)->find_all(new Paginator($limit*5, 1), Q::order('-recent_changeset'));
-            foreach($packages as $package){
-                foreach($package->package_tags() as $package_tag){
-                    if($package_tag->prime() === true && !isset($categories[$package_tag->tag()->name()])){
-                        $categories[$package_tag->tag()->name()] = $package_tag->tag();
-                        if(count($categories) >= $limit){
-                            break 2;
-                        }
-                    }
-                }
-            }
-            if ($limit > count($categories)) {
-                $sub = $limit - count($categories);
-                $q = new Q();
-                foreach (array_keys($categories) as $c) $q->add(Q::neq('name', $c));
-                $add_categories = C(OpenpearTag)->find_all(new Paginator($sub, 1), $q);
-                $categories = array_merge($categories, $add_categories);
-            }
-        } catch(Exception $e){
-            $categories = C(OpenpearTag)->find_all(new Paginator($limit, 1), Q::order('name'));
-        }
+        $tag_ids_count = C(OpenpearPackageTag)->find_count_by('package_id', 'tag_id', Q::eq('prime', true));
+        arsort($tag_ids_count);
+        $categories = C(OpenpearTag)->find_all(Q::in('id', array_slice(array_keys($tag_ids_count), 0, $limit)));
         return $categories;
     }
     
@@ -202,15 +182,11 @@ class OpenpearPackage extends Dao
      * @return void
      **/
     public function add_maintainer(OpenpearMaintainer $maintainer, $role='lead'){
-        try {
-            $charge = new OpenpearCharge();
-            $charge->maintainer_id($maintainer->id());
-            $charge->package_id($this->id());
-            $charge->role($role);
-            $charge->save();
-        } catch(Exception $e){
-            Exceptions::add($e);
-        }
+        $charge = new OpenpearCharge();
+        $charge->maintainer_id($maintainer->id());
+        $charge->package_id($this->id());
+        $charge->role($role);
+        $charge->save();
     }
 
     /**
@@ -316,10 +292,11 @@ class OpenpearPackage extends Dao
         if($this->latest_release instanceof OpenpearRelease === false){
             try{
                 $this->latest_release = C(OpenpearRelease)->find_get(Q::eq('package_id', $this->id()), Q::order('-id'));
-            } catch(Exception $e){}
-            $release = new OpenpearRelease();
-            $release->package_id($this->id());
-            $this->latest_release = $release;
+            } catch(Exception $e){
+                $release = new OpenpearRelease();
+                $release->package_id($this->id());
+                $this->latest_release = $release;
+            }
         }
         return $this->latest_release;
     }

@@ -7,8 +7,8 @@
  */
 
 if($argc === 4){
-    require dirname(dirname(__FILE__)). '/__settings__.php';
-    import('org.openpear.flow.parts.Openpear');
+    require dirname(__DIR__). '/__settings__.php';
+    import('org.openpear.flow.parts.__init__');
     
     list(, $path, $revision, $message) = $argv;
     try {
