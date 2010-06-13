@@ -17,6 +17,7 @@ class OpenpearChangeset extends Dao
     
     private $package;
     private $maintainer;
+    static private $cached_changesets = array();
     
     /**
      * 初期化
@@ -24,6 +25,49 @@ class OpenpearChangeset extends Dao
     protected function __init__(){
         $this->created = time();
     }
+    
+    public function comment() {
+        $cache_key = self::cache_key(implode(',', array('comment', $this->revision)));
+        if (Store::has($cache_key)) {
+            return Store::get($cache_key);
+        }
+        $log = Subversion::cmd('log', array(OpenpearConfig::svn_root()), array('revision' => $this->revision, 'limit' => 1));
+        $log = array_shift($log);
+        Store::set($cache_key, $log['msg']);
+        return $log['msg'];
+    }
+    
+    protected function __str__() {
+        return $this->comment();
+    }
+    
+    /**
+     * チェンジセットを取得する
+     * @param int $revision
+     * @param bool $cache
+     * @return OpenpearChangeset
+     **/
+    static public function get_changeset($revision, $cache=true) {
+        $cache_key = self::cache_key($revision);
+        if ($cache) {
+            if (isset(self::$cached_changesets[$revision])) {
+                return self::$cached_changesets[$revision]; 
+            } else if (Store::has($cache_key)) {
+                $changeset = Store::get($cache_key);
+                self::$cached_changesets[$revision] = $changeset;
+                return $changeset;
+            }
+        }
+        $changeset = C(__CLASS__)->find_get(Q::eq('revision', $revision));
+        
+        Store::set($cache_key, $changeset);
+        return $changeset;
+    }
+    
+    static private function cache_key($id) {
+        return array(__CLASS__, $id);
+    }
+    
     /**
      * changed を unserialize してオブジェクトの配列を返す
      */

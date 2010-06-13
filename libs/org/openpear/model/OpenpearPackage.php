@@ -52,6 +52,7 @@ class OpenpearPackage extends Dao
     private $package_tags = array();
     private $primary_tag;
     private $liked = array();
+    private $recent_changeset_object;
 
     static private $cached_packages = array();
     
@@ -325,7 +326,15 @@ class OpenpearPackage extends Dao
         }
         return $this->primary_tag;
     }
-
+    
+    public function recent_changeset_object() {
+        if($this->recent_changeset_object instanceof OpenpearChangeset === false && $this->is_recent_changeset()){
+            try {
+                $this->recent_changeset_object = OpenpearChangeset::get_changeset($this->recent_changeset);
+            } catch(Exception $e){}
+        }
+        return $this->recent_changeset_object;
+    }
 
     protected function __init__(){
         $this->created = time();
