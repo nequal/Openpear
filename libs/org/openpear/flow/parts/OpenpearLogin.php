@@ -188,13 +188,14 @@ class OpenpearLogin extends Flow
                 $charge = new OpenpearCharge();
                 $charge->maintainer_id($maintainer->id());
                 $charge->package_id($package->id());
+                $charge->role('developer');
                 $charge->save();
                 C($charge)->commit();
             } catch (Exception $e) {
                 Log::debug($e);
             }
         }
-        $this->redirect_method('package_manage',$package_name);
+        $this->redirect_by_map('package_manage', $package_name);
     }
     /**
      * パッケージからメンテナを削除する
@@ -214,7 +215,7 @@ class OpenpearLogin extends Flow
                 Log::debug($e);
             }
         }
-        $this->redirect_method('package_manage',$package_name);
+        $this->redirect_by_map('package_manage', $package_name);
     }
     
     /**
