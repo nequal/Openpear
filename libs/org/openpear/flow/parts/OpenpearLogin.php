@@ -56,9 +56,9 @@ class OpenpearLogin extends Flow
      */
     public function dashboard() {
         $this->vars('maintainer', $this->user());
-        $this->vars('my_package_charges', C(OpenpearCharge)->find_all(Q::eq('maintainer_id', $this->user()->id())));
+        $this->vars('my_packages', C(OpenpearPackage)->find_all(Q::in('id', C(OpenpearCharge)->find_sub('package_id', Q::eq('maintainer_id', $this->user()->id()))), Q::order('-updated')));
         $this->vars('timelines', OpenpearTimeline::get_by_maintainer($this->user()));
-        $this->vars('my_favorites', C(OpenpearFavorite)->find_all(Q::eq('maintainer_id', $this->user()->id())));
+        $this->vars('fav_packages', C(OpenpearPackage)->find_all(Q::in('id', C(OpenpearFavorite)->find_sub('package_id', Q::eq('maintainer_id', $this->user()->id()))), Q::order('-updated')));
         $this->vars('notices', C(OpenpearMessage)->find_all(Q::eq('maintainer_to_id', $this->user()->id()), Q::eq('type', 'system_notice'), Q::eq('unread', true)));
     }
     /**
@@ -66,7 +66,6 @@ class OpenpearLogin extends Flow
      * @request integer $message_id メッセージID
      */
     public function dashboard_message_hide() {
-        $this->login_required();
         // TODO 仕様の確認
         try {
             if ($this->is_post() && $this->is_vars('message_id')) {

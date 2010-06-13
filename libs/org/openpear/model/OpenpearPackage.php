@@ -58,6 +58,19 @@ class OpenpearPackage extends Dao
     const NOTIFY_WANTED = 'This package is accepting maintainers for admission.';
     const NOTIFY_DEPRECATED = 'This package is not maintained.';
     
+    // TODO: Charge に移動
+    public function maintainer_role(OpenpearMaintainer $maintainer) {
+        $cache_key = self::cache_key('maintainer_role');
+        if (Store::has($cache_key)) {
+            $role = Store::get($cache_key);
+        } else {
+            $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $this->id), Q::eq('maintainer_id', $maintainer->id()));
+            $role = $charge->role();
+            Store::set($cache_key, $role);
+        }
+        return $role;
+    }
+    
     /**
      * リポジトリ種類別のコマンドを取得
      * @return string $command
@@ -110,7 +123,7 @@ class OpenpearPackage extends Dao
         }
         return $categories;
     }
-
+    
     /**
      * パッケージ情報を取得する
      * @param int $id
