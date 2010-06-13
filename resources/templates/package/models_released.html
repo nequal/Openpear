@@ -25,7 +25,7 @@
    </td>
    <td class="nowrap">
      <rt:if param="{$object.latest_release().id()}">
-       <a href="{$t.url('package')}/{$object.name()}/download">{$object.latest_release().fm_version()}</a>
+       <a href="{$t.url('package')}/{$object.name()}/downloads">{$object.latest_release().fm_version()}</a>
       <rt:else />
        {$t.trans('No release.')}
       </rt:if>
