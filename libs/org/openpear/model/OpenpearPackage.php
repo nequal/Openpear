@@ -376,6 +376,10 @@ class OpenpearPackage extends Dao
         $timeline->save();
     }
 
+    protected function __before_save__() {
+        $this->updated = time();
+    }
+
     protected function __after_save__() {
         Store::delete(self::cache_key($this->id));
     }
