@@ -19,7 +19,7 @@ import('org.openpear.model.OpenpearReleaseQueue');
 
 foreach (C(OpenpearQueue)->find_all(new Paginator(5), Q::lt('locked', time()), Q::eq('type', 'build'), Q::order('updated')) as $queue) {
     try {
-        $queue->start(1);
+        $queue->start(300);
         $release_queue = $queue->fm_data();
         if ($release_queue instanceof OpenpearReleaseQueue === false) {
             throw new RuntimeException('queue data is broken');
