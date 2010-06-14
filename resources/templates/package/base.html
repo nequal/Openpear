@@ -44,7 +44,7 @@
           <li<rt:block name="package_navi_current_top"></rt:block>><a href="{$t.url('package')}/{$package.name()}">{$t.trans('Top')}</a></li>
           <li<rt:block name="package_navi_current_download"></rt:block>><a href="{$t.url('package')}/{$package.name()}/downloads">{$t.trans('Downloads')}</a></li>
           <li<rt:block name="package_navi_current_doc"></rt:block>><a href="{$t.url('package')}/{$package.name()}/doc">{$t.trans('Documentation')}</a></li>
-          <li<rt:block name="package_navi_current_src"></rt:block>><a href="{$t.url('package')}/{$package.name()}/src">{$t.trans('Source')}</a></li>
+          <rt:if param="{$package.is_external_repository()}" value="false"><li<rt:block name="package_navi_current_src"></rt:block>><a href="{$t.url('package')}/{$package.name()}/src">{$t.trans('Source')}</a></li></rt:if>
           <rt:if param="{$t.logined()}" value="true">
             <rt:if param="{$package.permission($t.user(),false)}">
               <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">{$t.trans('Manage')}</a></li>
