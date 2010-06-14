@@ -76,16 +76,9 @@ class OpenpearNoLogin extends Flow
             );
             Store::set('index/recent_releases', $recent_releases, 3600);
         }
-        if (Store::has('index/most_downloaded', 3600)) {
-            $most_downloaded = Store::get('index/most_downloaded');
-        } else {
-            $most_downloaded = C(OpenpearPackage)->find_all(new Paginator(5), Q::order('-download_count'));
-            Store::set('index/most_downloaded', $most_downloaded, 3600);
-        }
         $this->vars('package_count', $package_count);
         $this->vars('primary_tags', $primary_tags);
         $this->vars('recent_releases', $recent_releases);
-        $this->vars('most_downloaded', $most_downloaded);
     }
     /**
      * 検索のマッピング
