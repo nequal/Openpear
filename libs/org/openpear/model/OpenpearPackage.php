@@ -10,7 +10,8 @@ class OpenpearPackage extends Dao
     protected $public_level;
     protected $external_repository;
     protected $external_repository_type;
-    protected $favored_count;
+    protected $download_count = 0;
+    protected $favored_count = 0;
     protected $recent_changeset;
     protected $released_at;
     protected $latest_release_id;
@@ -29,6 +30,7 @@ class OpenpearPackage extends Dao
     static protected $__public_level__ = 'type=number';
     static protected $__external_repository__ = 'type=string';
     static protected $__external_repository_type__ = 'type=choice(Git,Mercurial,Subversion)';
+    static protected $__download_count__ = 'type=number,default=0';
     static protected $__favored_count__ = 'type=number,default=0';
     static protected $__recent_changeset__ = 'type=number';
     static protected $__released_at__ = 'type=timestamp';
