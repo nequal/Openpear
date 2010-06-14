@@ -7,7 +7,6 @@ class OpenpearTemplf
 		$this->user = $user;
 	}
     final public function isme(OpenpearMaintainer $maintainer){
-        Log::debug(array($this->user, $maintainer));
         if($this->user instanceof OpenpearMaintainer && $this->user->id() == $maintainer->id()){
             return true;
         }
