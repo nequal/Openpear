@@ -320,7 +320,7 @@ class OpenpearLogin extends Flow
                 $package->save();
                 $package->add_maintainer($user);
                 C($package)->commit();
-                $this->redirect_by_map('success_redirect');
+                $this->redirect_by_map('package_detail', $package->name());
             } catch (Exception $e) {
                 Log::debug($e);
             }
@@ -339,11 +339,10 @@ class OpenpearLogin extends Flow
             $this->vars('object', $package);
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
-            return;
         } catch (Exception $e) {
             Log::debug($e);
+            $this->redirect_by_map('package_detail', $package_name);
         }
-        $this->redirect_by_map('package_detail', $package_name);
     }
 
     /**

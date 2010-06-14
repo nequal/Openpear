@@ -1,15 +1,9 @@
 <database>
-    <table name="openpear_account_maintainer">
-        <column name="maintainer_id" type="number" require="true" primary="true" />
-        <column name="mail" type="email" require="true" />
-        <column name="password" />
-    </table>
     <table name="openpear_changeset">
         <column name="revision" type="number" require="true" primary="true" />
         <column name="maintainer_id" type="number" />
         <column name="package_id" type="number" />
         <column name="changed" type="text" />
-        
     </table>
     <table name="openpear_charge">
         <column name="package_id" type="number" require="true" />
@@ -95,18 +89,6 @@
         <column name="version_stab" type="choice" />
         <column name="notes" type="text" />
         <column name="settings" type="text" />
-        <column name="created" type="timestamp" />
-    </table>
-    <table name="openpear_release_queue">
-        <column name="id" type="serial" />
-        <column name="package_id" type="number" require="true" />
-        <column name="maintainer_id" type="number" require="true" />
-        <column name="revision" />
-        <column name="build_path" />
-        <column name="build_conf" type="text" />
-        <column name="description" type="text" />
-        <column name="notes" type="text" />
-        <column name="trial_count" type="number" />
         <column name="created" type="timestamp" />
     </table>
     <table name="openpear_tag">
