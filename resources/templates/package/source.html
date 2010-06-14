@@ -99,7 +99,7 @@
           <a href="{$t.url('package')}/{$package.name()}/src/{$path}/{$f['name']}">{$f['name']}<rt:if param="{$f['kind']}" value="dir">/</rt:if></a>
         </td>
         <td class="age">
-          <a href="{$t.url('package')}/{$package.name()}/changeset/{$f['commit']['revision']}">[{$f['commit']['revision']}]</a> {$ot.date_ago($f['commit']['date'])}
+          <a href="{$t.map_url('changeset', $f['commit']['revision'])}">[{$f['commit']['revision']}]</a> {$ot.date_ago($f['commit']['date'])}
         </td>
         <td class="comment">
           

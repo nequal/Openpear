@@ -64,7 +64,7 @@
             
             <map name="document_browse" url="package/(.+)/doc(/.+)?" method="document_browse" template="package/document.html" />
             
-            <map url="package/(.+)/changeset/(\d+)" method="changeset" template="package/changeset.html" />
+            <map name="changeset" url="changeset/(\d+)" method="changeset" template="package/changeset.html" />
             <map name="source_browse" url="package/(.+)/src(/?.+)?" method="source_browse" template="package/source.html" />
 
             <map url="timelines.atom" method="timeline_atom" />

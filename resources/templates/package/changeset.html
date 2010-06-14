@@ -16,11 +16,9 @@
 
 <rt:block name="package_main">
 <div class="changeset-nav">
-
-  <a href="package_Hoge_changeset.html">&laquo; {$t.trans('Previous Changes')}</a> | 
-  <a href="package_Hoge_changeset.html">{$t.trans('Next Changes')} &raquo; </a> | 
-  <a href="package_Hoge_changeset.html">{$t.trans('Latest')}</a>
-
+  <rt:if param="{$paginator.is_prev()}"><a href="{$t.map_url('changeset', $paginator->prev())}">&laquo; {$t.trans('Previous Changes')}</a> | </rt:if>
+  <rt:if param="{$paginator.is_next()}"><a href="{$t.map_url('changeset', $paginator->next())}">&laquo; {$t.trans('Next Changes')}</a> | </rt:if>
+  <rt:if param="{$paginator.last()}" param="{$revision}"><rt:else /><a href="{$t.map_url('changeset', $paginator->last())}">{$t.trans('Latest')}</a>
 </div>
 <div class="column2-l">
 

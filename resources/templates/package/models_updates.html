@@ -38,7 +38,7 @@
      {$ot.date_ago($object.updated())}
    </td>
    <td class="nowrap">
-     {$object.recent_changeset()}
+     <a href="{$t.map_url('changeset', $object.recent_changeset())}">{$object.recent_changeset()}</a>
    </td>
    <td class="description">
      {$object.recent_changeset_object()}

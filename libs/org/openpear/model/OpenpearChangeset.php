@@ -96,7 +96,7 @@ class OpenpearChangeset extends Dao
             $this->package()->name()
         ));
         $timeline->description(sprintf('Changeset <a href="%s">[%d]</a>.<br />%s',
-            url(sprintf('package/%s/changeset/%d', $this->package()->name(), $this->revision)),
+            url(sprintf('changeset/%d', $this->package()->name(), $this->revision)),
             $this->revision,
             nl2br(htmlspecialchars(Text::substring($message, 0, 200, 'utf-8'), ENT_QUOTES))
         ));

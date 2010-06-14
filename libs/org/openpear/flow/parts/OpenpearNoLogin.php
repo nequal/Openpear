@@ -324,26 +324,24 @@ class OpenpearNoLogin extends Flow
     }
     /**
      * SVNチェンジセットの詳細
-     * @param string $package_name パッケージ名
      * @param integer $revision リビジョン番号
      * @context OpenpearPackage $package パッケージ
      * @context OpenpearChangeset $changeset チェンジセット
      * @const string $svn_root　リポジトリのルートパス
      */
-    public function changeset($package_name, $revision) {
-        // TODO 前後のリビジョン
-        // TODO diff のパース
+    public function changeset($revision) {
         $revision = intval($revision);
-        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-        $changeset = C(OpenpearChangeset)->find_get(Q::eq('revision', $revision), Q::eq('package_id', $package->id()));
-        $path = File::absolute(OpenpearConfig::svn_root(), $package->name());
+        $changeset = C(OpenpearChangeset)->find_get(Q::eq('revision', $revision));
+        $package = C(OpenpearPackage)->find_get(Q::eq('id', $changeset->package_id()));
+        $path = OpenpearConfig::svn_root();
         $log = Subversion::cmd('log', array($path), array('revision' => $revision, 'limit' => 1));
         $diff = Subversion::cmd('diff', array($path), array('revision' => sprintf('%d:%d', $revision-1, $revision)));
+        $latest_changeset = C(OpenpearChangeset)->find_get(Q::order('-revision'));
         $this->vars('package', $package);
         $this->vars('changeset', $changeset);
         $this->vars('log', $log[0]);
-        Log::debug($diff);
         $this->vars('diff', $diff);
+        $this->vars('paginator', new Paginator(1, $revision, $latest_changeset->revision()));
     }
     
     private function add_vars_other_tree($package_name, $root='') {
