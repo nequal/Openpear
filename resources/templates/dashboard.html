@@ -74,7 +74,7 @@
   <rt:loop param="my_packages" var="package">
     <div class="dashboard-packages">
       <a href="{$t.url('package')}/{$package.name()}" class="package-link">{$package.name()}</a> <a href="{$t.url('package')}/{$package.name()}/manage" class="manage-link">&raquo; manage</a> 
-      <p>Latest: <a href="{$t.url('package')}/{$package.name()}/download">{$package.latest_release().fm_version()}</a>, {$package.favored_count()} Fans</p>
+      <p><rt:if param="{$package.is_latest_release()}">Latest: <a href="{$t.url('package')}/{$package.name()}/download">{$package.latest_release().fm_version()}</a>, </rt:if>{$package.favored_count()} Fans</p>
     </div>
   </rt:loop>
 

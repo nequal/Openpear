@@ -118,7 +118,7 @@
             <rt:else />
               <a href="{$t.url('package')}/{$package.name()}/like/{$ot.hash('rand')}"><img src="./images/global-icon-star-add.png" class="fright" /></a>
             </rt:if>
-            <h4><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> (<a href="{$t.url('package')}/{$package.name()}/download">{$package.latest_release().fm_version()}</a>) <span>({$package.maintainer_role($object)})</span></h4>
+            <h4><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a><rt:if param="{$package.is_latest_release()}"> (<a href="{$t.url('package')}/{$package.name()}/download">{$package.latest_release().fm_version()}</a>)</rt:if> <span>({$package.maintainer_role($object)})</span></h4>
             <p>{$package.description()}</p>
             <p><rt:if param="{$package.primary_tag()}">{$t.trans('Category')}: <a href="{$t.url('packages')}?category={$package.primary_tag()}">{$package.primary_tag()}</a> </rt:if><em>Last Update: {$t.df($package.updated(), 'Y-m-d')}</em>
             </p>
