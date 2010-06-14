@@ -454,6 +454,7 @@ class OpenpearLogin extends Flow
                 $release_queue->package_id($package->id());
                 $release_queue->maintainer_id($this->user()->id());
                 $release_queue->build_conf($build_conf->get_ini());
+                $release_queue->notes($this->in_vars('package_notes'));
 
                 $queue = new OpenpearQueue();
                 $queue->type('build');
