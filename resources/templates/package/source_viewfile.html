@@ -29,7 +29,11 @@
   </div>
   <rt:if param="{$code}">
     <div>
-      <code><pre class="prettyprint">{$code}</pre></code>
+      <rt:if param="{$geshi}">
+        {$t.noop($code)}
+      <rt:else />
+        <code><pre class="prettyprint">{$code}</pre></code>
+      </rt:if>
     </div>
   </rt:if>
 

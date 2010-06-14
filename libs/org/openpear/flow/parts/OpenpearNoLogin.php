@@ -24,7 +24,7 @@ class OpenpearNoLogin extends Flow
      * @request string $openid_url openid認証サーバのURL
      */
     public function login_by_openid() {
-        if ($this->is_login()) $this->redirect_method('index');
+        if ($this->is_login()) $this->redirect_by_map('top');
         if ((($this->in_vars('openid_url') != "") || $this->in_vars('openid_verify')) && OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))) {
             try {
                 $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(
@@ -39,7 +39,7 @@ class OpenpearNoLogin extends Flow
                 }
             } catch (NotfoundDaoException $e) {
                 $this->sessions('openid_identity', $openid_user->identity());
-                $this->redirect_method('signup');
+                $this->redirect_by_map('signup');
             } catch (Exception $e) {
                 throw $e;
             }
@@ -93,7 +93,7 @@ class OpenpearNoLogin extends Flow
             case 'packages':
             default: $this->redirect_method('packages', array('q' => $this->in_vars('q')));
         }
-        $this->redirect_method('index');
+        $this->redirect_by_map('top');
     }
     /**
      * タグ一覧
@@ -255,7 +255,6 @@ class OpenpearNoLogin extends Flow
             $this->redirect_method('document_browse', $package_name, '/'. $lang. '/README');
         }
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
-        // TODO pathはなんだろう
         $path = rtrim(ltrim($path, ' /.'), '/');
         $root = File::absolute(OpenpearConfig::svn_root(), implode('/', array($package->name(), 'doc')));
         $repo_path = File::absolute($root, $path);
@@ -268,7 +267,6 @@ class OpenpearNoLogin extends Flow
         }
         $this->vars('lang', $lang);
         $this->vars('body', HatenaSyntax::render($body));
-        // TODO tree は何が入る？
         $this->vars('tree', Subversion::cmd('list', array($root. '/'. $lang), array('recursive' => 'recursive')));
         $this->add_vars_other_tree($package_name, 'doc');
     }
@@ -295,10 +293,27 @@ class OpenpearNoLogin extends Flow
             $p = explode('.', $info['path']);
             $ext = array_pop($p);
             if (in_array($ext, $this->allowed_ext)) {
-                $this->vars('code', Subversion::cmd('cat', array($info['url']), array('revision' => $this->in_vars('rev', 'HEAD'))));
+                $source = Subversion::cmd('cat', array($info['url']), array('revision' => $this->in_vars('rev', 'HEAD')));
+                $this->vars('code', $source);
+                try {
+                    $cache_key = array('syntax_highlight', md5($source));
+                    if (Store::has($cache_key)) {
+                        $this->vars('code', Store::get($cache_key));
+                    } else {
+                        include_once 'geshi/geshi.php';
+                        $geshi = new Geshi($source, $ext);
+                        $code = $geshi->parse_code();
+                        Store::set($cache_key, $code);
+                        $this->vars('code', $code);
+                    }
+                    $this->vars('geshi', true);
+                } catch (Exception $e) {
+                    Log::debug($e);
+                    $this->vars('geshi', false);
+                }
             }
         } else {
-            $this->redirect_method('package',$package_name);
+            $this->redirect_by_map('package_detail', $package_name);
         }
         $this->vars('path', $path);
         $this->vars('info', self::format_info($info));
