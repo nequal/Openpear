@@ -27,13 +27,13 @@
           <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()}</a></li>
         </rt:if>
       </rt:loop>
-      <li><input type="button" id="js-category-add-button" value="+Add" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
+      <li><input type="button" id="js-category-add-button" value="{$t.trans('+Add')}" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
       <li id="js-category-add-form" class="dnone">
       <form action="{$t.url('package')}/{$package.name()}/category/add" id="add-category" method="post">
         <input name="tag_name" type="text" size="30" id="add-category-tag_name" />
         <input type="hidden" name="prime" value="false" />
-        <input type="submit" value="add" />
-        <a href="javascript:;" onclick="$('#js-category-add-form').hide();">cancel</a>
+        <input type="submit" value="{$t.trans('add')}" />
+        <a href="javascript:;" onclick="$('#js-category-add-form').hide();">{$t.trans('cancel')}</a>
       </form>
       </li>
     </ul>
@@ -98,13 +98,12 @@
         <br class="clear">
       </rt:if>
       
-      <rt:comment>
+      <rt:if param="{$object.fm_settings().dep()}">
       <h3>{$t.trans('Dependencies')}</h3>
-      <ul class="list-standard">
-        <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
-        <li>- <a href="">pear/DB (>= 1.0.0)</a></li>
+      <ul class="list-standard" rt:param="{$object.fm_settings().dep()}" rt:var="dep">
+        <li>- {$dep.package_name()}</li>
       </ul>
-      </rt:comment>
+      </rt:if>
       <br class="clear">
     </div>
     

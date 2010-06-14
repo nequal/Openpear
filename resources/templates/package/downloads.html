@@ -36,14 +36,14 @@
       <td>
         <dl>
           <rt:if param="{$object.fm_settings().dep()}">
-          <dt>Dependencies:</dt>
+          <dt>{$t.trans('Dependencies')}:</dt>
           <dd>
             <ul class="list-standard" rt:param="{$object.fm_settings().dep()}" rt:var="dep">
               <li>- {$dep.package_name()}</li>
             </ul>
           </dd>
           </rt:if>
-          <dt>Changes:</dt>
+          <dt>{$t.trans('Changes')}:</dt>
           <dd>
             <pre class="w500px">{$object.notes()}</pre>
           </dd>

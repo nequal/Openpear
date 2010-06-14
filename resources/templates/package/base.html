@@ -28,7 +28,7 @@
           </rt:if>
         </rt:if>
         <rt:if param="{$package.public_level()}" value="0">
-          <img src="./images/global-icon-protected.png" alt="this package is protected" />
+          <img src="./images/global-icon-protected.png" alt="{$t.trans('this package is protected')}" />
         </rt:if>
       </div>
 
@@ -73,8 +73,8 @@
                 <li><a href="{$t.url('packages')}?category={$package_tag.tag().name()}">{$package_tag.tag().name()}</a></li>
               </rt:if>
             </rt:loop>
-            <li><input type="button" id="js-category-add-button" value="+Add" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
-            <li id="js-category-add-form" class="dnone"><form action="{$t.url('package')}/{$package.name()}/add_category" id="add-category" method="post"><input name="tag_name" type="text" size="30" id="add-category-tag_name" /><input type="hidden" name="prime" value="false" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#js-category-add-form').hide();">cancel</a></form></li>
+            <li><input type="button" id="js-category-add-button" value="{$t.trans('+Add')}" onclick="$('#js-category-add-form').show();$('#add-category-tag_name').focus();" /></li>
+            <li id="js-category-add-form" class="dnone"><form action="{$t.url('package')}/{$package.name()}/add_category" id="add-category" method="post"><input name="tag_name" type="text" size="30" id="add-category-tag_name" /><input type="hidden" name="prime" value="false" /><input type="submit" value="{$t.trans('add')}" /> <a href="javascript:;" onclick="$('#js-category-add-form').hide();">{$t.trans('cancel')}</a></form></li>
           </ul>
         </div>
         
