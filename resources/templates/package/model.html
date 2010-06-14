@@ -52,12 +52,7 @@
       <p class="aright"><a href="{$t.url('package')}/{$object.name()}/downloads">{$t.trans('View All Releases')} &gt;&gt;</a></p>
       
       <h3>{$t.trans('Changes')}</h3>
-      <pre>* 2009-01-27 - Store old and new values for updates, and store all attributes on destroy.
-         Refactored revisioning methods to work as expected
-* 2008-10-10 - changed to make it work in development mode
-* 2008-04-19 - refactored to make compatible with dirty tracking in edge rails
-         and to stop storing both old and new values in a single audit
-* 2008-04-18 - Fix NoMethodError when trying to access the :previous revision</pre>
+      <pre>{$release.notes()}</pre>
 
     <rt:else />
     <p class="info">{$t.trans('There are no releases for this package.')}<br />
