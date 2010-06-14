@@ -52,7 +52,7 @@
       <p class="aright"><a href="{$t.url('package')}/{$object.name()}/downloads">{$t.trans('View All Releases')} &gt;&gt;</a></p>
       
       <h3>{$t.trans('Changes')}</h3>
-      <pre>{$release.notes()}</pre>
+      <pre>{$package.latest_release().notes()}</pre>
 
     <rt:else />
     <p class="info">{$t.trans('There are no releases for this package.')}<br />
