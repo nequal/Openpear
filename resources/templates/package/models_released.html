@@ -17,8 +17,8 @@
       <rt:if param="{$object.primary_tag()}"><p class="inline">{$t.trans('Category')}: <a href="{$t.url('packages')}?category={$object.primary_tag().name()}">{$object.primary_tag().name()}</a></p></rt:if>
    </th>
    <td class="nowrap">
-     <rt:if param="{$object.latest_release().id()}">
-      {$ot.date_ago($object.latest_release().created())}
+     <rt:if param="{$object.released_at()}">
+      {$ot.date_ago($object.released_at())}
      <rt:else />
       {$t.trans('No release.')}
      </rt:if>
