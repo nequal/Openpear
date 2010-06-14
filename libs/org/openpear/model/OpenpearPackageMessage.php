@@ -1,6 +1,5 @@
 <?php
 import('org.yabeken.service.Pea');
-Pea::import('openpear.org/HatenaSyntax');
 import('org.rhaco.storage.db.Dao');
 
 class OpenpearPackageMessage extends Dao

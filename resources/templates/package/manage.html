@@ -42,7 +42,7 @@
           </ul>
         </li>
         <li class="clear"><a href="javascript:;" onclick="$('#add-maintainer').show();">{$t.trans('Add maintainer')}</a>
-          <form id="add-maintainer" class="dnone"><input type="text" size="30" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
+          <form id="add-maintainer" class="dnone" action="{$t.url('package')}/{$package.name()}/maintainer/add" method="post"><input type="text" name="maintainer_name" size="30" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
         </ul>
         
         <h4>{$t.trans('Tags')}</h4>

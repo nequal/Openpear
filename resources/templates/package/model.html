@@ -49,7 +49,7 @@
         <li>- <a href="{$t.url('package')}/{$object.name()}/download#{$release.id()}">{$release.fm_version()}</a> <em>-- released on {$release.fm_created()}</em></li>
       </ul>
       <pre>% pear install {$pear_alias}/{$object.installName()}</pre>
-      <p class="aright"><a href="./package_Hoge_downloads.html">{$t.trans('View All Releases')} &gt;&gt;</a></p>
+      <p class="aright"><a href="{$t.url('package')}/{$object.name()}/downloads">{$t.trans('View All Releases')} &gt;&gt;</a></p>
       
       <h3>{$t.trans('Changes')}</h3>
       <pre>* 2009-01-27 - Store old and new values for updates, and store all attributes on destroy.

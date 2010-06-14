@@ -108,19 +108,19 @@
       <div class="column2-right">
         <h3 id="maintainer-package">{$t.trans('Packages')}</h3>
         
-        <rt:loop param="{$charges}" var="charge">
+        <rt:loop param="{$packages}" var="package">
           <div class="maintainer-package">
-            <rt:if param="{$charge.package().public_level()}" value="0">
+            <rt:if param="{$package.public_level()}" value="0">
               <img src="./images/global-icon-protected.png" alt="this package is protected" class="fright" />
             </rt:if>
-            <rt:if param="{$charge.package().liked($t.user())}" value="true">
+            <rt:if param="{$package.liked($t.user())}" value="true">
               <img src="./images/global-icon-star.png" class="fright" />
             <rt:else />
-              <a href="{$t.url('package')}/{$charge.package().name()}/like/{$ot.hash('rand')}"><img src="./images/global-icon-star-add.png" class="fright" /></a>
+              <a href="{$t.url('package')}/{$package.name()}/like/{$ot.hash('rand')}"><img src="./images/global-icon-star-add.png" class="fright" /></a>
             </rt:if>
-            <h4><a href="{$t.url('package')}/{$charge.package().name()}">{$charge.package().name()}</a> (<a href="{$t.url('package')}/{$charge.package().name()}/download">{$charge.package().latest_release().fm_version()}</a>) <span>({$charge.role()})</span></h4>
-            <p>{$charge.package().description()}</p>
-            <p><rt:if param="{$charge.package().primary_tag()}">{$t.trans('Category')}: <a href="{$t.url('packages')}?category=$charge.package().primary_tag()}">{$charge.package().primary_tag()}</a> </rt:if><em>Last Update: {$t.df($charge.package().updated(), 'Y-m-d')}</em>
+            <h4><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> (<a href="{$t.url('package')}/{$package.name()}/download">{$package.latest_release().fm_version()}</a>) <span>({$package.maintainer_role($object)})</span></h4>
+            <p>{$package.description()}</p>
+            <p><rt:if param="{$package.primary_tag()}">{$t.trans('Category')}: <a href="{$t.url('packages')}?category={$package.primary_tag()}">{$package.primary_tag()}</a> </rt:if><em>Last Update: {$t.df($package.updated(), 'Y-m-d')}</em>
             </p>
           </div>
           <rt:else />
@@ -129,8 +129,8 @@
         
         <h3 id="maintainer-favs">{$t.trans('Favorites')}</h3>
         
-        <ul class="list-liner" rt:param="favorites" rt:var="favorite">
-          <li>&raquo; <a href="{$t.url('package')}/{$favorite.package().name()}">{$favorite.package().name()}</a></li>
+        <ul class="list-liner" rt:param="fav_packages" rt:var="package">
+          <li>&raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a></li>
         </ul>
       </div>
     </div> <!-- end of column2-c -->

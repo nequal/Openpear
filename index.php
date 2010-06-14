@@ -8,7 +8,7 @@
         php setup.php -htaccess /openpear
         
         # アカウントの作成時にgmailでメールを送信するのでアカウントの設定が必須
-        def('org.openpear.flow.parts.Openpear@gmail_account','**@gmail.com**','**password**');
+        def('org.openpear.config.OpenpearConfig@gmail_account','**@gmail.com**','**password**');
         # DBの接続設定が必要
         def("org.rhaco.storage.db.Dbc@org.openpear.model","type=org.rhaco.storage.db.module.DbcMysql,dbname=**openpear**,user=**root**,password=**root**,encode=utf8");
 
@@ -16,10 +16,10 @@
         svnadmin で リポジトリ作成
 
         # __settings__.php に以下の設定を自分の環境に合わせて適当に変更して記述
-        def('org.openpear.flow.parts.Openpear@svn_root', 'file:///Users/riaf/tmp/optest2');
-        def('org.openpear.flow.parts.Openpear@svn_url', 'http://svn.openpear.org');
-        def('org.openpear.flow.parts.Openpear@svn_access_file', '/Users/riaf/tmp/optest2/openpear.access');
-        def('org.openpear.flow.parts.Openpear@svn_passwd_file', '/Users/riaf/tmp/optest2/openpear.passwd');
+        def('org.openpear.config.OpenpearConfig@svn_root', 'file:///Users/riaf/tmp/optest2');
+        def('org.openpear.config.OpenpearConfig@svn_url', 'http://svn.openpear.org');
+        def('org.openpear.config.OpenpearConfig@svn_access_file', '/Users/riaf/tmp/optest2/openpear.access');
+        def('org.openpear.config.OpenpearConfig@svn_passwd_file', '/Users/riaf/tmp/optest2/openpear.passwd');
         def('jp.nequal.net.Subversion@cmd_path', '/opt/local/bin/svn');
 
         # Subversion の設定後，新規プロジェクト用のディレクトリ構成を生成する
@@ -100,11 +100,16 @@
             <map name="package_manage" url="package/(.+)/manage" method="package_manage" template="package/manage.html" />
             <map url="package/(.+)/manage/edit" method="package_edit" template="package/edit.html" />
             <map url="package/(.+)/manage/edit_do" method="package_edit_do" />
+            <map url="package/(.+)/maintainer/add" method="package_add_maintainer" />
+            <map url="package/(.+)/maintainer/remove" method="package_remove_maintainer" />
             
             <map url="package/(.+)/manage/release" method="package_release" template="package/release.html" />
             <map url="package/(.+)/manage/release_confirm" method="package_release_confirm" template="package/release_confirm.html" />
             <map url="package/(.+)/manage/release_do" method="package_release_do" />
             <map url="package/(.+)/manage/release_done" method="package_release_done" template="message.html" />
+        </maps>
+        <maps class="org.openpear.flow.parts.OpenpearAPI" url="api">
+            <map url="check_repo_exists" method="check_repo_exists" />
         </maps>
     </handler>
     

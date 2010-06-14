@@ -1,8 +1,0 @@
-<?php
-
-return array(
-    'db_dsn' => 'mysql:host=localhost;dbname=openpear2',
-    'db_user' => 'root',
-    'db_pass' => 'root',
-    'svn_root' => 'file:///Users/riaf/tmp/optest2',
-);

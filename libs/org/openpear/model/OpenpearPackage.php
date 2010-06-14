@@ -52,11 +52,25 @@ class OpenpearPackage extends Dao
     private $package_tags = array();
     private $primary_tag;
     private $liked = array();
+    private $recent_changeset_object;
 
     static private $cached_packages = array();
     
     const NOTIFY_WANTED = 'This package is accepting maintainers for admission.';
     const NOTIFY_DEPRECATED = 'This package is not maintained.';
+    
+    // TODO: Charge に移動
+    public function maintainer_role(OpenpearMaintainer $maintainer) {
+        $cache_key = self::cache_key('maintainer_role');
+        if (Store::has($cache_key)) {
+            $role = Store::get($cache_key);
+        } else {
+            $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $this->id), Q::eq('maintainer_id', $maintainer->id()));
+            $role = $charge->role();
+            Store::set($cache_key, $role);
+        }
+        return $role;
+    }
     
     /**
      * リポジトリ種類別のコマンドを取得
@@ -85,32 +99,12 @@ class OpenpearPackage extends Dao
      * @return array OpenpearTag[]
      **/
     static public function getActiveCategories($limit=10){
-        $categories = array();
-        try {
-            $packages = C(__CLASS__)->find_all(new Paginator($limit*5, 1), Q::order('-recent_changeset'));
-            foreach($packages as $package){
-                foreach($package->package_tags() as $package_tag){
-                    if($package_tag->prime() === true && !isset($categories[$package_tag->tag()->name()])){
-                        $categories[$package_tag->tag()->name()] = $package_tag->tag();
-                        if(count($categories) >= $limit){
-                            break 2;
-                        }
-                    }
-                }
-            }
-            if ($limit > count($categories)) {
-                $sub = $limit - count($categories);
-                $q = new Q();
-                foreach (array_keys($categories) as $c) $q->add(Q::neq('name', $c));
-                $add_categories = C(OpenpearTag)->find_all(new Paginator($sub, 1), $q);
-                $categories = array_merge($categories, $add_categories);
-            }
-        } catch(Exception $e){
-            $categories = C(OpenpearTag)->find_all(new Paginator($limit, 1), Q::order('name'));
-        }
+        $tag_ids_count = C(OpenpearPackageTag)->find_count_by('package_id', 'tag_id', Q::eq('prime', true));
+        arsort($tag_ids_count);
+        $categories = C(OpenpearTag)->find_all(Q::in('id', array_slice(array_keys($tag_ids_count), 0, $limit)));
         return $categories;
     }
-
+    
     /**
      * パッケージ情報を取得する
      * @param int $id
@@ -189,15 +183,11 @@ class OpenpearPackage extends Dao
      * @return void
      **/
     public function add_maintainer(OpenpearMaintainer $maintainer, $role='lead'){
-        try {
-            $charge = new OpenpearCharge();
-            $charge->maintainer_id($maintainer->id());
-            $charge->package_id($this->id());
-            $charge->role($role);
-            $charge->save();
-        } catch(Exception $e){
-            Exceptions::add($e);
-        }
+        $charge = new OpenpearCharge();
+        $charge->maintainer_id($maintainer->id());
+        $charge->package_id($this->id());
+        $charge->role($role);
+        $charge->save();
     }
 
     /**
@@ -303,10 +293,11 @@ class OpenpearPackage extends Dao
         if($this->latest_release instanceof OpenpearRelease === false){
             try{
                 $this->latest_release = C(OpenpearRelease)->find_get(Q::eq('package_id', $this->id()), Q::order('-id'));
-            } catch(Exception $e){}
-            $release = new OpenpearRelease();
-            $release->package_id($this->id());
-            $this->latest_release = $release;
+            } catch(Exception $e){
+                $release = new OpenpearRelease();
+                $release->package_id($this->id());
+                $this->latest_release = $release;
+            }
         }
         return $this->latest_release;
     }
@@ -335,7 +326,15 @@ class OpenpearPackage extends Dao
         }
         return $this->primary_tag;
     }
-
+    
+    public function recent_changeset_object() {
+        if($this->recent_changeset_object instanceof OpenpearChangeset === false && $this->is_recent_changeset()){
+            try {
+                $this->recent_changeset_object = OpenpearChangeset::get_changeset($this->recent_changeset);
+            } catch(Exception $e){}
+        }
+        return $this->recent_changeset_object;
+    }
 
     protected function __init__(){
         $this->created = time();

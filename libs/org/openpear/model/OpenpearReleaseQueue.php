@@ -20,14 +20,14 @@ class OpenpearReleaseQueue extends Object
     private $working_dir;
 
     /**
-     * $B%Q%C%1!<%8$N%S%k%I$H%j%j!<%9$r9T$&(B
+     * パッケージのビルドとリリースを行う
      * @return void
      **/
     public function build() {
         $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->package_id));
-        $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer->id));
+        $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->maintainer_id));
 
-        $this->init_build_dir();
+        $this->init_build_dir(work_path('build/'. $package->name(). '.'. date('YmdHis')));
         foreach (array('desc.txt', 'notes.txt', 'summary.txt') as $filename) {
             File::write($this->build_dir($filename), $package->description());
         }
@@ -57,7 +57,7 @@ class OpenpearReleaseQueue extends Object
             throw new RuntimeException($command->stderr());
         }
         $build_path = $this->build_dir(implode('/', array('tmp', $this->build_path)));
-        if (File::exist($build_path)) {
+        if (!File::exist($build_path)) {
             throw new RuntimeException(sprintf('build path is not found: %s', $build_path));
         }
         $mv = new Command(sprintf('mv %s %s', escapeshellarg($build_path), escapeshellarg($this->build_dir('src'))));
@@ -65,22 +65,23 @@ class OpenpearReleaseQueue extends Object
             throw new RuntimeException('src dir is not found');
         }
 
-        // $B%S%k%I$9$k(B
+        // ビルドする
+        chdir($this->build_dir());
         $project = PEAR_PackageProjector::singleton()->load($this->build_dir());
         $project->configure($this->build_dir('build.conf'));
         $project->make();
         
-        // $B%j%j!<%9$7$?%U%!%$%k$O$I$3!)(B
+        // リリースしたファイルはどこ？
         chdir($this->build_dir('release'));
         foreach(glob('*.tgz') as $filename) {
-            $package_file = $release_dir. '/'. $filename;
+            $package_file = $this->build_dir('release'). '/'. $filename;
             break;
         }
         if (!file_exists($package_file)) {
             throw new RuntimeException('package file is not exists: '. $package_file);
         }
 
-        // $B%5!<%P!<$KDI2C$9$k(B
+        // サーバーに追加する
         $cfg = include path('channel.config.php');
         $server = new PEAR_Server2($cfg);
         $server->addPackage($package_file);
@@ -97,7 +98,7 @@ class OpenpearReleaseQueue extends Object
             'package released', $build_conf['version']['release_ver'], $build_conf['version']['release_stab'], $maintainer->name()
         ));
 
-        // $B$3$l0J9_$O%(%i!<$,5/$-$F$b%I%s%^%$(B
+        // これ以降はエラーが起きてもドンマイ
         try {
             $release = new OpenpearRelease();
             $release->package_id($package->id());
@@ -117,8 +118,8 @@ class OpenpearReleaseQueue extends Object
             Log::error($e);
         }
     }
-    private function init_build_dir() {
-        $this->working_dir = work('build/'. $package->name(). '.'. date('YmdHis'));
+    private function init_build_dir($working_dir) {
+        $this->working_dir = $working_dir;
         foreach (array('release') as $dirname) {
             File::mkdir($this->build_dir($dirname));
         }

@@ -25,9 +25,9 @@
    </td>
    <td class="nowrap">
      <rt:if param="{$object.latest_release().id()}">
-       {$ot.date_ago($object.latest_release().created())}
+       <a href="{$t.url('package')}/{$object.name()}/downloads">{$object.latest_release().fm_version()}</a>
       <rt:else />
-       <a href="{$t.url('package')}/{$object.name()}/download">{$object.latest_release().fmVersion()}</a>
+       {$t.trans('No release.')}
       </rt:if>
    </td>
    <td class="description">
