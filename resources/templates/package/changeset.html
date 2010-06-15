@@ -28,11 +28,9 @@
   
   <dl>
     <dt>{$t.trans('Author')}</dt>
-    <dd><img src="{$changeset.maintainer().avatar()}" /><a href="{$t.url('maintainer')}/{$changeset.maintainer().name()}">{$changeset.maintainer()}</a>
-    </dd>
+    <dd><img src="{$changeset.maintainer().avatar()}" /><a href="{$t.url('maintainer')}/{$changeset.maintainer().name()}">{$changeset.maintainer()}</a></dd>
     <dt>{$t.trans('Comment')}</dt>
-    <dd>{$log['msg']}
-    </dd>
+    <dd>{$changeset.comment()}</dd>
   </dl>
 
 </div> <!-- / column2-right -->
