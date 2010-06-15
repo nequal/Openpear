@@ -57,3 +57,16 @@
   float: left;
   width: 525px;
 }
+
+.column2-lt {
+  clear: both;
+}
+.column2-lt .column2-left {
+  width: 205px;
+  margin-right: 15px;
+  float: left;
+}
+.column2-lt .column2-right {
+  float: left;
+  width: 725px;
+}

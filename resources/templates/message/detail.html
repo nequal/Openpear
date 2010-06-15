@@ -1,0 +1,52 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/inbox.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">{$object.subject()} \ {$t.trans('Message')} \  Openpear</rt:block>
+
+<rt:block name="topic_path">
+    <div id="topic-path">
+        <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; <a href="{$t.url('message/inbox')}">{$t.trans('Message')}</a> &raquo; {$object.subject()}
+    </div>
+</rt:block>
+
+<rt:block name="contents">
+    <div class="frame-class" id="sub-title">
+        <div class="container-class">
+            <h2 class="inline fleft">{$object.subject()}</h2>
+            <br class="clear" />
+        </div> <!-- #container-s -->
+    </div> <!-- .frame-class -->
+
+
+    <div class="container-class">
+        <div class="column2-lt">
+            <div class="column2-left" id="message-left">
+                <h3>{$t.trans('Boxes')}</h3>
+                <ul id="message-box-list">
+                    <li><a href="{$t.url('message/inbox')}">{$t.trans('System messages')}</a></li>
+                    <li><a href="{$t.url('message/sent')}">{$t.trans('Sent')}</a></li>
+                </ul>
+            </div> <!-- end of colmun2-left -->
+            <div class="column2-right">
+                <div id="message-detail-outer">
+                    <dl>
+                        <dt>{$t.trans('From')}</dt>
+                        <dd>{$object.maintainer_from()}</dd>
+                        <dt>{$t.trans('subject')}</dt>
+                        <dd>{$object.subject()}</dd>
+                        <dt>{$t.trans('message')}</dt>
+                        <dd>{$t.noop($object.fm_description())}</dd>
+                    </dl>
+                </div>
+                <br class="clear" />
+            </div> <!-- end of column2-right -->
+            <br class="clear" />
+        </div> <!-- end of colmun2-lt -->
+    </div> <!-- end of container-class -->
+
+</rt:block>
