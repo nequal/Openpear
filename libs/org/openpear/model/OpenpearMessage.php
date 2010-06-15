@@ -1,7 +1,6 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.mail.Gmail');
-import('org.yabeken.service.Pea');
 /**
  * 
  * @const account gmailアカウント,パスワード
@@ -40,7 +39,7 @@ class OpenpearMessage extends Dao
     	return ($this->unread) ? "unread" : "";
     }
     protected function __save_verify__(){
-        if(!($this->type() === 'system' || $this->type() === 'system_notice') && $this->is_maintainer_from_id()){
+        if(!($this->type() === 'system' || $this->type() === 'system_notice') && !$this->is_maintainer_from_id()){
             Exceptions::add(new OpenpearException('maintainer_from_id required'), 'maintainer_from_id');
         }
     }
@@ -56,11 +55,12 @@ class OpenpearMessage extends Dao
         }
     }
     
-    public function permission(OpenpearMaintainer $maintainer){
-        if($this->maintainer_to_id() === $maintainer->id()
-            || $this->maintainer_from_id() === $maintainer->id()){
+    public function permission(OpenpearMaintainer $maintainer, $throw = false){
+        if($this->maintainer_to_id() == $maintainer->id()
+            || $this->maintainer_from_id() == $maintainer->id()){
             return true;
         }
+        if ($throw) throw new OpenpearException('permission denied');
         return false;
     }
     

@@ -6,18 +6,18 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">{$t.trans('Inbox')} \  Openpear</rt:block>
+<rt:block name="title">{$t.trans('Sent')} \  Openpear</rt:block>
 
 <rt:block name="topic_path">
   <div id="topic-path">
-    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Inbox')}
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Sent')}
   </div>
 </rt:block>
 
 <rt:block name="contents">
   <div class="frame-class" id="sub-title">
     <div class="container-class">
-      <h2 class="inline fleft">{$t.trans('Inbox')}</h2>
+      <h2 class="inline fleft">{$t.trans('Sent')}</h2>
       <br class="clear" />
     </div> <!-- #container-s -->
   </div> <!-- .frame-class -->
@@ -29,8 +29,8 @@
       <h3>{$t.trans('Boxes')}</h3>
 
       <ul id="message-box-list">
-        <li class="current"><a href="{$t.url('message/inbox')}">{$t.trans('System messages')}</a></li>
-        <li><a href="{$t.url('message/sent')}">{$t.trans('Sent')}</a></li>
+        <li><a href="{$t.url('message/inbox')}">{$t.trans('System messages')}</a></li>
+        <li class="current"><a href="{$t.url('message/sent')}">{$t.trans('Sent')}</a></li>
       </ul>
 
 
@@ -42,7 +42,7 @@
       <table id="message-list" rt:param="object_list" rt:var="message">
         <thead>
           <tr>
-            <th class="mesasge-list-from">{$t.trans('From')}</th>
+            <th class="mesasge-list-from">{$t.trans('To')}</th>
             <th class="message-list-title">{$t.trans('Title')}</th>
             <th class="mesasge-list-date">{$t.trans('Date')}</th>
             <th class="message-list-op">{$t.trans('Operations')}</th>
@@ -57,8 +57,8 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr class="even {$message.fm_unread()}">
-            <td><img src="images/global-icon-mail.png" /> Openpear </td>
+          <tr class="even">
+            <td><img src="images/global-icon-mail.png" /> {$message.maintainer_to()}</td>
             <td><a href="{$t.url('message')}/{$message.id()}">{$message.subject()}</a></td>
             <td class="message-list-date">{$message.fm_created()}</td>
             <td><img src="images/global-icon-delete.png" /></td>

@@ -84,12 +84,14 @@
             
             <map url="maintainers/update\.json" method="maintainer_update_json" />
             
-            <map url="message/inbox" method="inbox" template="message/inbox.html" />
-            <map url="message/sentbox" method="sentbox" template="message/sentbox.html" name="message_sentbox" />
-            <map url="message/compose" method="message_compose" template="message/compose.html">
-                <arg name="success_redirect" value="message_sentbox" />
+            <map name="message_inbox" url="message/inbox" method="message_inbox" template="message/inbox.html" />
+            <map name="message_sent" url="message/sent" method="message_sent" template="message/sent.html" />
+            <map name="message_compose" url="message/compose" method="message_compose" template="message/compose.html">
+                <arg name="success_redirect" value="message_sent" />
             </map>
-            <map url="message/(\d+)" method="message" template="message/detail.html" fail_redirect="/message/inbox" />
+            <map url="message/(\d+)" method="message" template="message/detail.html" />
+                <arg name="fail_redirect" value="message_inbox" />
+            </map>
             
             <map name="package_create" url="packages/create" method="package_create" template="package/create.html" />
             <map url="package/(.+)/like/(.+)" method="package_add_favorite" />

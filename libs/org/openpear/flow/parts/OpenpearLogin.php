@@ -76,18 +76,16 @@ class OpenpearLogin extends Flow
         $user = $this->user();
         try {
             $message = C(OpenpearMessage)->find_get(Q::eq('id', $id));
-            if ($massage->permission($user)) {
-                if ($message->maintainer_to_id() === $user->id()) {
-                    $message->unread(false);
-                    $message->save(true);
-                }
-                $this->vars('object', $message);
-                return;
+            $message->permission($user, true);
+            if ($message->maintainer_to_id() === $user->id()) {
+                $message->unread(false);
+                $message->save(true);
             }
+            $this->vars('object', $message);
         } catch (Exception $e) {
             Log::debug($e);
+            $this->redirect_by_map('fail_redirect');
         }
-        $this->redirect_by_map('fail_redirect');
     }
     /**
      * 受信箱
@@ -95,7 +93,7 @@ class OpenpearLogin extends Flow
      * @context OpenpearMessage[] $object_list メッセージ一覧
      * @context Paginator $paginator ページネータ
      */
-    public function inbox() {
+    public function message_inbox() {
         $paginator = new Paginator(20, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearMessage)->find_all(
             $paginator, Q::eq('maintainer_to_id', $this->user()->id()), Q::order('-id')
@@ -105,13 +103,13 @@ class OpenpearLogin extends Flow
     /**
      * 送信したメッセージ
      */
-    public function sentbox() {
-        // TODO 仕様の確認
+    public function message_sent() {
         $user = $this->user();
         $paginator = new Paginator(20, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearMessage)->find_all(
            $paginator, Q::eq('maintainer_from_id', $user->id()), Q::order('-id')
         ));
+        $this->vars('paginator', $paginator);
     }
     /**
      * メッセージを送信
@@ -119,16 +117,18 @@ class OpenpearLogin extends Flow
     public function message_compose() {
         if ($this->is_post()) {
             try {
+                $to_maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $this->in_vars('to')));
+                $message = new OpenpearMessage();
+                $message->cp($this->vars());
+                $message->maintainer_to_id($to_maintainer->id());
+                $message->maintainer_from_id($this->user()->id());
                 switch ($this->in_vars('action')) {
                     case 'confirm':
                         // TODO: put_block
-                        $message = new OpenpearMessage();
-                        $message->cp($this->vars());
                         $this->vars('confirm', $message);
                         break;
                     case 'do':
-                        $message = new OpenpearMessage();
-                        $message->cp($this->vars());
+                    default:
                         $message->save(true);
                         $this->redirect_by_map("success_redirect");
                         break;

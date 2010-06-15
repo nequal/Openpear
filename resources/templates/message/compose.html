@@ -1,0 +1,58 @@
+<rt:extends href="../index.html" />
+<rt:block name="stylesheet">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/inbox.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">{$t.trans('Compose')} \  Openpear</rt:block>
+
+<rt:block name="topic_path">
+    <div id="topic-path">
+        <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Compose')}
+    </div>
+</rt:block>
+
+<rt:block name="contents">
+    <div class="frame-class" id="sub-title">
+        <div class="container-class">
+            <h2 class="inline fleft">{$t.trans('Compose')}</h2>
+            <br class="clear" />
+        </div> <!-- #container-s -->
+    </div> <!-- .frame-class -->
+
+
+    <div class="container-class">
+        <div class="column2-lt">
+            <div class="column2-left" id="message-left">
+                <h3>{$t.trans('Boxes')}</h3>
+                <ul id="message-box-list">
+                    <li><a href="{$t.url('message/inbox')}">{$t.trans('System messages')}</a></li>
+                    <li><a href="{$t.url('message/sent')}">{$t.trans('Sent')}</a></li>
+                </ul>
+            </div> <!-- end of colmun2-left -->
+            <div class="column2-right">
+                <div id="message-compose-outer">
+                    <rt:invalid />
+                    <form action="{$t.url('message/compose')}" method="post" rt:ref="true">
+                        <input type="hidden" name="action" value="do" />
+                        <dl>
+                            <dt>{$t.trans('to')}</dt>
+                            <dd><input type="text" name="to" />
+                            <dt>{$t.trans('subject')}</dt>
+                            <dd><input type="text" name="subject" />
+                            <dt>{$t.trans('message')}</dt>
+                            <dd><textarea name="description" rows="8" cols="60"></textarea></dd>
+                            <dt>&nbsp;</dt>
+                            <dd><input type="submit" value="{$t.trans('Send')}" /></dd>
+                        </dl>
+                    </form>
+                </div>
+                <br class="clear" />
+            </div> <!-- end of column2-right -->
+            <br class="clear" />
+        </div> <!-- end of colmun2-lt -->
+    </div> <!-- end of container-class -->
+
+</rt:block>
