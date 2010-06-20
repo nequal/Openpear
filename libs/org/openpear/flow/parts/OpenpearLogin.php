@@ -18,9 +18,11 @@ class OpenpearLogin extends Flow
         $this->vars('pear_alias', OpenpearConfig::pear_alias('openpear'));
         $this->vars('svn_url', OpenpearConfig::svn_url('http://svn.openpear.org'));
         $this->vars('ot', new OpenpearTemplf($this->user()));
-        $unread_messages_count = C(OpenpearMessage)->find_count(Q::eq('maintainer_to_id', $this->user()->id()), Q::eq('unread', true));
-        if ($unread_messages_count > 0) {
-            $this->vars('unread_messages_count', $unread_messages_count);
+        if ($this->is_login()) {
+            $unread_messages_count = C(OpenpearMessage)->find_count(Q::eq('maintainer_to_id', $this->user()->id()), Q::eq('unread', true));
+            if ($unread_messages_count > 0) {
+                $this->vars('unread_messages_count', $unread_messages_count);
+            }
         }
     }
     /**
