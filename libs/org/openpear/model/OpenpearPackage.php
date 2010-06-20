@@ -74,6 +74,22 @@ class OpenpearPackage extends Dao
         return $role;
     }
     
+    public function generate_release_notes() {
+        if ($this->is_latest_release_id()) {
+            $latest_release = $this->latest_release();
+            $changesets = C(OpenpearChangeset)->find_all(Q::eq('package_id', $this->id), Q::gte('created', $latest_release->created()));
+        } else {
+            $changesets = C(OpenpearChangeset)->find_all(Q::eq('package_id', $this->id));
+        }
+        $notes = '';
+        foreach ($changesets as $changeset) {
+            $notes .= '- ';
+            $notes .= $changeset->comment();
+            $notes .= "\n";
+        }
+        return $notes;
+    }
+    
     /**
      * リポジトリ種類別のコマンドを取得
      * @return string $command

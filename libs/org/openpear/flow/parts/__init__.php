@@ -1,5 +1,4 @@
 <?php
-import('org.yabeken.service.Pea');
 import('org.rhaco.service.OpenIDAuth');
 import('org.rhaco.net.xml.Atom');
 import('org.openpear.pear.PackageProjector');

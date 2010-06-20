@@ -430,6 +430,7 @@ class OpenpearLogin extends Flow
             }
         } else {
             $this->vars('revision', $package->recent_changeset());
+            $this->vars('package_notes', $package->generate_release_notes());
             $this->cp(new PackageProjectorConfig());
         }
         $this->vars('package', $package);
