@@ -65,7 +65,7 @@ pre {
   border: solid 1px #ccc;
   background: #f0f0dd;
   overflow: auto;
-  font-family: "Courier New";
+  font-family: Menlo, Monaco, "Courier New";
 }
 code {
 }

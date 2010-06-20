@@ -95,6 +95,18 @@
               <li><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> <em>-- {$ot.date_ago($package.released_at())}</em></li>
             </ul>
           </div>
+          
+          <div id="main-column-center">
+              <h2><a href="{$t.url('packages')}/ranking">{$t.trans('Most Downloaded')}</a></h2>
+              <rt:comment>
+              <ul id="main-cat-list" rt:param="primary_tags" rt:var="tag">
+                <li><a href="{$t.url('packages')}?category=$tag->name()}">{$tag->name()}</a></li>
+              </ul>
+              <div id="main-cat-more">
+                <a href="{$t.url('packages')}/ranking">{$t.trans('more')} &raquo;</a>
+              </div>
+              </rt:comment>
+            </div>
 
           <div id="main-column-left">
             <h2><a href="{$t.url('packages')}/tags">{$t.trans('Active Categories')}</a></h2>

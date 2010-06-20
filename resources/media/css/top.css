@@ -12,7 +12,7 @@
 /** main-column
  */
 #top-main {
-  padding: 20px 0;
+  padding: 5px 0 20px;
   height: 270px;
   border-top: solid 5px #ccc;
   background: #7b011d url(../images/top-main-bg.gif) bottom repeat-x;
@@ -30,14 +30,42 @@
   border: none;
   text-decoration: none;
 }
+#top-main .container-class {
+}
 
 #main-column {
 }
 
 #main-column-left {
-  margin-right: 330px;
+  width: 300px;
+  margin-right: 305px;
   padding: 0 10px;
 }
+
+#main-column-center {
+  float: right;
+  margin-right: 15px;
+  width: 300px;
+}
+
+#main-column-right {
+  float: right;
+  width: 300px;
+}
+#main-column-left h2 ,
+#main-column-center h2 ,
+#main-column-right h2 {
+  margin-top: 0;
+  padding-top: 10px;
+}
+#main-column-right li {
+  padding: 0 0 3px 5px;
+}
+#main-column-right em {
+  color: #c0c0c0;
+  font-size: 0.8em;
+}
+
 
 #main-cat-list {
   margin: 0;
@@ -55,24 +83,6 @@
   clear: left;
   text-align: right;
 }
-
-#main-column-right {
-  float: right;
-  width: 320px;
-}
-#main-column-left h2 ,
-#main-column-right h2 {
-  margin-top: 0;
-  padding-top: 10px;
-}
-#main-column-right li {
-  padding: 0 0 3px 5px;
-}
-#main-column-right em {
-  color: #c0c0c0;
-  font-size: 0.8em;
-}
-
 #main-recent {
   padding: 0;
   margin: 0;
@@ -125,4 +135,15 @@
 #main-dream em {
   display: block;
   text-align: right;
+}
+
+#main-site-description
+{
+  text-align: left;
+  font-size: 0.95em;
+  margin-top: 0;
+}
+#main-site-description p
+{
+  line-height: 1.1em;
 }
