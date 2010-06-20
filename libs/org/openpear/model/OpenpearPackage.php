@@ -239,10 +239,12 @@ class OpenpearPackage extends Dao
         try {
             $tag = C(OpenpearTag)->find_get(Q::eq('id', $tag_id));
             $package_tag = C(OpenpearPackageTag)->find_get(Q::eq('tag_id', $tag->id()), Q::eq('package_id', $this->id()));
-            $package_tag->find_delete(Q::eq('tag_id', $tag->id()), Q::eq('package_id', $this->id()));
+            C($package_tag)->find_delete(Q::eq('tag_id', $tag->id()), Q::eq('package_id', $this->id()));
             $package_tag->after_delete();
             C($package_tag)->commit();
-        } catch(Exception $e){}
+        } catch(Exception $e){
+            Log::debug($e);
+        }
     }
     
     /**

@@ -255,7 +255,7 @@ class OpenpearLogin extends Flow
                 Log::debug($e);
             }
         }
-        $this->redirect_by_map('package_detail', $package_name);
+        $this->redirect_by_map('package_manage', $package_name);
     }
     /**
      * ？？？
@@ -276,7 +276,7 @@ class OpenpearLogin extends Flow
                 Log::debug($e);
             }
         }
-        $this->redirect_by_map('package_detail', $package_name);
+        $this->redirect_by_map('package_manage', $package_name);
     }
     
     /**
