@@ -410,6 +410,16 @@ class OpenpearNoLogin extends Flow
         }
         return $info;
     }
+    
+    /**
+     * リリースパッケージの ATOM フィード
+     **/
+    public function packages_releases_atom() {
+        Atom::convert(trans('Recent Releases'), url('packages/releases.atom'),
+            C(OpenpearRelease)->find_all(new Paginator(20), Q::order('-id'))
+        )->output();
+    }
+    
     /**
      * パッケージのタイムライン？
      * @param string $package_name パッケージ名

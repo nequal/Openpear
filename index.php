@@ -57,6 +57,7 @@
                 <arg name="released_at" value="package/models_released.html" />
             </map>
             <map url="packages/tags" method="packages_tags" template="package/tags.html" />
+            <map url="packages/releases\.atom" method="packages_releases_atom" />
             
             <map name="package_detail" url="package/([^/]+)" method="package" template="package/model.html" />
             <map url="package/(.+)/timeline" method="package_timeline" template="package/timeline.html" />

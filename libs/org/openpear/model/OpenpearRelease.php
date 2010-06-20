@@ -81,7 +81,7 @@ class OpenpearRelease extends Dao implements AtomInterface
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_title()
      */
     public function atom_title(){
-        return $this->package_name();
+        return implode(' ', array($this->package_name(), $this->fm_version()));
     }
     /**
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_published()
@@ -105,13 +105,13 @@ class OpenpearRelease extends Dao implements AtomInterface
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_content()
      */
     public function atom_content(){
-    	return Gettext::trans('{1} released new version.', $this->package_name());
+    	return $this->notes();
     }
     /**
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_summary()
      */
     public function atom_summary(){
-        return Gettext::trans('{1} released new version.', $this->package_name());
+        return $this->notes();
     }
     /**
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_author()
