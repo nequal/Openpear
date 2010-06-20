@@ -1,4 +1,3 @@
-<rt:extends href="base.html" />
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
   <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
@@ -21,8 +20,8 @@
 <h3>{$t.trans('Release Package Confirm')}</h3>
 
 
-<form action="{$t.url('package')}/{$package.name()}/manage/release_do" method="post" id="release-package" rt:ref="true">
-
+<form action="{$t.request_url()}" method="post" id="release-package" rt:ref="true">
+  <input type="hidden" name="action" value="" />
   <dl>
     <dt>{$t.trans('Target revision')}: </dt>
     <dd>

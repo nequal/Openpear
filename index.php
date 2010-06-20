@@ -88,6 +88,7 @@
             <map name="message_inbox" url="message/inbox" method="message_inbox" template="message/inbox.html" />
             <map name="message_sent" url="message/sent" method="message_sent" template="message/sent.html" />
             <map name="message_compose" url="message/compose" method="message_compose" template="message/compose.html">
+                <arg name="confirm_template" value="message/compose_confirm.html" />
                 <arg name="success_redirect" value="message_sent" />
             </map>
             <map url="message/(\d+)" method="message" template="message/detail.html" />
@@ -106,9 +107,10 @@
             <map url="package/(.+)/maintainer/add" method="package_add_maintainer" />
             <map url="package/(.+)/maintainer/remove" method="package_remove_maintainer" />
             
-            <map url="package/(.+)/manage/release" method="package_release" template="package/release.html" />
-            <map url="package/(.+)/manage/release_confirm" method="package_release_confirm" template="package/release_confirm.html" />
-            <map url="package/(.+)/manage/release_do" method="package_release_do" />
+            <map url="package/(.+)/manage/release" method="package_release" template="package/release.html">
+                <arg name="confirm_template" value="package/release_confirm.html" />
+            </map>
+            <map url="package/(.+)/manage/release/upload" method="package_release_by_upload" template="package/release_by_upload.html" />
             <map url="package/(.+)/manage/release_done" method="package_release_done" template="message.html" />
         </maps>
         <maps class="org.openpear.flow.parts.OpenpearAPI" url="api">

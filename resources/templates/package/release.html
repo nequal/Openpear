@@ -169,7 +169,7 @@
 <h3>{$t.trans('Release Package')}</h3>
 <a href="{$t.url('package')}/{$package.name()}/manage/release/upload">&raquo; {$t.trans('Release by upload.')}</a> <span class="caption"> -- {$t.trans('if you want to release a package by uploading your tarball, click here.')}</span>
 
-<form action="{$t.url('package')}/{$package.name()}/manage/release_confirm" method="post" id="release-package" rt:ref="true">
+<form action="{$t.request_url()}" method="post" id="release-package" rt:ref="true">
   <input type="hidden" name="package_id" value="" />
   <dl>
     <rt:if param="{$package.is_external_repository()}" value="false">

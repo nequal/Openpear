@@ -124,7 +124,7 @@ class OpenpearLogin extends Flow
                 $message->maintainer_from_id($this->user()->id());
                 switch ($this->in_vars('action')) {
                     case 'confirm':
-                        // TODO: put_block
+                        $this->put_block($this->map_arg('confirm_template'));
                         $this->vars('confirm', $message);
                         break;
                     case 'do':
@@ -392,82 +392,74 @@ class OpenpearLogin extends Flow
      * @context OpenpearPackage $package パッケージ
      */
     public function package_release($package_name) {
-        // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $package->permission($this->user());
-        if (!$this->is_post()) {
+        if ($this->is_post()) {
+            try {
+                $build_conf = new PackageProjectorConfig();
+                $build_conf->cp($this->vars());
+                if ($this->is_vars('extra_conf')) {
+                    $build_conf->parse_ini_string($this->in_vars('extra_conf'));
+                }
+                foreach (C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge) {
+                    $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
+                }
+                $build_conf->package_package_name($package->name());
+                $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
+                
+                if ($this->in_vars('action') == 'do') {
+                    $release_queue = new OpenpearReleaseQueue();
+                    $release_queue->cp($this->vars());
+                    $release_queue->package_id($package->id());
+                    $release_queue->maintainer_id($this->user()->id());
+                    $release_queue->build_conf($build_conf->get_ini());
+                    $release_queue->notes($this->in_vars('package_notes'));
+
+                    $queue = new OpenpearQueue();
+                    $queue->type('build');
+                    $queue->data(serialize($release_queue));
+                    $queue->save();
+                    C($queue)->commit();
+                    $this->redirect_method('package_release_done', $package_name);// FIXME
+                } else {
+                    $this->vars('action', 'do');
+                    $this->put_block($this->map_arg('confirm_template'));
+                }
+            } catch (Exception $e) {
+                Log::debug($e);
+            }
+        } else {
             $this->vars('revision', $package->recent_changeset());
             $this->cp(new PackageProjectorConfig());
         }
         $this->vars('package', $package);
         $this->vars('package_id', $package->id());
     }
+    
     /**
-     * パッケージのリリースの確認？
+     * ファイルアップロードからリリース
      * @param string $package_name パッケージ名
-     */
-    public function package_release_confirm($package_name) {
-        // TODO 仕様の確認
-        if ($this->is_post()) {
+     **/
+    public function package_release_by_upload($package_name) {
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $package->permission($this->user());
+        if ($this->is_post() && $this->is_files('package_file')) {
             try {
-                $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
-                $charge = $package->permission($this->user());
-                $build_conf = new PackageProjectorConfig();
-                $build_conf->cp($this->vars());
-                if ($this->is_vars('extra_conf')) $build_conf->parse_ini_string($this->in_vars('extra_conf'));
-                foreach (C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge) {
-                    $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
+                $package_file = $this->in_files('package_file');
+                $package_file->generate(work_path('upload/'. $package_name. '-'. date('YmdHis'). '.tgz'));
+                if (Tag::setof($xml, file_get_contents(sprintf('phar://%s/package.xml', $package_file->fullname())), 'package')) {
+                    $uploaded_name = $xml->f('name.value()');
+                    $uploaded_channel = $xml->f('channel.value()');
+                    if ($uploaded_name != $package->name() || $uploaded_channel != OpenpearConfig::pear_domain('openpear.org')) {
+                        throw new OpenpearException('package name or channel');
+                    }
+                    // TODO: キューの追加
                 }
-                $build_conf->package_package_name($package->name());
-                $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
-                $this->save_current_vars();
-                $this->vars('package', $package);
-                return $this;
             } catch (Exception $e) {
-                $this->save_current_vars();
-                $this->redirect_method('package_release', $package_name);
+                Log::debug($e);
+                Exceptions::add($e);
             }
         }
-        $this->redirect_by_map('package_detail', $package_name);
-    }
-    /**
-     * パッケージのリリース
-     * @param string $package_name パッケージ名
-     */
-    public function package_release_do($package_name) {
-        // TODO 仕様の確認
-        if ($this->is_post()) {
-            try {
-                $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
-                $package->permission($this->user());
-                $build_conf = new PackageProjectorConfig();
-                $build_conf->cp($this->vars());
-                if ($this->is_vars('extra_conf')) $build_conf->parse_ini_string($this->in_vars('extra_conf'));
-                foreach (C(OpenpearCharge)->find(Q::eq('package_id', $package->id())) as $charge) {
-                    $build_conf->maintainer(R(PackageProjectorConfigMaintainer)->set_charge($charge));
-                }
-                $build_conf->package_package_name($package->name());
-                $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
-
-                $release_queue = new OpenpearReleaseQueue();
-                $release_queue->cp($this->vars());
-                $release_queue->package_id($package->id());
-                $release_queue->maintainer_id($this->user()->id());
-                $release_queue->build_conf($build_conf->get_ini());
-                $release_queue->notes($this->in_vars('package_notes'));
-
-                $queue = new OpenpearQueue();
-                $queue->type('build');
-                $queue->data(serialize($release_queue));
-                $queue->save();
-                C($queue)->commit();
-                $this->redirect_method('package_release_done', $package_name);
-            } catch (Exception $e) {
-                $this->save_current_vars();
-                $this->redirect_method('package_release', $package_name);
-            }
-        }
-        $this->redirect_by_map('package_detail', $package_name);
     }
     
     /**
