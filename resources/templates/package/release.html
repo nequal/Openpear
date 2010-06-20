@@ -137,12 +137,12 @@
             {
               id: {$i},
               values: {
-                package_name: "{$d['package_name']}",
-                optional: "{$d['type']}",
-                channel: "{$d['channel']}",
-                channel_other: "{$d['channel_other']}",
-                min: "{$d['min']}",
-                max: "{$d['max']}"
+                name: "{$d.package_name()}",
+                optional: "{$d.type()}",
+                channel: "{$d.channel()}",
+                channel_other: "{$d.channel_other()}",
+                min: "{$d.min()}",
+                max: "{$d.max()}"
               }
             },
             </rt:loop>
