@@ -18,6 +18,10 @@ class OpenpearLogin extends Flow
         $this->vars('pear_alias', OpenpearConfig::pear_alias('openpear'));
         $this->vars('svn_url', OpenpearConfig::svn_url('http://svn.openpear.org'));
         $this->vars('ot', new OpenpearTemplf($this->user()));
+        $unread_messages_count = C(OpenpearMessage)->find_count(Q::eq('maintainer_to_id', $this->user()->id()), Q::eq('unread', true));
+        if ($unread_messages_count > 0) {
+            $this->vars('unread_messages_count', $unread_messages_count);
+        }
     }
     /**
      * ダッシュボード
@@ -77,7 +81,7 @@ class OpenpearLogin extends Flow
         try {
             $message = C(OpenpearMessage)->find_get(Q::eq('id', $id));
             $message->permission($user, true);
-            if ($message->maintainer_to_id() === $user->id()) {
+            if ($message->maintainer_to_id() == $user->id()) {
                 $message->unread(false);
                 $message->save(true);
             }
@@ -420,7 +424,14 @@ class OpenpearLogin extends Flow
                     $queue->data(serialize($release_queue));
                     $queue->save();
                     C($queue)->commit();
-                    $this->redirect_method('package_release_done', $package_name);// FIXME
+                    
+                    $message = new OpenpearMessage('type=system_notice,mail=false');
+                    $message->maintainer_to_id($this->user()->id());
+                    $message->subject(trans('リリースキューに追加されました'));
+                    $message->description(trans('{1}のリリースを受け付けました。リリースの完了後，メールでお知らせします。', $package->name()));
+                    $message->save(true);
+                    
+                    $this->redirect_by_map('dashboard');
                 } else {
                     $this->vars('action', 'do');
                     $this->put_block($this->map_arg('confirm_template'));
@@ -468,21 +479,6 @@ class OpenpearLogin extends Flow
                 Exceptions::add($e);
             }
         }
-    }
-    
-    /**
-     * リリースキュー追加完了通知
-     * 
-     * @context string $title ページタイトル
-     * @context string $message 本文
-     */
-    public function package_release_done($package_name) {
-        $this->vars('title', 'Your queue added!');
-        $this->vars('message', HatenaSyntax::render(text('
-            * Your queue added!
-            
-            Wait a mail.
-        ')));
     }
     
     /**

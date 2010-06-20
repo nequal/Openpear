@@ -1,0 +1,10 @@
+** {$t.trans('Congratulations')}
+{$t.trans('Your package is now released.')}
+
+** {$t.trans('To install package ...')}
+>||
+% pear install openpear/{$package.name()}
+||<
+
+** {$t.trans('Help')}
+- See help: [http://openpear.org/help]

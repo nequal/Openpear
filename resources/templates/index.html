@@ -44,7 +44,7 @@
             <li><a href="{$t.url()}">{$t.trans('Home')}</a> &nbsp; | </li>
             <li><img src="{$t.user().avatar()}" /></li>
             <li><a href="{$t.url('dashboard')}">{$t.trans('Dashboard')}</a></li>
-            <li><a href="{$t.url('message/inbox')}">{$t.trans('Inbox')}</a></li>
+            <li><a href="{$t.url('message/inbox')}">{$t.trans('Inbox')}<rt:if param="{$unread_messages_count}"> ({$unread_messages_count})</rt:if></a></li>
             <li><a href="{$t.url('maintainer')}/{$t.user().name()}">{$t.trans('Profile')}</a></li>
             <li><a href="{$t.url('account/logout')}">{$t.trans('Log out')}</a></li>
           <rt:else />

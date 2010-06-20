@@ -13,7 +13,7 @@ class OpenpearMessage extends Dao
     protected $subject;
     protected $description;
     protected $unread;
-    protected $type;
+    protected $type = 'normal';
     protected $created;
     
     static protected $__id__ = 'type=serial';
@@ -33,13 +33,12 @@ class OpenpearMessage extends Dao
     protected function __init__(){
         $this->created = time();
         $this->unread = true;
-        $this->type = 'normal';
     }
     protected function __fm_unread__(){
     	return ($this->unread) ? "unread" : "";
     }
     protected function __save_verify__(){
-        if(!($this->type() === 'system' || $this->type() === 'system_notice') && !$this->is_maintainer_from_id()){
+        if($this->type() !== 'system' && $this->type() !== 'system_notice' && !$this->is_maintainer_from_id()){
             Exceptions::add(new OpenpearException('maintainer_from_id required'), 'maintainer_from_id');
         }
     }
