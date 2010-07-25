@@ -15,6 +15,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
         || preg_match('/is deprecated$/', $errstr)
         || preg_match('/^Use of undefined constant/', $errstr)
         || preg_match('/^Declaration of/', $errstr)
+        || preg_match('/^Redefining already defined constructor/', $errstr)
     ) {
         return true;
     }

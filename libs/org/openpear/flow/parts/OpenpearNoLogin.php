@@ -30,7 +30,7 @@ class OpenpearNoLogin extends Flow
      * @request string $openid_url openid認証サーバのURL
      */
     public function login_by_openid() {
-        if ($this->is_login()) $this->redirect_by_map('top');
+        if ($this->is_login()) $this->redirect_by_map('index');
         if ((($this->in_vars('openid_url') != "") || $this->in_vars('openid_verify')) && OpenIDAuth::login($openid_user, $this->in_vars('openid_url'))) {
             try {
                 $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(
@@ -106,7 +106,7 @@ class OpenpearNoLogin extends Flow
             case 'packages':
             default: $this->redirect_method('packages', array('q' => $this->in_vars('q')));
         }
-        $this->redirect_by_map('top');
+        $this->redirect_by_map('index');
     }
     /**
      * タグ一覧
@@ -196,7 +196,6 @@ class OpenpearNoLogin extends Flow
                     $openid_maintainer->save();
                     $this->rm_sessions('openid_identity');
                 }
-                C($account)->commit();
                 $this->user($account);
                 parent::login();
                 $this->redirect_by_map("success_redirect");
@@ -326,7 +325,7 @@ class OpenpearNoLogin extends Flow
                 }
             }
         } else {
-            $this->redirect_by_map('package_detail', $package_name);
+            $this->redirect_by_map('package', $package_name);
         }
         $this->vars('path', $path);
         $this->vars('info', self::format_info($info));

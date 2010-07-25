@@ -10,11 +10,20 @@ class OpenpearQueue extends Dao
     protected $created;
     protected $updated;
     static protected $__id__ = 'type=serial';
-    static protected $__type__ = 'type=choice(build,mail),require=true';
+    static protected $__type__ = 'type=choice(build,upload_release,mail),require=true';
     static protected $__data__ = 'type=text';
     static protected $__locked__ = 'type=timestamp';
     static protected $__created__ = 'type=timestamp';
     static protected $__updated__ = 'type=timestamp';
+
+    static public function fetch_queues($type, $limit=5) {
+        return C(OpenpearQueue)->find_all(
+            new Paginator($limit),
+            Q::lt('locked', time()),
+            Q::eq('type', $type),
+            Q::order('updated')
+        );
+    }
 
     /**
      * タスクの実行開始
