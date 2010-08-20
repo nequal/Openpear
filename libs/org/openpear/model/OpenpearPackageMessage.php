@@ -1,5 +1,4 @@
 <?php
-import('org.yabeken.service.Pea');
 import('org.rhaco.storage.db.Dao');
 
 class OpenpearPackageMessage extends Dao
