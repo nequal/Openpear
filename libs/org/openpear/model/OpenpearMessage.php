@@ -46,7 +46,7 @@ class OpenpearMessage extends Dao
         if($this->mail()){
             list($account,$password) = OpenpearConfig::gmail_account();
             $mail = new Gmail($account, $password);
-            $mail->to($this->maintainer_to()->mail());
+            $mail->to($this->maintainer_to()->mail(), str($this->maintainer_to()));
             $mail->from($mail->from(), 'Openpear');
             $mail->subject($this->subject());
             $mail->message(strip_tags($this->fm_description()));
