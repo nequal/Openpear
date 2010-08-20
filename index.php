@@ -117,7 +117,7 @@
             <map url="check_repo_exists" name="check_repo_exists" />
         </maps>
     </handler>
-    
+
     <handler class="com.tokushimakazutaka.flow.parts.Developer" url="dev" hide="both" />
 </app>
 
