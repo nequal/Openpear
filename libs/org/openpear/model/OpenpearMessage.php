@@ -30,6 +30,25 @@ class OpenpearMessage extends Dao
     private $maintainer_from;
     static protected $__mail__ = 'type=boolean,extra=true';
     
+    static public function unread_count(OpenpearMaintainer $maintainer) {
+        $key = array('openpear_message_unread', $maintainer->id());
+        if (Store::has($key)) {
+            return Store::get($key);
+        }
+        $unread_messages_count = C(__CLASS__)->find_count(Q::eq('maintainer_to_id', $maintainer->id()), Q::eq('unread', true));
+        Store::set($key, $unread_messages_count);
+        return $unread_messages_count;
+    }
+
+    public function permission(OpenpearMaintainer $maintainer, $throw = false){
+        if($this->maintainer_to_id() == $maintainer->id()
+            || $this->maintainer_from_id() == $maintainer->id()){
+            return true;
+        }
+        if ($throw) throw new OpenpearException('permission denied');
+        return false;
+    }
+    
     protected function __init__(){
         $this->created = time();
         $this->unread = true;
@@ -53,14 +72,10 @@ class OpenpearMessage extends Dao
             $mail->send();
         }
     }
-    
-    public function permission(OpenpearMaintainer $maintainer, $throw = false){
-        if($this->maintainer_to_id() == $maintainer->id()
-            || $this->maintainer_from_id() == $maintainer->id()){
-            return true;
+    protected function __after_save__() {
+        foreach (array($this->maintainer_to_id, $this->maintainer_from_id) as $id) {
+            Store::delete(array('openpear_message_unread', $id));
         }
-        if ($throw) throw new OpenpearException('permission denied');
-        return false;
     }
     
     public function maintainer_to(){
