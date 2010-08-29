@@ -51,8 +51,10 @@
       <pre>% pear install {$pear_alias}/{$object.installName()}</pre>
       <p class="aright"><a href="{$t.url('package')}/{$object.name()}/downloads">{$t.trans('View All Releases')} &gt;&gt;</a></p>
       
-      <h3>{$t.trans('Changes')}</h3>
-      <pre>{$package.latest_release().notes()}</pre>
+      <rt:if param="{$package.latest_release().is_notes()}">
+          <h3>{$t.trans('Changes')}</h3>
+          <pre>{$package.latest_release().notes()}</pre>
+      </rt:if>
 
     <rt:else />
     <p class="info">{$t.trans('There are no releases for this package.')}<br />
