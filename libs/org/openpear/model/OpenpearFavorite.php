@@ -30,6 +30,8 @@ class OpenpearFavorite extends Dao
     }
     protected function __after_save__(){
         self::recount_favorites($this->package_id());
+        C($this)->commit();
+
         $timeline = new OpenpearTimeline();
         $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">liked</span> <a href="%s">%s</a>',
             url('maintainer/'. $this->maintainer()->name()),

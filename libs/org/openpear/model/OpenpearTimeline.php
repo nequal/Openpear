@@ -25,6 +25,25 @@ class OpenpearTimeline extends Dao implements AtomInterface
     protected function __init__(){
         $this->created = time();
     }
+    protected function __create_verify__() {
+        if ($this->type == 'favorite') {
+            try {
+                $timeline = C(__CLASS__)->find_get(
+                    Q::eq('type', 'favorite'),
+                    Q::eq('maintainer_id', $this->maintainer_id),
+                    Q::eq('package_id', $this->package_id)
+                );
+                if ($timeline instanceof OpenpearTimeline) {
+                    Exceptions::add(new RuntimeException());
+                    return false;
+                }
+            } catch (NotfoundDaoException $e) {
+                # pass
+            } catch (Exception $e) {
+                Log::debug($e);
+            }
+        }
+    }
     static public function get_by_maintainer(OpenpearMaintainer $maintainer, $limit = 20){
         try {
             $favorites = C(OpenpearFavorite)->find_all(Q::eq('maintainer_id', $maintainer->id()));
