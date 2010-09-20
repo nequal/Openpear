@@ -44,6 +44,9 @@
           <li<rt:block name="package_navi_current_top"></rt:block>><a href="{$t.url('package')}/{$package.name()}">{$t.trans('Top')}</a></li>
           <li<rt:block name="package_navi_current_download"></rt:block>><a href="{$t.url('package')}/{$package.name()}/downloads">{$t.trans('Downloads')}</a></li>
           <li<rt:block name="package_navi_current_doc"></rt:block>><a href="{$t.url('package')}/{$package.name()}/doc">{$t.trans('Documentation')}</a></li>
+          <rt:if param="{$package.is_url()}">
+            <li><a href="{$package.url()}">{$t.trans('Site')}</a></li>
+          </rt:if>
           <rt:if param="{$package.is_external_repository()}" value="false"><li<rt:block name="package_navi_current_src"></rt:block>><a href="{$t.url('package')}/{$package.name()}/src">{$t.trans('Source')}</a></li></rt:if>
           <rt:if param="{$t.logined()}" value="true">
             <rt:if param="{$package.permission($t.user(),false)}">
@@ -130,22 +133,20 @@
               </rt:if>
               <br class="clear">
             </rt:if>
-            
-            <rt:comment>
+
             <h3>{$t.trans('Dependencies')}</h3>
             <ul class="list-standard">
               <li>- <a href="">openpear/Fuga (>= 0.1.3)</a></li>
               <li>- <a href="">pear/DB (>= 1.0.0)</a></li>
             </ul>
-            </rt:comment>
             <br class="clear">
           </div>
-          
+
         </div> <!-- end of column2 -->
-        
+
         <div class="package-changes">
         </div>
-        
+
         <h3>{$t.trans('Timeline')} <a href="{$t.url('package')}/{$package.name()}/timelines.atom"><img src="./images/global-icon-feed-dark.png" alt="Feed: Recent Releases" /></a></h3>
         <div class="timeline timeline-user">
           <ul rt:param="timelines" rt:var="timeline">
