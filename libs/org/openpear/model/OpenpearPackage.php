@@ -73,7 +73,7 @@ class OpenpearPackage extends Dao
         }
         return $role;
     }
-    
+
     public function generate_release_notes() {
         if ($this->is_latest_release_id()) {
             $latest_release = $this->latest_release();
@@ -89,7 +89,7 @@ class OpenpearPackage extends Dao
         }
         return $notes;
     }
-    
+
     /**
      * リポジトリ種類別のコマンドを取得
      * @return string $command
@@ -412,6 +412,12 @@ class OpenpearPackage extends Dao
              Exceptions::add(new OpenpearException('name is NOT valid. ### FIXME ###'), 'name');
          }
          return true;
+    }
+
+    protected function __verify_url__() {
+        if ($this->repository_uri_select() == 2 && empty($this->url)) {
+            Exceptions::add(new OpenpearException('URL is required when using external repository'), 'url');
+        }
     }
 
     protected function __verify_external_repository__(){
