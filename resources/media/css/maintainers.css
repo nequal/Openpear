@@ -83,3 +83,13 @@
   margin-left: 15px;
 }
 
+#maintainer-profile form,
+#maintainer-profile input
+{
+  display: inline;
+}
+#maintainer-profile span.editable_field
+{
+  width: 100px;
+  min-width: 200px;
+}
