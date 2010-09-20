@@ -414,6 +414,7 @@ form dl dd {
 }
 form select,
 form select > option,
+form input[type="password"],
 form input[type="text"],
 form input[type="file"],
 form textarea
@@ -429,6 +430,7 @@ form select > option {
   padding: 0;
 }
 form select:focus,
+form input[type="password"]:focus,
 form input[type="text"]:focus,
 form input[type="file"]:focus,
 form textarea:focus

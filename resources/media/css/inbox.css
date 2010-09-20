@@ -44,12 +44,14 @@
   border: none;
 }
 
+#message-detail-outer ,
 #message-list-outer {
   margin-top: 20px;
   border: solid 4px #7B011D;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -o-border-radius: 5px;
+  border-radius: 5px;
 }
 
 #message-list {
@@ -112,3 +114,51 @@
   background: #d3d6dd;
 }
 
+.message-detail-from,
+.message-detail-meta,
+.message-detail-body {
+  padding: 5px;
+}
+.message-detail-from
+{
+  float: left;
+}
+.message-detail-meta
+{
+  float: right;
+}
+.message-detail-body {
+  clear: both;
+}
+h3.message-subject
+{
+  margin: 1em 0 0.5em;
+  line-height: 150%;
+}
+
+.message-form-markasread
+{
+  margin-top: 10px;
+}
+
+.message-form-markasread input
+{
+  border: solid 1px #ccc;
+  font-size: 1em;
+  padding: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  background: -moz-linear-gradient(-90deg, #FFFFFF 0%, #cccccc 100%) repeat scroll 0 0 #dedede;
+}
+.message-form-markasread input:hover
+{
+  background: #ccc;
+  background: -moz-linear-gradient(-90deg, #FFFFFF 0%, #dedede 100%) repeat scroll 0 0 #dedede;
+}
+.message-form-markasread input:active
+{
+  background: #fff;
+  background: -moz-linear-gradient(-90deg, #dedede 0%, #ffffff 100%) repeat scroll 0 0 #dedede;
+}

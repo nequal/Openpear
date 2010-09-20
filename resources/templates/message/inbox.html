@@ -30,15 +30,20 @@
 
       <ul id="message-box-list">
         <li class="current"><a href="{$t.url('message/inbox')}">{$t.trans('System messages')}</a></li>
+        <rt:comment>
         <li><a href="{$t.url('message/sent')}">{$t.trans('Sent')}</a></li>
+        </rt:comment>
       </ul>
 
 
     </div> <!-- end of colmun2-left -->
     <div class="column2-right">
 
-      <div id="message-list-outer">
+      <form action="" class="message-form-markasread">
+        <input type="submit" name="" value="{$t.trans('Mark all as read')}" />
+      </form>
 
+      <div id="message-list-outer">
       <table id="message-list" rt:param="object_list" rt:var="message">
         <thead>
           <tr>

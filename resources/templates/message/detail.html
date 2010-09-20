@@ -6,18 +6,18 @@
     <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
-<rt:block name="title">{$object.subject()} \ {$t.trans('Message')} \  Openpear</rt:block>
+<rt:block name="title">{$object.subject()} \ {$t.trans('Inbox')} \  Openpear</rt:block>
 
 <rt:block name="topic_path">
     <div id="topic-path">
-        <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; <a href="{$t.url('message/inbox')}">{$t.trans('Message')}</a> &raquo; {$object.subject()}
+        <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; <a href="{$t.url('message/inbox')}">{$t.trans('Inbox')}</a> &raquo; {$object.subject()}
     </div>
 </rt:block>
 
 <rt:block name="contents">
     <div class="frame-class" id="sub-title">
         <div class="container-class">
-            <h2 class="inline fleft">{$object.subject()}</h2>
+            <h2 class="inline fleft">{$object.subject()} \ {$t.trans('Inbox')} \  Openpear</h2>
             <br class="clear" />
         </div> <!-- #container-s -->
     </div> <!-- .frame-class -->
@@ -29,19 +29,27 @@
                 <h3>{$t.trans('Boxes')}</h3>
                 <ul id="message-box-list">
                     <li><a href="{$t.url('message/inbox')}">{$t.trans('System messages')}</a></li>
-                    <li><a href="{$t.url('message/sent')}">{$t.trans('Sent')}</a></li>
+                  <rt:comment>
+                  <li><a href="{$t.url('message/sent')}">{$t.trans('Sent')}</a></li>
+                  </rt:comment>
                 </ul>
             </div> <!-- end of colmun2-left -->
             <div class="column2-right">
+                <h3 class="message-subject">{$object.subject()}</h3>
                 <div id="message-detail-outer">
-                    <dl>
-                        <dt>{$t.trans('From')}</dt>
-                        <dd>{$object.maintainer_from()}</dd>
-                        <dt>{$t.trans('subject')}</dt>
-                        <dd>{$object.subject()}</dd>
-                        <dt>{$t.trans('message')}</dt>
-                        <dd>{$t.noop($object.fm_description())}</dd>
-                    </dl>
+                  <div class="message-detail-from">
+                    From: 
+                    <rt:if param="{$object.maintainer_from()}">
+                    <img src="{$object.maintainer_from().avatar(32)}" width="32" id="maintainer-image" />
+                    <a href="{$t.url('maintainer')}/{$object.maintainer_from().name()}">{$object.maintainer_from()}</a>
+                    <rt:else />
+                      Openpear
+                    </rt:if>
+                  </div>
+                  <div class="message-detail-meta">
+                    {$object.fm_created()}
+                  </div>
+                  <div class="message-detail-body">{$t.noop($object.fm_description())}</div>
                 </div>
                 <br class="clear" />
             </div> <!-- end of column2-right -->
