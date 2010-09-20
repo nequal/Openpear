@@ -119,7 +119,11 @@ class OpenpearPackage extends Dao
     static public function getActiveCategories($limit=10){
         $tag_ids_count = C(OpenpearPackageTag)->find_count_by('package_id', 'tag_id', Q::eq('prime', true));
         arsort($tag_ids_count);
-        $categories = C(OpenpearTag)->find_all(Q::in('id', array_slice(array_keys($tag_ids_count), 0, $limit)));
+        if (count($tag_ids_count) == 0) {
+            $categories = array();
+        } else {
+            $categories = C(OpenpearTag)->find_all(Q::in('id', array_slice(array_keys($tag_ids_count), 0, $limit)));
+        }
         return $categories;
     }
     

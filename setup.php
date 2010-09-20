@@ -68,11 +68,13 @@ function download_expand($url,$base_dir){
 	}
 }
 if(php_sapi_name() != 'cli') exit;
-@date_default_timezone_set((@date_default_timezone_get() == '') ? 'Asia/Tokyo' : @date_default_timezone_get());
-if('neutral' == mb_language()) @mb_language('Japanese');
+if(ini_get('date.timezone') == '') date_default_timezone_set('Asia/Tokyo');
+if('neutral' == mb_language()) mb_language('Japanese');
+mb_internal_encoding('UTF-8');
+umask(0);
 error_reporting(E_ALL|E_STRICT);
-ini_set('display_errors','On');
-ini_set('display_startup_errors','On');
+ini_set('display_errors','Off');
+ini_set('display_startup_errors','Off');
 ini_set('html_errors','Off');
 
 function setup_php_error_handler($errno,$errstr,$errfile,$errline){
@@ -81,7 +83,11 @@ function setup_php_error_handler($errno,$errstr,$errfile,$errline){
 	throw new ErrorException($errstr,0,$errno,$errfile,$errline);
 }
 function setup_php_print($msg,$fmt='1;31'){
-	print(((php_sapi_name() == 'cli' && substr(PHP_OS,0,3) != 'WIN') ? "\033[".$fmt."m".$msg."\033[0m" : $msg)."\n");
+	if(empty($msg)){
+		print($msg."\n");
+	}else{
+		print(((php_sapi_name() == 'cli' && substr(PHP_OS,0,3) != 'WIN') ? "\033[".$fmt."m".$msg."\033[0m" : $msg)."\n");
+	}
 }
 set_error_handler('setup_php_error_handler',E_ALL|E_STRICT);
 
@@ -94,31 +100,62 @@ if(file_exists('./__settings__.php')){
 }
 if(!class_exists('Object')){
 	try{
-		$current = str_replace("\\","/",getcwd());
+		$pwd = str_replace("\\","/",getcwd());
 		$jump_path = null;
+		$args = array();
 
-		if(is_file($jump_path = $current.'/jump.php')) @require_once($jump_path);
-		if(!class_exists('Object') && is_file($jump_path = $current.'/core/jump.php')) @require_once($jump_path);
-		if(!class_exists('Object') && is_file($jump_path = dirname($current).'/core/jump.php')) @require_once($jump_path);
+		if(isset($_SERVER['argv'])){
+			$argv = $_SERVER['argv'];
+			array_shift($argv);
+			if(isset($argv[0]) && $argv[0][0] != '-'){
+				$args = implode(' ',$argv);
+			}else{
+				$size = sizeof($argv);
+				for($i=0;$i<$size;$i++){
+					if($argv[$i][0] == '-'){
+						if(isset($argv[$i+1]) && $argv[$i+1][0] != '-'){
+							$args[substr($argv[$i],1)] = $argv[$i+1];
+							$i++;
+						}else{
+							$args[substr($argv[$i],1)] = '';
+						}
+					}
+				}
+			}
+		}
+		if(isset($args['h'])){
+			setup_php_print('usage: '.basename(__FILE__).' [-install target_package] [-quick]',null);
+			exit;
+		}
+		if(is_file($jump_path = $pwd.'/jump.php')) @require_once($jump_path);
+		if(!class_exists('Object') && is_file($jump_path = $pwd.'/core/jump.php')) @require_once($jump_path);
+		if(!class_exists('Object') && !isset($args['quick']) && is_file($jump_path = dirname($pwd).'/core/jump.php')) @require_once($jump_path);
 		if(!class_exists('Object')){
-			$default_path = $current."/core/";
-			print('core path['.$default_path.']: ');
-			fscanf(STDIN,'%s',$install_path);
-			$install_path = trim($install_path);
-			$install_path = empty($install_path) ? $default_path : $install_path;
-		
-			if(!empty($install_path)){
-				if(substr($install_path,-1) !== '/') $install_path .= '/';
-				if(!is_file($install_path.'jump.php')) download_expand(constant('_CORE_URL_'),$install_path);
-				@include_once($install_path.'jump.php');
-				$jump_path = $install_path.'jump.php';
+			if(isset($args['quick'])){
+				$jump_path = $pwd.'/jump.php';
+				file_put_contents($jump_path,file_get_contents(constant('_JUMP_URL_')));
 				setup_php_print('core installed. `'.$jump_path.'`','1;34');
+				include_once($jump_path);
+			}else{
+				$default_path = $pwd."/core/";
+				print('core path['.$default_path.']: ');
+				fscanf(STDIN,'%s',$install_path);
+				$install_path = trim($install_path);
+				$install_path = empty($install_path) ? $default_path : $install_path;
+			
+				if(!empty($install_path)){
+					if(substr($install_path,-1) !== '/') $install_path .= '/';
+					if(!is_file($install_path.'jump.php')) download_expand(constant('_CORE_URL_'),$install_path);
+					@include_once($install_path.'jump.php');
+					$jump_path = $install_path.'jump.php';
+					setup_php_print('core installed. `'.$jump_path.'`','1;34');
+				}
 			}
 		}
 	}catch(Exception $e){
 		setup_php_print($e->getMessage());
 	}
-	setup_php_print('use `'.$jump_path.'`','1;35');
+	setup_php_print('use `'.$jump_path.'`','35');
 }
 if(class_exists('Object')){
 	Setup::start();
