@@ -201,6 +201,7 @@ class OpenpearNoLogin extends Flow
                 $this->redirect_by_map("success_redirect");
             }
         } catch (Exception $e) {
+            Dao::rollback_all();
             Log::debug($e);
         }
         $this->cp($account);
