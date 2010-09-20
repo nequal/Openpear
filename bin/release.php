@@ -27,7 +27,7 @@ foreach (OpenpearQueue::fetch_queues('build') as $queue) {
         $release_queue->build();
         $queue->delete();
     } catch (Exception $e) {
-        echo 'what!?';
+        echo $e->getMessage();
         Log::error($e);
         C($queue)->rollback();
     }
