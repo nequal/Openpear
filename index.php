@@ -80,7 +80,7 @@
                 <arg name="login_redirect" value="dashboard" />
             </map>
             <map url="account/logout" name="do_logout">
-                <arg name="logout_redirect" value="top" />
+                <arg name="logout_redirect" value="index" />
             </map>
             
             <map url="maintainers/update\.json" name="maintainer_update_json" />
