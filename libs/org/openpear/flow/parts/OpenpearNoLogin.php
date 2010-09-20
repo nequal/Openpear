@@ -159,8 +159,7 @@ class OpenpearNoLogin extends Flow
         $this->vars('object', $package);
         $this->vars('package', $package);
         $this->vars('maintainers', $package->maintainers());
-        $releases = $package->releases();// TODO : sort
-        $this->vars('recent_releases', empty($releases) ? $releases : array_reverse($releases));
+        $this->vars('recent_releases', C(OpenpearRelease)->find_all(new Paginator(3), Q::order('-id')));
         // TODO changes
         $this->vars('timelines', C(OpenpearTimeline)->find_all(
             new Paginator(10),

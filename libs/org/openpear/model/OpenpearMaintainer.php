@@ -16,7 +16,7 @@ class OpenpearMaintainer extends Dao
     protected $created;
     
     static protected $__id__ = 'type=serial';
-    static protected $__name__ = 'type=alnum,unique=true,require=true';
+    static protected $__name__ = 'type=string,unique=true,require=true';
     static protected $__mail__ = 'type=email,require=true';
     static protected $__fullname__ = 'type=string';
     static protected $__profile__ = 'type=text';

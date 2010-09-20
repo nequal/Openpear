@@ -413,6 +413,7 @@ class OpenpearLogin extends Flow
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $package->permission($this->user());
         if ($this->is_post()) {
+            $this->save_current_vars();
             try {
                 $build_conf = new PackageProjectorConfig();
                 $build_conf->cp($this->vars());
