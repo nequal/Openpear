@@ -62,14 +62,18 @@ class OpenpearMessage extends Dao
         }
     }
     protected function __after_create__(){
-        if($this->mail()){
-            list($account,$password) = OpenpearConfig::gmail_account();
-            $mail = new Gmail($account, $password);
-            $mail->to($this->maintainer_to()->mail(), str($this->maintainer_to()));
-            $mail->from($mail->from(), 'Openpear');
-            $mail->subject($this->subject());
-            $mail->message(strip_tags($this->fm_description()));
-            $mail->send();
+        try {
+            if($this->mail()){
+                list($account,$password) = OpenpearConfig::gmail_account();
+                $mail = new Gmail($account, $password);
+                $mail->to($this->maintainer_to()->mail(), str($this->maintainer_to()));
+                $mail->from($mail->from(), 'Openpear');
+                $mail->subject($this->subject());
+                $mail->message(strip_tags($this->fm_description()));
+                $mail->send();
+            }
+        } catch (Exception $e) {
+            Log::debug($e);
         }
     }
     protected function __after_save__() {
