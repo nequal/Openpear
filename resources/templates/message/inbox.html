@@ -39,7 +39,8 @@
     </div> <!-- end of colmun2-left -->
     <div class="column2-right">
 
-      <form action="" class="message-form-markasread">
+      <form action="" method="post" class="message-form-markasread">
+        <input type="hidden" name="action" value="mark-all-as-read" />
         <input type="submit" name="" value="{$t.trans('Mark all as read')}" />
       </form>
 

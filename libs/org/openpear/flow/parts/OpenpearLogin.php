@@ -99,6 +99,10 @@ class OpenpearLogin extends Flow
      * @context Paginator $paginator ページネータ
      */
     public function message_inbox() {
+        if ($this->is_post() && $this->in_vars('action') === 'mark-all-as-read') {
+            C(OpenpearMessage)->mark_all_as_read($this->user());
+            $this->redirect_self();
+        }
         $paginator = new Paginator(20, $this->in_vars('page', 1));
         $this->vars('object_list', C(OpenpearMessage)->find_all(
             $paginator, Q::eq('maintainer_to_id', $this->user()->id()), Q::order('-id')

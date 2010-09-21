@@ -40,6 +40,13 @@ class OpenpearMessage extends Dao
         return $unread_messages_count;
     }
 
+    public function mark_all_as_read(OpenpearMaintainer $maintainer) {
+        foreach (C(__CLASS__)->find_all(Q::eq('maintainer_to_id', $maintainer->id())) as $message) {
+            $message->unread(false);
+            $message->save();
+        }
+    }
+
     public function permission(OpenpearMaintainer $maintainer, $throw = false){
         if($this->maintainer_to_id() == $maintainer->id()
             || $this->maintainer_from_id() == $maintainer->id()){
