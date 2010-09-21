@@ -84,7 +84,7 @@
         <form action="{$t.url('search')}" id="main-search-form" class="clear">
           {$t.trans('Search:')} <label><input type="radio" name="search_for" value="packages" checked /> {$t.trans('Packages')}</label> <label><input type="radio" name="search_for" value="maintainers" />{$t.trans('Maintainers')}</label> <br />
           <input type="text" class="radius-2" name="q" id="main-search-q">
-          <input type="submit" class="radius-2 bold" value="Search" id="main-search-submit" />
+          <input type="submit" class="radius-2 bold" value="{$t.trans('Search')}" id="main-search-submit" />
         </form>
 
         <div id="main-column">
