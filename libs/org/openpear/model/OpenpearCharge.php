@@ -9,8 +9,8 @@ class OpenpearCharge extends Dao
     protected $maintainer_id;
     protected $role;
     
-    static protected $__package_id__ = 'type=number,require=true,primary=true';
-    static protected $__maintainer_id__ = 'type=number,require=true,primary=true';
+    static protected $__package_id__ = 'type=integer,require=true,primary=true';
+    static protected $__maintainer_id__ = 'type=integer,require=true,primary=true';
     static protected $__role__ = 'type=choice(lead,developer,contributor,helper),require=true';
     
     private $package;

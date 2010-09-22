@@ -11,7 +11,7 @@ class OpenpearTag extends Dao
     static protected $__id__ = 'type=serial';
     static protected $__name__ = 'type=string,unique=true,require=true';
     static protected $__prime__ = 'type=boolean';
-    static protected $__package_count__ = 'type=number';
+    static protected $__package_count__ = 'type=integer';
     
     private $packages;
     

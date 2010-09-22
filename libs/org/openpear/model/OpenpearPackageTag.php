@@ -7,8 +7,8 @@ class OpenpearPackageTag extends Dao
     protected $tag_id;
     protected $prime;
     
-    static protected $__package_id__ = 'type=number,require=true,primary=true';
-    static protected $__tag_id__ = 'type=number,require=true,primary=true';
+    static protected $__package_id__ = 'type=integer,require=true,primary=true';
+    static protected $__tag_id__ = 'type=integer,require=true,primary=true';
     static protected $__prime__ = 'type=boolean';
     
     private $package;

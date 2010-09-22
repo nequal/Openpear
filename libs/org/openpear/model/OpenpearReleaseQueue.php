@@ -9,9 +9,9 @@ class OpenpearReleaseQueue extends Object
     protected $description;
     protected $notes;
     
-    static protected $__package_id__ = 'type=number,require=true';
-    static protected $__maintainer_id__ = 'type=number,require=true';
-    static protected $__revision__ = 'type=number';
+    static protected $__package_id__ = 'type=integer,require=true';
+    static protected $__maintainer_id__ = 'type=integer,require=true';
+    static protected $__revision__ = 'type=integer';
     static protected $__build_path__ = 'type=string';
     static protected $__build_conf__ = 'type=text,require=true';
     static protected $__description__ = 'type=text';

@@ -6,7 +6,7 @@ class OpenpearOpenidMaintainer extends Dao
     protected $maintainer_id;
     protected $url;
     
-    static protected $__maintainer_id__ = 'type=number,require=true,primary=true';
+    static protected $__maintainer_id__ = 'type=integer,require=true,primary=true';
     static protected $__url__ = 'type=string,require=true,primary=true';
     
     private $maintainer;

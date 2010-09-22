@@ -27,15 +27,15 @@ class OpenpearPackage extends Dao
     static protected $__name__ = 'type=string,unique=true,require=true';
     static protected $__description__ = 'type=string,require=true,max=250';
     static protected $__url__ = 'type=string';
-    static protected $__public_level__ = 'type=number';
+    static protected $__public_level__ = 'type=integer';
     static protected $__external_repository__ = 'type=string';
     static protected $__external_repository_type__ = 'type=choice(Git,Mercurial,Subversion)';
-    static protected $__download_count__ = 'type=number,default=0';
-    static protected $__favored_count__ = 'type=number,default=0';
-    static protected $__recent_changeset__ = 'type=number';
+    static protected $__download_count__ = 'type=integer,default=0';
+    static protected $__favored_count__ = 'type=integer,default=0';
+    static protected $__recent_changeset__ = 'type=integer';
     static protected $__released_at__ = 'type=timestamp';
-    static protected $__latest_release_id__ = 'type=number';
-    static protected $__author_id__ = 'type=number';
+    static protected $__latest_release_id__ = 'type=integer';
+    static protected $__author_id__ = 'type=integer';
     static protected $__license__ = 'type=string';
     static protected $__license_uri__ = 'type=string';
     static protected $__notify__ = 'type=string';
@@ -44,7 +44,7 @@ class OpenpearPackage extends Dao
     static protected $__updated__ = 'type=timestamp';
     
     protected $repository_uri_select = 1;
-    static protected $__repository_uri_select__ = 'type=number,extra=true';
+    static protected $__repository_uri_select__ = 'type=integer,extra=true';
     
     private $author;
     private $releases = array();
@@ -267,7 +267,9 @@ class OpenpearPackage extends Dao
         if($this->author instanceof OpenpearMaintainer === false){
             try {
                 $this->author = OpenpearMaintainer::get_maintainer($this->author_id());
-            } catch(Exception $e){}
+            } catch(Exception $e){
+                return new OpenpearMaintainer;
+            }
         }
         return $this->author;
     }

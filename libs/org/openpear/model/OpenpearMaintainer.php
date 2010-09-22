@@ -22,7 +22,7 @@ class OpenpearMaintainer extends Dao
     static protected $__profile__ = 'type=text';
     static protected $__url__ = 'type=string';
     static protected $__location__ = 'type=string';
-    static protected $__password__ = 'type=string,require=true';
+    static protected $__password__ = 'type=string';
     static protected $__svn_password__ = 'type=string';
     static protected $__created__ = 'type=timestamp';
     

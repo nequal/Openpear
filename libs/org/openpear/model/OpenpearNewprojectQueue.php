@@ -12,11 +12,11 @@ class OpenpearNewprojectQueue extends Dao
     protected $created;
     
     static protected $__id__ = 'type=serial';
-    static protected $__package_id__ = 'type=number,require=true';
-    static protected $__maintainer_id__ = 'type=number,require=true';
+    static protected $__package_id__ = 'type=integer,require=true';
+    static protected $__maintainer_id__ = 'type=integer,require=true';
     static protected $__mail_possible__ = 'type=boolean';
     static protected $__settings__ = 'type=text';
-    static protected $__trial_count__ = 'type=number';
+    static protected $__trial_count__ = 'type=integer';
     static protected $__created__ = 'type=timestamp';
     
     private $package;

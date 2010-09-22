@@ -15,8 +15,8 @@ class OpenpearTimeline extends Dao implements AtomInterface
     static protected $__subject__ = 'type=string,require=true';
     static protected $__description__ = 'type=text,require=true';
     static protected $__type__ = 'type=choice(release,changeset,user_activities,package_setting,favorite)';
-    static protected $__package_id__ = 'type=number';
-    static protected $__maintainer_id__ = 'type=number';
+    static protected $__package_id__ = 'type=integer';
+    static protected $__maintainer_id__ = 'type=integer';
     static protected $__created__ = 'type=timestamp';
     
     private $package;

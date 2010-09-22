@@ -73,8 +73,8 @@ if('neutral' == mb_language()) mb_language('Japanese');
 mb_internal_encoding('UTF-8');
 umask(0);
 error_reporting(E_ALL|E_STRICT);
-ini_set('display_errors','Off');
-ini_set('display_startup_errors','Off');
+ini_set('display_errors','On');
+ini_set('display_startup_errors','On');
 ini_set('html_errors','Off');
 
 function setup_php_error_handler($errno,$errstr,$errfile,$errline){

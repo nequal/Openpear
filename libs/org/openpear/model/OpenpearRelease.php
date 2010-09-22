@@ -15,8 +15,8 @@ class OpenpearRelease extends Dao implements AtomInterface
     protected $created; # 作成日時
     
     static protected $__id__ = 'type=serial';
-    static protected $__package_id__  = 'type=number,require=true';
-    static protected $__maintainer_id__ = 'type=number,require=true';
+    static protected $__package_id__  = 'type=integer,require=true';
+    static protected $__maintainer_id__ = 'type=integer,require=true';
     static protected $__version__ = 'type=string,require=true';
     static protected $__version_stab__ = 'type=choice(stable,beta,alpha),require=true';
     static protected $__notes__ = 'type=text';

@@ -17,8 +17,8 @@ class OpenpearMessage extends Dao
     protected $created;
     
     static protected $__id__ = 'type=serial';
-    static protected $__maintainer_to_id__ = 'type=number,require=true';
-    static protected $__maintainer_from_id__ = 'type=number';
+    static protected $__maintainer_to_id__ = 'type=integer,require=true';
+    static protected $__maintainer_from_id__ = 'type=integer';
     static protected $__subject__ = 'type=string,require=true';
     static protected $__description__ = 'type=text,require=true';
     static protected $__unread__ = 'type=boolean';
