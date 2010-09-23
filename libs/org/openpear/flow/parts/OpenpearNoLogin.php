@@ -69,7 +69,7 @@ class OpenpearNoLogin extends Flow
         if (Store::has('index/primary_tags', 3600)) {
             $primary_tags = Store::get('index/primary_tags');
         } else {
-            $primary_tags = OpenpearPackage::getActiveCategories(16);
+            $primary_tags = OpenpearPackage::getActiveCategories(8);
             Store::set('index/primary_tags', $primary_tags, 3600);
         }
         if (Store::has('index/recent_releases', 3600)) {
@@ -137,6 +137,7 @@ class OpenpearNoLogin extends Flow
             $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, $sort));
         }
         $paginator->vars('q', $this->in_vars('q'));
+        $paginator->vars('sort', $sort);
         $this->vars('paginator', $paginator);
         $this->put_block($this->map_arg($sort{0} == '-'? substr($sort, 1): $sort, 'models_released.html'));
     }    

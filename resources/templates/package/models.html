@@ -54,19 +54,18 @@
             <rt:block name="package_row" />
           </tbody>
         </table>
-        <rt:if param="{$paginator}">
+        <rt:if param="{$paginator.has_range()}">
         <div class="pager">
           <ul>
             <rt:if param="{$paginator.is_first()}"><li> <a href="?{$paginator.query($paginator.first())}">&laquo; First</a> </li></rt:if>
             <?php
-              $counter = 50;
-              for($counter=$paginator->wh_first($counter);$counter<=$paginator->wh_last($counter);$counter++):
+              for($counter=$paginator->which_first(10);$counter<=$paginator->which_last(10);$counter++):
             ?>
-            <rt:if param="{$paginator.current()}" value="{$counter}">
+            <?php if ($paginator->current() == $counter): ?>
             <li class="current"> {$counter} </li>
-            <rt:else />
+            <?php else: ?>
             <li> <a href="?{$paginator.query($counter)}">{$counter}</a> </li>
-            </rt:if>
+            <?php endif; ?>
             <?php endfor; ?>
             <rt:if param="{$paginator.is_last()}"><li> <a href="?{$paginator.query($paginator.last())}">Last &raquo;</a> </li></rt:if>
           </ul>
