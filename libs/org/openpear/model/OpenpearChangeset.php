@@ -122,7 +122,7 @@ class OpenpearChangeset extends Dao
                 $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $author));
             } catch(Exception $e){
                 Log::error($e);
-                throw $e;
+                // throw $e;
             }
             
             $changeset = new self();
