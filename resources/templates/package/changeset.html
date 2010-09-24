@@ -27,8 +27,10 @@
   <h3>{$t.trans('Changeset')} {$changeset.revision()} <em class="changeset-time">-- {$ot.date_ago($changeset.created())}</em></h3>
   
   <dl>
+    <rt:if param="{$changeset.is_maintainer_id()}">
     <dt>{$t.trans('Author')}</dt>
     <dd><img src="{$changeset.maintainer().avatar()}" /><a href="{$t.url('maintainer')}/{$changeset.maintainer().name()}">{$changeset.maintainer()}</a></dd>
+    </rt:if>
     <dt>{$t.trans('Comment')}</dt>
     <dd>{$changeset.comment()}</dd>
   </dl>
