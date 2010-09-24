@@ -60,17 +60,17 @@
             <map url="packages/releases\.atom" name="packages_releases_atom" />
             
             <map name="package" url="package/([^/]+)" template="package/model.html" />
-            <map url="package/(.+)/timeline" name="package_timeline" template="package/timeline.html" />
-            <map url="package/(.+)/downloads" name="package_downloads" template="package/downloads.html" />
+            <map url="package/(.+?)/timeline" name="package_timeline" template="package/timeline.html" />
+            <map url="package/(.+?)/downloads" name="package_downloads" template="package/downloads.html" />
             
-            <map name="document_browse" url="package/(.+)/doc(/.+)?" template="package/document.html" />
+            <map name="document_browse" url="package/(.+?)/doc(/.+)?" template="package/document.html" />
             
             <map name="changeset" url="changeset/(\d+)" template="package/changeset.html" />
-            <map name="source_browse" url="package/(.+)/src(/?.+)?" template="package/source.html" />
+            <map name="source_browse" url="package/(.+?)/src(/?.+)?" template="package/source.html" />
 
             <map url="timelines.atom" name="timeline_atom" />
-            <map url="package/(.+)/timelines\.atom" name="timeline_atom_package" />
-            <map url="maintainer/(.+)/timelines\.atom" name="timeline_atom_maintainer" />
+            <map url="package/(.+?)/timelines\.atom" name="timeline_atom_package" />
+            <map url="maintainer/(.+?)/timelines\.atom" name="timeline_atom_maintainer" />
         </maps>
         <maps class="org.openpear.flow.parts.OpenpearLogin">
             <map name="dashboard" template="dashboard.html" />
@@ -96,22 +96,22 @@
             </map>
             
             <map name="package_create" url="packages/create" template="package/create.html" />
-            <map url="package/(.+)/like/(.+)" name="package_add_favorite" />
-            <map url="package/(.+)/unlike/(.+)" name="package_remove_favorite" />
-            <map url="package/(.+)/category/add" name="package_add_tag" />
-            <map url="package/(.+)/category/remove" name="package_remove_tag" />
-            <map url="package/(.+)/category/prime" name="package_prime_tag" />
-            <map name="package_manage" url="package/(.+)/manage" template="package/manage.html" />
-            <map url="package/(.+)/manage/edit" name="package_edit" template="package/edit.html" />
-            <map url="package/(.+)/manage/edit_do" name="package_edit_do" />
-            <map url="package/(.+)/maintainer/add" name="package_add_maintainer" />
-            <map url="package/(.+)/maintainer/remove" name="package_remove_maintainer" />
+            <map url="package/(.+?)/like/(.+)" name="package_add_favorite" />
+            <map url="package/(.+?)/unlike/(.+)" name="package_remove_favorite" />
+            <map url="package/(.+?)/category/add" name="package_add_tag" />
+            <map url="package/(.+?)/category/remove" name="package_remove_tag" />
+            <map url="package/(.+?)/category/prime" name="package_prime_tag" />
+            <map name="package_manage" url="package/(.+?)/manage" template="package/manage.html" />
+            <map url="package/(.+?)/manage/edit" name="package_edit" template="package/edit.html" />
+            <map url="package/(.+?)/manage/edit_do" name="package_edit_do" />
+            <map url="package/(.+?)/maintainer/add" name="package_add_maintainer" />
+            <map url="package/(.+?)/maintainer/remove" name="package_remove_maintainer" />
             
-            <map url="package/(.+)/manage/release" name="package_release" template="package/release.html">
+            <map url="package/(.+?)/manage/release" name="package_release" template="package/release.html">
                 <arg name="confirm_template" value="package/release_confirm.html" />
             </map>
-            <map url="package/(.+)/manage/release/upload" name="package_release_by_upload" template="package/release_by_upload.html" />
-            <map url="package/(.+)/manage/release_done" name="package_release_done" template="message.html" />
+            <map url="package/(.+?)/manage/release/upload" name="package_release_by_upload" template="package/release_by_upload.html" />
+            <map url="package/(.+?)/manage/release_done" name="package_release_done" template="message.html" />
         </maps>
         <maps class="org.openpear.flow.parts.OpenpearAPI" url="api">
             <map url="check_repo_exists" name="check_repo_exists" />
