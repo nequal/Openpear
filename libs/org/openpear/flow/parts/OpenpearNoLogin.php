@@ -133,6 +133,7 @@ class OpenpearNoLogin extends Flow
                 Q::in('id', C(OpenpearPackageTag)->find_sub('package_id', Q::eq('tag_id', $tag->id()))),
                 Q::order($sort)
             ));
+            $paginator->vars('category', $this->in_vars('category'));
         } else {
             $this->vars('object_list', C(OpenpearPackage)->find_page($this->in_vars('q'), $paginator, $sort));
         }
