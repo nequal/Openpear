@@ -348,11 +348,18 @@ class OpenpearNoLogin extends Flow
         $package = C(OpenpearPackage)->find_get(Q::eq('id', $changeset->package_id()));
         $path = OpenpearConfig::svn_root();
         $diff = Subversion::cmd('diff', array($path), array('revision' => sprintf('%d:%d', $revision-1, $revision)));
-        $latest_changeset = C(OpenpearChangeset)->find_get(Q::order('-revision'));
+        $revs = array_map('intval', C(OpenpearChangeset)->find_distinct('revision', Q::eq('package_id', $package->id())));
+        for ($i=0; $i<count($revs); $i++) {
+            if ($revs[$i] == $revision) {
+                $this->vars('next_revision', isset($revs[$i+1])? $revs[$i+1]: null);
+                $this->vars('prev_revision', isset($revs[$i-1])? $revs[$i-1]: null);
+            }
+        }
+        $this->vars('latest_revision', max($revs));
+        $this->vars('revision', $revision);
         $this->vars('package', $package);
         $this->vars('changeset', $changeset);
         $this->vars('diff', $diff);
-        $this->vars('paginator', new Paginator(1, $revision, $latest_changeset->revision()));
     }
     
     private function add_vars_other_tree($package_name, $root='') {

@@ -16,9 +16,9 @@
 
 <rt:block name="package_main">
 <div class="changeset-nav">
-  <rt:if param="{$paginator.is_prev()}"><a href="{$t.map_url('changeset', $paginator->prev())}">&laquo; {$t.trans('Previous Changes')}</a> | </rt:if>
-  <rt:if param="{$paginator.is_next()}"><a href="{$t.map_url('changeset', $paginator->next())}">{$t.trans('Next Changes')} &raquo;</a> | </rt:if>
-  <rt:if param="{$paginator.last()}" param="{$revision}"><rt:else /><a href="{$t.map_url('changeset', $paginator->last())}">{$t.trans('Latest')}</a>
+  <rt:if param="{$prev_revision}"><a href="{$t.map_url('changeset', $prev_revision)}">&laquo; {$t.trans('Previous Changes')}</a> | </rt:if>
+  <rt:if param="{$next_revision}"><a href="{$t.map_url('changeset', $next_revision)}">{$t.trans('Next Changes')} &raquo;</a> | </rt:if>
+  <rt:if param="{$latest_revision}" param="{$revision}"><rt:else /><a href="{$t.map_url('changeset', $latest_revision)}">{$t.trans('Latest')}</a>
 </div>
 <div class="column2-l">
 
