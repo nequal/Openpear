@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-23 14:59+0900\n"
+"POT-Creation-Date: 2010-09-25 13:29+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <team@exsample.com>\n"
@@ -53,7 +53,7 @@ msgstr "誰でもコミットできる"
 
 #: /resources/templates/package/models_updates.html:34
 #: /resources/templates/package/models_released.html:16
-#: /resources/templates/package/changeset.html:30
+#: /resources/templates/package/changeset.html:31
 #: /resources/templates/package/models_favored.html:33
 msgid "Author"
 msgstr "編集者"
@@ -111,7 +111,7 @@ msgstr ""
 msgid "Changest"
 msgstr "チェンジセット"
 
-#: /resources/templates/package/changeset.html:32
+#: /resources/templates/package/changeset.html:34
 msgid "Comment"
 msgstr "コメント"
 
@@ -189,7 +189,7 @@ msgstr "依存"
 msgid "Description"
 msgstr "紹介文"
 
-#: /resources/templates/package/changeset.html:51
+#: /resources/templates/package/changeset.html:53
 msgid "Diffs"
 msgstr "差分"
 
@@ -261,7 +261,7 @@ msgstr "お気に入り"
 msgid "Feed: Recent Releases"
 msgstr ""
 
-#: /resources/templates/package/changeset.html:38
+#: /resources/templates/package/changeset.html:40
 msgid "Files"
 msgstr "ファイル"
 
@@ -336,8 +336,8 @@ msgid "Install target"
 msgstr "インストール先"
 
 #: /resources/templates/index.html:167
-msgid "It"
-msgstr ""
+msgid "It's a dreams come true."
+msgstr "夢のような話だ"
 
 #: /resources/templates/maintainer/models.html:43
 msgid "Last activity"
@@ -499,8 +499,8 @@ msgid "OpenID Identity"
 msgstr "OpenID"
 
 #: /resources/templates/index.html:155
-msgid "Openpear is offering the fastest process you"
-msgstr ""
+msgid "Openpear is offering the fastest process you've never experienced, from building a PEAR package upto release! No hassle for user as well to search all over the internet for package."
+msgstr "Openpear を利用すれば、パッケージを作成し、リリースするまでのプロセスは PEAR 史上最速となるでしょう！パッケージ利用者ももうライブラリを探しまわる必要はありません。"
 
 #: /resources/templates/message/sent.html:48
 #: /resources/templates/message/inbox.html:54
@@ -593,7 +593,7 @@ msgstr "最近のリリース"
 msgid "Recent Released Packages"
 msgstr "最近リリースされたパッケージ"
 
-#: /libs/org/openpear/flow/parts/OpenpearNoLogin.php:423
+#: /libs/org/openpear/flow/parts/OpenpearNoLogin.php:436
 #: /resources/templates/index.html:93
 #: /resources/templates/package/models_updates.html:4
 #: /resources/templates/package/models_released.html:4
@@ -711,14 +711,14 @@ msgid "Source"
 msgstr "ソース"
 
 #: /resources/templates/index.html:142
-msgid "Source code on Openpear is open to everyone. Would you like to commit bug fix which bug you"
-msgstr ""
+msgid "Source code on Openpear is open to everyone. Would you like to commit bug fix which bug you've found? Would you like to maintain a package no one is taking care of anymore? You can make it with Openpear!"
+msgstr "Openpear のソースコードはオープンに公開されています。バグを発見したからコミットしたい？開発者のいなくなってしまったパッケージをメンテナンスしたい？その思いを現実のものにできます！"
 
 #: /resources/templates/maintainer/model.html:132
 #: /resources/templates/maintainer/model.html:143
 #: /resources/templates/maintainer/model.html:154
 msgid "Submit"
-msgstr ""
+msgstr "送信"
 
 #: /resources/templates/package/source_viewfile.html:18
 #: /resources/templates/package/source.html:33
@@ -1087,9 +1087,9 @@ msgstr ""
 msgid "growl"
 msgstr ""
 
-#: spl/Gettext.php:301
+#: spl/Gettext.php:297
 #: spl/Templf.php:500
-#: /core/spl/Gettext.php:301
+#: /core/spl/Gettext.php:297
 #: /core/spl/Templf.php:500
 msgid "hoge"
 msgstr ""
