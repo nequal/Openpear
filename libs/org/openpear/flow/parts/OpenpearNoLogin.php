@@ -273,7 +273,11 @@ class OpenpearNoLogin extends Flow
         $root = File::absolute(OpenpearConfig::svn_root(), implode('/', array($package->name(), 'doc')));
         $repo_path = File::absolute($root, $path);
         $this->vars('package', $package);
-        $body = Subversion::cmd('cat', array($repo_path));
+        try {
+            $body = Subversion::cmd('cat', array($repo_path));
+        } catch (Exception $e) {
+            $body = '';
+        }
         if (empty($body)) {
             Http::status_header(404);
             $body = '* Not found.'. PHP_EOL;
