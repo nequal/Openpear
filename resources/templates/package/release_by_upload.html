@@ -1,4 +1,53 @@
-<form action="" method="post" enctype="multipart/form-data">
+<rt:extends href="base.html" />
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/1column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/package.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+
+<rt:block name="title">{$t.trans('Upload')} \ {$t.trans('Release')} \ {$t.trans('Manage')} \ {$package.name()} \ {$t.trans('Package')} \ Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">{$t.trans('Home')}</a>
+    &raquo; <a href="{$t.url('packages')}">{$t.trans('Package')}</a>
+    &raquo; <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a>
+    &raquo; <a href="{$t.url('package')}/{$package.name()}/manage">{$t.trans('Manage Package')}</a>
+    &raquo; <a href="{$t.url('package')}/{$package.name()}/manage/release">{$t.trans('Release')}</a>
+    &raquo; {$t.trans('Upload')}
+    </div>
+</rt:block>
+
+<rt:block name="package_main">
+
+<div id="sub-package-description">
+
+<div class="column1">
+
+<p><a href="{$t.url('package')}/{$package.name()}/manage/release">&laquo; back</a></p>
+
+<p>
+Release PEAR package by tar-ball.<br />
+</p>
+
+<p>
+<span class="red bold">CAITION</span>
+</p>
+<ul>
+  <li>The tar-ball must be valid PEAR package format.</li>
+  <li>&lt;channel&gt; tag will be replaced to "openpear.org" automatically.</li>
+</ul>
+
+<form action="{$t.url('package')}/{$package.name()}/manage/release/upload" method="post" enctype="multipart/form-data">
     <p><input type="file" name="package_file" />
     <p><input type="submit" value="upload &rarr;"></p>
 </form>
+
+</div> <!-- / column1 -->
+
+<br class="clear" />
+
+</div>
+</rt:block>

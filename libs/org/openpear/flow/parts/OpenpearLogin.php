@@ -503,6 +503,9 @@ class OpenpearLogin extends Flow
                 Exceptions::add($e);
             }
         }
+
+        $this->vars('package', $package);
+        $this->vars('package_id', $package->id());
     }
     
     /**
