@@ -41,6 +41,10 @@ class OpenpearRelease extends Dao implements AtomInterface
         if($this->version_stab === 'stable') return $this->version();
         return sprintf('%s (%s)', $this->version, $this->version_stab);
     }
+    protected function __fm_default_version__(){
+        if(is_null($this->id)) return '1.0.0';
+        return $this->version();
+    }
     protected function __fm_settings__(){
         if (is_null($this->fm_settings)) {
             $settings = new PackageProjectorConfig();

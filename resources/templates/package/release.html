@@ -180,7 +180,8 @@
     </rt:if>
     <dt>{$t.trans('Version')} <span class="red">*</span>: </dt>
     <dd>
-    <input name="version_release_ver" type="text" id="release-version" class="tiny" value="1.0.0" />
+    <p class="caption">{$t.trans('Version number should be higher than current version number.')}:</p>
+    <input name="version_release_ver" type="text" id="release-version" class="tiny" value="{$package.latest_release().fm_default_version()}" />
     <select name="version_release_stab">
       <option value="stable">Stable</option>
       <option value="alpha">Alpha</option>
