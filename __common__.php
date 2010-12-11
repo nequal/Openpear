@@ -1,4 +1,7 @@
 <?php
+import('org.rhaco.service.Pea');
+import('jp.riaf.util.AutoLoader');
+
 $__pear_config_file = __DIR__. '/channel.config.php';
 if (file_exists($__pear_config_file)) {
     $__pear_config = @include($__pear_config_file);
