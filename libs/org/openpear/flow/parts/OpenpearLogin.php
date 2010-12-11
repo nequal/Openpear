@@ -1,12 +1,14 @@
 <?php
-
+/**
+ * LoginRequired actions
+ *
+ * @var string[] $allowed_ext
+ * @var OpenpearMaintainer $user @{"require":true}
+ */
 class OpenpearLogin extends Flow
 {
     // TODO Source
     protected $allowed_ext = array('php', 'phps', 'html', 'css', 'pl', 'txt', 'js', 'htaccess');
-    static protected $__allowed_ext__ = 'type=string[]';
-
-    static protected $__user__ = 'type=OpenpearMaintainer,require=true';
     
     /**
      * @context OpenpearTemplf $ot フィルタ

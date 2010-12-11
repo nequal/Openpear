@@ -1,6 +1,17 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Newproject Queue
+ *
+ * @var serial $id
+ * @var integer $package_id @{"require":true}
+ * @var integer $maintainer_id @{"require":true}
+ * @var boolean $mail_possible
+ * @var text $settings
+ * @var integer $trial_count
+ * @var timestamp $created
+ */
 class OpenpearNewprojectQueue extends Dao
 {    
     protected $id;
@@ -10,18 +21,10 @@ class OpenpearNewprojectQueue extends Dao
     protected $settings;
     protected $trial_count = 0;
     protected $created;
-    
-    static protected $__id__ = 'type=serial';
-    static protected $__package_id__ = 'type=integer,require=true';
-    static protected $__maintainer_id__ = 'type=integer,require=true';
-    static protected $__mail_possible__ = 'type=boolean';
-    static protected $__settings__ = 'type=text';
-    static protected $__trial_count__ = 'type=integer';
-    static protected $__created__ = 'type=timestamp';
-    
+
     private $package;
     private $maintainer;
-    
+
     protected function __init__(){
         $this->trial_count = 0;
         $this->created = time();

@@ -1,4 +1,33 @@
 <?php
+/**
+ * PackageProjectorConfig
+ *
+ * @var string $project_src_dir @{"set":false}
+ * @var string $project_release_dir @{"set":false}
+ * @var string $document_doc_dir
+ * @var string $document_tutorial_file
+ * @var string $document_stylesheet_file
+ * @var string $package_package_name @{"require":true}
+ * @var string $package_package_type @{"set":false}
+ * @var string $package_baseinstalldir @{"require":true}
+ * @var string $package_channel @{"require":true}
+ * @var string $package_summary_file @{"set":false}
+ * @var string $package_description_file @{"set":false}
+ * @var string $package_notes_file @{"set":false}
+ * @var string{} $role
+ * @var string $version_release_ver @{"require":true}
+ * @var choice $version_release_stab @{"require":true,"choices":["stable","beta","alpha"]}
+ * @var string $version_api_ver
+ * @var choice $version_api_stab @{"choices":["stable","beta","alpha"]}
+ * @var string $version_php_min
+ * @var string $version_pear_min
+ * @var string $license_name
+ * @var string $license_uri
+ * @var PackageProjectorConfigMaintainer[] $maintainer
+ * @var PackageProjectorConfigFile[] $file
+ * @var PackageProjectorConfigDep[] $dep
+ * @var PackageProjectorConfigInstaller[] $installer
+ */
 class PackageProjectorConfig extends Object
 {
     protected $project_src_dir = 'src';
@@ -26,32 +55,6 @@ class PackageProjectorConfig extends Object
     protected $file = array();
     protected $dep = array();
     protected $installer = array();
-    
-    static protected $__project_src_dir__ = 'type=string,set=false';
-    static protected $__project_release_dir__ = 'type=string,set=false';
-    static protected $__document_doc_dir__ = 'type=string';
-    static protected $__document_tutorial_file__ = 'type=string';
-    static protected $__document_stylesheet_file__ = 'type=string';
-    static protected $__package_package_name__ = 'type=string,require=true';
-    static protected $__package_package_type__ = 'type=string,set=false';
-    static protected $__package_baseinstalldir__ = 'type=string,require=true';
-    static protected $__package_channel__ = 'type=string,require=true';
-    static protected $__package_summary_file__ = 'type=string,set=false';
-    static protected $__package_description_file__ = 'type=string,set=false';
-    static protected $__package_notes_file__ = 'type=string,set=false';
-    static protected $__role__ = 'type=string{}';
-    static protected $__version_release_ver__ = 'type=string,require=true';
-    static protected $__version_release_stab__ = 'type=choice(stable,beta,alpha),require=true';
-    static protected $__version_api_ver__ = 'type=string';
-    static protected $__version_api_stab__ = 'type=choice(stable,beta,alpha)';
-    static protected $__version_php_min__ = 'type=string';
-    static protected $__version_pear_min__ = 'type=string';
-    static protected $__license_name__ = 'type=string';
-    static protected $__license_uri__ = 'type=string';
-    static protected $__maintainer__ = 'type=PackageProjectorConfigMaintainer[]';
-    static protected $__file__ = 'type=PackageProjectorConfigFile[]';
-    static protected $__dep__ = 'type=PackageProjectorConfigDep[]';
-    static protected $__installer__ = 'type=PackageProjectorConfigInstaller[]';
     
     static private $_keys_ = array(
         'maintainer' => 'handlename',

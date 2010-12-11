@@ -2,6 +2,22 @@
 import('org.rhaco.storage.db.Dao');
 import('org.openpear.model.OpenpearMessage');
 
+/**
+ * Maintainer
+ *
+ * @var serial $id
+ * @var string $name @{"unique":true,"require":true}
+ * @var email $mail @{"require":true}
+ * @var string $fullname
+ * @var text $profile
+ * @var string $url
+ * @var string $location
+ * @var string $password
+ * @var string $svn_password
+ * @var timestamp $created
+ * @var mixed $new_password @{"extra":true}
+ * @var mixed $new_password_conf @{"extra":true}
+ */
 class OpenpearMaintainer extends Dao
 {
     protected $id;
@@ -15,21 +31,8 @@ class OpenpearMaintainer extends Dao
     protected $svn_password;
     protected $created;
     
-    static protected $__id__ = 'type=serial';
-    static protected $__name__ = 'type=string,unique=true,require=true';
-    static protected $__mail__ = 'type=email,require=true';
-    static protected $__fullname__ = 'type=string';
-    static protected $__profile__ = 'type=text';
-    static protected $__url__ = 'type=string';
-    static protected $__location__ = 'type=string';
-    static protected $__password__ = 'type=string';
-    static protected $__svn_password__ = 'type=string';
-    static protected $__created__ = 'type=timestamp';
-    
     protected $new_password;
     protected $new_password_conf;
-    static protected $__new_password__ = 'extra=true';
-    static protected $__new_password_conf__ = 'extra=true';
 
     static private $cached_maintainers = array();
     

@@ -1,6 +1,15 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Changeset
+ *
+ * @var integer $revision @{"require":true,"primary":true}
+ * @var integer $maintainer_id
+ * @var integer $package_id @{"require":true}
+ * @var text $changed
+ * @var timestamp $created
+ */
 class OpenpearChangeset extends Dao
 {
     protected $revision;
@@ -8,12 +17,6 @@ class OpenpearChangeset extends Dao
     protected $package_id;
     protected $changed;
     protected $created;
-    
-    static protected $__revision__ = 'type=integer,require=true,primary=true';
-    static protected $__maintainer_id__ = 'type=integer';
-    static protected $__package_id__ = 'type=integer,require=true';
-    static protected $__changed__ = 'type=text';
-    static protected $__created__ = 'type=timestamp';
     
     private $package;
     private $maintainer;

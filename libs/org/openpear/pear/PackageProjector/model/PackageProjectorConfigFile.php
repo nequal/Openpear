@@ -1,4 +1,11 @@
 <?php
+/**
+ * PackageProjectorConfigFile
+ *
+ * @var string $filename
+ * @var string $commandscript
+ * @var choice $role @{"choices":["php","data","doc","test","script","src"]}
+ */
 class PackageProjectorConfigFile extends PackageProjectorConfigExtra
 {
     protected $filename;
@@ -7,9 +14,6 @@ class PackageProjectorConfigFile extends PackageProjectorConfigExtra
     protected $platform;
     protected $install;
     protected $role;
-    static protected $__filename__ = 'type=string';
-    static protected $__commandscript__ = 'type=string';
-    static protected $__role__ = 'type=choice(php,data,doc,test,script,src)';
     
     protected $_special_section_ = 'filename';
     

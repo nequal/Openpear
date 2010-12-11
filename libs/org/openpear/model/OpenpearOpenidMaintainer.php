@@ -1,13 +1,16 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * OpenID Maintainer
+ *
+ * @var integer $maintainer_id @{"require":true,"primary":true}
+ * @var string $url @{"require":true,"primary":true}
+ */
 class OpenpearOpenidMaintainer extends Dao
 {
     protected $maintainer_id;
     protected $url;
-    
-    static protected $__maintainer_id__ = 'type=integer,require=true,primary=true';
-    static protected $__url__ = 'type=string,require=true,primary=true';
     
     private $maintainer;
     

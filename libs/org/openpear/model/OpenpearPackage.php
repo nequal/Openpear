@@ -1,6 +1,30 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Package
+ *
+ * @var serial $id
+ * @var string $name @{"unique":true,"require":true}
+ * @var string $description @{"require":true,"max":"250"}
+ * @var string $url
+ * @var integer $public_level
+ * @var string $external_repository
+ * @var choice $external_repository_type @{"choices":["Git","Mercurial","Subversion"]}
+ * @var integer $download_count @{"default":"0"}
+ * @var integer $favored_count @{"default":"0"}
+ * @var integer $recent_changeset
+ * @var timestamp $released_at
+ * @var integer $latest_release_id
+ * @var integer $author_id
+ * @var string $license
+ * @var string $license_uri
+ * @var string $notify
+ * @var choice $package_type @{"choices":["pear","pecl"]}
+ * @var timestamp $created
+ * @var timestamp $updated
+ * @var integer $repository_uri_select @{"extra":true}
+ */
 class OpenpearPackage extends Dao
 {
     protected $id;
@@ -23,28 +47,7 @@ class OpenpearPackage extends Dao
     protected $created;
     protected $updated;
     
-    static protected $__id__ = 'type=serial';
-    static protected $__name__ = 'type=string,unique=true,require=true';
-    static protected $__description__ = 'type=string,require=true,max=250';
-    static protected $__url__ = 'type=string';
-    static protected $__public_level__ = 'type=integer';
-    static protected $__external_repository__ = 'type=string';
-    static protected $__external_repository_type__ = 'type=choice(Git,Mercurial,Subversion)';
-    static protected $__download_count__ = 'type=integer,default=0';
-    static protected $__favored_count__ = 'type=integer,default=0';
-    static protected $__recent_changeset__ = 'type=integer';
-    static protected $__released_at__ = 'type=timestamp';
-    static protected $__latest_release_id__ = 'type=integer';
-    static protected $__author_id__ = 'type=integer';
-    static protected $__license__ = 'type=string';
-    static protected $__license_uri__ = 'type=string';
-    static protected $__notify__ = 'type=string';
-    static protected $__package_type__ = 'type=choice(pear,pecl)';
-    static protected $__created__ = 'type=timestamp';
-    static protected $__updated__ = 'type=timestamp';
-    
     protected $repository_uri_select = 1;
-    static protected $__repository_uri_select__ = 'type=integer,extra=true';
     
     private $author;
     private $releases = array();

@@ -1,4 +1,15 @@
 <?php
+/**
+ * Release Queue
+ *
+ * @var integer $package_id @{"require":true}
+ * @var integer $maintainer_id @{"require":true}
+ * @var integer $revision
+ * @var string $build_path
+ * @var text $build_conf @{"require":true}
+ * @var text $description
+ * @var text $notes
+ */
 class OpenpearReleaseQueue extends Object
 {
     protected $package_id;
@@ -8,14 +19,6 @@ class OpenpearReleaseQueue extends Object
     protected $build_conf;
     protected $description;
     protected $notes;
-    
-    static protected $__package_id__ = 'type=integer,require=true';
-    static protected $__maintainer_id__ = 'type=integer,require=true';
-    static protected $__revision__ = 'type=integer';
-    static protected $__build_path__ = 'type=string';
-    static protected $__build_conf__ = 'type=text,require=true';
-    static protected $__description__ = 'type=text';
-    static protected $__notes__ = 'type=text';
 
     private $working_dir;
 

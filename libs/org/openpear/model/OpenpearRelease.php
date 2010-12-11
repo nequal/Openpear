@@ -3,6 +3,17 @@ import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.xml.Atom');
 import('org.openpear.pear.PackageProjector');
 
+/**
+ * Release
+ *
+ * @var serial $id
+ * @var integer $maintainer_id @{"require":true}
+ * @var string $version @{"require":true}
+ * @var choice $version_stab @{"require":true,"choices":["stable","beta","alpha"]}
+ * @var text $notes
+ * @var text $settings
+ * @var timestamp $created
+ */
 class OpenpearRelease extends Dao implements AtomInterface
 {
     protected $id; # リリースID
@@ -13,15 +24,6 @@ class OpenpearRelease extends Dao implements AtomInterface
     protected $notes;
     protected $settings;
     protected $created; # 作成日時
-    
-    static protected $__id__ = 'type=serial';
-    static protected $__package_id__  = 'type=integer,require=true';
-    static protected $__maintainer_id__ = 'type=integer,require=true';
-    static protected $__version__ = 'type=string,require=true';
-    static protected $__version_stab__ = 'type=choice(stable,beta,alpha),require=true';
-    static protected $__notes__ = 'type=text';
-    static protected $__settings__ = 'type=text';
-    static protected $__created__ = 'type=timestamp';
     
     private $package;
     private $maintainer;

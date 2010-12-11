@@ -1,10 +1,14 @@
 <?php
+/**
+ * ChangesetChanged
+ *
+ * @var choice $status @{"choices":["add","modified","remove"]}
+ */
 class OpenpearChangesetChanged extends Object
 {
     protected $status;
     protected $type;
     protected $path;
-    static protected $__status__ = 'type=choice(add,modified,remove)';
     
     protected function __set_status__($status){
         switch($status){

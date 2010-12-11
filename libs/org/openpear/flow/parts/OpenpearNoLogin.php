@@ -1,12 +1,14 @@
 <?php
-
+/**
+ * public actions
+ *
+ * @var string[] $allowed_ext
+ * @var OpenpearMaintainer $user
+ */
 class OpenpearNoLogin extends Flow
 {
     // TODO Source
     protected $allowed_ext = array('php', 'phps', 'html', 'css', 'pl', 'txt', 'js', 'htaccess');
-    static protected $__allowed_ext__ = 'type=string[]';
-
-    static protected $__user__ = 'type=OpenpearMaintainer';
 
     /**
      * @context OpenpearTemplf $ot フィルタ

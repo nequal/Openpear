@@ -1,6 +1,13 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Charges
+ *
+ * @var integer $package_id @{"require":true,"primary":true}
+ * @var integer $maintainer_id @{"require":true,"primary":true}
+ * @var choice $role @{"require":true,"choices":["lead","developer","contributor","helper"]}
+ */
 class OpenpearCharge extends Dao
 {
     const CACHE_TIMEOUT = 3600;
@@ -8,10 +15,6 @@ class OpenpearCharge extends Dao
     protected $package_id;
     protected $maintainer_id;
     protected $role;
-    
-    static protected $__package_id__ = 'type=integer,require=true,primary=true';
-    static protected $__maintainer_id__ = 'type=integer,require=true,primary=true';
-    static protected $__role__ = 'type=choice(lead,developer,contributor,helper),require=true';
     
     private $package;
     private $maintainer;
