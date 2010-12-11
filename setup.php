@@ -1,6 +1,16 @@
 <?php
-define('_CORE_URL_','http://rhaco.org/core.tar.gz');
-define('_JUMP_URL_','http://rhaco.org/jump.php');
+if(php_sapi_name() != 'cli') exit;
+if(ini_get('date.timezone') == '') date_default_timezone_set('Asia/Tokyo');
+if('neutral' == mb_language()) mb_language('Japanese');
+mb_internal_encoding('UTF-8');
+umask(0);
+error_reporting(E_ALL|E_STRICT);
+ini_set('display_errors','On');
+ini_set('display_startup_errors','On');
+ini_set('html_errors','Off');
+set_error_handler('setup_php_error_handler',E_ALL|E_STRICT);
+
+define('_CORE_URL_','http://rhaco.org/download/core/rhaco2.php');
 
 function download_expand($url,$base_dir){
 	if(substr($base_dir,-1) != '/') $base_dir .= '/';
@@ -67,16 +77,6 @@ function download_expand($url,$base_dir){
 		}
 	}
 }
-if(php_sapi_name() != 'cli') exit;
-if(ini_get('date.timezone') == '') date_default_timezone_set('Asia/Tokyo');
-if('neutral' == mb_language()) mb_language('Japanese');
-mb_internal_encoding('UTF-8');
-umask(0);
-error_reporting(E_ALL|E_STRICT);
-ini_set('display_errors','On');
-ini_set('display_startup_errors','On');
-ini_set('html_errors','Off');
-
 function setup_php_error_handler($errno,$errstr,$errfile,$errline){
 	if(strpos($errstr,' should be compatible with that of') !== false || strpos($errstr,'Strict Standards') !== false) return true;
 	if(strpos($errstr,'Use of undefined constant') !== false && preg_match("/\'(.+?)\'/",$errstr,$m) && class_exists($m[1])) return define($m[1],$m[1]);
@@ -89,8 +89,6 @@ function setup_php_print($msg,$fmt='1;31'){
 		print(((php_sapi_name() == 'cli' && substr(PHP_OS,0,3) != 'WIN') ? "\033[".$fmt."m".$msg."\033[0m" : $msg)."\n");
 	}
 }
-set_error_handler('setup_php_error_handler',E_ALL|E_STRICT);
-
 if(file_exists('./__settings__.php')){
 	try{
 		include_once('./__settings__.php');
@@ -124,33 +122,15 @@ if(!class_exists('Object')){
 			}
 		}
 		if(isset($args['h'])){
-			setup_php_print('usage: '.basename(__FILE__).' [-install target_package] [-quick]',null);
+			setup_php_print('usage: '.basename(__FILE__).' [-install target_package]',null);
 			exit;
 		}
-		if(is_file($jump_path = $pwd.'/jump.php')) @require_once($jump_path);
-		if(!class_exists('Object') && is_file($jump_path = $pwd.'/core/jump.php')) @require_once($jump_path);
-		if(!class_exists('Object') && !isset($args['quick']) && is_file($jump_path = dirname($pwd).'/core/jump.php')) @require_once($jump_path);
+		if(is_file($jump_path = $pwd.'/rhaco2.php')) @require_once($jump_path);
 		if(!class_exists('Object')){
-			if(isset($args['quick'])){
-				$jump_path = $pwd.'/jump.php';
-				file_put_contents($jump_path,file_get_contents(constant('_JUMP_URL_')));
-				setup_php_print('core installed. `'.$jump_path.'`','1;34');
-				include_once($jump_path);
-			}else{
-				$default_path = $pwd."/core/";
-				print('core path['.$default_path.']: ');
-				fscanf(STDIN,'%s',$install_path);
-				$install_path = trim($install_path);
-				$install_path = empty($install_path) ? $default_path : $install_path;
-			
-				if(!empty($install_path)){
-					if(substr($install_path,-1) !== '/') $install_path .= '/';
-					if(!is_file($install_path.'jump.php')) download_expand(constant('_CORE_URL_'),$install_path);
-					@include_once($install_path.'jump.php');
-					$jump_path = $install_path.'jump.php';
-					setup_php_print('core installed. `'.$jump_path.'`','1;34');
-				}
-			}
+			$jump_path = $pwd.'/rhaco2.php';
+			file_put_contents($jump_path,file_get_contents(constant('_CORE_URL_')));
+			setup_php_print('core installed. `'.$jump_path.'`','1;34');
+			include_once($jump_path);
 		}
 	}catch(Exception $e){
 		setup_php_print($e->getMessage());

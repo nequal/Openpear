@@ -40,7 +40,7 @@
 
         <div id="header-navi">
           <ul id="header-navi-sub">
-          <rt:if param="{$t.logined()}" value="true">
+          <rt:if param="{$t.is_login()}" value="true">
             <li><a href="{$t.url()}">{$t.trans('Home')}</a> &nbsp; | </li>
             <li><img src="{$t.user().avatar()}" /></li>
             <li><a href="{$t.url('dashboard')}">{$t.trans('Dashboard')}</a></li>

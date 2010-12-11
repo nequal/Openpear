@@ -22,7 +22,7 @@
     <div class="container-class">
       <h2 class="inline fleft"><a href="{$t.url('package')}/{$package.name()}">{$t.trans('Package')} \ {$package.name()}</a></h2>
       <div id="sub-package-button-navi" class="fright">
-        <rt:if param="{$t.logined()}" value="true">
+        <rt:if param="{$t.is_login()}" value="true">
           <rt:if param="{$package.liked($t.user())}" value="false">
             <a href="{$t.url('package')}/{$package.name()}/like/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /></a>
           </rt:if>
@@ -48,7 +48,7 @@
             <li><a href="{$package.url()}">{$t.trans('Site')}</a></li>
           </rt:if>
           <rt:if param="{$package.is_external_repository()}" value="false"><li<rt:block name="package_navi_current_src"></rt:block>><a href="{$t.url('package')}/{$package.name()}/src">{$t.trans('Source')}</a></li></rt:if>
-          <rt:if param="{$t.logined()}" value="true">
+          <rt:if param="{$t.is_login()}" value="true">
             <rt:if param="{$package.permission($t.user(),false)}">
               <li class="admin"><a href="{$t.url('package')}/{$package.name()}/manage">{$t.trans('Manage')}</a></li>
             </rt:if>
@@ -125,7 +125,7 @@
             </ul>
             <br class="clear">
             
-            <rt:if param="{$t.logined()}" value="true">
+            <rt:if param="{$t.is_login()}" value="true">
               <rt:if param="{$package.liked($t.user())}" value="true">
                 <a href="{$t.url('package')}/{$package.name()}/unlike/{$ot.hash('rand')}" class="clear"><img src="./images/global-icon-star-add.png" /> Remove your fav.</a>
               <rt:else />

@@ -91,7 +91,7 @@
       </ul>
       <br class="clear">
       
-      <rt:if param="{$t.logined()}" value="true">
+      <rt:if param="{$t.is_login()}" value="true">
         <rt:if param="{$object.liked($t.user())}" value="true">
           <a href="{$t.url('package')}/{$object.name()}/unlike/{$ot.hash('rand')}" class="clear">Remove your fav.</a>
         <rt:else />
