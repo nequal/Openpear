@@ -285,7 +285,10 @@ class OpenpearNoLogin extends Flow
      */
     public function maintainers() {
         $paginator = new Paginator(20, $this->in_vars('page', 1));
-        $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator, 'name'));
+        $query = $this->in_vars('q') == null
+            ? null
+            : sprintf('name=%1$s,fullname=%1$s,profile=%1$s,url=%1$s,location=%1$s', $this->in_vars('q'));
+        $this->vars('object_list', C(OpenpearMaintainer)->find_page($query, $paginator, 'name'));
         $paginator->vars('q', $this->in_vars('q'));
         $this->vars('paginator', $paginator);
     }
