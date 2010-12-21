@@ -62,8 +62,8 @@
         
         <h4>{$t.trans('Maintainance')}</h4>
         <ul class="list-standard">
-          <li><a href="">Solicit maintainer</a></li>
-          <li><a href="">Set to "Not Maintained"</a></li>
+          <li><a href="{$t.url('package')}/{$package.name()}/manage/setflag?flag=recruite">Recruite volunteers</a></li>
+          <li><a href="{$t.url('package')}/{$package.name()}/manage/setflag?flag=nomaint">Set to "Not Maintained"</a></li>
         </ul>
       </div>
       
