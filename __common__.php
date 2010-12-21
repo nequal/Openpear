@@ -3,6 +3,8 @@ import('org.rhaco.service.Pea');
 import('org.rhaco.net.xml.Atom');
 import('jp.riaf.util.AutoLoader');
 
+set_include_path(__DIR__ . '/libs/vendors' . PATH_SEPARATOR . get_include_path());
+
 $__pear_config_file = __DIR__. '/channel.config.php';
 if (file_exists($__pear_config_file)) {
     $__pear_config = @include($__pear_config_file);
