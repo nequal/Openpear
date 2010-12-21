@@ -1,5 +1,6 @@
 <?php
 import('org.rhaco.service.Pea');
+import('org.rhaco.net.xml.Atom');
 import('jp.riaf.util.AutoLoader');
 
 $__pear_config_file = __DIR__. '/channel.config.php';
