@@ -468,6 +468,7 @@ class OpenpearLogin extends Flow
                 $config = new PackageProjectorConfig();
                 $config->parse_ini_string($latest_release->settings());
                 $this->cp($config);
+                $this->vars('version_release_ver', $latest_release->version());
             } else {
                 $this->cp(new PackageProjectorConfig());
             }
