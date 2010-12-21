@@ -5,6 +5,8 @@
  * @var string[] $allowed_ext
  * @var OpenpearMaintainer $user @{"require":true}
  */
+import('org.openpear.pear.PackageProjector');
+
 class OpenpearLogin extends Flow
 {
     // TODO Source
