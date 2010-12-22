@@ -410,6 +410,33 @@ class OpenpearLogin extends Flow
         }
         return $this->update($package_name);
     }
+
+    /**
+     * パッケージにフラグをたてる
+     * @param string $package_name パッケージ名
+     **/
+    public function package_setflag($package_name) {
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $package->permission($this->user());
+        if ($this->is_vars('flag')) {
+            $package->setflag($this->in_vars('flag'));
+            $package->save();
+        }
+        $this->redirect_by_map('package', $package_name);
+    }
+    /**
+     * パッケージフラグ折る
+     * @param string $package_name パッケージ名
+     **/
+    public function package_rmflag($package_name) {
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $package->permission($this->user());
+        if ($this->is_vars('flag')) {
+            $package->rmflag($this->in_vars('flag'));
+        }
+        $this->redirect_by_map('package', $package_name);
+    }
+
     /**
      * パッケージのリリース
      * @param string $package_name パッケージ名

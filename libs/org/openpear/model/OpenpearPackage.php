@@ -61,8 +61,8 @@ class OpenpearPackage extends Dao
 
     static private $cached_packages = array();
     
-    const NOTIFY_WANTED = 'This package is accepting maintainers for admission.';
-    const NOTIFY_DEPRECATED = 'This package is not maintained.';
+    const NOTIFY_RECRUITE = 'This package is accepting maintainers for admission.';
+    const NOTIFY_NOMAINT = 'This package is not maintained.';
     
     // TODO: Charge に移動
     public function maintainer_role(OpenpearMaintainer $maintainer) {
@@ -253,7 +253,41 @@ class OpenpearPackage extends Dao
             Log::debug($e);
         }
     }
-    
+
+    /**
+     * notify フラグ
+     * @return array
+     **/
+    public function getflags() {
+        return explode(',', $this->notify);
+    }
+
+    /**
+     * notify フラグをセットする
+     * @param string $flag
+     * @return void
+     **/
+    public function setflag($flag) {
+        $notifies = array_map('trim', explode(',', $this->notify));
+        if (in_array($flag, array('recruite', 'nomaint')) && array_search($flag, $notifies) === false) {
+            $notifies[] = $flag;
+        }
+        $this->notify = implode(',', $notifies);
+    }
+
+    /**
+     * notify フラグを削除する
+     * @param string $flag
+     * @return void
+     **/
+    public function rmflag($flag) {
+        $notifies = array_map('trim', explode(',', $this->notify));
+        if (in_array($flag, array('recruite', 'nomaint')) && ($key = array_search($flag, $notifies)) !== false) {
+            unset($notifies[$key]);
+        }
+        $this->notify = implode(',', $notifies);
+    }
+
     /**
      * PEAR コマンドでインストール時に使う名前を取得
      * @return string $package_name
