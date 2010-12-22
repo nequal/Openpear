@@ -337,6 +337,12 @@ class OpenpearLogin extends Flow
             $this->vars('object', $package);
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
+            foreach (array('recruite', 'nomaint') as $flag) {
+                $this->vars("flag_{$flag}", false);
+            }
+            foreach ($package->getflags() as $flag) {
+                $this->vars("flag_{$flag}", true);
+            }
         } catch (Exception $e) {
             Log::debug($e);
             $this->redirect_by_map('package', $package_name);
@@ -433,6 +439,7 @@ class OpenpearLogin extends Flow
         $package->permission($this->user());
         if ($this->is_vars('flag')) {
             $package->rmflag($this->in_vars('flag'));
+            $package->save();
         }
         $this->redirect_by_map('package', $package_name);
     }
