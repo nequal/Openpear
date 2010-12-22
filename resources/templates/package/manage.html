@@ -62,8 +62,16 @@
         
         <h4>{$t.trans('Maintainance')}</h4>
         <ul class="list-standard">
-          <li><a href="{$t.url('package')}/{$package.name()}/manage/setflag?flag=recruite">Recruite volunteers</a></li>
-          <li><a href="{$t.url('package')}/{$package.name()}/manage/setflag?flag=nomaint">Set to "Not Maintained"</a></li>
+          <rt:if param="{$flag_recruite}">
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/rmflag?flag=recruite">Finish Recruite volunteers</a></li>
+          <rt:else />
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/setflag?flag=recruite">Recruite volunteers</a></li>
+          </rt:if>
+          <rt:if param="{$flag_nomaint}">
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/rmflag?flag=nomaint">Remove "Not Maintained" Flag</a></li>
+          <rt:else />
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/setflag?flag=nomaint">Set to "Not Maintained"</a></li>
+          </rt:if>
         </ul>
       </div>
       

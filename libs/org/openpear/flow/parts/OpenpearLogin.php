@@ -337,6 +337,12 @@ class OpenpearLogin extends Flow
             $this->vars('object', $package);
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
+            foreach (array('recruite', 'nomaint') as $flag) {
+                $this->vars("flag_{$flag}", false);
+            }
+            foreach ($package->getflags() as $flag) {
+                $this->vars("flag_{$flag}", true);
+            }
         } catch (Exception $e) {
             Log::debug($e);
             $this->redirect_by_map('package', $package_name);
@@ -410,6 +416,34 @@ class OpenpearLogin extends Flow
         }
         return $this->update($package_name);
     }
+
+    /**
+     * パッケージにフラグをたてる
+     * @param string $package_name パッケージ名
+     **/
+    public function package_setflag($package_name) {
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $package->permission($this->user());
+        if ($this->is_vars('flag')) {
+            $package->setflag($this->in_vars('flag'));
+            $package->save();
+        }
+        $this->redirect_by_map('package', $package_name);
+    }
+    /**
+     * パッケージフラグ折る
+     * @param string $package_name パッケージ名
+     **/
+    public function package_rmflag($package_name) {
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $package->permission($this->user());
+        if ($this->is_vars('flag')) {
+            $package->rmflag($this->in_vars('flag'));
+            $package->save();
+        }
+        $this->redirect_by_map('package', $package_name);
+    }
+
     /**
      * パッケージのリリース
      * @param string $package_name パッケージ名

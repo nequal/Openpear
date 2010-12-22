@@ -107,6 +107,8 @@
             <map url="package/(.+?)/maintainer/add" name="package_add_maintainer" />
             <map url="package/(.+?)/maintainer/remove" name="package_remove_maintainer" />
             
+            <map url="package/(.+?)/manage/setflag" name="package_setflag" />
+            <map url="package/(.+?)/manage/rmflag" name="package_rmflag" />
             <map url="package/(.+?)/manage/release" name="package_release" template="package/release.html">
                 <arg name="confirm_template" value="package/release_confirm.html" />
             </map>

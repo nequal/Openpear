@@ -12,6 +12,20 @@
 
 <rt:block name="package_main">
 <div id="sub-package-description">
+  <rt:loop param="{$object.getflags()}" var="flag">
+    <rt:if param="{$flag}" value="recruite">
+      <p id="sub-package-description-notify" class="warning">
+        {$t.trans('This package is accepting maintainers for admission.')}
+      </p>
+    </rt:if>
+    <rt:if param="{$flag}" value="nomaint">
+      <p id="sub-package-description-notify" class="notice">
+        {$t.trans('This package is not maintained.')}
+      </p>
+    </rt:if>
+  </rt:loop>
+
+
   <div class="sub-package-description">
     <p class="title">
       {$t.trans('Description')}
