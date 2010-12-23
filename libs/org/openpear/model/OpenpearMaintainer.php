@@ -30,16 +30,16 @@ class OpenpearMaintainer extends Dao
     protected $password;
     protected $svn_password;
     protected $created;
-    
+
     protected $new_password;
     protected $new_password_conf;
 
     static private $cached_maintainers = array();
-    
+
     protected function __init__(){
         $this->created = time();
     }
-    
+
     /**
      * アバターを取得
      * @param int $size
@@ -86,7 +86,7 @@ class OpenpearMaintainer extends Dao
         Store::set($cache_key, $maintainer, OpenpearConfig::object_cache_timeout(3600));
         return $maintainer;
     }
-    
+
     /**
      * 正しいパスワードか認証する
      * 過去のパスワードはひどいので適宜修正
@@ -136,7 +136,7 @@ class OpenpearMaintainer extends Dao
         File::write(OpenpearConfig::svn_passwd_file(work_path('openpear.passwd')), $template->read('files/passwd.txt'));
         Store::delete(self::cache_key($this->id));
     }
-    
+
     /**
      * 新規作成時検証
      */
@@ -148,7 +148,7 @@ class OpenpearMaintainer extends Dao
             Exceptions::add(new Exception('Incorrect Confirm Password'), 'new_password_conf');
         }
     }
-    
+
     /**
      * 作成後処理
      * - Subversion アカウントの作成
@@ -157,23 +157,23 @@ class OpenpearMaintainer extends Dao
     protected function __after_create__($commit){
         $registered_message = new Template();
         $registered_message->vars('maintainer', $this);
-        
+
         $message = new OpenpearMessage();
         $message->maintainer_to_id($this->id());
         $message->subject('Welcome to Openpear!');
         $message->description($registered_message->read('messages/registered.txt'));
         $message->type('system');
         $message->save();
-        
+
         $message = new OpenpearMessage();
         $message->maintainer_to_id($this->id());
         $message->subject('Please join Openpear Group');
-        $message->description('Do you already join the Openpear Group? <a href="http://groups.google.com/group/openpear">Openpear Group</a>');
+        $message->description('Do you already join the Openpear Group? [http://groups.google.com/group/openpear:title=Openpear Group]');
         $message->type('system_notice');
         $message->mail(false);
         $message->save();
     }
-    
+
     protected function __verify_url__(){
         if(!empty($this->url) && !preg_match('/s?https?:\/\/[\-_\.!~*\'\(\)a-zA-Z0-9;\/\?:@&=\+$,%#]+/i', $this->url)){
             return false;
