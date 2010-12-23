@@ -61,6 +61,36 @@ class OpenpearLogin extends Flow
         }
         exit;
     }
+
+    public function maintainer_edit() {
+        $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->user()->id()));
+        if ($this->is_post()) {
+            try {
+                $maintainer->cp($this->vars());
+                $maintainer->save();
+                $this->redirect_by_map('maintainer_profile', $maintainer->name());
+            } catch (Exception $e) {
+                Log::info($e);
+            }
+        }
+        $this->cp($maintainer);
+        $this->vars('openid_accounts', C(OpenpearOpenidMaintainer)->find_all(Q::eq('maintainer_id', $maintainer->id())));
+    }
+
+    public function maintainer_openid_add() {
+        if ($openid = OpenpearOpenIDAuth::login($this)) {
+            try {
+                $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid));
+            } catch (NotfoundDaoException $e) {
+                $openid_maintainer = new OpenpearOpenidMaintainer();
+                $openid_maintainer->maintainer_id($this->user()->id());
+                $openid_maintainer->url($openid);
+                $openid_maintainer->save();
+            }
+        }
+        $this->redirect_by_map('maintainer_edit', $this->user()->name());
+    }
+
     /**
      * メンテナ情報を更新して結果をjsonで出力
      */
