@@ -161,6 +161,9 @@
             <td>{$t.df($object.created(), 'M d, Y')}</td>
           </tr>
         </table>
+        <rt:if param="{$ot.isme($object)}">
+            <p align="right"><a href="{$t.url('maintainers/edit')}">{$t.trans('Edit Profile')}</a></p>
+        </rt:if>
       </div>
       <br class="clear">
     </div> <!-- end of column2-l -->
