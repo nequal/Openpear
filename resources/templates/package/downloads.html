@@ -31,7 +31,7 @@
         {$ot.date_ago($object.created())}
       </td>
       <td class="acenter">
-        <a href="{$t.url('get')}/{$object.filename()}">{$object.filename()}</a> / <a href="{$t.url('package')}/{$package.name()}/src/tags/release-{$object.fm_version()}-{$object.fm_created('YmdHis')}">Source</a>
+        <a href="{$t.url('get')}/{$object.filename()}">{$object.filename()}</a> / <a href="{$t.url('package')}/{$package.name()}/src/tags/release-{$object.version()}-{$object.fm_created('YmdHis')}">Source</a>
       </td>
       <td>
         <dl>
