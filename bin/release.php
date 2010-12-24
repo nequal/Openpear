@@ -1,6 +1,8 @@
 <?php
-require_once __DIR__. '/__init__.php';
+require_once dirname(__DIR__). '/__settings__.php';
 chdir(__DIR__);
+
+Pea::begin_loose_syntax();
 
 // import pear
 require_once 'PEAR/PackageProjector.php';

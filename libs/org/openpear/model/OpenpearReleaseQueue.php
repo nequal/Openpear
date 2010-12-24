@@ -49,7 +49,7 @@ class OpenpearReleaseQueue extends Object
                 default:
                     throw new RuntimeException('unknown repository type');
             }
-            $command = new Command(sprintf('%s %s %s', $cmd, escapeshellarg($package->external_repository), escapeshellarg($this->build_dir('tmp'))));
+            $command = new Command(sprintf('%s %s %s', $cmd, escapeshellarg($package->external_repository()), escapeshellarg($this->build_dir('tmp'))));
         } else {
             // Openpear Repository
             $revision = (is_numeric($this->revision) && $this->revision > 0)? intval($this->revision): 'HEAD';

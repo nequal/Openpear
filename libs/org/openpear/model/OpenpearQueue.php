@@ -42,7 +42,7 @@ class OpenpearQueue extends Dao
     protected function __init__() {
         $this->created = $this->updated = $this->locked = time();
     }
-    protected function __before_save__() {
+    protected function __before_save__($commit) {
         $this->updated = time();
     }
     protected function __fm_data__() {

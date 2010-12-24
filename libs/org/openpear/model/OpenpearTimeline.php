@@ -29,7 +29,7 @@ class OpenpearTimeline extends Dao implements AtomInterface
     protected function __init__(){
         $this->created = time();
     }
-    protected function __create_verify__() {
+    protected function __create_verify__($commit) {
         if ($this->type == 'favorite') {
             try {
                 $timeline = C(__CLASS__)->find_get(

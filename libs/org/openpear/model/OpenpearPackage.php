@@ -408,10 +408,10 @@ class OpenpearPackage extends Dao
         $this->favored_count = 0;
     }
     
-    protected function __create_verify__(){
+    protected function __create_verify__($commit){
     }
 
-    protected function __after_create__(){
+    protected function __after_create__($commit){
         $queue = new OpenpearNewprojectQueue();
         $queue->package_id($this->id());
         $queue->maintainer_id($this->author_id());
@@ -438,11 +438,11 @@ class OpenpearPackage extends Dao
         $timeline->save();
     }
 
-    protected function __before_save__() {
+    protected function __before_save__($commit) {
         $this->updated = time();
     }
 
-    protected function __after_save__() {
+    protected function __after_save__($commit) {
         Store::delete(self::cache_key($this->id));
     }
 

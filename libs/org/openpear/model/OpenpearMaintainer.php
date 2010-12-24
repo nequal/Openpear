@@ -120,7 +120,7 @@ class OpenpearMaintainer extends Dao
     /**
      * 作成/更新前処理
      */
-    protected function __before_save__(){
+    protected function __before_save__($commit){
         if($this->new_password() && $this->new_password() === $this->new_password_conf()){
             $this->password = sha1($this->new_password());
             $this->svn_password = crypt($this->new_password());
@@ -130,7 +130,7 @@ class OpenpearMaintainer extends Dao
 	 * @see vendors/org/rhaco/storage/db/Dao/Dao#__after_save__()
 	 * @const string $svn_passwd_file リポジトリにアクセスするパスワード
 	 */
-    protected function __after_save__(){
+    protected function __after_save__($commit){
         $template = new Template();
         $template->vars('maintainers', C(OpenpearMaintainer)->find_all());
         File::write(OpenpearConfig::svn_passwd_file(work_path('openpear.passwd')), $template->read('files/passwd.txt'));
@@ -140,7 +140,7 @@ class OpenpearMaintainer extends Dao
     /**
      * 新規作成時検証
      */
-    protected function __create_verify__(){
+    protected function __create_verify__($commit){
         if(!$this->new_password()){
             Exceptions::add(new Exception('Subversion Password is required'), 'new_password');
         }
@@ -154,7 +154,7 @@ class OpenpearMaintainer extends Dao
      * - Subversion アカウントの作成
      * - メールの送信
      */
-    protected function __after_create__(){
+    protected function __after_create__($commit){
         $registered_message = new Template();
         $registered_message->vars('maintainer', $this);
         
