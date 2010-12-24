@@ -3,6 +3,7 @@ require_once dirname(__DIR__). '/__settings__.php';
 chdir(__DIR__);
 
 Pea::begin_loose_syntax();
+error_reporting(E_ALL & ~(E_STRICT | E_DEPRECATED));
 
 // import pear
 require_once 'PEAR/PackageProjector.php';
