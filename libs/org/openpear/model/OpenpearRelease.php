@@ -38,6 +38,27 @@ class OpenpearRelease extends Dao implements AtomInterface
         $this->version_stab = 'stable';
         $this->created = time();
     }
+
+    protected function __after_create__($commit) {
+        $timeline = new OpenpearTimeline();
+        $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">released</span> <a href="%s">%s %s</a>',
+            url('maintainer/'. $this->author()->name()),
+            $this->author()->name(),
+            url('package/'. $this->name()),
+            $this->name(),
+            $this->fm_version()
+        ));
+        $timeline->description(sprintf('Download: <a href="%s">%s</a>.<pre>pear install openpear/%s</pre>',
+            url("package/{$this->package_name()}/downloads#{$this->id()}"),
+            $this->fm_version(),
+            $this->package()->installName()
+        ));
+        $timeline->type('release');
+        $timeline->package_id($this->id());
+        $timeline->maintainer_id($this->maintainer_id());
+        $timeline->save();
+    }
+
     protected function __fm_version__(){
         if(is_null($this->id)) return 'No Release';
         if($this->version_stab === 'stable') return $this->version();

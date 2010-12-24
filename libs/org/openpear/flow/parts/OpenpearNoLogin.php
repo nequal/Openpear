@@ -166,7 +166,7 @@ class OpenpearNoLogin extends Flow
         $this->vars('timelines', C(OpenpearTimeline)->find_all(
             new Paginator(10),
             Q::eq('package_id', $package->id()),
-            Q::order('-id')
+            Q::order('-created')
         ));
         $this->vars('favored_maintainers', $package->favored_maintainers());
     }
@@ -227,7 +227,7 @@ class OpenpearNoLogin extends Flow
         $this->vars('object', $maintainer);
         $this->vars('packages', C(OpenpearPackage)->find_all(Q::in('id', C(OpenpearCharge)->find_sub('package_id', Q::eq('maintainer_id', $maintainer->id()))), Q::order('-updated')));
         $this->vars('fav_packages', C(OpenpearPackage)->find_all(Q::in('id', C(OpenpearFavorite)->find_sub('package_id', Q::eq('maintainer_id', $maintainer->id()))), Q::order('-updated')));
-        $this->vars('timelines', C(OpenpearTimeline)->find_all(new Paginator(10), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id')));
+        $this->vars('timelines', C(OpenpearTimeline)->find_all(new Paginator(10), Q::eq('maintainer_id', $maintainer->id()), Q::order('-created')));
     }
     /**
      * メンテナ一覧
@@ -456,7 +456,7 @@ class OpenpearNoLogin extends Flow
     public function timeline_atom() {
         // TODO 仕様の確認
         Atom::convert('Openpear Timelines', url('timelines.atom'),
-            C(OpenpearTimeline)->find_all(new Paginator(20), Q::order('-id'))
+            C(OpenpearTimeline)->find_all(new Paginator(20), Q::order('-created'))
         )->output();
     }
     /**
@@ -467,7 +467,7 @@ class OpenpearNoLogin extends Flow
         // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         Atom::convert('Openpear Package Timelines: '. $package->name(), url('timelines.atom'),
-            C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('package_id', $package->id()), Q::order('-id'))
+            C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('package_id', $package->id()), Q::order('-created'))
         )->output();
     }
     /**
@@ -478,7 +478,7 @@ class OpenpearNoLogin extends Flow
         // TODO 仕様の確認
         $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
         Atom::convert('Openpear Maintainer Timelines: '. $maintainer->name(), url('timelines.atom'),
-            C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id'))
+            C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('maintainer_id', $maintainer->id()), Q::order('-created'))
         )->output();
     }
 
