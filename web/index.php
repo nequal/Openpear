@@ -1,4 +1,4 @@
-<?php require dirname(__FILE__). '/__settings__.php'; app(); ?>
+<?php require dirname(__DIR__). '/__settings__.php'; app(__FILE__); ?>
 <app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" nomatch_redirect="/">
 	<installation>
         mysqlに resources/schema.sql に流し込んでテーブル作成

@@ -1,4 +1,5 @@
 <?php
+Lib::config_path(path('vendors'), path('libs'));
 Rhaco2::repository('http://github.com/downloads/riaf/rhaco2-repository');
 
 import('org.rhaco.service.Pea');
