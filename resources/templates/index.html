@@ -6,9 +6,9 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <meta name="robots" content="INDEX,FOLLOW" />
-  
+
   <!-- $Id$ -->
-  
+
   <meta name="keywords" content="Openpear,PEAR,PHP,Library,Open Source,Subversion,Git,Hosting" />
   <meta name="description" content="Openpear is a PEAR Repository Channel and Subversion Hosting Service" />
 
@@ -17,7 +17,7 @@
   <meta property="og:type" content="website" />
   <rt:block name="og:url"><meta property="og:url" content="" /></rt:block>
   <rt:block name="og:title"><meta property="og:title" content="" /></rt:block>
-  <meta property="og:image" content="http://media.openpear.org/images/header_logo.gif" />
+  <meta property="og:image" content="images/header_logo.gif" />
 
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
@@ -102,7 +102,7 @@
               <li><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> <em>-- {$ot.date_ago($package.released_at())}</em></li>
             </ul>
           </div>
-          
+
           <div id="main-column-center">
               <h2>{$t.trans('Most Downloaded')}</h2>
               <ul id="main-recent" rt:param="most_downloaded" rt:var="package">
