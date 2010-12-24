@@ -1,4 +1,6 @@
 <?php
+Rhaco2::repository('http://github.com/downloads/riaf/rhaco2-repository');
+
 import('org.rhaco.service.Pea');
 import('org.rhaco.net.xml.Atom');
 import('jp.riaf.util.AutoLoader');
