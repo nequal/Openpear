@@ -28,7 +28,9 @@
       
       <ul class="list-standard">
         <li><a href="{$t.url('package')}/{$package.name()}/manage/release">{$t.trans('Release package')}</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/manage/release/setting">{$t.trans('Release setting')}</a></li>
+        <rt:comment>
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/release/setting">{$t.trans('Release setting')}</a></li>
+        </rt:comment>
       </ul>
       
       <h4>{$t.trans('Maintainers')}</h4>
