@@ -173,7 +173,7 @@ class OpenpearPackage extends Dao
         return (bool) isset($this->external_repository) && strpos($this->external_repository, "github.com");
     }
     public function github_url() {
-        if($this->is_github() && preg_match('/github\.com[\/:](.+?)\/(.+?)\.git/', $this->external_repository)) {
+        if($this->is_github() && preg_match('/github\.com[\/:](.+?)\/(.+?)\.git/', $this->external_repository, $match)) {
             return sprintf('https://github.com/%s/%s', $match[1], $match[2]);
         }
         return '';
