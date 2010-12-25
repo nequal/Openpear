@@ -40,20 +40,23 @@ class OpenpearRelease extends Dao implements AtomInterface
     }
 
     protected function __after_create__($commit) {
-        $timeline = new OpenpearTimeline();
+        $maintainer = $this->maintainer();
+        $package = $this->package();
+
+        $timeline = new OpenpearTimeline('type=release');
         $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">released</span> <a href="%s">%s %s</a>',
-            url('maintainer/'. $this->author()->name()),
-            $this->author()->name(),
-            url('package/'. $this->name()),
-            $this->name(),
+            url('maintainer/'. $maintainer->name()),
+            $maintainer->name(),
+            url('package/'. $package->name()),
+            $package->name(),
             $this->fm_version()
         ));
-        $timeline->description(sprintf('Download: <a href="%s">%s</a>.<pre>pear install openpear/%s</pre>',
-            url("package/{$this->package_name()}/downloads#{$this->id()}"),
+        $timeline->description(sprintf('Download: <a href="%s">%s</a>.<pre>pear install openpear/%s-%s</pre>',
+            url("package/{$package->name()}/downloads#{$this->id()}"),
             $this->fm_version(),
-            $this->package()->installName()
+            $package->name(),
+            $this->version(). ($this->version_stab == 'stable' ? '': $this->version_stab)
         ));
-        $timeline->type('release');
         $timeline->package_id($this->package_id());
         $timeline->maintainer_id($this->maintainer_id());
         $timeline->save();

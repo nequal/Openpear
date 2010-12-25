@@ -466,8 +466,6 @@ class OpenpearLogin extends Flow
     public function package_release($package_name) {
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $package->permission($this->user());
-        $this->vars('package', $package);
-        $this->vars('package_id', $package->id());
 
         if ($this->is_post()) {
             $this->save_current_vars();
@@ -523,6 +521,8 @@ class OpenpearLogin extends Flow
                 $this->cp(new PackageProjectorConfig());
             }
         }
+        $this->vars('package', $package);
+        $this->vars('package_id', $package->id());
     }
     
     /**
@@ -541,6 +541,7 @@ class OpenpearLogin extends Flow
                         throw new OpenpearException(Gettext::trans('incorrect package name'));
                     }
                     if ($package_xml->channel != OpenpearConfig::pear_domain('openpear.org')) {
+                        $package_xml->channel = OpenpearConfig::pear_domain('openpear.org');
                         $pd = new PharData($package_file->fullname());
                         $pd->addFromString('package.xml', $package_xml->asXML());
                         unset($pd);
@@ -552,6 +553,14 @@ class OpenpearLogin extends Flow
                     $queue = new OpenpearQueue('type=upload_release');
                     $queue->data(serialize($upload_queue));
                     $queue->save();
+
+                    $message = new OpenpearMessage('type=system_notice,mail=false');
+                    $message->maintainer_to_id($this->user()->id());
+                    $message->subject(trans('リリースキューに追加されました'));
+                    $message->description(trans('{1}のリリースを受け付けました。リリースの完了後，メールでお知らせします。', $package->name()));
+                    $message->save();
+
+                    $this->redirect_by_map('dashboard');
                 }
             } catch (Exception $e) {
                 Log::debug($e);
