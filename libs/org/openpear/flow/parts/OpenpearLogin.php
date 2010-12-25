@@ -11,7 +11,7 @@ class OpenpearLogin extends Flow
 {
     // TODO Source
     protected $allowed_ext = array('php', 'phps', 'html', 'css', 'pl', 'txt', 'js', 'htaccess');
-    
+
     /**
      * @context OpenpearTemplf $ot フィルタ
      */
@@ -183,7 +183,7 @@ class OpenpearLogin extends Flow
             }
         }
     }
-    
+
     /**
      * Fav 登録
      * @param string $package_name パッケージ名
@@ -235,7 +235,7 @@ class OpenpearLogin extends Flow
                 $charge = new OpenpearCharge();
                 $charge->maintainer_id($maintainer->id());
                 $charge->package_id($package->id());
-                $charge->role('developer');
+                $charge->role($this->in_vars('role', 'lead'));
                 $charge->save();
             } catch (NotfoundDaoException $e) {
                 $this->not_found();
@@ -245,6 +245,24 @@ class OpenpearLogin extends Flow
         }
         $this->redirect_by_map('package_manage', $package_name);
     }
+
+    public function package_update_maintainer($package_name) {
+        if ($this->is_post() && $this->is_vars('maintainer_id')) {
+            try {
+                $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+                $package->permission($this->user());
+                $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $package->id()), Q::eq('maintainer_id', $this->in_vars('maintainer_id')));
+                $charge->role($this->in_vars('role', 'lead'));
+                $charge->save();
+            } catch (NotfoundDaoException $e) {
+                $this->not_found();
+            } catch (Exception $e) {
+                Log::debug($e);
+            }
+        }
+        $this->redirect_by_map('package_manage', $package_name);
+    }
+
     /**
      * パッケージからメンテナを削除する
      * @param string $package_name パッケージ名
@@ -255,6 +273,7 @@ class OpenpearLogin extends Flow
         if ($this->is_post() && $this->is_vars('maintainer_id')) {
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+                $package->permission($this->user());
                 $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->in_vars('maintainer_id')));
                 $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $package->id()), Q::eq('maintainer_id', $maintainer->id()));
                 $charge->delete();
@@ -266,7 +285,7 @@ class OpenpearLogin extends Flow
         }
         $this->redirect_by_map('package_manage', $package_name);
     }
-    
+
     /**
      * カテゴリ登録
      * @param string $package_name パッケージ名

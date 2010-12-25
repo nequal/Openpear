@@ -39,12 +39,18 @@
         <li>
           <ul class="list-liner">
             <rt:loop param="maintainers" var="m">
-            <li><img src="{$m.avatar()}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a></li>
+              <li>
+                <img src="{$m.avatar()}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a>
+                <form action="{$t.url('package')}/{$package.name()}/category/remove" class="inline" onsubmit="return window.confirm('Delete this tag?');" method="post">
+                  <input type="image" src="images/global-icon-notice.png" value="Delete" />
+                  <input type="hidden" name="maintainer_id" value="{$m.id()}" />
+                </form>
+              </li>
             </rt:loop>
           </ul>
         </li>
         <li class="clear"><a href="javascript:;" onclick="$('#add-maintainer').show();">{$t.trans('Add maintainer')}</a>
-          <form id="add-maintainer" class="dnone" action="{$t.url('package')}/{$package.name()}/maintainer/add" method="post"><input type="text" name="maintainer_name" size="30" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
+          <form id="add-maintainer" class="dnone" action="{$t.url('package')}/{$package.name()}/maintainer/add" method="post"><input type="text" name="maintainer_name" size="30" /><select name="role"><option value="lead">{$t.trans('lead')}</option><option value="developer">{$t.trans('developer')}</option><option value="contributor">{$t.trans('contributor')}</option><option value="helper">{$t.trans('helper')}</option></select><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
         </ul>
         
         <h4>{$t.trans('Tags')}</h4>

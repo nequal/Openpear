@@ -11,14 +11,14 @@ import('org.rhaco.storage.db.Dao');
 class OpenpearCharge extends Dao
 {
     const CACHE_TIMEOUT = 3600;
-    
+
     protected $package_id;
     protected $maintainer_id;
     protected $role;
-    
+
     private $package;
     private $maintainer;
-    
+
     static public function packages(OpenpearMaintainer $maintainer){
         $store_key = array('charges_maintainer', $maintainer->id());
         if (Store::has($store_key, self::CACHE_TIMEOUT)) {
@@ -37,8 +37,8 @@ class OpenpearCharge extends Dao
         }
         return $packages;
     }
-    
-    protected function __after_save__(){
+
+    protected function __after_save__($commit){
         $maintainers = C(OpenpearMaintainer)->find_all();
         $packages = C(OpenpearPackage)->find_all();
         $template = new Template();
@@ -46,7 +46,7 @@ class OpenpearCharge extends Dao
         $template->vars('packages', $packages);
         File::write(OpenpearConfig::svn_access_file(), $template->read('files/access.txt'));
     }
-    
+
     public function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{
