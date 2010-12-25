@@ -536,11 +536,14 @@ class OpenpearLogin extends Flow
             try {
                 $package_file = $this->in_files('package_file');
                 $package_file->generate(work_path('upload/'. $package_name. '-'. date('YmdHis'). '.tgz'));
-                if (Tag::setof($xml, file_get_contents(sprintf('phar://%s/package.xml', $package_file->fullname())), 'package')) {
-                    $uploaded_name = $xml->f('name.value()');
-                    $uploaded_channel = $xml->f('channel.value()');
-                    if ($uploaded_name != $package->name() || $uploaded_channel != OpenpearConfig::pear_domain('openpear.org')) {
-                        throw new OpenpearException('package name or channel');
+                if ($package_xml = simplexml_load_file(sprintf('phar://%s/package.xml', $package_file->fullname()))) {
+                    if ($package_xml->name != $package->name()) {
+                        throw new OpenpearException(Gettext::trans('incorrect package name'));
+                    }
+                    if ($package_xml->channel != OpenpearConfig::pear_domain('openpear.org')) {
+                        $pd = new PharData($package_file->fullname());
+                        $pd->addFromString('package.xml', $package_xml->asXML());
+                        unset($pd);
                     }
                     $upload_queue = new stdClass;
                     $upload_queue->package_id = $package->id();
