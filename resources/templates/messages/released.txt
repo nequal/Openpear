@@ -7,4 +7,4 @@
 ||<
 
 ** {$t.trans('Help')}
-- See help: [http://openpear.org/help]
+- See help: [http://openpear.org/package/Openpear/doc]
