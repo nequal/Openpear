@@ -56,7 +56,7 @@ class OpenpearReleaseQueue extends Object
             $repository_path = sprintf('%s/%s/trunk', OpenpearConfig::svn_root(), $package->name());
             $command = new Command(sprintf('svn export -r %s %s %s', $revision, escapeshellarg($repository_path), escapeshellarg($this->build_dir('tmp'))));
         }
-        if ($command->stderr()) {
+        if ($command->end_code()) {
             throw new RuntimeException($command->stderr());
         }
         $build_path = $this->build_dir(implode('/', array('tmp', $this->build_path)));
