@@ -407,23 +407,25 @@ class OpenpearPackage extends Dao
         $this->license = 'New BSD License (BSD)';
         $this->favored_count = 0;
     }
-    
+
     protected function __create_verify__($commit){
     }
 
     protected function __after_create__($commit){
-        $queue = new OpenpearNewprojectQueue();
-        $queue->package_id($this->id());
-        $queue->maintainer_id($this->author_id());
-        $queue->save();
-        
+        if (!$this->is_external_repository()) {
+            $queue = new OpenpearNewprojectQueue();
+            $queue->package_id($this->id());
+            $queue->maintainer_id($this->author_id());
+            $queue->save();
+        }
+
         $created_message = new Template();
         $created_message->vars('package', $this);
         $message = new OpenpearPackageMessage();
         $message->package_id($this->id());
         $message->description($created_message->read('messages/created.txt'));
         $message->save();
-        
+
         $timeline = new OpenpearTimeline();
         $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">created</span> a new package: <a href="%s">%s</a>',
             url('maintainer/'. $this->author()->name()),
