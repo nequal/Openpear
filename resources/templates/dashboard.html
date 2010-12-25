@@ -74,14 +74,14 @@
   <rt:loop param="my_packages" var="package">
     <div class="dashboard-packages">
       <a href="{$t.url('package')}/{$package.name()}" class="package-link">{$package.name()}</a> <a href="{$t.url('package')}/{$package.name()}/manage" class="manage-link">&raquo; manage</a> 
-      <p><rt:if param="{$package.is_latest_release()}">Latest: <a href="{$t.url('package')}/{$package.name()}/download">{$package.latest_release().fm_version()}</a>, </rt:if>{$package.favored_count()} Fans</p>
+      <p><rt:if param="{$package.is_latest_release()}">Latest: <a href="{$t.url('package')}/{$package.name()}/downloads">{$package.latest_release().fm_version()}</a>, </rt:if>{$package.favored_count()} Fans</p>
     </div>
   </rt:loop>
 
   <h3>{$t.trans('Favorite Packages')}</h3>
   <rt:loop param="fav_packages" var="package">
     <div class="dashboard-packages">
-      <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a><rt:if param="{$package.latest_release().id()}"> <a href="{$t.url('package')}/{$package.name()}/download">{$package.latest_release().fm_version()}</a> </rt:if>
+      <a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a><rt:if param="{$package.latest_release().id()}"> <a href="{$t.url('package')}/{$package.name()}/downloads">{$package.latest_release().fm_version()}</a> </rt:if>
     </div>
     <rt:else />
     {$t.trans('No favs.')}

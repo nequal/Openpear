@@ -1,21 +1,13 @@
 <?php
-require_once __DIR__. '/__init__.php';
+require_once dirname(__DIR__). '/__settings__.php';
 chdir(__DIR__);
+
+Pea::begin_loose_syntax();
+error_reporting(E_ALL & ~(E_STRICT | E_DEPRECATED));
 
 // import pear
 require_once 'PEAR/PackageProjector.php';
 require_once 'PEAR/Server2.php';
-
-// import libs
-import('org.openpear.config.OpenpearConfig');
-import('org.openpear.pear.PackageProjector');
-import('jp.nequal.net.Subversion');
-import('org.openpear.model.OpenpearMaintainer');
-import('org.openpear.model.OpenpearPackage');
-import('org.openpear.model.OpenpearMessage');
-import('org.openpear.model.OpenpearQueue');
-import('org.openpear.model.OpenpearRelease');
-import('org.openpear.model.OpenpearReleaseQueue');
 
 foreach (OpenpearQueue::fetch_queues('build') as $queue) {
     try {
@@ -85,7 +77,6 @@ foreach (OpenpearQueue::fetch_queues('upload_release') as $queue) {
         } catch(Exception $e) {
             Log::error($e);
         }
-        
         $queue->delete();
     } catch (Exception $e) {
         Log::error($e);

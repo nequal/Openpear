@@ -1,15 +1,18 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Package Tag
+ *
+ * @var integer $package_id @{"require":true,"primary":true}
+ * @var integer $tag_id @{"require":true,"primary":true}
+ * @var boolean $prime
+ */
 class OpenpearPackageTag extends Dao
 {
     protected $package_id;
     protected $tag_id;
     protected $prime;
-    
-    static protected $__package_id__ = 'type=integer,require=true,primary=true';
-    static protected $__tag_id__ = 'type=integer,require=true,primary=true';
-    static protected $__prime__ = 'type=boolean';
     
     private $package;
     private $tag;

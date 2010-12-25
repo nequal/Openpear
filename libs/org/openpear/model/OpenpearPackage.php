@@ -1,6 +1,30 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Package
+ *
+ * @var serial $id
+ * @var string $name @{"unique":true,"require":true}
+ * @var string $description @{"require":true,"max":"250"}
+ * @var string $url
+ * @var integer $public_level
+ * @var string $external_repository
+ * @var choice $external_repository_type @{"choices":["Git","Mercurial","Subversion"]}
+ * @var integer $download_count @{"default":"0"}
+ * @var integer $favored_count @{"default":"0"}
+ * @var integer $recent_changeset
+ * @var timestamp $released_at
+ * @var integer $latest_release_id
+ * @var integer $author_id
+ * @var string $license
+ * @var string $license_uri
+ * @var string $notify
+ * @var choice $package_type @{"choices":["pear","pecl"]}
+ * @var timestamp $created
+ * @var timestamp $updated
+ * @var integer $repository_uri_select @{"extra":true}
+ */
 class OpenpearPackage extends Dao
 {
     protected $id;
@@ -23,28 +47,7 @@ class OpenpearPackage extends Dao
     protected $created;
     protected $updated;
     
-    static protected $__id__ = 'type=serial';
-    static protected $__name__ = 'type=string,unique=true,require=true';
-    static protected $__description__ = 'type=string,require=true,max=250';
-    static protected $__url__ = 'type=string';
-    static protected $__public_level__ = 'type=integer';
-    static protected $__external_repository__ = 'type=string';
-    static protected $__external_repository_type__ = 'type=choice(Git,Mercurial,Subversion)';
-    static protected $__download_count__ = 'type=integer,default=0';
-    static protected $__favored_count__ = 'type=integer,default=0';
-    static protected $__recent_changeset__ = 'type=integer';
-    static protected $__released_at__ = 'type=timestamp';
-    static protected $__latest_release_id__ = 'type=integer';
-    static protected $__author_id__ = 'type=integer';
-    static protected $__license__ = 'type=string';
-    static protected $__license_uri__ = 'type=string';
-    static protected $__notify__ = 'type=string';
-    static protected $__package_type__ = 'type=choice(pear,pecl)';
-    static protected $__created__ = 'type=timestamp';
-    static protected $__updated__ = 'type=timestamp';
-    
     protected $repository_uri_select = 1;
-    static protected $__repository_uri_select__ = 'type=integer,extra=true';
     
     private $author;
     private $releases = array();
@@ -58,8 +61,8 @@ class OpenpearPackage extends Dao
 
     static private $cached_packages = array();
     
-    const NOTIFY_WANTED = 'This package is accepting maintainers for admission.';
-    const NOTIFY_DEPRECATED = 'This package is not maintained.';
+    const NOTIFY_RECRUITE = 'This package is accepting maintainers for admission.';
+    const NOTIFY_NOMAINT = 'This package is not maintained.';
     
     // TODO: Charge に移動
     public function maintainer_role(OpenpearMaintainer $maintainer) {
@@ -163,6 +166,20 @@ class OpenpearPackage extends Dao
     }
 
     /**
+     * Github ですか？
+     * @return bool
+     **/
+    public function is_github() {
+        return (bool) isset($this->external_repository) && strpos($this->external_repository, "github.com");
+    }
+    public function github_url() {
+        if($this->is_github() && preg_match('/github\.com[\/:](.+?)\/(.+?)\.git/', $this->external_repository, $match)) {
+            return sprintf('https://github.com/%s/%s', $match[1], $match[2]);
+        }
+        return '';
+    }
+
+    /**
      * メンテナに権限があるか
      * @param OpenpearMaintainer $maintainer
      * @param bool $exception 例外を出力するかどうか
@@ -250,7 +267,41 @@ class OpenpearPackage extends Dao
             Log::debug($e);
         }
     }
-    
+
+    /**
+     * notify フラグ
+     * @return array
+     **/
+    public function getflags() {
+        return explode(',', $this->notify);
+    }
+
+    /**
+     * notify フラグをセットする
+     * @param string $flag
+     * @return void
+     **/
+    public function setflag($flag) {
+        $notifies = array_map('trim', explode(',', $this->notify));
+        if (in_array($flag, array('recruite', 'nomaint')) && array_search($flag, $notifies) === false) {
+            $notifies[] = $flag;
+        }
+        $this->notify = implode(',', $notifies);
+    }
+
+    /**
+     * notify フラグを削除する
+     * @param string $flag
+     * @return void
+     **/
+    public function rmflag($flag) {
+        $notifies = array_map('trim', explode(',', $this->notify));
+        if (in_array($flag, array('recruite', 'nomaint')) && ($key = array_search($flag, $notifies)) !== false) {
+            unset($notifies[$key]);
+        }
+        $this->notify = implode(',', $notifies);
+    }
+
     /**
      * PEAR コマンドでインストール時に使う名前を取得
      * @return string $package_name
@@ -370,23 +421,25 @@ class OpenpearPackage extends Dao
         $this->license = 'New BSD License (BSD)';
         $this->favored_count = 0;
     }
-    
-    protected function __create_verify__(){
+
+    protected function __create_verify__($commit){
     }
 
-    protected function __after_create__(){
-        $queue = new OpenpearNewprojectQueue();
-        $queue->package_id($this->id());
-        $queue->maintainer_id($this->author_id());
-        $queue->save();
-        
+    protected function __after_create__($commit){
+        if (!$this->is_external_repository()) {
+            $queue = new OpenpearNewprojectQueue();
+            $queue->package_id($this->id());
+            $queue->maintainer_id($this->author_id());
+            $queue->save();
+        }
+
         $created_message = new Template();
         $created_message->vars('package', $this);
         $message = new OpenpearPackageMessage();
         $message->package_id($this->id());
         $message->description($created_message->read('messages/created.txt'));
         $message->save();
-        
+
         $timeline = new OpenpearTimeline();
         $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">created</span> a new package: <a href="%s">%s</a>',
             url('maintainer/'. $this->author()->name()),
@@ -401,11 +454,11 @@ class OpenpearPackage extends Dao
         $timeline->save();
     }
 
-    protected function __before_save__() {
+    protected function __before_save__($commit) {
         $this->updated = time();
     }
 
-    protected function __after_save__() {
+    protected function __after_save__($commit) {
         Store::delete(self::cache_key($this->id));
     }
 

@@ -2,11 +2,15 @@
 module('command.SubversionCommand');
 module('exception.SubversionLogException');
 
+/**
+ * SubversionLog
+ *
+ * @var boolean $raw
+ */
 class SubversionLog extends SubversionCommand
 {
     protected $_command_ = 'log';
     protected $raw = false;
-    static protected $__raw__ = 'type=boolean';
     
     protected function __exec__(){
         if($this->is_raw()){

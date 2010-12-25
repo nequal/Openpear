@@ -1,0 +1,136 @@
+<rt:extends href="../index.html" />
+
+<rt:block name="stylesheet">
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/2column.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+</rt:block>
+<rt:block name="title">{$t.trans('Edit Profile')} \ Openpear</rt:block>
+
+<rt:block name="topic_path">
+  <div id="topic-path">
+    <a href="{$t.url()}">{$t.trans('Home')}</a> &raquo; {$t.trans('Edit Profile')}
+  </div>
+</rt:block>
+
+<rt:block name="contents">
+  <div class="frame-class" id="sub-title">
+    
+    <div class="container-class">
+      <h2 class="inline fleft"><a href="{$t.url('maintainers/edit')}">{$t.trans('Edit Profile')}</a></h2>
+      
+      <form action="{$t.url('packages')}" id="sub-search-form" method="post">
+        <input type="text" name="q" class="radius-2 darkgray" id="sub-search-q" value="package search" onfocus="this.value = ''; this.style.color = '#000';" />
+        <input type="submit" class="radius-2" id="sub-search-submit" value="Search" />
+      </form>
+      <br class="clear" />
+    </div> <!-- #container-s -->
+  </div> <!-- .frame-class -->
+  
+  <div class="frame-class">
+    <div class="container-class" id="sub-main">
+      
+      <div class="column2">
+        
+        <div class="column2-left">
+          
+          <form action="{$t.url('maintainers/edit')}" method="post" id="register" rt:ref="true">
+            <dl>
+              <dt>{$t.trans('Subversion password')}:</dt>
+              <dd>
+                <rt:invalid param="new_password" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="new_password" type="password" id="svn-pass" class="tiny" />
+              </dd>
+              <dt>{$t.trans('Confirm password')}:</dt>
+              <dd>
+                <rt:invalid param="new_password_conf" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="new_password_conf" type="password" id="svn-pass-conf" class="tiny" />
+              </dd>
+              <dt>{$t.trans('E-mail')} <span class="red">*</span>: </dt>
+              <dd>
+                <rt:invalid param="mail" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="mail" type="text" id="email" class="small" /></dd>
+              <dt>{$t.trans('Username')}: </dt>
+              <dd>
+                <rt:invalid param="fullname" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="fullname" type="text" id="name" class="small" /></dd>
+              <dt>{$t.trans('Profile')}: </dt>
+              <dd>
+                <rt:invalid param="profile" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <textarea name="profile" id="profile"></textarea>
+              </dd>
+              <dt>{$t.trans('URL')} : </dt>
+              <dd>
+                <rt:invalid param="url" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="url" type="text" id="url" class="small" /></dd>
+              <dt>{$t.trans('Location')} : </dt>
+              <dd>
+                <rt:invalid param="location" messages="errors">
+                  <rt:loop param="errors" var="error" limit="1">
+                    <p class="error">{$error}</p>
+                  </rt:loop>
+                </rt:invalid>
+                <input name="location" type="text" id="location" class="small" /></dd>
+            </dl>
+            
+            <input type="submit" value="{$t.trans('Update')}" class="small" />
+          </form>
+          
+        </div>
+        
+        <div class="column2-right">
+          
+          <h3>{$t.trans('Add new OpenID account')}</h3>
+          
+          <form action="{$t.url('maintainers/openid/add')}" method="post" id="login-openid">
+            <input type="text" name="openid_url" id="openid-url" />
+            <input type="submit" value="{$t.trans('Login')}" id="openid-login" />
+          </form>
+          
+          <form method="post" id="login-openid-major">
+            <div>
+              <img src="images/openid/hatena.png" onclick="$('#openid-url').val('http://www.hatena.ne.jp/' + prompt('hatena user id?') + '/'); $('#login-openid').submit(); return false;" />
+              <img src="images/openid/google.png" onclick="$('#openid-url').val('https://www.google.com/accounts/o8/id'); $('#login-openid').submit(); return false;" />
+              <img src="images/openid/livedoor.png" onclick="$('#openid-url').val('http://livedoor.com/'); $('#login-openid').submit(); return false;" />
+              <img src="./images/openid/mixi.png" onclick="$('#openid-url').val('https://mixi.jp/'); $('#login-openid').submit(); return false;" />
+              <img src="./images/openid/yahoo.png" onclick="$('#openid-url').val('http://www.yahoo.com/'); $('#login-openid').submit(); return false;" />
+              <img src="./images/openid/myopenid.png" onclick="$('#openid-url').val('https://www.myopenid.com/'); $('#login-openid').submit(); return false;" />
+            </div>
+          </form>
+          
+          <rt:if param="{$openid_accounts}">
+            <h3>{$t.trans('Your OpenID account(s)')}</h3>
+            <ul class="list-standard" rt:param="{$openid_accounts}" rt:var="openid">
+              <li>{$openid.url()}</li>
+            </ul>
+          </rt:if>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</rt:block>

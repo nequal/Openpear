@@ -1,4 +1,4 @@
-<?php require dirname(__FILE__). '/__settings__.php'; app(); ?>
+<?php require dirname(__DIR__). '/__settings__.php'; app(__FILE__); ?>
 <app name="Openpear" summary="PEAR Repository Channel and Subversion Hosting Service" ns="Openpear" nomatch_redirect="/">
 	<installation>
         mysqlに resources/schema.sql に流し込んでテーブル作成
@@ -35,7 +35,7 @@
         <maps class="org.openpear.flow.parts.OpenpearNoLogin">
             <map url="/" name="index" template="index.html" />
             <map name="search" />
-            
+
             <map url="account/login" name="do_login" template="account/login.html">
                 <arg name="login_redirect" value="dashboard" />
             </map>
@@ -47,10 +47,10 @@
             	<arg name="success_redirect" value="dashboard" />
             	<arg name="fail_redirect" value="signup" />
             </map>
-            
-	        <map url="maintainer/(.+)" method="maintainer_profile" template="maintainer/model.html" />                    
-            <map url="maintainers" method="maintainers" template="maintainer/models.html" />
-            
+
+	        <map url="maintainer/(.+)" name="maintainer_profile" template="maintainer/model.html" />
+            <map url="maintainers" name="maintainers" template="maintainer/models.html" />
+
             <map name="packages" template="package/models.html">
                 <arg name="updated" value="package/models_updates.html" />
                 <arg name="favored_count" value="package/models_favored.html" />
@@ -58,13 +58,13 @@
             </map>
             <map url="packages/tags" name="packages_tags" template="package/tags.html" />
             <map url="packages/releases\.atom" name="packages_releases_atom" />
-            
+
             <map name="package" url="package/([^/]+)" template="package/model.html" />
             <map url="package/(.+?)/timeline" name="package_timeline" template="package/timeline.html" />
             <map url="package/(.+?)/downloads" name="package_downloads" template="package/downloads.html" />
-            
+
             <map name="document_browse" url="package/(.+?)/doc(/.+)?" template="package/document.html" />
-            
+
             <map name="changeset" url="changeset/(\d+)" template="package/changeset.html" />
             <map name="source_browse" url="package/(.+?)/src(/?.+)?" template="package/source.html" />
 
@@ -82,9 +82,11 @@
             <map url="account/logout" name="do_logout">
                 <arg name="logout_redirect" value="index" />
             </map>
-            
+
             <map url="maintainers/update\.json" name="maintainer_update_json" />
-            
+            <map url="maintainers/edit" name="maintainer_edit" template="maintainer/edit.html" />
+            <map url="maintainers/openid/add" name="maintainer_openid_add" />
+
             <map name="message_inbox" url="message/inbox" template="message/inbox.html" />
             <map name="message_sent" url="message/sent" template="message/sent.html" />
             <map name="message_compose" url="message/compose" template="message/compose.html">
@@ -94,7 +96,7 @@
             <map url="message/(\d+)" name="message" template="message/detail.html" />
                 <arg name="fail_redirect" value="message_inbox" />
             </map>
-            
+
             <map name="package_create" url="packages/create" template="package/create.html" />
             <map url="package/(.+?)/like/(.+)" name="package_add_favorite" />
             <map url="package/(.+?)/unlike/(.+)" name="package_remove_favorite" />
@@ -106,7 +108,9 @@
             <map url="package/(.+?)/manage/edit_do" name="package_edit_do" />
             <map url="package/(.+?)/maintainer/add" name="package_add_maintainer" />
             <map url="package/(.+?)/maintainer/remove" name="package_remove_maintainer" />
-            
+
+            <map url="package/(.+?)/manage/setflag" name="package_setflag" />
+            <map url="package/(.+?)/manage/rmflag" name="package_rmflag" />
             <map url="package/(.+?)/manage/release" name="package_release" template="package/release.html">
                 <arg name="confirm_template" value="package/release_confirm.html" />
             </map>

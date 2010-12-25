@@ -1,12 +1,14 @@
 <?php
-
+/**
+ * public actions
+ *
+ * @var string[] $allowed_ext
+ * @var OpenpearMaintainer $user
+ */
 class OpenpearNoLogin extends Flow
 {
     // TODO Source
     protected $allowed_ext = array('php', 'phps', 'html', 'css', 'pl', 'txt', 'js', 'htaccess');
-    static protected $__allowed_ext__ = 'type=string[]';
-
-    static protected $__user__ = 'type=OpenpearMaintainer';
 
     /**
      * @context OpenpearTemplf $ot フィルタ
@@ -29,70 +31,23 @@ class OpenpearNoLogin extends Flow
      * @request string $openid_url openid認証サーバのURL
      */
     public function login_by_openid() {
-        Pea::begin_loose_syntax();
-        require_once 'Auth/OpenID/Consumer.php';
-        require_once 'Auth/OpenID/FileStore.php';
-        require_once 'Auth/OpenID/SReg.php';
-        require_once 'Auth/OpenID/PAPE.php';
-        $openid = null;
-
         if ($this->is_login()) $this->redirect_by_map('index');
-        if ((($this->in_vars('openid_url') != "") || $this->in_vars('openid_verify'))) {
-            Log::debug("begin openid auth: ". $this->in_vars('openid_url'));
 
-            // OpenID Auth
-            $consumer = new Auth_OpenID_Consumer(new Auth_OpenID_FileStore(work_path('openid')));
-            if ($this->is_vars('openid_verify')) {
-                $response = $consumer->complete($this->request_url());
-                if ($response->status == Auth_OpenID_SUCCESS) {
-                    $openid = $response->getDisplayIdentifier();
+        if ($openid = OpenpearOpenIDAuth::login($this)) {
+            try {
+                $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid));
+                $this->user($openid_maintainer->maintainer());
+                if ($this->login()) {
+                    $redirect_to = $this->in_sessions('logined_redirect_to');
+                    $this->rm_sessions('logined_redirect_to');
+                    if(!empty($redirect_to)) $this->redirect($redirect_to);
+                    $this->redirect_by_map("login_redirect");
                 }
-            } else {
-                $auth_request = $consumer->begin($this->in_vars('openid_url'));
-                if (!$auth_request) {
-                    throw new RuntimeException('invalid openid url');
-                }
-                $sreg_request = Auth_OpenID_SRegRequest::build(array('nickname'), array('fullname', 'email'));
-                if ($sreg_request) {
-                    $auth_request->addExtension($sreg_request);
-                }
-                if ($auth_request->shouldSendRedirect()) {
-                    $redirect_url = $auth_request->redirectURL(url(), $this->request_url(false). '?openid_verify=true');
-                    if (Auth_OpenID::isFailure($redirect_url)) {
-                        throw new RuntimeException("Could not redirect to server: {$redirect_url->message}");
-                    } else {
-                        $this->redirect($redirect_url);
-                    }
-                } else {
-                    $form_html = $auth_request->htmlMarkup(url(),
-                        $this->request_url(false). '?openid_verify=true', false, array('id' => 'openid_message'));
-                    if (Auth_OpenID::isFailure($form_html)) {
-                        throw new RuntimeException("Could not redirect to server: {$form_html->message}");
-                    } else {
-                        echo $form_html;
-                        exit;
-                    }
-                }
-            }
-
-            Pea::end_loose_syntax();
-
-            if ($openid) {
-                try {
-                    $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid));
-                    $this->user($openid_maintainer->maintainer());
-                    if ($this->login()) {
-                        $redirect_to = $this->in_sessions('logined_redirect_to');
-                        $this->rm_sessions('logined_redirect_to');
-                        if(!empty($redirect_to)) $this->redirect($redirect_to);
-                        $this->redirect_by_map("login_redirect");
-                    }
-                } catch (NotfoundDaoException $e) {
-                    $this->sessions('openid_identity', $openid);
-                    $this->redirect_by_map('signup');
-                } catch (Exception $e) {
-                    throw $e;
-                }
+            } catch (NotfoundDaoException $e) {
+                $this->sessions('openid_identity', $openid);
+                $this->redirect_by_map('signup');
+            } catch (Exception $e) {
+                throw $e;
             }
         }
         $this->do_login();
@@ -211,7 +166,7 @@ class OpenpearNoLogin extends Flow
         $this->vars('timelines', C(OpenpearTimeline)->find_all(
             new Paginator(10),
             Q::eq('package_id', $package->id()),
-            Q::order('-id')
+            Q::order('-created')
         ));
         $this->vars('favored_maintainers', $package->favored_maintainers());
     }
@@ -272,7 +227,7 @@ class OpenpearNoLogin extends Flow
         $this->vars('object', $maintainer);
         $this->vars('packages', C(OpenpearPackage)->find_all(Q::in('id', C(OpenpearCharge)->find_sub('package_id', Q::eq('maintainer_id', $maintainer->id()))), Q::order('-updated')));
         $this->vars('fav_packages', C(OpenpearPackage)->find_all(Q::in('id', C(OpenpearFavorite)->find_sub('package_id', Q::eq('maintainer_id', $maintainer->id()))), Q::order('-updated')));
-        $this->vars('timelines', C(OpenpearTimeline)->find_all(new Paginator(10), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id')));
+        $this->vars('timelines', C(OpenpearTimeline)->find_all(new Paginator(10), Q::eq('maintainer_id', $maintainer->id()), Q::order('-created')));
     }
     /**
      * メンテナ一覧
@@ -283,7 +238,10 @@ class OpenpearNoLogin extends Flow
      */
     public function maintainers() {
         $paginator = new Paginator(20, $this->in_vars('page', 1));
-        $this->vars('object_list', C(OpenpearMaintainer)->find_page($this->in_vars('q'), $paginator, 'name'));
+        $query = $this->in_vars('q') == null
+            ? null
+            : Q::contains('name,fullname,profile,url,location', explode(' ', $this->in_vars('q')));
+        $this->vars('object_list', C(OpenpearMaintainer)->find_all($paginator, Q::order('name'), $query));
         $paginator->vars('q', $this->in_vars('q'));
         $this->vars('paginator', $paginator);
     }
@@ -498,7 +456,7 @@ class OpenpearNoLogin extends Flow
     public function timeline_atom() {
         // TODO 仕様の確認
         Atom::convert('Openpear Timelines', url('timelines.atom'),
-            C(OpenpearTimeline)->find_all(new Paginator(20), Q::order('-id'))
+            C(OpenpearTimeline)->find_all(new Paginator(20), Q::order('-created'))
         )->output();
     }
     /**
@@ -509,7 +467,7 @@ class OpenpearNoLogin extends Flow
         // TODO 仕様の確認
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         Atom::convert('Openpear Package Timelines: '. $package->name(), url('timelines.atom'),
-            C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('package_id', $package->id()), Q::order('-id'))
+            C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('package_id', $package->id()), Q::order('-created'))
         )->output();
     }
     /**
@@ -520,7 +478,7 @@ class OpenpearNoLogin extends Flow
         // TODO 仕様の確認
         $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('name', $maintainer_name));
         Atom::convert('Openpear Maintainer Timelines: '. $maintainer->name(), url('timelines.atom'),
-            C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('maintainer_id', $maintainer->id()), Q::order('-id'))
+            C(OpenpearTimeline)->find_all(new Paginator(20), Q::eq('maintainer_id', $maintainer->id()), Q::order('-created'))
         )->output();
     }
 

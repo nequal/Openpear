@@ -1,4 +1,12 @@
 <?php
+/**
+ * SubversionCommand
+ *
+ * @var mixed $cmd_path
+ * @var mixed $look_cmd_path
+ * @var mixed{} $vars
+ * @var mixed{} $options
+ */
 class SubversionCommand extends Object
 {
     static protected $__cmd_path__ = '/usr/bin/svn';
@@ -7,8 +15,6 @@ class SubversionCommand extends Object
     protected $_command_ = 'help';
     protected $vars = array();
     protected $options = array();
-    static protected $__vars__ = 'type=mixed{}';
-    static protected $__options__ = 'type=mixed{}';
 
     static public function __import__(){
         self::$__cmd_path__ = module_const('cmd_path','/usr/bin/svn');

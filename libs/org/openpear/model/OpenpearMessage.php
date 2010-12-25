@@ -2,7 +2,17 @@
 import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.mail.Gmail');
 /**
- * 
+ * Message
+ *
+ * @var serial $id
+ * @var integer $maintainer_to_id @{"require":true}
+ * @var integer $maintainer_from_id
+ * @var string $subject @{"require":true}
+ * @var text $description @{"require":true}
+ * @var boolean $unread
+ * @var choice $type @{"choices":["system","system_notice","notice","warning","normal"]}
+ * @var timestamp $created
+ * @var boolean $mail @{"extra":true}
  * @const account gmailアカウント,パスワード
  */
 class OpenpearMessage extends Dao
@@ -15,21 +25,11 @@ class OpenpearMessage extends Dao
     protected $unread;
     protected $type = 'normal';
     protected $created;
-    
-    static protected $__id__ = 'type=serial';
-    static protected $__maintainer_to_id__ = 'type=integer,require=true';
-    static protected $__maintainer_from_id__ = 'type=integer';
-    static protected $__subject__ = 'type=string,require=true';
-    static protected $__description__ = 'type=text,require=true';
-    static protected $__unread__ = 'type=boolean';
-    static protected $__type__ = 'type=choice(system,system_notice,notice,warning,normal)';
-    static protected $__created__ = 'type=timestamp';
-    
+
     protected $mail = true;
     private $maintainer_to;
     private $maintainer_from;
-    static protected $__mail__ = 'type=boolean,extra=true';
-    
+
     static public function unread_count(OpenpearMaintainer $maintainer) {
         $key = array('openpear_message_unread', $maintainer->id());
         if (Store::has($key)) {
@@ -55,7 +55,7 @@ class OpenpearMessage extends Dao
         if ($throw) throw new OpenpearException('permission denied');
         return false;
     }
-    
+
     protected function __init__(){
         $this->created = time();
         $this->unread = true;
@@ -71,7 +71,6 @@ class OpenpearMessage extends Dao
     protected function __after_create__(){
         try {
             if($this->mail()){
-                return;
                 list($account, $password) = OpenpearConfig::gmail_account();
                 $mail = new Gmail($account, $password);
                 $mail->to($this->maintainer_to()->mail(), str($this->maintainer_to()));
@@ -89,7 +88,7 @@ class OpenpearMessage extends Dao
             Store::delete(array('openpear_message_unread', $id));
         }
     }
-    
+
     public function maintainer_to(){
         if($this->maintainer_to instanceof OpenpearMaintainer === false){
             try{
@@ -106,7 +105,7 @@ class OpenpearMessage extends Dao
         }
         return $this->maintainer_from;
     }
-    
+
     protected function __fm_description__(){
         return HatenaSyntax::render($this->description());
     }

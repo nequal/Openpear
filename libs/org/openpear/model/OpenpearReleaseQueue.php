@@ -1,4 +1,15 @@
 <?php
+/**
+ * Release Queue
+ *
+ * @var integer $package_id @{"require":true}
+ * @var integer $maintainer_id @{"require":true}
+ * @var integer $revision
+ * @var string $build_path
+ * @var text $build_conf @{"require":true}
+ * @var text $description
+ * @var text $notes
+ */
 class OpenpearReleaseQueue extends Object
 {
     protected $package_id;
@@ -8,14 +19,6 @@ class OpenpearReleaseQueue extends Object
     protected $build_conf;
     protected $description;
     protected $notes;
-    
-    static protected $__package_id__ = 'type=integer,require=true';
-    static protected $__maintainer_id__ = 'type=integer,require=true';
-    static protected $__revision__ = 'type=integer';
-    static protected $__build_path__ = 'type=string';
-    static protected $__build_conf__ = 'type=text,require=true';
-    static protected $__description__ = 'type=text';
-    static protected $__notes__ = 'type=text';
 
     private $working_dir;
 
@@ -46,14 +49,14 @@ class OpenpearReleaseQueue extends Object
                 default:
                     throw new RuntimeException('unknown repository type');
             }
-            $command = new Command(sprintf('%s %s %s', $cmd, escapeshellarg($package->external_repository), escapeshellarg($this->build_dir('tmp'))));
+            $command = new Command(sprintf('%s %s %s', $cmd, escapeshellarg($package->external_repository()), escapeshellarg($this->build_dir('tmp'))));
         } else {
             // Openpear Repository
             $revision = (is_numeric($this->revision) && $this->revision > 0)? intval($this->revision): 'HEAD';
             $repository_path = sprintf('%s/%s/trunk', OpenpearConfig::svn_root(), $package->name());
             $command = new Command(sprintf('svn export -r %s %s %s', $revision, escapeshellarg($repository_path), escapeshellarg($this->build_dir('tmp'))));
         }
-        if ($command->stderr()) {
+        if ($command->end_code()) {
             throw new RuntimeException($command->stderr());
         }
         $build_path = $this->build_dir(implode('/', array('tmp', $this->build_path)));
@@ -113,8 +116,6 @@ class OpenpearReleaseQueue extends Object
             $package->released_at(time());
             $package->save();
 
-            C($release)->commit();
-            
             $message_template = new Template();
             $message_template->vars('t', new Templf());
             $message_template->vars('package', $package);
@@ -123,7 +124,7 @@ class OpenpearReleaseQueue extends Object
             $message->maintainer_to_id($maintainer->id());
             $message->subject(trans('{1} package have been released.', $package->name()));
             $message->description($message_template->read('messages/released.txt'));
-            $message->save(true);
+            $message->save();
         } catch(Exception $e) {
             Log::error($e);
         }

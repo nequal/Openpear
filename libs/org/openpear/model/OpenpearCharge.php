@@ -1,21 +1,24 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Charges
+ *
+ * @var integer $package_id @{"require":true,"primary":true}
+ * @var integer $maintainer_id @{"require":true,"primary":true}
+ * @var choice $role @{"require":true,"choices":["lead","developer","contributor","helper"]}
+ */
 class OpenpearCharge extends Dao
 {
     const CACHE_TIMEOUT = 3600;
-    
+
     protected $package_id;
     protected $maintainer_id;
-    protected $role;
-    
-    static protected $__package_id__ = 'type=integer,require=true,primary=true';
-    static protected $__maintainer_id__ = 'type=integer,require=true,primary=true';
-    static protected $__role__ = 'type=choice(lead,developer,contributor,helper),require=true';
-    
+    protected $role = 'lead';
+
     private $package;
     private $maintainer;
-    
+
     static public function packages(OpenpearMaintainer $maintainer){
         $store_key = array('charges_maintainer', $maintainer->id());
         if (Store::has($store_key, self::CACHE_TIMEOUT)) {
@@ -34,8 +37,8 @@ class OpenpearCharge extends Dao
         }
         return $packages;
     }
-    
-    protected function __after_save__(){
+
+    protected function __after_save__($commit){
         $maintainers = C(OpenpearMaintainer)->find_all();
         $packages = C(OpenpearPackage)->find_all();
         $template = new Template();
@@ -43,7 +46,7 @@ class OpenpearCharge extends Dao
         $template->vars('packages', $packages);
         File::write(OpenpearConfig::svn_access_file(), $template->read('files/access.txt'));
     }
-    
+
     public function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{

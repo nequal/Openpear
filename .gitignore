@@ -8,3 +8,8 @@ core/
 work/
 __common_*__.php
 rhaco2.php
+channel.config.php
+channel.xml
+rest.php
+get/
+resources/locale/messages/messages-xx.po

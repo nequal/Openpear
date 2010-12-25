@@ -3,6 +3,17 @@ import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.xml.Atom');
 import('org.openpear.pear.PackageProjector');
 
+/**
+ * Release
+ *
+ * @var serial $id
+ * @var integer $maintainer_id @{"require":true}
+ * @var string $version @{"require":true}
+ * @var choice $version_stab @{"require":true,"choices":["stable","beta","alpha"]}
+ * @var text $notes
+ * @var text $settings
+ * @var timestamp $created
+ */
 class OpenpearRelease extends Dao implements AtomInterface
 {
     protected $id; # リリースID
@@ -13,15 +24,6 @@ class OpenpearRelease extends Dao implements AtomInterface
     protected $notes;
     protected $settings;
     protected $created; # 作成日時
-    
-    static protected $__id__ = 'type=serial';
-    static protected $__package_id__  = 'type=integer,require=true';
-    static protected $__maintainer_id__ = 'type=integer,require=true';
-    static protected $__version__ = 'type=string,require=true';
-    static protected $__version_stab__ = 'type=choice(stable,beta,alpha),require=true';
-    static protected $__notes__ = 'type=text';
-    static protected $__settings__ = 'type=text';
-    static protected $__created__ = 'type=timestamp';
     
     private $package;
     private $maintainer;
@@ -36,6 +38,30 @@ class OpenpearRelease extends Dao implements AtomInterface
         $this->version_stab = 'stable';
         $this->created = time();
     }
+
+    protected function __after_create__($commit) {
+        $maintainer = $this->maintainer();
+        $package = $this->package();
+
+        $timeline = new OpenpearTimeline('type=release');
+        $timeline->subject(sprintf('<a href="%s">%s</a> <span class="hl">released</span> <a href="%s">%s %s</a>',
+            url('maintainer/'. $maintainer->name()),
+            $maintainer->name(),
+            url('package/'. $package->name()),
+            $package->name(),
+            $this->fm_version()
+        ));
+        $timeline->description(sprintf('Download: <a href="%s">%s</a>.<pre>pear install openpear/%s-%s</pre>',
+            url("package/{$package->name()}/downloads#{$this->id()}"),
+            $this->fm_version(),
+            $package->name(),
+            $this->version(). ($this->version_stab == 'stable' ? '': $this->version_stab)
+        ));
+        $timeline->package_id($this->package_id());
+        $timeline->maintainer_id($this->maintainer_id());
+        $timeline->save();
+    }
+
     protected function __fm_version__(){
         if(is_null($this->id)) return 'No Release';
         if($this->version_stab === 'stable') return $this->version();

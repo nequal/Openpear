@@ -2,6 +2,17 @@
 import('org.rhaco.storage.db.Dao');
 import('org.rhaco.net.xml.Atom');
 
+/**
+ * Timeline
+ *
+ * @var serial $id
+ * @var string $subject @{"require":true}
+ * @var text $description @{"require":true}
+ * @var choice $type @{"choices":["release","changeset","user_activities","package_setting","favorite"]}
+ * @var integer $package_id
+ * @var integer $maintainer_id
+ * @var timestamp $created
+ */
 class OpenpearTimeline extends Dao implements AtomInterface
 {
     protected $id;
@@ -11,13 +22,6 @@ class OpenpearTimeline extends Dao implements AtomInterface
     protected $package_id;
     protected $maintainer_id;
     protected $created;
-    static protected $__id__ = 'type=serial';
-    static protected $__subject__ = 'type=string,require=true';
-    static protected $__description__ = 'type=text,require=true';
-    static protected $__type__ = 'type=choice(release,changeset,user_activities,package_setting,favorite)';
-    static protected $__package_id__ = 'type=integer';
-    static protected $__maintainer_id__ = 'type=integer';
-    static protected $__created__ = 'type=timestamp';
     
     private $package;
     private $maintainer;
@@ -25,7 +29,7 @@ class OpenpearTimeline extends Dao implements AtomInterface
     protected function __init__(){
         $this->created = time();
     }
-    protected function __create_verify__() {
+    protected function __create_verify__($commit) {
         if ($this->type == 'favorite') {
             try {
                 $timeline = C(__CLASS__)->find_get(

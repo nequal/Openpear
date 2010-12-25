@@ -6,11 +6,18 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <meta name="robots" content="INDEX,FOLLOW" />
-  
+
   <!-- $Id$ -->
-  
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
+
+  <meta name="keywords" content="Openpear,PEAR,PHP,Library,Open Source,Subversion,Git,Hosting" />
+  <meta name="description" content="Openpear is a PEAR Repository Channel and Subversion Hosting Service" />
+
+  <meta property="fb:admins" content="1" />
+  <meta property="og:site_name" content="Openpear :: Open PEAR Repository Channel" />
+  <meta property="og:type" content="website" />
+  <rt:block name="og:url"><meta property="og:url" content="" /></rt:block>
+  <rt:block name="og:title"><meta property="og:title" content="" /></rt:block>
+  <meta property="og:image" content="images/header_logo.gif" />
 
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
@@ -95,7 +102,7 @@
               <li><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> <em>-- {$ot.date_ago($package.released_at())}</em></li>
             </ul>
           </div>
-          
+
           <div id="main-column-center">
               <h2>{$t.trans('Most Downloaded')}</h2>
               <ul id="main-recent" rt:param="most_downloaded" rt:var="package">
@@ -177,19 +184,19 @@
     <div class="frame-class footer-wrap">
       <div id="footer">
         <ul id="footer-menu">
-          <li><a href="{$t.url('about')}">{$t.trans('About')}</a> | </li>
+          <li><a href="{$t.url('package')}/Openpear/doc/ja/about">{$t.trans('About')}</a> | </li>
           <li><a href="http://openpear.blogspot.com/" target="_blank">{$t.trans('Blog')}</a> | </li>
           <!--
           <li><a href="">Logos</a> | </li>
           -->
           <li><a href="http://groups.google.com/group/openpear" target="_blank">{$t.trans('Google Group')}</a> | </li>
-          <li><a href="{$t.url('help')}">{$t.trans('Help')}</a> | </li>
+          <li><a href="{$t.url('package')}/Openpear/doc">{$t.trans('Help')}</a> | </li>
           <li><a href="http://pledgie.com/campaigns/11253">{$t.trans('Donate')}</a></li>
           <!--
           <li><a href="">Contact</a></li>
           -->
         </ul>
-        <p>Copyright &copy; 2009 <a href="http://openpear.org/">Openpear</a>.  All Rights Reserved.</p>
+        <p>Copyright &copy; 2008-2011 <a href="http://openpear.org/">Openpear</a>.  All Rights Reserved.</p>
         <!--
         <p><a href="{$t.url()}">Terms of Service</a> | <a href="{$t.url('policy')}">Privacy Policy</a></p>
           -->

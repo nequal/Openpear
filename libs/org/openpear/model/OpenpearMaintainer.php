@@ -2,6 +2,22 @@
 import('org.rhaco.storage.db.Dao');
 import('org.openpear.model.OpenpearMessage');
 
+/**
+ * Maintainer
+ *
+ * @var serial $id
+ * @var string $name @{"unique":true,"require":true}
+ * @var email $mail @{"require":true}
+ * @var string $fullname
+ * @var text $profile
+ * @var string $url
+ * @var string $location
+ * @var string $password
+ * @var string $svn_password
+ * @var timestamp $created
+ * @var mixed $new_password @{"extra":true}
+ * @var mixed $new_password_conf @{"extra":true}
+ */
 class OpenpearMaintainer extends Dao
 {
     protected $id;
@@ -14,29 +30,16 @@ class OpenpearMaintainer extends Dao
     protected $password;
     protected $svn_password;
     protected $created;
-    
-    static protected $__id__ = 'type=serial';
-    static protected $__name__ = 'type=string,unique=true,require=true';
-    static protected $__mail__ = 'type=email,require=true';
-    static protected $__fullname__ = 'type=string';
-    static protected $__profile__ = 'type=text';
-    static protected $__url__ = 'type=string';
-    static protected $__location__ = 'type=string';
-    static protected $__password__ = 'type=string';
-    static protected $__svn_password__ = 'type=string';
-    static protected $__created__ = 'type=timestamp';
-    
+
     protected $new_password;
     protected $new_password_conf;
-    static protected $__new_password__ = 'extra=true';
-    static protected $__new_password_conf__ = 'extra=true';
 
     static private $cached_maintainers = array();
-    
+
     protected function __init__(){
         $this->created = time();
     }
-    
+
     /**
      * アバターを取得
      * @param int $size
@@ -83,7 +86,7 @@ class OpenpearMaintainer extends Dao
         Store::set($cache_key, $maintainer, OpenpearConfig::object_cache_timeout(3600));
         return $maintainer;
     }
-    
+
     /**
      * 正しいパスワードか認証する
      * 過去のパスワードはひどいので適宜修正
@@ -117,7 +120,7 @@ class OpenpearMaintainer extends Dao
     /**
      * 作成/更新前処理
      */
-    protected function __before_save__(){
+    protected function __before_save__($commit){
         if($this->new_password() && $this->new_password() === $this->new_password_conf()){
             $this->password = sha1($this->new_password());
             $this->svn_password = crypt($this->new_password());
@@ -127,17 +130,17 @@ class OpenpearMaintainer extends Dao
 	 * @see vendors/org/rhaco/storage/db/Dao/Dao#__after_save__()
 	 * @const string $svn_passwd_file リポジトリにアクセスするパスワード
 	 */
-    protected function __after_save__(){
+    protected function __after_save__($commit){
         $template = new Template();
         $template->vars('maintainers', C(OpenpearMaintainer)->find_all());
         File::write(OpenpearConfig::svn_passwd_file(work_path('openpear.passwd')), $template->read('files/passwd.txt'));
         Store::delete(self::cache_key($this->id));
     }
-    
+
     /**
      * 新規作成時検証
      */
-    protected function __create_verify__(){
+    protected function __create_verify__($commit){
         if(!$this->new_password()){
             Exceptions::add(new Exception('Subversion Password is required'), 'new_password');
         }
@@ -145,32 +148,32 @@ class OpenpearMaintainer extends Dao
             Exceptions::add(new Exception('Incorrect Confirm Password'), 'new_password_conf');
         }
     }
-    
+
     /**
      * 作成後処理
      * - Subversion アカウントの作成
      * - メールの送信
      */
-    protected function __after_create__(){
+    protected function __after_create__($commit){
         $registered_message = new Template();
         $registered_message->vars('maintainer', $this);
-        
+
         $message = new OpenpearMessage();
         $message->maintainer_to_id($this->id());
         $message->subject('Welcome to Openpear!');
         $message->description($registered_message->read('messages/registered.txt'));
         $message->type('system');
         $message->save();
-        
+
         $message = new OpenpearMessage();
         $message->maintainer_to_id($this->id());
         $message->subject('Please join Openpear Group');
-        $message->description('Do you already join the Openpear Group? <a href="http://groups.google.com/group/openpear">Openpear Group</a>');
+        $message->description('Do you already join the Openpear Group? [http://groups.google.com/group/openpear:title=Openpear Group]');
         $message->type('system_notice');
         $message->mail(false);
         $message->save();
     }
-    
+
     protected function __verify_url__(){
         if(!empty($this->url) && !preg_match('/s?https?:\/\/[\-_\.!~*\'\(\)a-zA-Z0-9;\/\?:@&=\+$,%#]+/i', $this->url)){
             return false;

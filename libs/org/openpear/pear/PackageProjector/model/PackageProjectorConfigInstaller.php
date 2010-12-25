@@ -1,4 +1,14 @@
 <?php
+/**
+ * PackageProjectorConfigInstaller
+ *
+ * @var string $group_name
+ * @var string $instructions
+ * @var string[] $params
+ * @var string{} $prompt
+ * @var string{} $type
+ * @var string{} $default
+ */
 class PackageProjectorConfigInstaller extends PackageProjectorConfigExtra
 {
     protected $group_name;
@@ -7,12 +17,6 @@ class PackageProjectorConfigInstaller extends PackageProjectorConfigExtra
     protected $prompt;
     protected $type;
     protected $default;
-    static protected $__group_name__ = 'type=string';
-    static protected $__instructions__ = 'type=string';
-    static protected $__params__ = 'type=string[]';
-    static protected $__prompt__ = 'type=string{}';
-    static protected $__type__ = 'type=string{}';
-    static protected $__default__ = 'type=string{}';
     
     protected $_special_section_ = 'groupname';
     

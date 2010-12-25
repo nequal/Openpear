@@ -175,13 +175,13 @@
     <rt:if param="{$package.is_external_repository()}" value="false">
     <dt>{$t.trans('Target revision')} <span class="red">*</span>: </dt>
     <dd>
-    <input name="revision" type="text" id="release-revision" class="tiny" value="1288" />
+    <input name="revision" type="text" id="release-revision" class="tiny" value="1" />
     </dd>
     </rt:if>
     <dt>{$t.trans('Version')} <span class="red">*</span>: </dt>
     <dd>
     <p class="caption">{$t.trans('Version number should be higher than current version number.')}:</p>
-    <input name="version_release_ver" type="text" id="release-version" class="tiny" value="{$package.latest_release().fm_default_version()}" />
+    <input name="version_release_ver" type="text" id="release-version" class="tiny" value="1.0.0" />
     <select name="version_release_stab">
       <option value="stable">Stable</option>
       <option value="alpha">Alpha</option>

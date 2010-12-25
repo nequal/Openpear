@@ -1,14 +1,18 @@
 <?php
+/**
+ * PackageProjectorConfigMaintainer
+ *
+ * @var string $handlename @{"require":true}
+ * @var string $name @{"require":true}
+ * @var email $mail
+ * @var choice $role @{"choices":["lead","developer","contributor","helper"]}
+ */
 class PackageProjectorConfigMaintainer extends PackageProjectorConfigExtra
 {
     protected $handlename;
     protected $name;
     protected $mail;
     protected $role = 'lead';
-    static protected $__handlename__ = 'type=string,require=true';
-    static protected $__name__ = 'type=string,require=true';
-    static protected $__mail__ = 'type=email';
-    static protected $__role__ = 'type=choice(lead,developer,contributor,helper)';
     
     protected $_special_section_ = 'handlename';
     

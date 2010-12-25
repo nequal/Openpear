@@ -1,13 +1,16 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Favorites
+ *
+ * @var integer $package_id @{"require":true,"primary":true}
+ * @var integer $maintainer_id @{"require":true,"primary":true}
+ */
 class OpenpearFavorite extends Dao
 {
     protected $package_id;
     protected $maintainer_id;
-    
-    static protected $__package_id__ = 'type=integer,require=true,primary=true';
-    static protected $__maintainer_id__ = 'type=integer,require=true,primary=true';
     
     private $package;
     private $maintainer;

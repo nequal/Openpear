@@ -1,13 +1,17 @@
 <?php
+/**
+ * LoginRequired actions
+ *
+ * @var string[] $allowed_ext
+ * @var OpenpearMaintainer $user @{"require":true}
+ */
+import('org.openpear.pear.PackageProjector');
 
 class OpenpearLogin extends Flow
 {
     // TODO Source
     protected $allowed_ext = array('php', 'phps', 'html', 'css', 'pl', 'txt', 'js', 'htaccess');
-    static protected $__allowed_ext__ = 'type=string[]';
 
-    static protected $__user__ = 'type=OpenpearMaintainer,require=true';
-    
     /**
      * @context OpenpearTemplf $ot フィルタ
      */
@@ -57,6 +61,36 @@ class OpenpearLogin extends Flow
         }
         exit;
     }
+
+    public function maintainer_edit() {
+        $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->user()->id()));
+        if ($this->is_post()) {
+            try {
+                $maintainer->cp($this->vars());
+                $maintainer->save();
+                $this->redirect_by_map('maintainer_profile', $maintainer->name());
+            } catch (Exception $e) {
+                Log::info($e);
+            }
+        }
+        $this->cp($maintainer);
+        $this->vars('openid_accounts', C(OpenpearOpenidMaintainer)->find_all(Q::eq('maintainer_id', $maintainer->id())));
+    }
+
+    public function maintainer_openid_add() {
+        if ($openid = OpenpearOpenIDAuth::login($this)) {
+            try {
+                $openid_maintainer = C(OpenpearOpenidMaintainer)->find_get(Q::eq('url', $openid));
+            } catch (NotfoundDaoException $e) {
+                $openid_maintainer = new OpenpearOpenidMaintainer();
+                $openid_maintainer->maintainer_id($this->user()->id());
+                $openid_maintainer->url($openid);
+                $openid_maintainer->save();
+            }
+        }
+        $this->redirect_by_map('maintainer_edit', $this->user()->name());
+    }
+
     /**
      * メンテナ情報を更新して結果をjsonで出力
      */
@@ -149,7 +183,7 @@ class OpenpearLogin extends Flow
             }
         }
     }
-    
+
     /**
      * Fav 登録
      * @param string $package_name パッケージ名
@@ -201,7 +235,7 @@ class OpenpearLogin extends Flow
                 $charge = new OpenpearCharge();
                 $charge->maintainer_id($maintainer->id());
                 $charge->package_id($package->id());
-                $charge->role('developer');
+                $charge->role($this->in_vars('role', 'lead'));
                 $charge->save();
             } catch (NotfoundDaoException $e) {
                 $this->not_found();
@@ -211,6 +245,24 @@ class OpenpearLogin extends Flow
         }
         $this->redirect_by_map('package_manage', $package_name);
     }
+
+    public function package_update_maintainer($package_name) {
+        if ($this->is_post() && $this->is_vars('maintainer_id')) {
+            try {
+                $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+                $package->permission($this->user());
+                $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $package->id()), Q::eq('maintainer_id', $this->in_vars('maintainer_id')));
+                $charge->role($this->in_vars('role', 'lead'));
+                $charge->save();
+            } catch (NotfoundDaoException $e) {
+                $this->not_found();
+            } catch (Exception $e) {
+                Log::debug($e);
+            }
+        }
+        $this->redirect_by_map('package_manage', $package_name);
+    }
+
     /**
      * パッケージからメンテナを削除する
      * @param string $package_name パッケージ名
@@ -221,6 +273,7 @@ class OpenpearLogin extends Flow
         if ($this->is_post() && $this->is_vars('maintainer_id')) {
             try {
                 $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+                $package->permission($this->user());
                 $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->in_vars('maintainer_id')));
                 $charge = C(OpenpearCharge)->find_get(Q::eq('package_id', $package->id()), Q::eq('maintainer_id', $maintainer->id()));
                 $charge->delete();
@@ -232,7 +285,7 @@ class OpenpearLogin extends Flow
         }
         $this->redirect_by_map('package_manage', $package_name);
     }
-    
+
     /**
      * カテゴリ登録
      * @param string $package_name パッケージ名
@@ -333,6 +386,12 @@ class OpenpearLogin extends Flow
             $this->vars('object', $package);
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
+            foreach (array('recruite', 'nomaint') as $flag) {
+                $this->vars("flag_{$flag}", false);
+            }
+            foreach ($package->getflags() as $flag) {
+                $this->vars("flag_{$flag}", true);
+            }
         } catch (Exception $e) {
             Log::debug($e);
             $this->redirect_by_map('package', $package_name);
@@ -351,19 +410,19 @@ class OpenpearLogin extends Flow
             $this->vars('object', $package);
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
-            if (!$this->is_post()) {
-                foreach (array('id', 'name', 'description', 'url', 'public_level', 'external_repository', 'external_repository_type', 'license') as $k) {
-                    if ($k == 'external_repository') {
-                        $p = $package->{$k}();
-                        if (!empty($p)) {
-                            $this->vars('repository_uri_select', '2');
-                        }
-                        $this->vars($k, $p);
-                    }
-                    else {
-                        $this->vars($k, $package->{$k}());
-                    }
+            if ($this->is_post()) {
+                try {
+                    $this->vars('name', $package->name());
+                    $package->cp($this->vars());
+                    $package->save();
+                    $this->redirect_method('package_manage',$package->name());
+                } catch (Exception $e) {
+                    Log::debug($e);
+                    C($package)->rollback();
                 }
+            } else {
+                $this->cp($package);
+                $this->vars('repository_uri_select', $package->is_external_repository() ? 2 : 1);
             }
         } catch (Exception $e) {
             Log::debug($e);
@@ -371,41 +430,33 @@ class OpenpearLogin extends Flow
         }
     }
 
-    /*
-    public function update_confirm() {
-        try {
-            $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
-            $package->permission($this->user());
-            $package->cp($this->vars());
-            $this->vars('packge', $package);
-            return $this;
-        } catch (Exception $e) {
-            Log::debug($e);
-        }
-        Http::redirect(url());
-    }
-    */
     /**
-     * パッケージ情報更新
+     * パッケージにフラグをたてる
      * @param string $package_name パッケージ名
-     */
-    public function package_edit_do($package_name) {
-        // TODO 仕様の確認
-        try {
-            $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('id')));
-            $package->permission($this->user());
-            $this->vars('name', $package->name());
-            $package->cp($this->vars());
+     **/
+    public function package_setflag($package_name) {
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $package->permission($this->user());
+        if ($this->is_vars('flag')) {
+            $package->setflag($this->in_vars('flag'));
             $package->save();
-            $this->redirect_method('package_manage',$package->name());
-        } catch (NotfoundDaoException $e) {
-            $this->not_found();
-        } catch (Exception $e) {
-            Log::debug($e);
-            C($package)->rollback();
         }
-        return $this->update($package_name);
+        $this->redirect_by_map('package', $package_name);
     }
+    /**
+     * パッケージフラグ折る
+     * @param string $package_name パッケージ名
+     **/
+    public function package_rmflag($package_name) {
+        $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
+        $package->permission($this->user());
+        if ($this->is_vars('flag')) {
+            $package->rmflag($this->in_vars('flag'));
+            $package->save();
+        }
+        $this->redirect_by_map('package', $package_name);
+    }
+
     /**
      * パッケージのリリース
      * @param string $package_name パッケージ名
@@ -415,6 +466,7 @@ class OpenpearLogin extends Flow
     public function package_release($package_name) {
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $package->permission($this->user());
+
         if ($this->is_post()) {
             $this->save_current_vars();
             try {
@@ -464,6 +516,7 @@ class OpenpearLogin extends Flow
                 $config = new PackageProjectorConfig();
                 $config->parse_ini_string($latest_release->settings());
                 $this->cp($config);
+                $this->vars('version_release_ver', $latest_release->version());
             } else {
                 $this->cp(new PackageProjectorConfig());
             }
@@ -483,11 +536,15 @@ class OpenpearLogin extends Flow
             try {
                 $package_file = $this->in_files('package_file');
                 $package_file->generate(work_path('upload/'. $package_name. '-'. date('YmdHis'). '.tgz'));
-                if (Tag::setof($xml, file_get_contents(sprintf('phar://%s/package.xml', $package_file->fullname())), 'package')) {
-                    $uploaded_name = $xml->f('name.value()');
-                    $uploaded_channel = $xml->f('channel.value()');
-                    if ($uploaded_name != $package->name() || $uploaded_channel != OpenpearConfig::pear_domain('openpear.org')) {
-                        throw new OpenpearException('package name or channel');
+                if ($package_xml = simplexml_load_file(sprintf('phar://%s/package.xml', $package_file->fullname()))) {
+                    if ($package_xml->name != $package->name()) {
+                        throw new OpenpearException(Gettext::trans('incorrect package name'));
+                    }
+                    if ($package_xml->channel != OpenpearConfig::pear_domain('openpear.org')) {
+                        $package_xml->channel = OpenpearConfig::pear_domain('openpear.org');
+                        $pd = new PharData($package_file->fullname());
+                        $pd->addFromString('package.xml', $package_xml->asXML());
+                        unset($pd);
                     }
                     $upload_queue = new stdClass;
                     $upload_queue->package_id = $package->id();
@@ -496,6 +553,14 @@ class OpenpearLogin extends Flow
                     $queue = new OpenpearQueue('type=upload_release');
                     $queue->data(serialize($upload_queue));
                     $queue->save();
+
+                    $message = new OpenpearMessage('type=system_notice,mail=false');
+                    $message->maintainer_to_id($this->user()->id());
+                    $message->subject(trans('リリースキューに追加されました'));
+                    $message->description(trans('{1}のリリースを受け付けました。リリースの完了後，メールでお知らせします。', $package->name()));
+                    $message->save();
+
+                    $this->redirect_by_map('dashboard');
                 }
             } catch (Exception $e) {
                 Log::debug($e);

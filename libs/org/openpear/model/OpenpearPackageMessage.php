@@ -1,6 +1,16 @@
 <?php
 import('org.rhaco.storage.db.Dao');
 
+/**
+ * Package Message
+ *
+ * @var serial $id
+ * @var integer $package_id @{"require":true}
+ * @var text $description @{"require":true}
+ * @var boolean $unread
+ * @var choice $type @{"choices":["maintainer","public"]}
+ * @var timestamp $created
+ */
 class OpenpearPackageMessage extends Dao
 {
     protected $id;
@@ -9,13 +19,6 @@ class OpenpearPackageMessage extends Dao
     protected $unread;
     protected $type;
     protected $created;
-    
-    static protected $__id__ = 'type=serial';
-    static protected $__package_id__ = 'type=integer,require=true';
-    static protected $__description__ = 'type=text,require=true';
-    static protected $__unread__ = 'type=boolean';
-    static protected $__type__ = 'type=choice(maintainer,public)';
-    static protected $__created__ = 'type=timestamp';
     
     protected function __init__(){
         $this->unread = true;

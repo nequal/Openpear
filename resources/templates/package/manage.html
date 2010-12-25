@@ -28,7 +28,9 @@
       
       <ul class="list-standard">
         <li><a href="{$t.url('package')}/{$package.name()}/manage/release">{$t.trans('Release package')}</a></li>
-        <li><a href="{$t.url('package')}/{$package.name()}/manage/release/setting">{$t.trans('Release setting')}</a></li>
+        <rt:comment>
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/release/setting">{$t.trans('Release setting')}</a></li>
+        </rt:comment>
       </ul>
       
       <h4>{$t.trans('Maintainers')}</h4>
@@ -37,12 +39,31 @@
         <li>
           <ul class="list-liner">
             <rt:loop param="maintainers" var="m">
-            <li><img src="{$m.avatar()}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a></li>
+              <li>
+                <img src="{$m.avatar()}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a>
+                <rt:if param="{$ot.count($maintainers)}" value="1"><rt:else />
+                <form action="{$t.url('package')}/{$package.name()}/maintainer/remove" class="inline" onsubmit="return window.confirm('Remove maintainer?');" method="post">
+                  <input type="image" src="images/global-icon-notice.png" value="Delete" />
+                  <input type="hidden" name="maintainer_id" value="{$m.id()}" />
+                </form>
+                </rt:if>
+              </li>
             </rt:loop>
           </ul>
         </li>
         <li class="clear"><a href="javascript:;" onclick="$('#add-maintainer').show();">{$t.trans('Add maintainer')}</a>
-          <form id="add-maintainer" class="dnone" action="{$t.url('package')}/{$package.name()}/maintainer/add" method="post"><input type="text" name="maintainer_name" size="30" /><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
+          <form id="add-maintainer" class="dnone" action="{$t.url('package')}/{$package.name()}/maintainer/add" method="post">
+            <input type="text" name="maintainer_name" size="30" />
+            <rt:comment>
+            <select name="role">
+              <option value="lead">{$t.trans('lead')}</option>
+              <option value="developer">{$t.trans('developer')}</option>
+              <option value="contributor">{$t.trans('contributor')}</option>
+              <option value="helper">{$t.trans('helper')}</option>
+            </select>
+            </rt:comment>
+            <input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form>
+        </li>
         </ul>
         
         <h4>{$t.trans('Tags')}</h4>
@@ -62,8 +83,16 @@
         
         <h4>{$t.trans('Maintainance')}</h4>
         <ul class="list-standard">
-          <li><a href="">Solicit maintainer</a></li>
-          <li><a href="">Set to "Not Maintained"</a></li>
+          <rt:if param="{$flag_recruite}">
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/rmflag?flag=recruite">Finish Recruite volunteers</a></li>
+          <rt:else />
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/setflag?flag=recruite">Recruite volunteers</a></li>
+          </rt:if>
+          <rt:if param="{$flag_nomaint}">
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/rmflag?flag=nomaint">Remove "Not Maintained" Flag</a></li>
+          <rt:else />
+            <li><a href="{$t.url('package')}/{$package.name()}/manage/setflag?flag=nomaint">Set to "Not Maintained"</a></li>
+          </rt:if>
         </ul>
       </div>
       
