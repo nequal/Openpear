@@ -52,7 +52,18 @@
           </ul>
         </li>
         <li class="clear"><a href="javascript:;" onclick="$('#add-maintainer').show();">{$t.trans('Add maintainer')}</a>
-          <form id="add-maintainer" class="dnone" action="{$t.url('package')}/{$package.name()}/maintainer/add" method="post"><input type="text" name="maintainer_name" size="30" /><select name="role"><option value="lead">{$t.trans('lead')}</option><option value="developer">{$t.trans('developer')}</option><option value="contributor">{$t.trans('contributor')}</option><option value="helper">{$t.trans('helper')}</option></select><input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form></li>
+          <form id="add-maintainer" class="dnone" action="{$t.url('package')}/{$package.name()}/maintainer/add" method="post">
+            <input type="text" name="maintainer_name" size="30" />
+            <rt:comment>
+            <select name="role">
+              <option value="lead">{$t.trans('lead')}</option>
+              <option value="developer">{$t.trans('developer')}</option>
+              <option value="contributor">{$t.trans('contributor')}</option>
+              <option value="helper">{$t.trans('helper')}</option>
+            </select>
+            </rt:comment>
+            <input type="submit" value="add" /> <a href="javascript:;" onclick="$('#add-maintainer').hide();">cancel</a></form>
+        </li>
         </ul>
         
         <h4>{$t.trans('Tags')}</h4>

@@ -14,7 +14,7 @@ class OpenpearCharge extends Dao
 
     protected $package_id;
     protected $maintainer_id;
-    protected $role;
+    protected $role = 'lead';
 
     private $package;
     private $maintainer;
