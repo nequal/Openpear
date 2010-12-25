@@ -54,7 +54,7 @@ class OpenpearRelease extends Dao implements AtomInterface
             $this->package()->installName()
         ));
         $timeline->type('release');
-        $timeline->package_id($this->id());
+        $timeline->package_id($this->package_id());
         $timeline->maintainer_id($this->maintainer_id());
         $timeline->save();
     }
