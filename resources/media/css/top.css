@@ -40,17 +40,22 @@
   width: 300px;
   margin-right: 305px;
   padding: 0 10px;
-}
+  max-height: 168px;
+  overflow: hidden; }
 
 #main-column-center {
   float: right;
   margin-right: 15px;
   width: 300px;
+  max-height: 168px;
+  overflow: hidden; 
 }
 
 #main-column-right {
   float: right;
   width: 300px;
+  max-height: 168px;
+  overflow: hidden; 
 }
 #main-column-left h2 ,
 #main-column-center h2 ,
