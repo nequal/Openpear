@@ -116,8 +116,6 @@ class OpenpearReleaseQueue extends Object
             $package->released_at(time());
             $package->save();
 
-            C($release)->commit();
-            
             $message_template = new Template();
             $message_template->vars('t', new Templf());
             $message_template->vars('package', $package);
@@ -126,7 +124,7 @@ class OpenpearReleaseQueue extends Object
             $message->maintainer_to_id($maintainer->id());
             $message->subject(trans('{1} package have been released.', $package->name()));
             $message->description($message_template->read('messages/released.txt'));
-            $message->save(true);
+            $message->save();
         } catch(Exception $e) {
             Log::error($e);
         }
