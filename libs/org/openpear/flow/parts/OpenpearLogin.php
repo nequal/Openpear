@@ -410,60 +410,24 @@ class OpenpearLogin extends Flow
             $this->vars('object', $package);
             $this->vars('package', $package);
             $this->vars('maintainers', $package->maintainers());
-            if (!$this->is_post()) {
-                foreach (array('id', 'name', 'description', 'url', 'public_level', 'external_repository', 'external_repository_type', 'license') as $k) {
-                    if ($k == 'external_repository') {
-                        $p = $package->{$k}();
-                        if (!empty($p)) {
-                            $this->vars('repository_uri_select', '2');
-                        }
-                        $this->vars($k, $p);
-                    }
-                    else {
-                        $this->vars($k, $package->{$k}());
-                    }
+            if ($this->is_post()) {
+                try {
+                    $this->vars('name', $package->name());
+                    $package->cp($this->vars());
+                    $package->save();
+                    $this->redirect_method('package_manage',$package->name());
+                } catch (Exception $e) {
+                    Log::debug($e);
+                    C($package)->rollback();
                 }
+            } else {
+                $this->cp($package);
+                $this->vars('repository_uri_select', $package->is_external_repository() ? 2 : 1);
             }
         } catch (Exception $e) {
             Log::debug($e);
             $this->redirect_by_map('package', $package_name);
         }
-    }
-
-    /*
-    public function update_confirm() {
-        try {
-            $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('package_id')));
-            $package->permission($this->user());
-            $package->cp($this->vars());
-            $this->vars('packge', $package);
-            return $this;
-        } catch (Exception $e) {
-            Log::debug($e);
-        }
-        Http::redirect(url());
-    }
-    */
-    /**
-     * パッケージ情報更新
-     * @param string $package_name パッケージ名
-     */
-    public function package_edit_do($package_name) {
-        // TODO 仕様の確認
-        try {
-            $package = C(OpenpearPackage)->find_get(Q::eq('id', $this->in_vars('id')));
-            $package->permission($this->user());
-            $this->vars('name', $package->name());
-            $package->cp($this->vars());
-            $package->save();
-            $this->redirect_method('package_manage',$package->name());
-        } catch (NotfoundDaoException $e) {
-            $this->not_found();
-        } catch (Exception $e) {
-            Log::debug($e);
-            C($package)->rollback();
-        }
-        return $this->update($package_name);
     }
 
     /**

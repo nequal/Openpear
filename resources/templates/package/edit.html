@@ -9,7 +9,7 @@
       <div class="column1 clear">
         <p><a href="{$t.url('package')}/{$package.name()}/manage">&laquo; back</a></p>
         <h3>{$t.trans('Package Setting')}</h3>
-        <form action="{$t.url('package')}/{$package.name()}/manage/edit_do" method="post" id="new-package" rt:ref="true">
+        <form action="{$t.url('package')}/{$package.name()}/manage/edit" method="post" id="new-package" rt:ref="true">
           <input type="hidden" name="id" value="{$package.id()}" />
           <dl>
             <dt>{$t.trans('Package Name')}: </dt>
