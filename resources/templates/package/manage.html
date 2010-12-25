@@ -41,10 +41,12 @@
             <rt:loop param="maintainers" var="m">
               <li>
                 <img src="{$m.avatar()}" /> <a href="{$t.url('maintainer')}/{$m.name()}">{$m.name()}</a>
+                <rt:if param="{$ot.count($maintainers)}" value="1"><rt:else />
                 <form action="{$t.url('package')}/{$package.name()}/maintainer/remove" class="inline" onsubmit="return window.confirm('Remove maintainer?');" method="post">
                   <input type="image" src="images/global-icon-notice.png" value="Delete" />
                   <input type="hidden" name="maintainer_id" value="{$m.id()}" />
                 </form>
+                </rt:if>
               </li>
             </rt:loop>
           </ul>
