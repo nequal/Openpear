@@ -35,9 +35,9 @@
     <dt>{$t.trans('Target directory')} : </dt>
     <p class="caption"></p>
     <dd>
-    {$t.trans('Repository')}: /Package_Hoge/trunk/<span class="inline-pre">src</span>
+    {$t.trans('Repository')}: /{$package.name()}/trunk/<span class="inline-pre">{$build_path}</span>
     <br />
-    {$t.trans('Install target')}: PEAR_DIR/<span class="inline-pre"></span>
+    {$t.trans('Install target')}: PEAR_DIR/<span class="inline-pre">{$package_baseinstalldir}</span>
     </dd>
     <dt>{$t.trans('Notes')}: </dt>
     <dd>
