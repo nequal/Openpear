@@ -71,7 +71,6 @@ class OpenpearMessage extends Dao
     protected function __after_create__(){
         try {
             if($this->mail()){
-                return;
                 list($account, $password) = OpenpearConfig::gmail_account();
                 $mail = new Gmail($account, $password);
                 $mail->to($this->maintainer_to()->mail(), str($this->maintainer_to()));
