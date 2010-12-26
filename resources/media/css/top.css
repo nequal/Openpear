@@ -119,14 +119,30 @@
   margin-right: 10px;
 }
 
+/** main-quickstart
+ */
+#main-quickstart {
+  float: left;
+  width: 430px;
+  margin: 15px;
+  padding: 0 20px;
+  background: #f5f5f5;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: sx;
+}
+#main-quickstart h3 {
+  margin: .2em;
+}
+
 /** main-dream
  */
 #main-dream {
-  clear: both;
+  float: left;
   background: #fcecc0 url(../images/top-main-dream.gif) bottom repeat-x;
   padding: 30px 20px;
   width: 340px;
-  margin: 15px auto;
+  margin: 15px;
   font-style: italic;
   border-radius: 5px;
   -moz-border-radius: 5px;
