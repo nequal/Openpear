@@ -464,6 +464,15 @@ class OpenpearLogin extends Flow
      * @context OpenpearPackage $package パッケージ
      */
     public function package_release($package_name) {
+        $session_key = "_openpear_vars_release_{$package_name}_";
+        if ($this->is_sessions($session_key)) {
+            foreach ($this->in_sessions($session_key) as $_k_ => $_v_) {
+                if (!isset($this->vars[$_k_])) {
+                    $this->vars[$_k_] = (get_magic_quotes_gpc() && is_string($_v_)) ? stripslashes($_v_) : $_v_;
+                }
+            }
+        }
+
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $package->permission($this->user());
 
@@ -501,8 +510,8 @@ class OpenpearLogin extends Flow
 
                     $this->redirect_by_map('dashboard');
                 } else {
+                    $this->sessions($session_key, $_POST);
                     $this->vars('action', 'do');
-                    $this->vars('post_values', $_POST);
                     $this->put_block($this->map_arg('confirm_template'));
                 }
             } catch (Exception $e) {
