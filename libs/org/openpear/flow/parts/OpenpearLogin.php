@@ -352,7 +352,7 @@ class OpenpearLogin extends Flow
         }
         $this->redirect_by_map('package_manage', $package_name);
     }
-    
+
     /**
      * パッケージ作成
      */
@@ -468,7 +468,6 @@ class OpenpearLogin extends Flow
         $package->permission($this->user());
 
         if ($this->is_post()) {
-            $this->save_current_vars();
             try {
                 $build_conf = new PackageProjectorConfig();
                 $build_conf->cp($this->vars());
@@ -480,7 +479,7 @@ class OpenpearLogin extends Flow
                 }
                 $build_conf->package_package_name($package->name());
                 $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
-                
+
                 if ($this->in_vars('action') == 'do') {
                     $release_queue = new OpenpearReleaseQueue();
                     $release_queue->cp($this->vars());
@@ -493,16 +492,17 @@ class OpenpearLogin extends Flow
                     $queue->type('build');
                     $queue->data(serialize($release_queue));
                     $queue->save();
-                    
+
                     $message = new OpenpearMessage('type=system_notice,mail=false');
                     $message->maintainer_to_id($this->user()->id());
                     $message->subject(trans('リリースキューに追加されました'));
                     $message->description(trans('{1}のリリースを受け付けました。リリースの完了後，メールでお知らせします。', $package->name()));
                     $message->save();
-                    
+
                     $this->redirect_by_map('dashboard');
                 } else {
                     $this->vars('action', 'do');
+                    $this->vars('post_values', $_POST);
                     $this->put_block($this->map_arg('confirm_template'));
                 }
             } catch (Exception $e) {
@@ -524,7 +524,7 @@ class OpenpearLogin extends Flow
         $this->vars('package', $package);
         $this->vars('package_id', $package->id());
     }
-    
+
     /**
      * ファイルアップロードからリリース
      * @param string $package_name パッケージ名
