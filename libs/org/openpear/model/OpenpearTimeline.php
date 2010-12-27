@@ -22,10 +22,10 @@ class OpenpearTimeline extends Dao implements AtomInterface
     protected $package_id;
     protected $maintainer_id;
     protected $created;
-    
+
     private $package;
     private $maintainer;
-    
+
     protected function __init__(){
         $this->created = time();
     }
@@ -60,7 +60,7 @@ class OpenpearTimeline extends Dao implements AtomInterface
             return array();
         }
     }
-    
+
     public function package(){
         if($this->package instanceof OpenpearPackage === false){
             try{
@@ -77,12 +77,12 @@ class OpenpearTimeline extends Dao implements AtomInterface
         }
         return $this->maintainer;
     }
-    
+
     public function atom_id(){
         return $this->id();
     }
     public function atom_title(){
-        return $this->subject();
+        return strip_tags($this->subject());
     }
     public function atom_published(){
         return $this->created();
