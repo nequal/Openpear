@@ -1,1 +1,1 @@
-Welcome
+* {$t.trans('Welcome to Openpear')}Congratulations, you've successfully activated your Openpear account.You can now create new package and commit to some package's repository.Sincerely,The Openpear Project Team----This message was sent from a notification-only email address that does not accept incoming email. Please do not reply to this message.http://openpear.org/

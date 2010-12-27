@@ -17,7 +17,7 @@
   <meta property="og:type" content="website" />
   <rt:block name="og:url"><meta property="og:url" content="" /></rt:block>
   <rt:block name="og:title"><meta property="og:title" content="" /></rt:block>
-  <meta property="og:image" content="images/header_logo.gif" />
+  <meta property="og:image" content="{$t.media('images/header_logo.gif')}" />
 
 <rt:block name="stylesheet">
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
@@ -30,10 +30,22 @@
 
   <!-- additinal header -->
 <rt:block name="extra_header">
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$t.url('rss')}" />
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$t.url('timelines.atom')}" />
 </rt:block>
 
   <title><rt:block name="title">Openpear :: Open PEAR Repository Channel</rt:block></title>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-288900-19']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
 </head>
 <body>
   <div id="nequal-pre-header"><a href="http://nequal.jp/" target="_blank">powered by nequal</a></div>
@@ -99,14 +111,14 @@
           <div id="main-column-right">
             <h2><a href="{$t.url('packages')}?sort=-released_at">{$t.trans('Recent Releases')}</a> <a href="{$t.url('packages/releases.atom')}"><img src="images/global-icon-feed.gif" alt="{$t.trans('Feed: Recent Releases')}" /></a></h2>
             <ul id="main-recent" rt:param="recent_releases" rt:var="package">
-              <li><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a> <em>-- {$ot.date_ago($package.released_at())}</em></li>
+              <li><a href="{$t.url('package')}/{$package.name()}" title="{$package.name()}">{$t.trim_width($package.name(),25,'..')}</a> <em>-- {$ot.date_ago($package.released_at())}</em></li>
             </ul>
           </div>
 
           <div id="main-column-center">
               <h2>{$t.trans('Most Downloaded')}</h2>
               <ul id="main-recent" rt:param="most_downloaded" rt:var="package">
-                <li><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a></li>
+                <li><a href="{$t.url('package')}/{$package.name()}" title="{$package.name()}">{$t.trim_width($package.name(),25,'..')}</a></li>
               </ul>
             </div>
 
@@ -170,6 +182,11 @@
           </div>
         </div> <!-- #main-section -->
 
+        <div id="main-quickstart">
+            <h3>Quick Start</h3>
+            <pre>$ pear channel-discover openpear.org</pre>
+        </div>
+
         <blockquote id="main-dream">
             "{$t.trans('It\'s a dreams come true.')}"
           <em>-- sotarok</em>
@@ -184,13 +201,13 @@
     <div class="frame-class footer-wrap">
       <div id="footer">
         <ul id="footer-menu">
-          <li><a href="{$t.url('about')}">{$t.trans('About')}</a> | </li>
+          <li><a href="{$t.url('package')}/Openpear/doc/ja/about">{$t.trans('About')}</a> | </li>
           <li><a href="http://openpear.blogspot.com/" target="_blank">{$t.trans('Blog')}</a> | </li>
           <!--
           <li><a href="">Logos</a> | </li>
           -->
           <li><a href="http://groups.google.com/group/openpear" target="_blank">{$t.trans('Google Group')}</a> | </li>
-          <li><a href="{$t.url('help')}">{$t.trans('Help')}</a> | </li>
+          <li><a href="{$t.url('package')}/Openpear/doc">{$t.trans('Help')}</a> | </li>
           <li><a href="http://pledgie.com/campaigns/11253">{$t.trans('Donate')}</a></li>
           <!--
           <li><a href="">Contact</a></li>

@@ -352,7 +352,7 @@ class OpenpearLogin extends Flow
         }
         $this->redirect_by_map('package_manage', $package_name);
     }
-    
+
     /**
      * パッケージ作成
      */
@@ -464,11 +464,19 @@ class OpenpearLogin extends Flow
      * @context OpenpearPackage $package パッケージ
      */
     public function package_release($package_name) {
+        $session_key = "_openpear_vars_release_{$package_name}_";
+        if ($this->is_sessions($session_key)) {
+            foreach ($this->in_sessions($session_key) as $_k_ => $_v_) {
+                if (!isset($this->vars[$_k_])) {
+                    $this->vars[$_k_] = (get_magic_quotes_gpc() && is_string($_v_)) ? stripslashes($_v_) : $_v_;
+                }
+            }
+        }
+
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $package->permission($this->user());
 
         if ($this->is_post()) {
-            $this->save_current_vars();
             try {
                 $build_conf = new PackageProjectorConfig();
                 $build_conf->cp($this->vars());
@@ -480,7 +488,10 @@ class OpenpearLogin extends Flow
                 }
                 $build_conf->package_package_name($package->name());
                 $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
-                
+                if ($build_conf->package_baseinstalldir() == '') {
+                    $build_conf->package_baseinstalldir('.');
+                }
+
                 if ($this->in_vars('action') == 'do') {
                     $release_queue = new OpenpearReleaseQueue();
                     $release_queue->cp($this->vars());
@@ -493,15 +504,16 @@ class OpenpearLogin extends Flow
                     $queue->type('build');
                     $queue->data(serialize($release_queue));
                     $queue->save();
-                    
+
                     $message = new OpenpearMessage('type=system_notice,mail=false');
                     $message->maintainer_to_id($this->user()->id());
                     $message->subject(trans('リリースキューに追加されました'));
                     $message->description(trans('{1}のリリースを受け付けました。リリースの完了後，メールでお知らせします。', $package->name()));
                     $message->save();
-                    
+
                     $this->redirect_by_map('dashboard');
                 } else {
+                    $this->sessions($session_key, $_POST);
                     $this->vars('action', 'do');
                     $this->put_block($this->map_arg('confirm_template'));
                 }
@@ -524,7 +536,7 @@ class OpenpearLogin extends Flow
         $this->vars('package', $package);
         $this->vars('package_id', $package->id());
     }
-    
+
     /**
      * ファイルアップロードからリリース
      * @param string $package_name パッケージ名
