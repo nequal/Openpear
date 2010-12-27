@@ -488,6 +488,9 @@ class OpenpearLogin extends Flow
                 }
                 $build_conf->package_package_name($package->name());
                 $build_conf->package_channel(OpenpearConfig::pear_domain('openpear.org'));
+                if ($build_conf->package_baseinstalldir() == '') {
+                    $build_conf->package_baseinstalldir('.');
+                }
 
                 if ($this->in_vars('action') == 'do') {
                     $release_queue = new OpenpearReleaseQueue();
