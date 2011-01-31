@@ -153,6 +153,6 @@ class OpenpearRelease extends Dao implements AtomInterface
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_href()
      */
     public function atom_href(){
-        return url('package/'). $this->package_name();
+        return url('package/' . $this->package_name());
     }
 }
