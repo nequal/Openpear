@@ -55,7 +55,7 @@ class OpenpearRelease extends Dao implements AtomInterface
             url("package/{$package->name()}/downloads#{$this->id()}"),
             $this->fm_version(),
             $package->name(),
-            $this->version(). ($this->version_stab == 'stable' ? '': $this->version_stab)
+            ($this->version_stab == 'stable' ? $this->version(): $this->version_stab)
         ));
         $timeline->package_id($this->package_id());
         $timeline->maintainer_id($this->maintainer_id());
