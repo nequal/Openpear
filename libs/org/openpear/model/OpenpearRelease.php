@@ -55,7 +55,7 @@ class OpenpearRelease extends Dao implements AtomInterface
             url("package/{$package->name()}/downloads#{$this->id()}"),
             $this->fm_version(),
             $package->name(),
-            $this->version(). ($this->version_stab == 'stable' ? '': $this->version_stab)
+            ($this->version_stab == 'stable' ? $this->version(): $this->version_stab)
         ));
         $timeline->package_id($this->package_id());
         $timeline->maintainer_id($this->maintainer_id());
@@ -153,6 +153,6 @@ class OpenpearRelease extends Dao implements AtomInterface
      * @see vendors/org/rhaco/net/xml/Atom/AtomInterface#atom_href()
      */
     public function atom_href(){
-        return url('package/'). $this->package_name();
+        return url('package/' . $this->package_name());
     }
 }
