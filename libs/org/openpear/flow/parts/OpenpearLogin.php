@@ -97,11 +97,13 @@ class OpenpearLogin extends Flow
     public function maintainer_update_json() {
         try {
             if (!$this->is_post()) throw new OpenpearException('request method is unsupported');
+            if (!$this->verify()) throw new OpenpearException('invalid ticket');
             $maintainer = C(OpenpearMaintainer)->find_get(Q::eq('id', $this->user()->id()));
             $maintainer->cp($this->vars());
             $maintainer->save();
             return Text::output_jsonp(array('status' => 'ok', 'maintainer' => $maintainer));
         } catch (Exception $e) {
+            header('HTTP', true, 400);
             return Text::output_jsonp(array('status' => 'ng', 'error' => $e->getMessage()));
         }
     }
