@@ -32,6 +32,7 @@
 
     <handler error_template="error/global.html">
         <module class="org.rhaco.flow.module.HtmlFilter" />
+        <module class="org.openpear.flow.module.HtmlOneTimeTicketFilter" />
         <maps class="org.openpear.flow.parts.OpenpearNoLogin">
             <map url="/" name="index" template="index.html" />
             <map name="search" />
