@@ -45,7 +45,10 @@
                     url: '{$t.url('maintainers/update.json')}',
                     type: 'post',
                     //data: $('#' + name).serialize(),
-                    data: name + '=' + $('#' + input_name).val(),
+                    data: {
+                        name: $('#' + input_name).val(),
+                        _onetimeticket: '{$_onetimeticket}'
+                    },
                     dataType: 'json',
                     success: function (data, dataType) {
                       $('#' + name).text($('#' + input_name).val());
