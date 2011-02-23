@@ -57,7 +57,7 @@
         <rt:if param="{$paginator.has_range()}">
         <div class="pager">
           <ul>
-            <rt:if param="{$paginator.is_first()}"><li> <a href="?{$paginator.query($paginator.first())}">&laquo; First</a> </li></rt:if>
+            <rt:if param="{$paginator.is_first(10)}"><li> <a href="?{$paginator.query($paginator.first())}">&laquo; First</a> </li></rt:if>
             <?php
               for($counter=$paginator->which_first(10);$counter<=$paginator->which_last(10);$counter++):
             ?>
@@ -67,7 +67,7 @@
             <li> <a href="?{$paginator.query($counter)}">{$counter}</a> </li>
             <?php endif; ?>
             <?php endfor; ?>
-            <rt:if param="{$paginator.is_last()}"><li> <a href="?{$paginator.query($paginator.last())}">Last &raquo;</a> </li></rt:if>
+            <rt:if param="{$paginator.is_last(10)}"><li> <a href="?{$paginator.query($paginator.last())}">Last &raquo;</a> </li></rt:if>
           </ul>
         </div>
         </rt:if>
