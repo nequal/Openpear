@@ -28,8 +28,12 @@
               <rt:invalid param="external_repository" messages="errors"><rt:loop param="errors" var="error" limit="1">
               <p class="error">{$error}</p>
               </rt:loop></rt:invalid>
-              <label><input type="radio" name="repository_uri_select" value="1">Subversion repository on Openpear (will be generated)</label><br/>
-              <label><input type="radio" name="repository_uri_select" id="repository-uri-select-2" value="2">External</label>
+              <rt:if param="{$repository_uri_select}" value="1">
+                  <label><input type="radio" name="repository_uri_select" value="1">Subversion repository on Openpear (will be generated)</label><br/>
+              <rt:else />
+                  <label><input type="radio" name="repository_uri_select" value="1" disabled>Subversion repository on Openpear (will be generated)</label><br/>
+              </rt:if>
+                  <label><input type="radio" name="repository_uri_select" id="repository-uri-select-2" value="2">External</label>
               <p style="display: none" id="repository-uri-option">
               <select name="external_repository_type" id="external-repository-type">
                 <option value="Subversion">Subversion</option>

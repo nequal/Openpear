@@ -270,6 +270,8 @@ class OpenpearNoLogin extends Flow
         $lang = $this->in_vars('lang', Gettext::lang());
         if (empty($path)) {
             $this->redirect_method('document_browse', $package_name, '/'. $lang. '/README');
+        } else if (strlen($path) > 4) {
+            $lang = substr($path, 1, 2);
         }
         $package = C(OpenpearPackage)->find_get(Q::eq('name', $package_name));
         $path = rtrim(ltrim($path, ' /.'), '/');

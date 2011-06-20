@@ -17,18 +17,18 @@ class OpenpearChangeset extends Dao
     protected $package_id;
     protected $changed;
     protected $created;
-    
+
     private $package;
     private $maintainer;
     static private $cached_changesets = array();
-    
+
     /**
      * 初期化
      */
     protected function __init__(){
         $this->created = time();
     }
-    
+
     public function comment() {
         $cache_key = array('commit_comment', $this->revision);
         if (Store::has($cache_key)) {
@@ -39,11 +39,11 @@ class OpenpearChangeset extends Dao
         Store::set($cache_key, $log['msg']);
         return $log['msg'];
     }
-    
+
     protected function __str__() {
         return $this->comment();
     }
-    
+
     /**
      * チェンジセットを取得する
      * @param int $revision
@@ -62,15 +62,15 @@ class OpenpearChangeset extends Dao
             }
         }
         $changeset = C(__CLASS__)->find_get(Q::eq('revision', $revision));
-        
+
         Store::set($cache_key, $changeset);
         return $changeset;
     }
-    
+
     static private function cache_key($id) {
         return array(__CLASS__, $id);
     }
-    
+
     /**
      * changed を unserialize してオブジェクトの配列を返す
      */
@@ -108,7 +108,7 @@ class OpenpearChangeset extends Dao
         $timeline->maintainer_id($this->maintainer_id());
         $timeline->save();
     }
-    
+
     static public function commit_hook($path, $revision, $message){
         Log::debug(sprintf('commit hook: %s %d "%s"', $path, $revision, $message));
         $changed = Subversion::look('changed', array($path), array('revision' => $revision));
@@ -127,14 +127,15 @@ class OpenpearChangeset extends Dao
                 Log::error($e);
                 // throw $e;
             }
-            
+
             $changeset = new self();
             $changeset->revision($revision);
-            if($maintainer instanceof OpenpearMaintainer) $changeset->maintainer_id($maintainer->id());
+            if ($maintainer instanceof OpenpearMaintainer) $changeset->maintainer_id($maintainer->id());
             $changeset->package_id($package->id());
             $changeset->changed(serialize($parsed_changed));
             $changeset->save();
-            
+
+            if ($maintainer instanceof OpenpearMaintainer) $package->author_id($maintainer->id());
             $package->recent_changeset($changeset->revision());
             $package->save(true);
         } catch(Exception $e){

@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
 </rt:block>
 
+<rt:block name="og:type"><meta property="og:type" content="product" /></rt:block>
+<rt:block name="og:title"><meta property="og:title" content="{$object.name()} \ {$t.trans('Maintainer')} \  Openpear" /></rt:block>
+<rt:block name="og:url"><meta property="og:url" content="{$t.url('maintainer')}/{$object.name()}" /></rt:block>
+
 <rt:block name="title">{$object.name()} \ {$t.trans('Maintainer')} \  Openpear</rt:block>
 
 <rt:block name="extra_header">
@@ -45,7 +49,10 @@
                     url: '{$t.url('maintainers/update.json')}',
                     type: 'post',
                     //data: $('#' + name).serialize(),
-                    data: name + '=' + $('#' + input_name).val(),
+                    data: {
+                        name: $('#' + input_name).val(),
+                        _onetimeticket: '{$_onetimeticket}'
+                    },
                     dataType: 'json',
                     success: function (data, dataType) {
                       $('#' + name).text($('#' + input_name).val());
@@ -69,28 +76,6 @@
               $('#' + form_name).submit(profile_edit_post);
 
             });
-            //    var tmp_val = $(this).text();
-            //    var name = $(this).attr('id');
-            //    $(this).empty().append(
-            //        $('<form><input type="text" name="' + name + '" size="30" placeholder="' + tmp_val + '" /></form>').change(function(){
-            //            console.log($(this).serialize());
-            //            $.ajax({
-            //                url: '{$t.url('maintainers/update.json')}',
-            //                type: 'post',
-            //                data: $(this).serialize(),
-            //                dataType: 'json',
-            //                success: function (data, dataType) {
-            //                    $('#' + name).text(data.maintainer[name]);
-            //                },
-            //                error: function (XMLHttpRequest, textStatus, errorThrown) {
-            //                    $('#' + name).text(tmp_val);
-            //                }
-            //            });
-            //        }).submit(function(){
-            //            return false;
-            //        })
-            //    );
-            //});
         });
     </script>
 </rt:if>
@@ -198,7 +183,7 @@
             <rt:else />
               <a href="{$t.url('package')}/{$package.name()}/like/{$ot.hash('rand')}"><img src="./images/global-icon-star-add.png" class="fright" /></a>
             </rt:if>
-            <h4><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a><rt:if param="{$package.is_latest_release()}"> (<a href="{$t.url('package')}/{$package.name()}/downloads">{$package.latest_release().fm_version()}</a>)</rt:if> <span>({$package.maintainer_role($object)})</span></h4>
+            <h4><a href="{$t.url('package')}/{$package.name()}">{$package.name()}</a><rt:if param="{$package.is_latest_release()}"> <a href="{$t.url('package')}/{$package.name()}/downloads">{$package.latest_release().fm_version()}</a></rt:if></h4>
             <p>{$package.description()}</p>
             <p><rt:if param="{$package.primary_tag()}">{$t.trans('Category')}: <a href="{$t.url('packages')}?category={$package.primary_tag()}">{$package.primary_tag()}</a> </rt:if><em>Last Update: {$t.df($package.updated(), 'Y-m-d')}</em>
             </p>
