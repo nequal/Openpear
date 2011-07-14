@@ -97,7 +97,7 @@ msgstr "編集者"
 
 #: resources/templates/package/create.html:418
 #: /resources/templates/package/create.html:418
-msgid "Before create a pacakge, search packages and look for if there are similar packages."
+msgid "Before create a package, search packages and look for if there are similar packages."
 msgstr "新しくパッケージを登録する前に，似たようなパッケージが無いか確認しましょう"
 
 #: resources/templates/error/global.html:55
