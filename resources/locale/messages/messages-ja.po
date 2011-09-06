@@ -713,7 +713,7 @@ msgstr ""
 #: resources/templates/index.html:136
 #: /resources/templates/index.html:136
 msgid "No more hassle to propose a new package for inclusion in PEAR or to create a PEAR package! Openpear provides you with automated way from building a PEAR package all the way to registering it to channel."
-msgstr "もう PEAR パッケージ登録のための投票や、あの PEAR パッケージ作成の苦痛を味わう必要あありません！Openpear では、PEAR パッケージのビルド作業、チャンネル登録作業はすべて自動です！"
+msgstr "もう PEAR パッケージ登録のための投票や、あの PEAR パッケージ作成の苦痛を味わう必要はありません！Openpear では、PEAR パッケージのビルド作業、チャンネル登録作業はすべて自動です！"
 
 #: resources/templates/package/base.html:105
 #: resources/templates/package/models_released.html:23
