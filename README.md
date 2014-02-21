@@ -4,8 +4,7 @@ This is a web system of openpear.org.
 
 # Community
 
-- Openpear Project (Google Groups)
-    - <http://groups.google.com/group/openpear-project>
+[![Gitter chat](https://badges.gitter.im/nequal/Openpear.png)](https://gitter.im/nequal/Openpear)
 
 
 # New BSD License
